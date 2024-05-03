@@ -1,0 +1,188 @@
+.container{
+  @media screen and (min-width: 768px) {
+    min-width: 95%;
+    
+  }
+  .title-abc {
+    color: rgb(21, 93, 121);
+    font-size: 22px;
+    text-align: center;
+    padding: 10px;
+    font-weight: 700;
+  }
+
+  .card-wrap{
+    width: 100%;
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5); // Màu đen với độ trong suốt 0.5
+      z-index: 999; // Đặt z-index cao hơn để nó nằm trên mọi thành phần khác
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  
+  
+    
+      &::after {
+        content: "";
+        width: 50px; /* Đặt kích thước vòng quay */
+        height: 50px; /* Đặt kích thước vòng quay */
+        border: 4px solid #fff; /* Đặt màu và độ rộng của vòng quay */
+        border-top: 4px solid transparent; /* Để tạo vòng tròn trong suốt */
+        border-radius: 50%; /* Chuyển thành hình tròn */
+        animation: spin 1s linear infinite; /* Sử dụng animation với tên spin, thời gian 1s, tuyến tính và vô hạn lặp */
+      }
+    
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    }
+    .filter-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+        
+      }
+  
+      .select-month{
+        margin-top: 20px;
+        border: 1px solid #ccc;
+        padding: 5px 20px;
+        border-radius: 6px;
+        margin-right: 10px;
+        &:hover{
+          border: 1px solid #919191;
+          transition: all 0.3s ease-in-out;
+        }
+      }
+    
+      .select-year{
+        margin-top: 20px;
+        border: 1px solid #ccc;
+        padding: 5px 20px;
+        border-radius: 6px;
+        margin-right: 10px;
+        &:hover{
+          border: 1px solid #919191;
+          transition: all 0.3s ease-in-out;
+        }
+      }
+    
+      .filter-btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-top: 20px;
+        margin-right: 10px;
+        border: 1px solid #0e207c;
+        padding: 2px 10px;
+        border-radius: 6px;
+        background-color: #e5e8ff;
+        color: #102878;
+        
+        &:hover{
+          background-color: #0f3586;
+          color: white;
+          transition: all 0.3s ease-in-out;
+        }
+        .filter-icon{
+          font-size: 28px;
+        }
+      }
+      .export-btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-top: 20px;
+        border: 1px solid #0d7124;
+        padding: 2px 10px;
+        border-radius: 6px;
+        background-color: #e8ffed;
+        color: #0d7124;
+        
+        &:hover{
+          background-color: #129230;
+          color: white;
+          transition: all 0.3s ease-in-out;
+        }
+        .export-icon{
+          font-size: 28px;
+        }
+      
+      }
+    }
+  
+    .table-container{
+      @media screen and (max-width: 768px){
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto; 
+      }
+      .data-table{
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 20px;
+        width: 100%;
+        overflow-x: hidden;
+        @media screen and (max-width: 768px) {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+      }
+        
+        thead{
+          th{
+            min-width: 100px;
+            text-align: left;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #2e2e2e;
+            background-color: #d5d5d5;
+            @media screen and (max-width: 768px){
+              min-width: 150px;
+            }
+          }
+        }
+        tbody{
+          tr{
+            td{
+              text-align: left;
+  
+              padding: 10px;
+              font-size: 16px;
+              font-weight: 400;
+              color: #2e2e2e;
+              border-bottom: 1px solid #ccc;
+            }
+          }
+          .total-container{
+            td{
+              font-weight: 600;
+              font-size: 20px;
+              color: #2e2e2e;
+            }
+          }
+        }
+      }
+    }
+
+  }
+  }
+
+
+
+
+
+ 

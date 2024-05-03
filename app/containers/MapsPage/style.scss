@@ -1,0 +1,175 @@
+.maps-page-wrapper {
+    position: relative;
+    height: calc(var(--vh, 1vh) * 100);
+    .status-wrapper {
+        width: 100%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        padding: 5px;
+        text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+        font-weight: bold;
+        .status{
+            display: flex;
+            gap: 5px;
+            flex-direction: row;
+            align-items: center;
+            .green-box {
+                width: 30px;
+                height: 30px ;
+                border-radius: 50%;
+                background-color: rgb(17, 217, 17);
+                margin-right: 10px;
+                padding: 0 15px;
+            }
+            .red-box {
+                width: 30px;
+                height: 30px ;
+                border-radius: 50%;
+                background-color: red;
+                margin-right: 10px;
+                padding: 0 15px;
+            }
+            .orange-box {
+                width: 30px;
+                height: 30px ;
+                border-radius: 50%;
+                background-color: orange;
+                margin-right: 10px;
+                padding: 0 15px;
+            }
+        }
+
+    }
+    .detail-wrapper {
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        .container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+
+        }
+        cursor: pointer;
+        .row {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 20px;
+            font-size: 14px;
+            background-color: white;
+            padding: 20px 0;
+            width: 50%;
+            border-radius: 12px;
+            @media screen and (max-width: 768px) {
+                width: 90%;
+            }
+            .full-image {
+                position: relative;
+                height: 100%;
+                .image-container{
+                    display: flex;
+                    flex-direction: row;
+                    .image{
+                        margin-top: 10px;
+                        img{
+                            width: 100%;
+                            border-radius: 6px;
+                            object-fit: cover;
+                        }
+                    }
+                    .card-content{
+                        display: flex;
+                        flex-direction: column;
+                        height: 100%;
+                        justify-content: space-between;
+                        gap: 20px;
+                        .card-info{
+                            display: flex;
+                            flex-direction: column;
+                            gap: 5px;
+                            .title {
+                                font-size: 27px;
+                                color: gray;
+                                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+                                font-weight: bold;
+                            }
+                            .address{
+                                display: flex;
+                                gap: 5px;
+                                align-items: flex-start;
+                                color: gray;
+                                justify-content: flex-start;
+                                .address-icon{
+                                    font-size: 17px;
+                                }
+                            }
+                            .phone{
+                                display: flex;
+                                gap: 5px;
+                                align-items: center;
+                                color: gray;
+                                font-weight: 500;
+                                justify-content: flex-start;
+                                .phone-icon{
+                                    font-size: 16px;
+                                }
+                            }
+                            .price {
+                                color: red;
+                                font-size: 22px;
+                                margin-left: 20px;
+                                font-weight: bold;
+                                @media screen and (max-width: 768px) {
+                                    font-size: 18px;
+                                }
+                            }
+                        }
+                        
+                        .button-container{
+                            display: flex;
+                            justify-content: flex-end;
+                            gap: 20px;
+                            .cancel-button{
+                                background-color: rgb(255, 255, 255);
+                                color: rgb(154, 154, 154);
+                                width: 150px;
+                                font-size: 18px;
+                                padding: 8px 20px;
+                                border-radius: 16px;
+                                cursor: pointer;
+                                border: 1px solid rgb(154, 154, 154);
+                                transition: color 0.3s, background-color 0.3s;
+                                &:hover{
+                                    background-color: rgb(154, 154, 154);
+                                    color: rgb(255, 255, 255);
+                                }
+                            }
+                            .detail-button{
+                                background-color: rgb(13, 116, 227);
+                                color: white;
+                                width: 150px;
+                                font-size: 18px;
+                                padding: 8px 20px;
+                                border-radius: 16px;
+                                cursor: pointer;
+                                border: 1px solid rgb(13, 116, 227);
+                                transition: background-color 0.3s;
+                                &:hover{
+                                    background-color: rgb(19, 85, 155);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}

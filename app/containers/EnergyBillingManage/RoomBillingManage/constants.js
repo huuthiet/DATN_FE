@@ -1,0 +1,6 @@
+export const GET_DATA_ENERGY_PER_MONTH_SUCCESS =
+  'app/energy/device/GET_DATA_ENERGY_PER_MONTH_SUCCESS';
+export const GET_DATA_ENERGY_PER_MONTH_ERROR =
+  'app/energy/device/GET_DATA_ENERGY_PER_MONTH_ERROR';
+export const GET_DATA_ENERGY_PER_MONTH =
+  'app/energy/device/GET_DATA_ENERGY_PER_MONTH';

@@ -1,0 +1,83 @@
+.top-bar-wrapper {
+  background-color: #6b2c85;
+  a {
+    color: #fff;
+    font-size: 10px;
+    display: inline;
+    font-weight: 400;
+    letter-spacing: 0.6px;
+  }
+  .col-6 {
+    padding: 0;
+  }
+  .contact-info {
+    .nav-item {
+      i {
+        color: #45ab48;
+        margin-right: 5px;
+      }
+      .nav-link {
+        padding: 0.5rem;
+
+      }
+      a:hover {
+        color: #45ab48;
+
+      }
+    }
+  }
+  .social-contact {
+    float: right;
+    @media (max-width: 575px) {
+      .social-icons {
+        display: none;
+      }
+    }
+    .social-icons ul li a {
+      border: 0 none;
+      border-radius: 0;
+      color: #a5a5a5;
+      padding: 0px;
+    }
+
+    .social-icons ul li {
+      display: inline-block;
+    }
+
+    .social-icons ul li a i {
+      padding: 11px 15px;
+      transition: all 0.9s ease 0s;
+      -moz-transition: all 0.9s ease 0s;
+      -webkit-transition: all 0.9s ease 0s;
+      -o-transition: all 0.9s ease 0s;
+    }
+
+    .social-icons ul li a i:hover {
+      color: #fff;
+      transition: all 0.9s ease 0s;
+      -moz-transition: all 0.9s ease 0s;
+      -webkit-transition: all 0.9s ease 0s;
+      -o-transition: all 0.9s ease 0s;
+    }
+
+    .fa-facebook:hover {
+      background: #0083c9;
+    }
+
+    .fa-twitter:hover {
+      background: #5bbcec;
+    }
+
+    .fa-linkedin:hover {
+      background: #ff4518;
+    }
+
+    .fa-dribbble:hover {
+      background: #90c9dc;
+    }
+
+    .fa-google-plus:hover {
+      background: #ce3c2d;
+    }
+  }
+}

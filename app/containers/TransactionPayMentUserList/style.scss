@@ -1,0 +1,28 @@
+.title {
+  color: rgb(0, 183, 255);
+  font-size: 18px;
+  text-align: center;
+  padding: 10px;
+  font-weight: 500;
+}
+
+.btn-upload-img{
+  height: 40px;
+  width: 140px;
+  border: none;
+  border-radius: 20px;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  color: gray;
+  transition: all 0.3s ease-in-out;
+  .upload-icon{
+    font-size: 20px;
+  }
+  &:hover{
+    background-color: #afafaf;
+    color: white;
+  }
+}

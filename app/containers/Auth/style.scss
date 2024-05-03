@@ -1,0 +1,18 @@
+.auth-wrapper {
+  display: flex;
+  .auth-left {
+    width: calc(100% - 400px);
+  }
+  .auth-right {
+    width: 400px;
+    z-index: 1;
+  }
+  @media (max-width: 575px) {
+    .auth-left {
+      display: none;
+    }
+    .auth-right {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.success-popup-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 550px;
+  text-align: start;
+  .content {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+}

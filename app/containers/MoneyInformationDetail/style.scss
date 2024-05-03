@@ -1,0 +1,60 @@
+
+
+.form-content{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  box-shadow: 2px 2px 20px 6px rgba($color: #000000, $alpha: .05);
+  margin: 30px 0;
+  padding: 30px;
+  flex-direction: column;
+  .title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #a2a2a2;
+  }
+  .infor{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    flex-direction: column;
+    .stk-accountName{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    input[type="file"]::file-selector-button {
+      border: none;
+      padding: 0.5em 1em;
+      color: white;
+      border-radius: 20px;
+      background-color: #147cd1;
+      transition: .3s;
+      margin-right: 10px;
+    }
+    
+    input[type="file"]::-ms-browse:hover {
+      background-color: #19598d;
+      transition: .3s;
+    }
+    
+    input[type="file"]::-webkit-file-upload-button:hover {
+      background-color: #19598d;
+      }
+    
+    input[type="file"]::file-selector-button:hover {
+      background-color: #19598d;
+    }
+  }
+}

@@ -1,0 +1,125 @@
+.room-box {
+  height: 150px;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  padding: 20px 0;
+  cursor: pointer;
+  text-align: left;
+  border: none;
+  border-radius: 5px;
+  margin: 20px 0px;
+  background-color: rgb(248, 248, 248);
+  transition: 0.3s linear;
+
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Opera and Firefox */
+
+  // &.rented {
+  //   background-color: red;
+  // }
+  // &.available {
+  //   background-color: rgb(69, 168, 69);
+  // }
+  // &.deposited {
+  //   background-color: orange;
+  // }
+  &:hover {
+    .room-status {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.room-other {
+  display: none;
+  content: 'Other';
+}
+
+.room-status {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 120px;
+  border-radius: 5px;
+  font-size: 12px;
+  margin: 0 auto;
+  color: rgb(255, 255, 255);
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+  transition: 0.2s linear;
+  top: -40px;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Conqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
+  &.rented {
+    background-color: red;
+  }
+  &.available {
+    background-color: rgb(69, 168, 69);
+  }
+  &.deposited {
+    background-color: orange;
+  }
+  &.soonExpireContract {
+    background-color: purple;
+  }
+  .other {
+    display: none;
+    content: 'Other';
+  }
+  .status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    .icon {
+      font-size: 16px;
+      margin-right: 4px;
+    }
+  }
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  min-width: 80px;
+  margin: 0 auto;
+  color: gray;
+  font-size: 16px;
+  bottom: 15px;
+  border: 1px solid gray;
+  border-radius: 4px;
+  padding: 2px 8px;
+  .icon {
+    font-size: 22px;
+    margin-right: 4px;
+  }
+  .info-detail {
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-weight: 600;
+    font-size: 15px;
+  }
+}
+
+.info-other {
+  display: none;
+  content: 'Other';
+}

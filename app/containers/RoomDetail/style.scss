@@ -1,0 +1,93 @@
+.room-detail-wrapper {
+    .button {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        padding: 15px;
+    }
+    .room-detail {
+        .edit-button-detail {
+            cursor: pointer;
+        }
+    }
+    .image-slider {
+        margin-bottom: 20px;
+        .carousel-item {
+            height: 200px;
+            position: relative;
+            img {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin: auto;
+                height: 600px;
+            }
+        }
+    }
+    .infor {
+        .furniture,
+        .utilities {
+            padding-bottom: 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+        }
+    }
+    .name {
+        text-align: center;
+    }
+    .item {
+        position: relative;
+        max-width: 100px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .icon {
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            height: 30px;
+        }
+    }
+    .price {
+        text-align: center;
+        color: red;
+        font-weight: 500;
+    }
+    .price-room {
+        color: gray;
+        font-weight: 500;
+    }
+    .name-room {
+        color: gray;
+        font-weight: 500;
+        font-size: 18px;
+    }
+    .title {
+        color: gray;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+    .more-infor {
+        margin-bottom: 70px;
+        .icon {
+            img {
+                height: 20px;
+            }
+        }
+    }
+    .checked {
+        position: absolute;
+        right: 0px;
+        top: -10px;
+        img {
+            width: 15px;
+        }
+    }
+    .carousel-inner {
+        height: 400px;
+    }
+}

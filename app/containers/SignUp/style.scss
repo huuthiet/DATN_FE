@@ -1,0 +1,141 @@
+.sign-up-page-wrapper {
+  .sign-up-page {
+    background-color: white;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    .title {
+      color: rgb(0, 183, 255);
+      font-size: 18px;
+      text-align: center;
+      padding: 10px;
+      font-weight: 500;
+    }
+    .content {
+      padding: 15px;
+      text-align: center;
+      margin-bottom: 30px;
+      .text-bold {
+        font-weight: bold;
+      }
+    }
+
+    .infor{
+      .form input{
+        border-radius: 20px;
+        &:hover {
+          border: 1px solid #1363a5; 
+          transition: all 0.3s ease-in-out;
+      }
+      }
+      .form .error {
+        color: red; 
+        font-size: 12px; 
+      }
+    }
+    .login {
+      padding: 15px 0;
+      position: relative;
+      .link {
+        color: rgb(0, 183, 255);
+        font-weight: 500;
+        &:hover {
+          color: #1363a5;
+          text-decoration: none;
+          transition: all 0.3s ease-in-out;
+        }
+      }
+      .btn-submit {
+        position: absolute;
+        right: 0;
+        top: 11px;
+        padding: 8px 18px;
+        line-height: normal;
+        font-weight: 500;
+        border-radius: 20px;
+        &:hover{
+          background-color: #1363a5;
+          transition: all 0.3s ease-in-out;
+          box-shadow: 0px 15px 15px -15px rgba($color: #0e7dcc, $alpha: 1);
+        }
+      }
+    }
+    .role {
+      .role-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        background-size: 30%;
+        height: 90px;
+        border: 2px solid rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        margin-top: 20px;
+        &:hover {
+          border: 2px solid rgb(22, 213, 66);
+          transition: all 0.15s ease-in-out;
+        }
+        &.border-blue {
+          border: 2px solid rgb(22, 213, 66);
+          transition: all 0.15s ease-in-out;
+        }
+        .checked {
+          position: absolute;
+          right: 25px;
+          top: 30px;
+          transition: all 0.15s ease-in-out;
+          img {
+            width: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+        &.host {
+          background-image: url('../../images/Kevon.jpg');
+          display: flex;
+          background-position: top center;
+        }
+        &.customer {
+          background-image: url('../../images/Kevin.jpg');
+          display: flex;
+          background-position: top center;
+        }
+        .role-name {
+          width: 60%;
+          position: absolute;
+          bottom: 0;
+          padding: 5px;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+.send-otp-wrapper {
+  .modal-body {
+    @media (max-width: 575px) {
+      .react-code-input {
+        input {
+          font-size: 24px !important;
+        }
+      }
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type='number'] {
+      -moz-appearance: textfield;
+    }
+    display: flex;
+    flex-wrap: wrap; /* Optional. only if you want the items to wrap */
+    justify-content: center; /* For horizontal alignment */
+    align-items: center; /* For vertical alignment */
+  }
+}

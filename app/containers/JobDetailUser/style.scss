@@ -1,0 +1,33 @@
+.job-detail-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;;
+    .job-detail-container{
+        min-width: 80% ;
+        box-shadow: 2px 2px 20px 8px rgba($color: #000000, $alpha: .05);
+        margin: 40px auto;
+        border-radius: 6px;
+        padding: 10px 40px;  
+        .job-detail-title{
+            position: relative;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            padding: 20px 0;
+            border-bottom: 1px solid gray;
+            margin-bottom: 20px;
+        }
+    }
+    .date-custom {
+        input {
+            display: none;
+        }
+        .MuiInput-underline:before,
+        .MuiInput-underline:hover:not(.Mui-disabled):before {
+            border-bottom: none;
+        }
+    }
+}

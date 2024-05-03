@@ -1,0 +1,39 @@
+.create-motel-wrapper {
+  .react-datepicker-popper {
+    left: -45px !important;
+  }
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
+  .quantity-room {
+    margin-left: 50px;
+  }
+  .status-wrapper {
+    .input-form-wrapper {
+      margin-right: 50px;
+    }
+    position: relative;
+    .status {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding-top: 29px;
+      div {
+        position: absolute;
+        display: inline;
+        padding: 15px 15px;
+        right: 0;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+      }
+      .green-box {
+        background-color: green;
+      }
+      .red-box {
+        background-color: red;
+      }
+      .orange-box {
+        background-color: orange;
+      }
+    }
+  }
+}

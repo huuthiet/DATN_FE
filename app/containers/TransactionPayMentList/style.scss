@@ -1,0 +1,25 @@
+.header-bold {
+  font-weight: bold;
+}
+.title {
+  color: rgb(0, 183, 255);
+  font-size: 24px;
+  text-align: center;
+  padding: 10px;
+  font-weight: 500;
+}
+
+.button-container{
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
+  .btn-accept{
+    border-radius: 20px;
+    font-size: 17px;
+  }
+  .btn-cancel{
+    border-radius: 20px;
+    font-size: 17px;
+  }
+}

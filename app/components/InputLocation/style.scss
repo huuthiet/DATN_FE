@@ -1,0 +1,47 @@
+.input-location-wrapper {
+  .form-control {
+    &.is-invalid {
+      background-image: none;
+    }
+    &:disabled {
+      cursor: unset;
+    }
+  }
+  .form-group {
+    margin-bottom: 10px;
+    .label-input {
+      font-size: 14px;
+      margin-bottom: 2px;
+      font-weight: bold;
+    }
+    .error {
+      color: #dc3545;
+      font-size: 14px;
+    }
+  }
+  .no-edit {
+    .form-control {
+      &:disabled {
+        background-color: unset;
+        border: unset;
+        color: black;
+      }
+    }
+  }
+  .add-icon {
+    position: relative;
+    .form-control {
+      padding-left: 37px;
+    }
+    .icon-append {
+      position: absolute;
+      padding: 7px 15px;
+      left: 0;
+    }
+    .icon-eye {
+      position: absolute;
+      padding: 7px 15px;
+      right: 0px;
+    }
+  }
+}

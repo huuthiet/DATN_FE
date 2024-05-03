@@ -1,0 +1,123 @@
+.motel-wrapper {
+    .image-slider {
+        margin-bottom: 20px;
+        .carousel-item {
+            height: 200px;
+            position: relative;
+            img {
+                width: auto;
+                height: auto;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin: auto;
+            }
+        }
+    }
+    .container{
+        border-radius: 6px;
+        box-shadow: 2px 2px 20px 8px rgba($color: #000000, $alpha: .05);
+        padding: 20px;
+
+        .content {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            @media screen and (max-width: 768px){
+                flex-direction: column;
+            }
+            .title{
+                display: flex;
+                justify-content: center;
+                text-align: center;
+                padding-bottom: 20px;
+                font-size: 32px;
+                font-weight: 500;
+            }
+            .image-container{
+                width: 100%;
+                img{
+                    width: 100%;
+                    border-radius: 6px;
+                }
+            }
+            .building-container{
+                background-color: rgba($color: #000000, $alpha: .02);
+                border-radius: 8px;
+                padding: 30px 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+            .information{
+                font-size: 24px;
+                color: #636363;
+                font-weight: 600;
+            }
+            .bold {
+                font-weight: 500;
+            }
+            .btn-container{
+                width: 100%;
+                padding-top: 15px;
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+                .btn-detail{
+                    width: 100%;
+                    border: none;
+                    background-color: #1181e3;
+                    color: white;
+                    border-radius: 14px;
+                    padding: 10px 0;
+                    transition: background-color 0.3s;
+                    &:hover{
+                        background-color: #0a5f8f;
+                        box-shadow: 0 4px 14px 2px rgba($color: #0c5d97, $alpha: .25);
+                    
+                    }
+                }
+                .edit-button,
+                .add-button {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 3px;
+                    background-color: #ffffff;
+                    border: 1px solid #c9c9c9;
+                    color: rgb(117, 117, 117);
+                    border-radius: 14px;
+                    padding: 10px 0;
+                    width: 100%;
+                    transition: all 0.3s ease-in-out;
+                    cursor: pointer;
+                    .edit-icon {
+                        font-size: 19px;
+                    }
+                    &:hover{
+                        background-color: gray;
+                        color: white;
+                    
+                    }
+                }
+            }
+
+            
+            .detail {
+                display: inline;
+                font-size: 20px;
+                padding: 10px 0;
+                border-bottom: 1px solid #a4a4a4;
+            }
+            .price {
+                .red-price {
+                    font-weight: 500;
+                    color: red;
+                }
+            }
+        }
+    }
+
+}

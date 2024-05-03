@@ -1,0 +1,20 @@
+.order-detail-wrapper {
+    .edit {
+        .form-group {
+            .input-form {
+                .form-control {
+                    border: none;
+                }
+                .form-control:read-only {
+                    background-color: white;
+                }
+                .form-control:focus {
+                    box-shadow: none;
+                }
+                .form-control {
+                    cursor: unset;
+                }
+            }
+        }
+    }
+}

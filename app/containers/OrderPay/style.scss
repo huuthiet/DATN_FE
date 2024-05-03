@@ -1,0 +1,29 @@
+.user-profileUpdate {
+  padding: 20px 0 0;
+}
+.header-profile {
+  background: linear-gradient(90deg, #0410efb5 0%, rgb(4, 16, 239) 100%);
+  padding: 10px;
+  color: #fff;
+  position: absolute;
+  top: -30px;
+  width: calc(100% - 30px);
+}
+.eader-profile-paper {
+  padding-bottom: 0px;
+  position: relative;
+  padding-top: 20px;
+}
+.button-class {
+  background-color: rgb(4, 16, 239);
+}
+.card {
+  margin: 0.2rem;
+}
+.card .card-header h4 {
+  font-size: 1.2rem;
+  text-align: center;
+}
+.card .card-body p {
+  text-align: center;
+}

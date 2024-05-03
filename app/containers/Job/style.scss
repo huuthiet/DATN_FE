@@ -1,0 +1,32 @@
+.job-wrapper {
+    .react-datepicker-wrapper {
+        display: block;
+    }
+    .payments {
+        padding: 20px 10px;
+        background-color: black;
+        border-radius: 15px;
+        color: white;
+        text-align: center;
+        .price {
+            font-size: 28px;
+            color: yellow;
+        }
+        .title {
+            margin-bottom: 10px;
+        }
+        .type {
+            cursor: pointer;
+            font-weight: 500;
+            .checked {
+                position: absolute;
+                top: 0px;
+                right: 20px;
+                img {
+                    height: 20px;
+                }
+            }
+        }
+    }
+    .ReactModalPortal {}
+}

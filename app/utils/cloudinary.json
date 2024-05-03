@@ -1,0 +1,11 @@
+{
+    "CLOUDINARY": {
+        "CLOUDINARY_URL": "https://api.cloudinary.com/v1_1/nghia2589/image/upload",
+        "CLOUDINARY_UPLOAD_PRESET": "roomimage",
+        "CLOUDINARY_UPLOAD_DETAIL": "detailRoom"
+    },
+    "CLOUDINARY_DETAIL": {
+        "CLOUDINARY_URL": "https://api.cloudinary.com/v1_1/nghia2589/image/upload",
+        "CLOUDINARY_UPLOAD_PRESET": "detailRoom"
+    }
+}

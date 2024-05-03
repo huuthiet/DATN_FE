@@ -1,0 +1,11 @@
+.update-motel-wrapper {
+  .input-price {
+    &::before {
+      content: '-';
+      position: absolute;
+      left: -5px;
+      top: 30px;
+      font-weight: bold;
+    }
+  }
+}

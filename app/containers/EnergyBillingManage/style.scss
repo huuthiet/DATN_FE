@@ -1,0 +1,106 @@
+.user-profile-wrapper {
+  width: 100%;
+
+  .title-abc {
+    color: rgb(21, 93, 121);
+    font-size: 22px;
+    text-align: center;
+    padding: 10px;
+    font-weight: 700;
+  }
+
+  .card-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+    .motel-card {
+      width: 25%;
+      display: flex;
+      flex-wrap: wrap;
+      min-width: 330px;
+      @media (max-width: 767px) {
+        width: 100%;
+        left: 0;
+      }
+      .icon-card {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #fb8137;
+        width: 56px;
+        min-width: 56px;
+        height: 56px;
+        min-height: 56px;
+        position: relative;
+        border: none;
+        border-radius: 50%;
+        z-index: 99;
+        top: 50px;
+        left: 30px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 10px 0 rgba(251, 129, 55, 0.5);
+      }
+
+      .card-container {
+        display: flex;
+        flex-direction: column;
+        background: #f7f7f7;
+        border: none;
+        padding: 40px 30px 30px 30px;
+        border-radius: 20px;
+        position: relative;
+        top: 25px;
+        left: 0;
+        justify-content: space-around;
+        min-height: 300px;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        .card-motel-name {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
+
+        .card-motel-address{
+          display: flex;
+          gap: 5px;
+        }
+
+        .motel-name {
+          text-transform: uppercase;
+          font-weight: 700;
+          color: #6d6d6d;
+        }
+
+        .title {
+          font-size: 20px;
+          font-weight: 700;
+          text-align: center;
+        }
+
+        .detail-button {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          margin-top: 10px;
+          background-color: #eaeaea;
+          width: fit-content;
+          padding: 10px 20px;
+          border-radius: 10px;
+          transition: all linear 0.2s;
+          font-size: 16px;
+
+          &:hover {
+            background-color: #dddddd;
+            color: #454545;
+          }
+        }
+      }
+    }
+  }
+}

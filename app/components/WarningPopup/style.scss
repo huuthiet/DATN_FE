@@ -1,0 +1,44 @@
+.warning-popup-wrapper {
+  max-width: 500px;
+  .content {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 40px;
+  }
+  .btn-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    border-radius: 20px;
+    margin: 0;
+    .btn {
+      font-weight: bold;
+      color: white;
+    }
+
+    .btn-success{
+      height: 50px;
+      width: 30%;
+      border: none;
+      border-radius: 30px;
+      background-color: rgb(210, 19, 19);
+      &:hover{
+        background-color: rgb(138, 26, 26);
+        transition: all 0.3s ease-in-out;
+      }
+      
+    }
+
+    .btn-cancel{
+      height: 50px;
+      width: 30%;
+      border: none;
+      border-radius: 30px;
+      background-color: rgb(159, 159, 159);
+      &:hover{
+        background-color: rgb(110, 110, 110);
+        transition: all 0.3s ease-in-out;
+      }
+    }
+  }
+}
