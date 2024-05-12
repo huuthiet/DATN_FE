@@ -14,7 +14,7 @@ import {
 } from './constants';
 
 import { GET_ROOM } from '../RoomDetail/constants';
-import { apiGeRoom } from '../RoomDetail/saga';
+import { apiGetRoom } from '../RoomDetail/saga';
 import { urlLink } from '../../helper/route';
 import {
   getJobSuccess,
@@ -214,5 +214,5 @@ export default function* jobDetailSaga() {
   yield takeLatest(PUT_DEPOSIT, apiPutDeposit);
   yield takeLatest(PUT_CHECKOUT, apiPutCheckOut);
   yield takeLatest(PUT_JOB, apiPutJob);
-  // yield takeLatest(GET_ROOM, apiGeRoom);
+  // yield takeLatest(GET_ROOM, apiGetRoom);
 }

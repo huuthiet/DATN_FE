@@ -14,6 +14,7 @@ import {
   DELETE_ROOM_FAIL,
   PUSH_IMAGE,
   REMOVE_IMAGE,
+  PUT_EDIT_ROOM,
 } from './constants';
 
 export const initialState = {
@@ -36,6 +37,8 @@ const updateRoomReducer = (state = initialState, action) =>
       case GET_ROOM_FAIL:
         draft.room = action.error;
         break;
+      case PUT_EDIT_ROOM:
+        break;
       case PUT_EDIT_ROOM_SUCCESS:
         draft.showSuccessPopup = true;
         draft.content = 'Cập nhật thành công';
@@ -54,7 +57,7 @@ const updateRoomReducer = (state = initialState, action) =>
         draft.images.push(URL.createObjectURL(action.image));
         break;
       case REMOVE_IMAGE:
-        draft.images = draft.images.filter(function(value) {
+        draft.images = draft.images.filter(function (value) {
           return value !== action.image;
         });
         break;

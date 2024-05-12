@@ -4,7 +4,12 @@
  *
  */
 import produce from 'immer';
-import { GET_ROOM_SUCCESS, GET_ROOM_FAIL, CHANGE_STORE_DATA, DELETE_ROOM_SUCCESS } from './constants';
+import {
+    GET_ROOM_SUCCESS,
+    GET_ROOM_FAIL,
+    CHANGE_STORE_DATA,
+    DELETE_ROOM_SUCCESS,
+} from './constants';
 
 export const initialState = {
     room: {},

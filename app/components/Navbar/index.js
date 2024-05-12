@@ -439,7 +439,7 @@ const Navbar = props => {
                               : ''
                           }
                           onClick={() => {
-                            history.push('/user/hostMotelRoom');
+                            history.push(`/user/hostRevenue/${currentUser._id}`);
                           }}
                         >
                           <LibraryBooksOutlined className="icon" />

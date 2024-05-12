@@ -4,7 +4,7 @@ import FormData from 'form-data';
 import { put, takeLatest } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import { GET_ROOM } from '../RoomDetail/constants';
-import { apiGeRoom } from '../RoomDetail/saga';
+import { apiGetRoom } from '../RoomDetail/saga';
 // import { take, call, put, select } from 'redux-saga/effects';
 import { urlLink } from '../../helper/route';
 import { loadRepos, reposLoaded } from '../App/actions';
@@ -131,7 +131,7 @@ export
 }
 // Individual exports for testing
 export default function* jobSaga() {
-  yield takeLatest(GET_ROOM, apiGeRoom);
+  yield takeLatest(GET_ROOM, apiGetRoom);
   yield takeLatest(POST_JOB, apiPostJob);
   yield takeLatest(GET_BANK_INFO, apiBankInfo);
 }

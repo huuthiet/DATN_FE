@@ -771,9 +771,11 @@ export function JobDetailUser(props) {
               }
               onClick={() => {
                 // history.push(`/payment/${id}`);
+                //convert to number
+                const roomPriceRounded = parseInt(job.currentOrder.amount.toFixed(0));
+                setMoneyWallet(Money(roomPriceRounded));
 
-                setMoneyWallet(Money(job.currentOrder.amount));
-                const total = job.currentOrder.amount + totalElectric + totalWater + room.wifiPrice + room.garbagePrice;
+                const total = roomPriceRounded + totalElectric + totalWater + room.wifiPrice + room.garbagePrice;
                 const roundedTotal = Money(total);
                 setTotal(roundedTotal);
                 toggleModal();

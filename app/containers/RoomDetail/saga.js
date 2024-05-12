@@ -11,13 +11,18 @@ import {
 } from './actions';
 import { DELETE_ROOM, GET_ROOM } from './constants';
 
-export function* apiGeRoom(payload) {
+export function* apiGetRoom(payload) {
   const { id } = payload;
   const requestUrl = urlLink.api.serverUrl + urlLink.api.roomDetail + id;
   yield put(loadRepos());
   try {
     const response = yield axios.get(requestUrl);
-    yield put(getRoomSuccess(response.data.data));
+    if (response && response.data && response.data) {
+      console.log('response.data', response.data.data);
+      yield put(getRoomSuccess(response.data.data));
+    } else {
+      yield put(getRoomFail(response.data));
+    }
   } catch (error) {
     yield put(getRoomFail(error.response.data));
   } finally {
@@ -25,7 +30,7 @@ export function* apiGeRoom(payload) {
   }
 }
 
-export function* apiDeteleRoom(payload) {
+export function* apiDeleteRoom(payload) {
   const { id } = payload;
   const requestUrl = urlLink.api.serverUrl + urlLink.api.roomDetail + id;
   yield put(loadRepos());
@@ -41,6 +46,6 @@ export function* apiDeteleRoom(payload) {
 }
 
 export default function* roomDetailSaga() {
-  yield takeLatest(GET_ROOM, apiGeRoom);
-  yield takeLatest(DELETE_ROOM, apiDeteleRoom);
+  yield takeLatest(GET_ROOM, apiGetRoom);
+  yield takeLatest(DELETE_ROOM, apiDeleteRoom);
 }

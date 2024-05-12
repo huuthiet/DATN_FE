@@ -7,9 +7,9 @@ import { GET_LIST_ROOM } from './constants';
 
 export function* apiGetListRoom(payload) {
   const { data } = payload;
-  const requestUrl = `${urlLink.api.serverUrl}${
-    urlLink.api.motelListDetail
-  }/jobList/MotelRoom/owner`;
+  console.log('data', data);
+  const requestUrl = `${urlLink.api.serverUrl}${urlLink.api.motelListDetail
+    }/jobList/MotelRoom/owner`;
   yield put(loadRepos());
   try {
     const response = yield axios.get(requestUrl, {

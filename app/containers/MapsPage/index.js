@@ -55,6 +55,7 @@ export function MapsPage(props) {
   }, []);
   document.documentElement.style.setProperty('--vh', `${windowHeight}px`);
   const { listRoom = [], action1 } = props.mapsPage;
+  console.log('listRoom', listRoom);
 
   const [room, setRoom] = useState({});
 
@@ -112,18 +113,42 @@ export function MapsPage(props) {
                   {room.images ? (
                     <div className='col-12 image-container'>
                       <div className='col-2 image'>
-                        <img
+                        {/* <img
                           alt="Avatar"
                           src={room.images}
                         >
                           N
-                        </img>
+                        </img> */}
                       </div>
-                      <div className='col-7 card-content'>
-                        <div className="title">{room.name}</div>
-                        <div className="address">{room.address.address}</div>
-                        <div className="price">{Money(room.price || 0)}</div>
-                        <div className="phone">{room.contactPhone}</div>
+                      <div className='col-8 card-content'>
+                        <div className='card-info'>
+                          <div className="title">{room.name}</div>
+                          <div className="address">
+                            <LocationOn className='address-icon' />
+                            {room.address.address}</div>
+                          <div className="price">{Money(room.price || 0)} đ</div>
+                          <div className="phone">
+                            <Phone className='phone-icon' />
+                            {room.contactPhone}
+                          </div>
+                        </div>
+                        <div className="button-container">
+                          <button
+                            className='cancel-button'
+                            onClick={() => {
+                              setRoom({});
+                            }}
+                          >Hủy
+                          </button>
+                          <button
+                            className='detail-button'
+                            onClick={() => {
+                              /* eslint no-underscore-dangle: 0 */
+                              history.push(`/motel/${room._id}`);
+                            }}
+                          >Xem chi tiết
+                          </button>
+                        </div>
                       </div>
 
                     </div>
@@ -131,10 +156,10 @@ export function MapsPage(props) {
                   ) : (
                     <div className='image-container'>
                       <div className='col-4 image'>
-                        <img
+                        {/* <img
                           alt="Avatar"
                           src="./defaul-room.jpg"
-                        />
+                        /> */}
                       </div>
                       <div className='col-8 card-content'>
                         <div className='card-info'>
