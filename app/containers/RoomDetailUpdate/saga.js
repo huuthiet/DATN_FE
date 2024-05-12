@@ -25,7 +25,7 @@ export function* apiPostMotel(payload) {
   }
 }
 
-export function* apiGeRoom(payload) {
+export function* apiGetRoom(payload) {
   const { id } = payload;
   const requestUrl = urlLink.api.serverUrl + urlLink.api.roomDetail + id;
   yield put(loadRepos());
@@ -119,6 +119,6 @@ export function* apiPutRoomDetailUpdate(payload) {
 
 export default function* roomDetailSaga() {
   yield takeLatest(POST_MOTEL, apiPostMotel);
-  yield takeLatest(GET_ROOM, apiGeRoom);
+  yield takeLatest(GET_ROOM, apiGetRoom);
   yield takeLatest(PUT_ROOM_DETAIL_UPDATE, apiPutRoomDetailUpdate);
 }

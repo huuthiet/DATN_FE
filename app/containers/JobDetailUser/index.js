@@ -324,9 +324,7 @@ export function JobDetailUser(props) {
   let wifiPrice = 0;
   let roundedTotalWater = 0;
 
-  const {
-    totalkWhTime = 0,
-  } = dataEnergy;
+  const { totalkWhTime = 0 } = dataEnergy;
   if (job && job.room) {
     roundedTotalkWhTime = totalkWhTime.toFixed(2);
 
@@ -401,7 +399,7 @@ export function JobDetailUser(props) {
 
   function SubmitModalRenewContract() {
     setModalRenewContract(!modalRenewContract);
-    console.log("gọi renew");
+    console.log('gọi renew');
 
     props.putRenewContract(job._id, numberMonRenew);
   }
@@ -412,7 +410,7 @@ export function JobDetailUser(props) {
   const [isOpenCheckIn, setIsOpenCheckIn] = useState(false);
   const toggleCheckInModal = () => {
     setIsOpenCheckIn(!isOpenCheckIn);
-  }
+  };
 
   function SubmitModal() {
     setIsOpen(!isOpen);
@@ -422,7 +420,7 @@ export function JobDetailUser(props) {
   const submitCheckInModal = () => {
     setIsOpenCheckIn(!isOpenCheckIn);
     props.putJob(id);
-  }
+  };
 
   const [moneyWallet, setMoneyWallet] = useState();
   const [total, setTotal] = useState(0);
@@ -448,14 +446,19 @@ export function JobDetailUser(props) {
         <title>Job Detail User</title>
         <meta name="description" content="Description of JobDetailUser" />
       </Helmet>
-      <div className='job-detail-container'>
-        <span className='job-detail-title'>
+      <div className="job-detail-container">
+        <span className="job-detail-title">
           <FormattedMessage {...messages.InformationRoom} />
         </span>
         <Grid container justify="center" alignItems="center" spacing={1}>
           {images &&
             images.map((imageId, index) => (
-              <Grid item xs={6} key={index} style={{ display: 'flex', justifyContent: 'center' }}>
+              <Grid
+                item
+                xs={6}
+                key={index}
+                style={{ display: 'flex', justifyContent: 'center' }}
+              >
                 <Avatar
                   style={{
                     width: '140px',
@@ -514,7 +517,7 @@ export function JobDetailUser(props) {
             </ListItemAvatar>
             <ListItemText
               primary={<FormattedMessage {...messages.Motel} />}
-            // secondary={name}
+              // secondary={name}
             />
             {flagDeposit === true && (
               <FormattedMessage {...messages.PaymentDeposit} />
@@ -577,7 +580,14 @@ export function JobDetailUser(props) {
               }}
             >
               {isActived ? (
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '4px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '4px',
+                  }}
+                >
                   <CheckCircleOutline style={{ fontSize: '20px' }} />
                   <FormattedMessage {...messages.Activated} />
                 </div>
@@ -625,26 +635,35 @@ export function JobDetailUser(props) {
               variant="outlined"
               color="primary"
               disabled={
-                !isActived
-                || (currentOrder.type === 'afterCheckInCost' && currentOrder.isCompleted === true) ||
+                !isActived ||
+                (currentOrder.type === 'afterCheckInCost' &&
+                  currentOrder.isCompleted === true) ||
                 currentOrder.type !== 'afterCheckInCost'
               }
               onClick={() => {
                 setMoneyWallet(Money(afterCheckInCost));
-                //toggle thanh toán khi nhận phòng
-                toggleCheckInModal()
+                // toggle thanh toán khi nhận phòng
+                toggleCheckInModal();
                 // toggleModal();
                 // history.push(`/payment/${id}`);
                 // props.putJob(id);
               }}
             >
-              {!isActived || (currentOrder.type === 'afterCheckInCost' && currentOrder.isCompleted === true)
-                || currentOrder.type !== 'afterCheckInCost' ? (
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '4px' }}>
+              {!isActived ||
+              (currentOrder.type === 'afterCheckInCost' &&
+                currentOrder.isCompleted === true) ||
+              currentOrder.type !== 'afterCheckInCost' ? (
+                <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      gap: '4px',
+                    }}
+                  >
                   <CheckCircleOutline style={{ fontSize: '20px' }} />
                   <FormattedMessage {...messages.Paid} />
                 </div>
-
               ) : (
                 <FormattedMessage {...messages.Pay} />
               )}
@@ -680,12 +699,12 @@ export function JobDetailUser(props) {
               minDate={minDate}
               onChange={handleCheckOut}
               customInput={<ExampleCustomInput />}
-            // customInput={
-            // 	<InputForm
-            // 		// icon="fa fa-calendar"
-            // 		style={{width:'10px'}}
-            // 	/>
-            // }
+              // customInput={
+              // 	<InputForm
+              // 		// icon="fa fa-calendar"
+              // 		style={{width:'10px'}}
+              // 	/>
+              // }
             />
             {/* <ListItemText
 								primary="Ngày trả phòng"
@@ -771,18 +790,34 @@ export function JobDetailUser(props) {
               }
               onClick={() => {
                 // history.push(`/payment/${id}`);
+                // convert to number
+                const roomPriceRounded = parseInt(
+                  job.currentOrder.amount.toFixed(0),
+                );
+                setMoneyWallet(Money(roomPriceRounded));
 
-                setMoneyWallet(Money(job.currentOrder.amount));
-                const total = job.currentOrder.amount + totalElectric + totalWater + room.wifiPrice + room.garbagePrice;
+                const total =
+                  roomPriceRounded +
+                  totalElectric +
+                  totalWater +
+                  room.wifiPrice +
+                  room.garbagePrice;
                 const roundedTotal = Money(total);
                 setTotal(roundedTotal);
                 toggleModal();
               }}
             >
               {!isActived ||
-                currentOrder.type !== 'monthly' ||
-                (currentOrder.type === 'monthly' && currentOrder.isCompleted) ? (
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '4px' }}>
+              currentOrder.type !== 'monthly' ||
+              (currentOrder.type === 'monthly' && currentOrder.isCompleted) ? (
+                <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      gap: '4px',
+                    }}
+                  >
                   <CheckCircleOutline style={{ fontSize: '20px' }} />
                   <FormattedMessage {...messages.Paid} />
                 </div>
@@ -820,10 +855,20 @@ export function JobDetailUser(props) {
           </>
         }
       >
-        <div className='bill-content' style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+        <div
+          className="bill-content"
+          style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
             <span style={{ minWidth: '300px' }}>
-              <FormattedMessage {...messages.TotalMoney} />{': '}
+              <FormattedMessage {...messages.TotalMoney} />
+              {': '}
             </span>
             <span>{Money(afterCheckInCost)}</span>
           </div>
@@ -845,68 +890,151 @@ export function JobDetailUser(props) {
           </>
         }
       >
-        <div className='bill-content' style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+        <div
+          className="bill-content"
+          style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
             <span style={{ minWidth: '300px' }}>
-              <FormattedMessage {...messages.RoomPrice} />{': '}
+              <FormattedMessage {...messages.RoomPrice} />
+              {': '}
             </span>
             <span>{moneyWallet}</span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
             <span style={{ minWidth: '300px' }}>
-              <FormattedMessage {...messages.ElectricNumber} />{': '}
+              <FormattedMessage {...messages.ElectricNumber} />
+              {': '}
             </span>
             <span>{roundedTotalkWhTime} (kWh)</span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
             <span style={{ minWidth: '300px' }}>
-              <FormattedMessage {...messages.ElectricPrice} />{': '}
+              <FormattedMessage {...messages.ElectricPrice} />
+              {': '}
             </span>
             <span>{electricPrice}</span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
             <span style={{ minWidth: '300px' }}>
-              <FormattedMessage {...messages.TotalElectric} />{': '}
+              <FormattedMessage {...messages.TotalElectric} />
+              {': '}
             </span>
             <span>{roundedTotalElectric}</span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
             <span style={{ minWidth: '300px' }}>
-              <FormattedMessage {...messages.WaterNumber} />{': '}
+              <FormattedMessage {...messages.WaterNumber} />
+              {': '}
             </span>
             <span>{waterNumber} (Khối)</span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
             <span style={{ minWidth: '300px' }}>
-              <FormattedMessage {...messages.WaterPrice} />{': '}
+              <FormattedMessage {...messages.WaterPrice} />
+              {': '}
             </span>
             <span>{waterPrice}</span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
             <span style={{ minWidth: '300px' }}>
-              <FormattedMessage {...messages.TotalWater} />{': '}
+              <FormattedMessage {...messages.TotalWater} />
+              {': '}
             </span>
             <span>{roundedTotalWater}</span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
             <span style={{ minWidth: '300px' }}>
-              <FormattedMessage {...messages.VehiclePrice} />{': '}
+              <FormattedMessage {...messages.VehiclePrice} />
+              {': '}
             </span>
             <span>{wifiPrice}</span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', borderBottom: '1px solid grey', paddingBottom: '6px' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              borderBottom: '1px solid grey',
+              paddingBottom: '6px',
+            }}
+          >
             <span style={{ minWidth: '300px' }}>
-              <FormattedMessage {...messages.ServicePrice} />{': '}
+              <FormattedMessage {...messages.ServicePrice} />
+              {': '}
             </span>
             <span>{garbagePrice}</span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-            <span style={{ minWidth: '300px', fontSize: '18px', fontWeight: '700' }}>
-              <FormattedMessage {...messages.TotalPrice} />{': '}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span
+              style={{ minWidth: '300px', fontSize: '18px', fontWeight: '700' }}
+            >
+              <FormattedMessage {...messages.TotalPrice} />
+              {': '}
             </span>
             <span style={{ fontSize: '18px', fontWeight: '700' }}>{total}</span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
             <span style={{ minWidth: '300px' }}>
               <FormattedMessage {...messages.AmountOfMoneyDec} />
             </span>
@@ -919,10 +1047,16 @@ export function JobDetailUser(props) {
         modalTitle="Xác nhận gia hạn hợp đồng"
         footer={
           <>
-            <Button className="btn btn-secondary" onClick={toggleModalRenewContract}>
+            <Button
+              className="btn btn-secondary"
+              onClick={toggleModalRenewContract}
+            >
               {<FormattedMessage {...messages.Cancel} />}
             </Button>
-            <Button className="btn btn-success" onClick={SubmitModalRenewContract}>
+            <Button
+              className="btn btn-success"
+              onClick={SubmitModalRenewContract}
+            >
               {<FormattedMessage {...messages.Accept} />}
             </Button>
           </>
@@ -953,7 +1087,6 @@ export function JobDetailUser(props) {
                   className="mb-3"
                   onChange={evt => {
                     setNumberMonRenew(evt.value);
-
 
                     // setFieldValue(
                     //   'rentalPeriod',

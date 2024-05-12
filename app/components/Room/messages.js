@@ -110,10 +110,6 @@ export default defineMessages({
     id: `${scope}.washstand`,
     defaultMessage: 'Bồn rửa mặt',
   },
-  wifi: {
-    id: `${scope}.wifi`,
-    defaultMessage: 'Wifi',
-  },
   clearTheRoom: {
     id: `${scope}.clearTheRoom`,
     defaultMessage: 'Dọn phòng',
@@ -174,17 +170,9 @@ export default defineMessages({
     id: `${scope}.WifiPrice`,
     defaultMessage: 'Giá wifi',
   },
-  GarbagePrice: {
-    id: `${scope}.GarbagePrice`,
-    defaultMessage: 'Dịch vụ',
-  },
   DepositPrice: {
     id: `${scope}.DepositPrice`,
     defaultMessage: 'Tiền Đặt Cọc',
-  },
-  MinimumMonth: {
-    id: `${scope}.MinimumMonth`,
-    defaultMessage: 'Số tháng thuê tối thiểu: ',
   },
   Information: {
     id: `${scope}.Information`,
@@ -201,15 +189,5 @@ export default defineMessages({
   ErrPopup: {
     id: `${scope}.ErrPopup`,
     defaultMessage: 'Bạn Muốn Xóa Phòng Này',
-  },
-  // edit
-  EditRoom: {
-    id: `${scope}.EditRoom`,
-    defaultMessage: 'Chỉnh sửa',
-  },
-  // delete
-  DeleteRoom: {
-    id: `${scope}.DeleteRoom`,
-    defaultMessage: 'Xóa phòng',
   },
 });

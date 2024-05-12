@@ -14,7 +14,7 @@ import {
 } from './constants';
 
 import { GET_ROOM } from '../RoomDetail/constants';
-import { apiGeRoom } from '../RoomDetail/saga';
+import { apiGetRoom } from '../RoomDetail/saga';
 import { urlLink } from '../../helper/route';
 import {
   getJobSuccess,
@@ -38,15 +38,19 @@ import { apiGetProfile } from '../Profile/saga';
 
 export function* apiGetJob(payload) {
   const { id, idElectricMetter } = payload;
-  console.log("id in saga", id);
+  console.log('id in saga', id);
   const currentDate = new Date();
   const formattedStartDate = new Date(
     currentDate.getFullYear(),
     currentDate.getMonth(),
-    2
-  ).toISOString().slice(0, 10);
+    2,
+  )
+    .toISOString()
+    .slice(0, 10);
   const formattedCurrentDate = currentDate.toISOString().slice(0, 10);
-  const requestDataUrl = urlLink.api.serverUrl + urlLink.api.getDataEnergyPerDayByTime + idElectricMetter + `/${formattedStartDate}/${formattedCurrentDate}`;
+  const requestDataUrl = `${urlLink.api.serverUrl +
+    urlLink.api.getDataEnergyPerDayByTime +
+    idElectricMetter}/${formattedStartDate}/${formattedCurrentDate}`;
 
   try {
     const dataResponse = yield axios.get(requestDataUrl);
@@ -64,12 +68,11 @@ export function* apiGetJob(payload) {
   try {
     const response = yield axios.get(requestUrl);
     if (response && response.data) {
-      console.log("Check getJob in saga: ", response.data.data);
+      console.log('Check getJob in saga: ', response.data.data);
       yield put(getJobSuccess(response.data.data));
     } else {
       yield put(getJobFail(error.response.data));
     }
-
   } catch (error) {
     yield put(getJobFail(error.response.data));
   } finally {
@@ -102,8 +105,8 @@ export function* apiPutRenewContract(payload) {
   // const requestUrl = `${urlLink.api.serverUrl + urlLink.api.job}/${id}/active`;
   const requestUrl = `http://localhost:5502/api/v1/homeKey/job/renewContract/${id}`;
   const dataUpdate = {
-    numberMon: numberMon
-  }
+    numberMon,
+  };
   yield put(loadRepos());
   try {
     const response = yield axios.put(requestUrl, dataUpdate);
@@ -140,7 +143,7 @@ export function* apiPutDeposit(payload) {
             yield put(putDepositSuccess(response.data.data));
             yield put(getJob(jobId));
             // eslint-disable-next-line no-empty
-          } catch (error) { }
+          } catch (error) {}
         } else {
           yield put(putDepositSuccess(response.data.data));
           yield put(getJob(jobId));
@@ -148,7 +151,7 @@ export function* apiPutDeposit(payload) {
         }
       }
       // eslint-disable-next-line no-empty
-    } catch (error) { }
+    } catch (error) {}
   } catch (error) {
     yield put(putDepositFail(error.response.data));
   } finally {
@@ -176,7 +179,7 @@ export function* apiPutCheckOut(payload) {
 
 export function* apiPutJob(payload) {
   const { id } = payload;
-  console.log("id in saga", id);
+  console.log('id in saga', id);
 
   const requestUrlPayWallet = urlLink.api.serverUrl + urlLink.api.pay;
   const requestUrl = `${urlLink.api.serverUrl + urlLink.api.job}/${id}`;
@@ -184,7 +187,7 @@ export function* apiPutJob(payload) {
   const response = yield axios.get(requestUrl);
 
   const order = response.data.data.orders;
-  console.log("Check order saga: ", order);
+  console.log('Check order saga: ', order);
   let orderId = null;
   for (let i = 0; i < order.length; i++) {
     if (order[i].paymentMethod === 'none') {
@@ -214,5 +217,5 @@ export default function* jobDetailSaga() {
   yield takeLatest(PUT_DEPOSIT, apiPutDeposit);
   yield takeLatest(PUT_CHECKOUT, apiPutCheckOut);
   yield takeLatest(PUT_JOB, apiPutJob);
-  // yield takeLatest(GET_ROOM, apiGeRoom);
+  // yield takeLatest(GET_ROOM, apiGetRoom);
 }

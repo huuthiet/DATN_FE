@@ -22,10 +22,13 @@ import { getMotel } from '../Motel/actions';
 import FloorDetail from '../../components/FloorDetail';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import ModalComponent from './modal';
+import { Button } from 'reactstrap';
 
 export function MotelDetail(props) {
   const { id } = useParams();
   const [status, setStatus] = useState('0');
+  const [modal, setModal] = useState(false);
   useInjectReducer({ key: 'motelDetail', reducer });
   useInjectSaga({ key: 'motelDetail', saga });
   useEffect(() => {
@@ -132,7 +135,7 @@ export function MotelDetail(props) {
           })}
           onClick={() => {
             status !== '4' && setStatus('4');
-            console.log({ status })
+            console.log({ status });
           }}
         >
           <div style={homelandContent}>

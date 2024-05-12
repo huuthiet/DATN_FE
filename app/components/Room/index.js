@@ -4,23 +4,57 @@
  *
  */
 
-import React from 'react';
+import { useState } from React from 'react';
+
 import PropTypes from 'prop-types';
 import ClassNames from 'classnames';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 import './style.scss';
 import { useHistory } from 'react-router-dom';
+import { Button, Col, Container, Row, UncontrolledCarousel } from 'reactstrap';
 import {
   CheckCircleOutlineOutlined,
   InfoOutlined,
   VpnKeyOutlined,
   AttachMoneyOutlined,
-} from '@material-ui/icons';
-
+ MonetizationOnOutlined, LocalAtmOutlined, Waves, EmojiObjects, Wifi } from '@material-ui/icons';
+import defaultRoomImage from '../../images/defaul-room.jpg';
+import Money from '../../containers/App/format';
 import useLongPress from './longpress';
+import ModalComponent from './modal';
+
 import { roomStatus, roomStatusCode } from '../../helper/constants';
 
 function Room(props) {
   const { item = {}, status = '', isEdit, isHost } = props;
+  console.log('item', item);
+  const {
+    _id,
+    utilities = [],
+    name = '',
+    price = '',
+    electricityPrice = '',
+    waterPrice = '',
+    wifiPrice = '',
+    garbagePrice = '',
+    images = [],
+    minimumMonths,
+    motelRoomDataDetail = {
+      owner: '',
+      images: [],
+    },
+  } = item;
+
+  const items =
+    images.map((image, index) => ({
+      key: index,
+      src: image,
+      altText: '',
+      caption: '',
+      header: '',
+    })) || [];
+  const [modal, setModal] = useState(false);
   const history = useHistory();
   /* eslint no-underscore-dangle: 0 */
   const backspaceLongPress = useLongPress(() => {
@@ -70,16 +104,119 @@ function Room(props) {
         },
       )}
       onClick={() => {
-        if (isHost) {
-          history.push(`/room-detail/${item._id}`);
-        } else if (!isEdit) {
-          history.push('/auth/login');
-        } else {
-          /* eslint no-underscore-dangle: 0 */
-          history.push(`/room-detail/${item._id}`);
-        }
+        setModal(true);
+        // if (isHost) {
+
+        //   // history.push(`/room-detail/${item._id}`);
+        // } else if (!isEdit) {
+        //   history.push('/auth/login');
+        // } else {
+        //   /* eslint no-underscore-dangle: 0 */
+        //   history.push(`/room-detail/${item._id}`);
+        // }
       }}
     >
+      <ModalComponent
+        modal={modal}
+        toggle={() => setModal(false)}
+        className="room-modal"
+        modalTitle="Thông tin phòng"
+        footer={
+          <>
+            <Button color="secondary" onClick={() => setModal(false)}>
+              Đóng
+            </Button>
+            <Button
+color="primary" onClick={() => {
+                if (isHost) {
+                  history.push(`/room-detail/${item._id}`);
+                } else if (!isEdit) {
+                  history.push('/auth/login');
+                } else {
+                  /* eslint no-underscore-dangle: 0 */
+                  history.push(`/room-detail/${item._id}`);
+                }
+              }}
+            >
+              Xem chi tiết
+            </Button>
+          </>
+        }
+      >
+        <Container>
+          <div>
+            {items.length > 0 ? (
+              <UncontrolledCarousel className="image-slider" items={items} />
+            ) : (
+              <Row className="room-infor">
+                <Col xs={12} className="room-image">
+                  <img src={defaultRoomImage} alt="default" />
+                </Col>
+              </Row>
+            )}
+            <Row className="room-infor">
+              <Col xs={12} className="room-detail">
+                <Row>
+                  <div className="name-room">
+                    <FormattedMessage {...messages.Information} /> {name}
+                  </div>
+                </Row>
+                <Row>
+                  <Col xs={12}>
+                    <div className="price-room">
+                      <div className="price-title">
+                        <MonetizationOnOutlined className="price-icon" />
+                        <FormattedMessage
+                          {...messages.Price}
+                          className="price-text"
+                        />
+                      </div>
+                      {Money(price)} đ
+                    </div>
+                    <div className="price-deposit">
+                      <div className="deposit-title">
+                        <LocalAtmOutlined className="deposit-icon" />
+                        <FormattedMessage {...messages.DepositPrice} />{' '}
+                      </div>
+                      {Money(price / 2)} đ
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={4}>
+                    <div className="item">
+                      <div className="electric-title">
+                        <EmojiObjects className="electric-icon" />
+                        <FormattedMessage {...messages.ElectricPrice} />
+                      </div>
+                      {Money(electricityPrice)} đ
+                    </div>
+                  </Col>
+                  <Col xs={4}>
+                    <div className="item">
+                      <div className="water-title">
+                        <Waves className="water-icon" />
+                        <FormattedMessage {...messages.WaterPrice} />
+                      </div>
+                      {Money(wifiPrice)} đ
+                    </div>
+                  </Col>
+                  <Col xs={4}>
+                    <div className="item">
+                      <div className="wifi-title">
+                        <Wifi className="wifi-icon" />
+                        <FormattedMessage {...messages.WifiPrice} />
+                      </div>
+                      {Money(waterPrice)} đ
+                    </div>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </div>
+        </Container>
+      </ModalComponent>
+
       <div
         className={ClassNames(
           'room-status',

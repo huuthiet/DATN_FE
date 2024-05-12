@@ -70,10 +70,11 @@ export function ManagerEnergyHostAdmin(props) {
       headerClassName: 'header-bold',
       renderCell: params => (
         <span>
-          {params.row.hostBuildingRevenue.toLocaleString('vi-VN', {
-            style: 'currency',
-            currency: 'VND',
-          })}
+          {params.row.hostBuildingRevenue &&
+            params.row.hostBuildingRevenue.toLocaleString('vi-VN', {
+              style: 'currency',
+              currency: 'VND',
+            })}
         </span>
       ),
     },

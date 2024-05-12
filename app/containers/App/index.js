@@ -17,6 +17,7 @@ import HistoryRoomHostAdmin from 'containers/HistoryRoomHostAdmin/Loadable';
 import HostMotelRoom from 'containers/HostMotelRoom/Loadable';
 import HostMotelRoomDetail from 'containers/HostMotelRoomDetail/Loadable';
 import HostMotelRoomDetailUser from 'containers/HostMotelRoomDetailUser/Loadable';
+import HostRevenue from 'containers/HostRevenue/Loadable';
 // import HostMotelRoomUser from 'containers/HostMotelRoomUser/Loadable';
 import BillList from 'containers/BillList/Loadable';
 import BillListAdmin from 'containers/BillListAdmin/Loadable';
@@ -184,7 +185,10 @@ export function App(props) {
         <Route path="/terms" component={Terms} />
         <Route path="/about" component={About} />
         <Route path="/roomManage" component={RoomManage} />
-        <Route path="/job-detail/:id/:idElectricMetter" component={JobDetailUser} />
+        <Route
+          path="/job-detail/:id/:idElectricMetter"
+          component={JobDetailUser}
+        />
         <Route path="/job-verify/:id/:idElectricMetter" component={JobVerify} />
         <Route path="/payment-return" component={PaymentReturn} />
         <Route path="/order-pay/:id" component={OrderPay} />
@@ -232,6 +236,7 @@ export function App(props) {
         <Route path="/admin/hostMotelRoom" component={HostMotelRoom} />
         <Route path="/hostMotelRoom/:id" component={HostMotelRoomDetail} />
         <Route path="/user/hostMotelRoom" component={HostMotelRoomDetailUser} />
+        <Route path="/user/hostRevenue/:id" component={HostRevenue} />
         <Route
           path="/historyRoomHost/room/:id/roomdetail/:idroom"
           component={HistoryRoomHostDetail}
@@ -317,7 +322,6 @@ export function App(props) {
           path="/admin/manager-energy-buildings-host/:id/:name"
           component={ManagerEnergyBuildingsAdmin}
         />
-
 
         <Route
           path="/admin/manager-energy-rooms-admin/:id/:name"

@@ -13,19 +13,36 @@ import { createStructuredSelector } from 'reselect';
 import localStoreService from 'local-storage';
 import _ from 'lodash';
 import localStore from 'local-storage';
+import {
+  MonetizationOnOutlined,
+  LocalAtmOutlined,
+  Waves,
+  EmojiObjects,
+  Wifi,
+  EditOutlined,
+  DeleteOutline,
+  RoomService,
+  MoreHoriz,
+} from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import { Button, Col, Container, Row, UncontrolledCarousel } from 'reactstrap';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
+import Tooltip from '@material-ui/core/Tooltip';
+import { Collapse, IconButton } from '@material-ui/core';
 import WarningPopup from '../../components/WarningPopup';
 import Money from '../App/format';
+
 import { changeStoreData, deleteRoom, getRoom } from './actions';
 import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
 import makeSelectRoomDetail from './selectors';
+
+import defaultRoomImage from '../../images/defaul-room.jpg';
+
 import './style.scss';
 
 export function RoomDetail(props) {
@@ -33,6 +50,11 @@ export function RoomDetail(props) {
   useInjectReducer({ key: 'roomDetail', reducer });
   useInjectSaga({ key: 'roomDetail', saga });
   const [isAdmin, setIsAdmin] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const handleClick = event => {
+    setOpen(!open);
+  };
   useEffect(() => {
     if (_.isArray(localStoreService.get('user').role)) {
       for (
@@ -51,6 +73,7 @@ export function RoomDetail(props) {
   }, []);
   const history = useHistory();
   const { room = {}, showWarningPopup } = props.roomDetail;
+  console.log('room', room);
   const {
     _id,
     utilities = [],
@@ -65,6 +88,7 @@ export function RoomDetail(props) {
     minimumMonths,
     motelRoomDataDetail = {
       owner: '',
+      images: [],
     },
   } = room;
 
@@ -73,13 +97,14 @@ export function RoomDetail(props) {
       ? false
       : motelRoomDataDetail.owner === localStore.get('user')._id;
 
-  const items = images.map((image, index) => ({
-    key: index,
-    src: image,
-    altText: '',
-    caption: '',
-    header: '',
-  }));
+  const items =
+    images.map((image, index) => ({
+      key: index,
+      src: image,
+      altText: '',
+      caption: '',
+      header: '',
+    })) || [];
 
   return (
     <div className="room-detail-wrapper">
@@ -93,353 +118,340 @@ export function RoomDetail(props) {
         )}
 
         <Container>
-          <div className="room-detail">
-            <Row>
-              <Col xs={2}>
-                <div className="name-room">
-                  <FormattedMessage {...messages.Infomation} /> {name}
-                </div>
-              </Col>
-              <Col xs={2}>
-                {localStoreService.get('user').role.length > 1 && isEdit && (
-                  <div
-                    className="edit-button-detail"
-                    onClick={() => {
-                      history.push(`/room-detail-update/${_id}`);
-                    }}
-                  >
-                    <img src="/edit.png" />
-                  </div>
+          <div className="room-container">
+            <Row className="room-infor">
+              <Col xs={12} sm={4} className="room-image">
+                {images && images.length > 0 ? (
+                  <img className="image" src={images[0]} alt="motel" />
+                ) : (
+                  <img className="image" src={defaultRoomImage} alt="motel" />
                 )}
               </Col>
-              <Col xs={2}>
-                {localStoreService.get('user').role.length > 1 && isEdit && (
-                  <div
-                    className="edit-button-detail"
-                    onClick={() => {
-                      props.changeStoreData('showWarningPopup', true);
-                    }}
-                  >
-                    <img
-                      src="/trash.png"
-                      style={{ width: '30px', height: '30px' }}
-                    />
+              <Col xs={12} sm={8} className="room-detail">
+                <Row>
+                  <Col xs={12} sm={6} className="name-room">
+                    <FormattedMessage {...messages.Information} /> {name}
+                  </Col>
+                  <Col xs={12} sm={5} className="button-container">
+                    {localStoreService.get('user').role.length > 1 && isEdit && (
+                      <>
+                        <Tooltip
+                          title="Chỉnh sửa thông tin"
+                          placement="top"
+                          arrow
+                        >
+                          <IconButton
+                            onClick={handleClick}
+                            className="action-button"
+                          >
+                            <MoreHoriz />
+                          </IconButton>
+                        </Tooltip>
+                        <Collapse in={open} className="collapse">
+                          <div>
+                            <button
+                              className="edit-button-detail"
+                              onClick={() => {
+                                history.push(`/room-detail-update/${_id}`);
+                              }}
+                            >
+                              <EditOutlined className="edit-icon" />
+                              <FormattedMessage {...messages.EditRoom} />
+                            </button>
+                            <button
+                              className="delete-button-detail"
+                              onClick={() => {
+                                props.changeStoreData('showWarningPopup', true);
+                                setOpen(false);
+                              }}
+                            >
+                              <DeleteOutline className="delete-icon" />
+                              <FormattedMessage {...messages.DeleteRoom} />
+                            </button>
+                          </div>
+                        </Collapse>
+                      </>
+                    )}
+                  </Col>
+                </Row>
+                <Row>
+                  <div className="price-room">
+                    <Col xs={12} sm={6} className="price-title">
+                      <MonetizationOnOutlined className="price-icon" />
+                      <FormattedMessage
+                        {...messages.Price}
+                        className="price-text"
+                      />
+                      <span className="price-text">{Money(price)} đ</span>
+                    </Col>
                   </div>
-                )}
-              </Col>
-              <Col xs={3}>
-                <div className="price-room">
-                  <FormattedMessage {...messages.Price} /> {Money(price)}
-                </div>
-              </Col>
-              <Col xs={3}>
-                <div className="price-room">
-                  <FormattedMessage {...messages.DepositPrice} />{' '}
-                  {Money(price / 2)}
-                </div>
+                  <div className="price-deposit">
+                    <Col xs={12} className="deposit-title">
+                      <LocalAtmOutlined className="deposit-icon" />
+                      <FormattedMessage {...messages.DepositPrice} />{' '}
+                      {Money(price / 2)} đ
+                    </Col>
+                  </div>
+                  <div className="minimum-month">
+                    <Col xs={12}>
+                      <span className="minimum-month-title">
+                        <FormattedMessage {...messages.MinimumMonth} />
+                        {minimumMonths}
+                      </span>
+                    </Col>
+                  </div>
+                </Row>
+                <Row>
+                  <Col xs={6} sm={3}>
+                    <div className="item">
+                      <div className="electric-title">
+                        <EmojiObjects className="electric-icon" />
+                        <FormattedMessage {...messages.ElectricPrice} />
+                      </div>
+                      {Money(electricityPrice)} đ
+                    </div>
+                  </Col>
+                  <Col xs={6} sm={3}>
+                    <div className="item">
+                      <div className="water-title">
+                        <Waves className="water-icon" />
+                        <FormattedMessage {...messages.WaterPrice} />
+                      </div>
+                      {Money(wifiPrice)} đ
+                    </div>
+                  </Col>
+                  <Col xs={6} sm={3}>
+                    <div className="item">
+                      <div className="wifi-title">
+                        <Wifi className="wifi-icon" />
+                        <FormattedMessage {...messages.WifiPrice} />
+                      </div>
+                      {Money(waterPrice)} đ
+                    </div>
+                  </Col>
+                  <Col xs={6} sm={3}>
+                    <div className="item">
+                      <div className="garbage-title">
+                        <RoomService className="garbage-icon" />
+                        <FormattedMessage {...messages.GarbagePrice} />
+                      </div>
+                      {Money(garbagePrice)} đ
+                    </div>
+                  </Col>
+                </Row>
               </Col>
             </Row>
 
-            <Row className="price-wrapper">
-              <Col xs={4}>
-                <Row>
-                  <Col xs={6}>
-                    <div className="item">
-                      <div className="icon">
-                        <img src="/electric.png" alt="electric" />
-                      </div>
-                      <div className="price">{Money(electricityPrice)}</div>
-                    </div>
-                  </Col>
-                  <Col xs={6}>
-                    <div className="item">
-                      <div className="icon">
-                        <img src="/wifi.png" alt="wifi" />
-                      </div>
-                      <div className="price">{Money(wifiPrice)}</div>
-                    </div>
-                  </Col>
-                </Row>
-              </Col>
-              <Col xs={4}>
-                <div className="item">
-                  <div className="icon">
-                    <img src="/month.png" alt="month" />
-                  </div>
-                  <div className="price">{minimumMonths}</div>
-                </div>
-              </Col>
-              <Col xs={4}>
-                <Row>
-                  <Col xs={6}>
-                    <div className="item">
-                      <div className="icon">
-                        <img src="/water.png" alt="water" />
-                      </div>
-                      <div className="price">{Money(waterPrice)}</div>
-                    </div>
-                  </Col>
-                  <Col xs={6}>
-                    <div className="item">
-                      <div className="icon">
-                        <img src="../broom.png" alt="broom" />
-                      </div>
-                      <div className="price">{Money(garbagePrice)}</div>
-                    </div>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
             <div className="furniture">
               <div className="title">
                 <FormattedMessage {...messages.Furniture} />
               </div>
               <Row>
                 <Col xs={4}>
-                  <div className="item">
-                    {utilities.includes('gac_lung') && (
-                      <div className="checked">
-                        <img src="/checked.png" alt="checked" />
+                  {utilities.includes('gac_lung') && (
+                    <div className="interior-item">
+                      <div className="icon">
+                        <img src="../stairs.png" alt="stairs" />
                       </div>
-                    )}
-                    <div className="icon">
-                      <img src="../stairs.png" alt="stairs" />
+                      <div className="name">
+                        <FormattedMessage {...messages.Mezzanine} />
+                      </div>
                     </div>
-                    <div className="name">
-                      <FormattedMessage {...messages.Mezzanine} />
-                    </div>
-                  </div>
+                  )}
                 </Col>
                 <Col xs={4}>
-                  <div className="item">
-                    {utilities.includes('tu_quan_ao') && (
+                  {utilities.includes('tu_quan_ao') && (
+                    <div className="interior-item">
+                      <div className="icon">
+                        <img src="../wardrobe.png" alt="wardrobe" />
+                      </div>
+                      <div className="name">
+                        <FormattedMessage {...messages.Wardrobe} />
+                      </div>
                       <div className="checked">
                         <img src="/checked.png" alt="checked" />
                       </div>
-                    )}
-                    <div className="icon">
-                      <img src="../wardrobe.png" alt="wardrobe" />
                     </div>
-                    <div className="name">
-                      <FormattedMessage {...messages.Wardrobe} />
-                    </div>
-                  </div>
+                  )}
                 </Col>
                 <Col xs={4}>
-                  <div className="item">
-                    {utilities.includes('voi_hoa_sen') && (
-                      <div className="checked">
-                        <img src="/checked.png" alt="checked" />
+                  {utilities.includes('tu_bep') && (
+                    <div className="interior-item">
+                      <div className="icon">
+                        <img src="../kitchen.png" alt="kitchen" />
                       </div>
-                    )}
-                    <div className="icon">
-                      <img src="../shower.png" alt="shower" />
+                      <div className="name">
+                        <FormattedMessage {...messages.Kitchen} />
+                      </div>
                     </div>
-                    <div className="name">
-                      <FormattedMessage {...messages.shower} />
-                    </div>
-                  </div>
+                  )}
                 </Col>
                 <Col xs={4}>
-                  <div className="item">
-                    {utilities.includes('san_go') && (
-                      <div className="checked">
-                        <img src="/checked.png" alt="checked" />
+                  {utilities.includes('san_go') && (
+                    <div className="interior-item">
+                      <div className="icon">
+                        <img src="../dropceiling.png" alt="dropceiling" />
                       </div>
-                    )}
-                    <div className="icon">
-                      <img src="../dropceiling.png" alt="dropceiling" />
+                      <div className="name">
+                        <FormattedMessage {...messages.WoodFloor} />
+                      </div>
                     </div>
-                    <div className="name">
-                      <FormattedMessage {...messages.WoodFloor} />
-                    </div>
-                  </div>
+                  )}
                 </Col>
                 <Col xs={4}>
-                  <div className="item">
-                    {utilities.includes('bon_cau') && (
-                      <div className="checked">
-                        <img src="/checked.png" alt="checked" />
+                  {utilities.includes('bon_cau') && (
+                    <div className="interior-item">
+                      <div className="icon">
+                        <img src="../toilet.png" alt="toilet" />
                       </div>
-                    )}
-                    <div className="icon">
-                      <img src="../toiletbowl.png" alt="toiletbowl" />
+                      <div className="name">
+                        <FormattedMessage {...messages.toiletBowl} />
+                      </div>
                     </div>
-                    <div className="name">
-                      <FormattedMessage {...messages.toiletBowl} />
-                    </div>
-                  </div>
+                  )}
                 </Col>
                 <Col xs={4}>
-                  <div className="item">
-                    {utilities.includes('bon_rua_mat') && (
-                      <div className="checked">
-                        <img src="/checked.png" alt="checked" />
+                  {utilities.includes('bon_rua_mat') && (
+                    <div className="interior-item">
+                      <div className="icon">
+                        <img src="../washstand.png" alt="washstand" />
                       </div>
-                    )}
-                    <div className="icon">
-                      <img src="../washstand.png" alt="washstand" />
+                      <div className="name">
+                        <FormattedMessage {...messages.washstand} />
+                      </div>
                     </div>
-                    <div className="name">
-                      <FormattedMessage {...messages.washstand} />
-                    </div>
-                  </div>
+                  )}
                 </Col>
               </Row>
             </div>
+
             <div className="utilities">
               <div className="title">
                 <FormattedMessage {...messages.Utilities} />
               </div>
               <Row>
                 <Col xs={4}>
-                  <div className="item">
-                    {utilities.includes('wifi') && (
-                      <div className="checked">
-                        <img src="/checked.png" alt="checked" />
+                  {utilities.includes('wifi') && (
+                    <div className="furniture-item">
+                      <div className="icon">
+                        <img src="../wifi.png" alt="wifi" />
                       </div>
-                    )}
-                    <div className="icon">
-                      <img src="../wifi.png" alt="wifi" />
+                      <div className="name">
+                        <FormattedMessage {...messages.wifi} />
+                      </div>
                     </div>
-                    <div className="name">Wifi</div>
-                  </div>
+                  )}
                 </Col>
                 <Col xs={4}>
-                  <div className="item">
-                    {utilities.includes('giat_ui') && (
-                      <div className="checked">
-                        <img src="/checked.png" alt="checked" />
+                  {utilities.includes('giat_ui') && (
+                    <div className="furniture-item">
+                      <div className="icon">
+                        <img src="../laundry.png" alt="laundry" />
                       </div>
-                    )}
-                    <div className="icon">
-                      <img src="../laundry.png" alt="laundry" />
+                      <div className="name">
+                        <FormattedMessage {...messages.washingDrying} />
+                      </div>
                     </div>
-                    <div className="name">
-                      <FormattedMessage {...messages.washingDrying} />
-                    </div>
-                  </div>
+                  )}
                 </Col>
                 <Col xs={4}>
-                  <div className="item">
-                    {utilities.includes('giu_xe') && (
-                      <div className="checked">
-                        <img src="/checked.png" alt="checked" />
+                  {utilities.includes('giu_xe') && (
+                    <div className="furniture-item">
+                      <div className="icon">
+                        <img src="../delivery.png" alt="delivery" />
                       </div>
-                    )}
-                    <div className="icon">
-                      <img src="../delivery.png" alt="delivery" />
+                      <div className="name">
+                        <FormattedMessage {...messages.parkingLot} />
+                      </div>
                     </div>
-                    <div className="name">
-                      <FormattedMessage {...messages.parkingLot} />
-                    </div>
-                  </div>
+                  )}
                 </Col>
                 <Col xs={4}>
-                  <div className="item">
-                    {utilities.includes('dieu_hoa') && (
-                      <div className="checked">
-                        <img src="/checked.png" alt="checked" />
+                  {utilities.includes('dieu_hoa') && (
+                    <div className="furniture-item">
+                      <div className="icon">
+                        <img
+                          src="../air_conditioner.png"
+                          alt="air conditioner"
+                        />
                       </div>
-                    )}
-                    <div className="icon">
-                      <img src="../air_conditioner.png" alt="air conditioner" />
+                      <div className="name">
+                        <FormattedMessage {...messages.AirConditioner} />
+                      </div>
                     </div>
-                    <div className="name">
-                      <FormattedMessage {...messages.AirConditioner} />
-                    </div>
-                  </div>
+                  )}
                 </Col>
                 <Col xs={4}>
-                  <div className="item">
-                    {utilities.includes('don_phong') && (
-                      <div className="checked">
-                        <img src="/checked.png" alt="checked" />
+                  {utilities.includes('don_phong') && (
+                    <div className="furniture-item">
+                      <div className="icon">
+                        <img src="../broom.png" alt="broom" />
                       </div>
-                    )}
-                    <div className="icon">
-                      <img src="../broom.png" alt="broom" />
+                      <div className="name">
+                        <FormattedMessage {...messages.clearTheRoom} />
+                      </div>
                     </div>
-                    <div className="name">
-                      <FormattedMessage {...messages.clearTheRoom} />
-                    </div>
-                  </div>
+                  )}
                 </Col>
                 <Col xs={4}>
-                  <div className="item">
-                    {utilities.includes('truyen_hinh') && (
-                      <div className="checked">
-                        <img src="/checked.png" alt="checked" />
+                  {utilities.includes('truyen_hinh') && (
+                    <div className="furniture-item">
+                      <div className="icon">
+                        <img src="../television.png" alt="television" />
                       </div>
-                    )}
-                    <div className="icon">
-                      <img src="../television.png" alt="television" />
+                      <div className="name">
+                        <FormattedMessage {...messages.television} />
+                      </div>
                     </div>
-                    <div className="name">
-                      <FormattedMessage {...messages.television} />
+                  )}
+                </Col>
+                <Col xs={4}>
+                  {utilities.includes('gio_giac_tu_do') && (
+                    <div className="furniture-item">
+                      <div className="icon">
+                        <img src="../time.png" alt="time" />
+                      </div>
+                      <div className="name">
+                        <FormattedMessage {...messages.FreeTime} />
+                      </div>
                     </div>
-                  </div>
+                  )}
+                </Col>
+                <Col xs={4}>
+                  {utilities.includes('loi_di_rieng') && (
+                    <div className="furniture-item">
+                      <div className="icon">
+                        <img src="../gate.png" alt="gate" />
+                      </div>
+                      <div className="name">
+                        <FormattedMessage {...messages.PrivateEntrance} />
+                      </div>
+                    </div>
+                  )}
+                </Col>
+              </Row>
+              <Row className="button">
+                <Col xs={6} className="button-deposit">
+                  {!isAdmin && (
+                    <>
+                      <Button
+                        onClick={() => {
+                          history.push(`/job/${id}`);
+                        }}
+                        color="primary"
+                        className="btn-block"
+                        disabled={room.status !== 'available'}
+                      >
+                        <FormattedMessage {...messages.Deposit} />
+                      </Button>
+                    </>
+                  )}
                 </Col>
               </Row>
             </div>
           </div>
         </Container>
       </div>
-      <div className="more-infor">
-        <Container>
-          <div className="title">
-            <FormattedMessage {...messages.AdditionalDescription} />
-          </div>
-          <Row>
-            <Col xs={6}>
-              <div className="item">
-                {utilities.includes('gio_giac_tu_do') && (
-                  <div className="checked">
-                    <img src="/checked.png" alt="checked" />
-                  </div>
-                )}
-                <div className="icon">
-                  <img src="../time.png" alt="time" />
-                </div>
-                <div className="name">
-                  <FormattedMessage {...messages.FreeTime} />
-                </div>
-              </div>
-            </Col>
-            <Col xs={6}>
-              <div className="item">
-                {utilities.includes('loi_di_rieng') && (
-                  <div className="checked">
-                    <img src="/checked.png" alt="checked" />
-                  </div>
-                )}
-                <div className="icon">
-                  <img src="../gate.png" alt="gate" />
-                </div>
-                <div className="name">
-                  <FormattedMessage {...messages.PrivateEntrance} />
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </div>
-      {!isAdmin && (
-        <div className="button">
-          <div className="button-deposit">
-            <Button
-              onClick={() => {
-                history.push(`/job/${id}`);
-              }}
-              color="primary"
-              className="btn-block"
-              disabled={room.status !== 'available'}
-            >
-              <FormattedMessage {...messages.Deposit} />
-            </Button>
-          </div>
-        </div>
-      )}
 
       <WarningPopup
         visible={showWarningPopup}

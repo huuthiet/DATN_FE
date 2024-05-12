@@ -55,6 +55,7 @@ export function MapsPage(props) {
   }, []);
   document.documentElement.style.setProperty('--vh', `${windowHeight}px`);
   const { listRoom = [], action1 } = props.mapsPage;
+  console.log('listRoom', listRoom);
 
   const [room, setRoom] = useState({});
 
@@ -89,92 +90,116 @@ export function MapsPage(props) {
 
       <div className="status-wrapper container">
         <div className="status">
-          <div className="green-box"></div>
+          <div className="green-box" />
           Còn phòng
         </div>
         <div className="status">
-          <div className="red-box"></div>
+          <div className="red-box" />
           Đã thuê
         </div>
         <div className="status">
-          <div className="orange-box"></div>
+          <div className="orange-box" />
           Sắp trống
         </div>
       </div>
-      {
-        Object.keys(room).length !== 0 && (
-          <div className="detail-wrapper">
-            <div className="container">
-              <div
-                className="row"
-              >
-                <div className="col-12 full-image">
-                  {room.images ? (
-                    <div className='col-12 image-container'>
-                      <div className='col-2 image'>
-                        <img
+      {Object.keys(room).length !== 0 && (
+        <div className="detail-wrapper">
+          <div className="container">
+            <div className="row">
+              <div className="col-12 full-image">
+                {room.images ? (
+                  <div className="col-12 image-container">
+                    <div className="col-2 image">
+                      {/* <img
                           alt="Avatar"
                           src={room.images}
                         >
                           N
-                        </img>
-                      </div>
-                      <div className='col-7 card-content'>
-                        <div className="title">{room.name}</div>
-                        <div className="address">{room.address.address}</div>
-                        <div className="price">{Money(room.price || 0)}</div>
-                        <div className="phone">{room.contactPhone}</div>
-                      </div>
-
+                        </img> */}
                     </div>
-
-                  ) : (
-                    <div className='image-container'>
-                      <div className='col-4 image'>
-                        <img
+                    <div className="col-8 card-content">
+                      <div className="card-info">
+                        <div className="title">{room.name}</div>
+                        <div className="address">
+                          <LocationOn className="address-icon" />
+                          {room.address.address}
+                        </div>
+                        <div className="price">{Money(room.price || 0)} đ</div>
+                        <div className="phone">
+                          <Phone className="phone-icon" />
+                          {room.contactPhone}
+                        </div>
+                      </div>
+                      <div className="button-container">
+                        <button
+                          className="cancel-button"
+                          onClick={() => {
+                            setRoom({});
+                          }}
+                        >
+                          Hủy
+                        </button>
+                        <button
+                          className="detail-button"
+                          onClick={() => {
+                            /* eslint no-underscore-dangle: 0 */
+                            history.push(`/motel/${room._id}`);
+                          }}
+                        >
+                          Xem chi tiết
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="image-container">
+                    <div className="col-4 image">
+                      {/* <img
                           alt="Avatar"
                           src="./defaul-room.jpg"
-                        />
+                        /> */}
+                    </div>
+                    <div className="col-8 card-content">
+                      <div className="card-info">
+                        <div className="title">{room.name}</div>
+                        <div className="address">
+                          <LocationOn className="address-icon" />
+                          {room.address.address}
+                        </div>
+                        <div className="price">{Money(room.price || 0)} đ</div>
+                        <div className="phone">
+                          <Phone className="phone-icon" />
+                          {room.contactPhone}
+                        </div>
                       </div>
-                      <div className='col-8 card-content'>
-                        <div className='card-info'>
-                          <div className="title">{room.name}</div>
-                          <div className="address">
-                            <LocationOn className='address-icon' />
-                            {room.address.address}</div>
-                          <div className="price">{Money(room.price || 0)} đ</div>
-                          <div className="phone">
-                            <Phone className='phone-icon' />
-                            {room.contactPhone}
-                          </div>
-                        </div>
-                        <div className="button-container">
-                          <button
-                            className='cancel-button'
-                            onClick={() => {
-                              setRoom({});
-                            }}
-                          >Hủy
-                          </button>
-                          <button
-                            className='detail-button'
-                            onClick={() => {
-                              /* eslint no-underscore-dangle: 0 */
-                              history.push(`/motel/${room._id}`);
-                            }}
-                          >Xem chi tiết
-                          </button>
-                        </div>
+                      <div className="button-container">
+                        <button
+                          className="cancel-button"
+                          onClick={() => {
+                            setRoom({});
+                          }}
+                        >
+                          Hủy
+                        </button>
+                        <button
+                          className="detail-button"
+                          onClick={() => {
+                            /* eslint no-underscore-dangle: 0 */
+                            history.push(`/motel/${room._id}`);
+                          }}
+                        >
+                          Xem chi tiết
+                        </button>
                       </div>
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
-        )
-      }
-    </div >
+        </div>
+      )}
+    </div>
   );
 }
 

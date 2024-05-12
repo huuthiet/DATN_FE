@@ -13,6 +13,23 @@ import Money from '../../containers/App/format';
 
 function MarkerPrice(props) {
   const { item, setRoom } = props;
+  console.log('item', item);
+  let address = {};
+  if (
+    item &&
+    item.address &&
+    item.address.geometry &&
+    item.address.geometry.location
+  ) {
+    address = {
+      lat: item.address.geometry.location[0],
+      lng: item.address.geometry.location[1],
+    };
+    console.log('address', address);
+  } else {
+    return null;
+  }
+
   const listReview = JSON.parse(localStorage.getItem('listReview'));
   const [backgroundColor, setBackgroundColor] = useState('green');
   useEffect(() => {
@@ -29,7 +46,7 @@ function MarkerPrice(props) {
   }, [listReview]);
   return (
     <OverlayView
-      position={item.address.geometry.location}
+      position={address}
       mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
     >
       <div className="marker-price-wrapper" style={{ color: backgroundColor }}>

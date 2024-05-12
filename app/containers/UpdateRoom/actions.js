@@ -12,6 +12,7 @@ import {
   CHANGE_STORE_DATA,
   DELETE_ROOM,
   DELETE_ROOM_SUCCESS,
+  DELETE_ROOM_FAIL,
   PUSH_IMAGE,
   REMOVE_IMAGE,
 } from './constants';
@@ -30,7 +31,7 @@ export function putEditRoom(formData, id) {
   };
 }
 
-export function putEditRoomSucess(response) {
+export function putEditRoomSuccess(response) {
   return {
     type: PUT_EDIT_ROOM_SUCCESS,
     response,

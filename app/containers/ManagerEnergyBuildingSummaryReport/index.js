@@ -55,6 +55,7 @@ export function ManagerEnergyBuildingsHost(props) {
     props.getMotelList();
   }, []);
   const { motelList } = props.profile;
+  console.log('motelList', motelList);
 
   const date = '';
   let totalElectricCost = 0; // Biến để tích lũy tổng electricCost
@@ -78,6 +79,11 @@ export function ManagerEnergyBuildingsHost(props) {
     // Loading spin
     setLoading(true);
     setEnableExport(true);
+
+    const square = num => num * num;
+
+    const result = square(5);
+    console.log('Bình phương của 5 là:', result);
 
     try {
       const current = new Date();
