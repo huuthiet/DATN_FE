@@ -4,7 +4,7 @@
  *
  */
 
-import { useState } from React from 'react';
+import { useState } from 'react';
 
 import PropTypes from 'prop-types';
 import ClassNames from 'classnames';
@@ -18,7 +18,8 @@ import {
   InfoOutlined,
   VpnKeyOutlined,
   AttachMoneyOutlined,
- MonetizationOnOutlined, LocalAtmOutlined, Waves, EmojiObjects, Wifi } from '@material-ui/icons';
+  MonetizationOnOutlined, LocalAtmOutlined, Waves, EmojiObjects, Wifi
+} from '@material-ui/icons';
 import defaultRoomImage from '../../images/defaul-room.jpg';
 import Money from '../../containers/App/format';
 import useLongPress from './longpress';
@@ -127,7 +128,7 @@ function Room(props) {
               Đóng
             </Button>
             <Button
-color="primary" onClick={() => {
+              color="primary" onClick={() => {
                 if (isHost) {
                   history.push(`/room-detail/${item._id}`);
                 } else if (!isEdit) {
