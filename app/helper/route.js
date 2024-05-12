@@ -88,6 +88,10 @@ export const urlLink = {
     getDataEnergyPerDayByTime:
       '/v1/homeKey/energy/device/getDataPerDayTimeToTime/' /* + id/:startTime/:endTime */,
     getDataEnergyPerMonth: '/v1/homeKey/energy/device/historyDataPerMon/',
+    getListIdMetterElectric:
+    '/v1/homeKey/energy/device/getListIdMetterElectricByRoom/', //+idRoom
+    addIdMetterElectric:
+    '/v1/homeKey/energy/device/addIdMetterElectricForRoom/', //+:id/:time/:newIdMetter
     getBankUser: '/v1/user/bank',
     postRequestWithdraw: '/v1/user/requestWithdraws/',
     getRequestWithdrawUserList: '/v1/user/requestWithdraws/list',
