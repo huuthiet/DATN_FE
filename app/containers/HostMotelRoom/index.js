@@ -76,7 +76,6 @@ export function ManagerEnergyHostAdmin(props) {
               currency: 'VND',
             })}
         </span>
-
       ),
     },
   ];

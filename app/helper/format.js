@@ -9,7 +9,6 @@ export default function Money(number) {
   return `${parts.join(',')} đ`;
 }
 
-
 export function convertDate(date) {
   return moment(date).format('DD/MM/YYYY');
 }

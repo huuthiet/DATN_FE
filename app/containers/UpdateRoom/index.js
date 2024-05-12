@@ -19,7 +19,11 @@ import {
   Container,
   Row,
   Col,
-  Button
+  Button,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from 'reactstrap';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -36,17 +40,17 @@ import CheckBox from '../../components/CheckBox';
 import ImageView from '../../components/ImageView';
 import './style.scss';
 
-import { changeStoreData, deleteRoom, removeImage, putEditRoom } from './actions';
+import {
+  changeStoreData,
+  deleteRoom,
+  removeImage,
+  putEditRoom,
+} from './actions';
 import SuccessPopup from '../../components/SuccessPopup';
 import WarningPopup from '../../components/WarningPopup';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
-import {
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from 'reactstrap';
+
 import { update } from 'lodash';
 
 const validateForm = Yup.object().shape({
@@ -89,7 +93,7 @@ export function UpdateRoom(props) {
   }, [utilities]);
   const onImageChange = e => {
     e.preventDefault();
-    const files = e.target.files;
+    const { files } = e.target;
 
     const updatedRoom = { ...room }; // Tạo một bản sao của room
     console.log('Check updatedRoom: ', updatedRoom);
@@ -104,7 +108,7 @@ export function UpdateRoom(props) {
 
     // Gọi hàm changeStoreData để cập nhật lại giá trị của room
     props.changeStoreData(['room', 'images'], updatedImages);
-    //log data chuẩn bị submit
+    // log data chuẩn bị submit
     console.log('Check updatedRoom 3: ', updatedRoom);
   };
 
@@ -145,10 +149,10 @@ export function UpdateRoom(props) {
             <form onSubmit={handleSubmit}>
               <Container>
                 <div className="room-detail">
-                  <div className='information'>Thông tin phòng</div>
+                  <div className="information">Thông tin phòng</div>
                   <Row>
-                    <Col xs={12} className='input-file-container'>
-                      <div className='input-title'>Upload ảnh</div>
+                    <Col xs={12} className="input-file-container">
+                      <div className="input-title">Upload ảnh</div>
 
                       <InputForm
                         className="input-file"
@@ -250,39 +254,53 @@ export function UpdateRoom(props) {
                       />
                     ))}
                   </Row>
-                  <Row className='information-status'>
-                    <Col xs={12}>
-                      Trạng thái phòng
-                    </Col>
+                  <Row className="information-status">
+                    <Col xs={12}>Trạng thái phòng</Col>
                   </Row>
 
-                  <Row className='room-status'>
-                    <Col xs={4} className='dropdown-container'>
-                      <Dropdown isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}>
-                        <DropdownToggle caret color='none' className='room-dropdown'>
+                  <Row className="room-status">
+                    <Col xs={4} className="dropdown-container">
+                      <Dropdown
+                        isOpen={isOpen}
+                        toggle={() => setIsOpen(!isOpen)}
+                      >
+                        <DropdownToggle
+                          caret
+                          color="none"
+                          className="room-dropdown"
+                        >
                           {status === 'available' && 'Còn trống'}
                           {status === 'deposited' && 'Đặt cọc'}
                           {status === 'rented' && 'Đã thuê'}
                         </DropdownToggle>
-                        <DropdownMenu className='dropdown-menu'>
+                        <DropdownMenu className="dropdown-menu">
                           <DropdownItem
-                            className='dropdown-item'
+                            className="dropdown-item"
                             onClick={() => {
-                              props.changeStoreData(['room', 'status'], 'available');
+                              props.changeStoreData(
+                                ['room', 'status'],
+                                'available',
+                              );
                             }}
                           >
                             Còn trống
                           </DropdownItem>
                           <DropdownItem
                             onClick={() => {
-                              props.changeStoreData(['room', 'status'], 'deposited');
+                              props.changeStoreData(
+                                ['room', 'status'],
+                                'deposited',
+                              );
                             }}
                           >
                             Đặt cọc
                           </DropdownItem>
                           <DropdownItem
                             onClick={() => {
-                              props.changeStoreData(['room', 'status'], 'rented');
+                              props.changeStoreData(
+                                ['room', 'status'],
+                                'rented',
+                              );
                             }}
                           >
                             Đã thuê
@@ -291,14 +309,17 @@ export function UpdateRoom(props) {
                       </Dropdown>
                     </Col>
                     {status === 'available' && (
-                      <Col xs={7} className='date-picker2'>
-                        <div className='date-title'>Từ ngày</div>
-                        <div className='date-input'>
+                      <Col xs={7} className="date-picker2">
+                        <div className="date-title">Từ ngày</div>
+                        <div className="date-input">
                           <DatePicker
                             dateFormat="dd/MM/yyyy"
                             selected={values.availableDate}
                             onChange={date => {
-                              props.changeStoreData(['room', 'availableDate'], date);
+                              props.changeStoreData(
+                                ['room', 'availableDate'],
+                                date,
+                              );
                             }}
                             customInput={<InputForm />}
                           />
@@ -307,27 +328,33 @@ export function UpdateRoom(props) {
                     )}
                     {status === 'deposited' && (
                       <>
-                        <Col sm={4} className='date-picker'>
-                          <div className='date-title'>Từ ngày</div>
-                          <div className='date-input'>
+                        <Col sm={4} className="date-picker">
+                          <div className="date-title">Từ ngày</div>
+                          <div className="date-input">
                             <DatePicker
                               dateFormat="dd/MM/yyyy"
                               selected={values.availableDate}
                               onChange={date => {
-                                props.changeStoreData(['room', 'availableDate'], date);
+                                props.changeStoreData(
+                                  ['room', 'availableDate'],
+                                  date,
+                                );
                               }}
                               customInput={<InputForm />}
                             />
                           </div>
                         </Col>
-                        <Col sm={4} className='date-picker2'>
-                          <div className='date-title'>đến</div>
-                          <div className='date-input'>
+                        <Col sm={4} className="date-picker2">
+                          <div className="date-title">đến</div>
+                          <div className="date-input">
                             <DatePicker
                               dateFormat="dd/MM/yyyy"
                               selected={values.unavailableDate}
                               onChange={date => {
-                                props.changeStoreData(['room', 'unavailableDate'], date);
+                                props.changeStoreData(
+                                  ['room', 'unavailableDate'],
+                                  date,
+                                );
                               }}
                               customInput={<InputForm />}
                             />
@@ -337,28 +364,34 @@ export function UpdateRoom(props) {
                     )}
                     {status === 'rented' && (
                       <>
-                        <Col sm={4} className='date-picker'>
-                          <div className='date-title'>Từ ngày</div>
-                          <div className='date-input'>
+                        <Col sm={4} className="date-picker">
+                          <div className="date-title">Từ ngày</div>
+                          <div className="date-input">
                             <DatePicker
                               dateFormat="dd/MM/yyyy"
                               selected={values.availableDate}
                               onChange={date => {
-                                props.changeStoreData(['room', 'availableDate'], date);
+                                props.changeStoreData(
+                                  ['room', 'availableDate'],
+                                  date,
+                                );
                               }}
                               customInput={<InputForm />}
                             />
                           </div>
                         </Col>
 
-                        <Col sm={4} className='date-picker2'>
-                          <div className='date-title'>đến</div>
-                          <div className='date-input'>
+                        <Col sm={4} className="date-picker2">
+                          <div className="date-title">đến</div>
+                          <div className="date-input">
                             <DatePicker
                               dateFormat="dd/MM/yyyy"
                               selected={values.unavailableDate}
                               onChange={date => {
-                                props.changeStoreData(['room', 'unavailableDate'], date);
+                                props.changeStoreData(
+                                  ['room', 'unavailableDate'],
+                                  date,
+                                );
                               }}
                               customInput={<InputForm />}
                             />
@@ -491,9 +524,9 @@ export function UpdateRoom(props) {
                       </Col>
                     )}
                   </Row> */}
-                  <div className='information'>Thông tin tiện ích</div>
+                  <div className="information">Thông tin tiện ích</div>
                   <Row>
-                    <Col xs={4} className='information-checkbox'>
+                    <Col xs={4} className="information-checkbox">
                       <CheckBox
                         className="checkbox"
                         label="Internet"
@@ -756,7 +789,9 @@ export function UpdateRoom(props) {
                     </Col>
                     <Col xs={4}>
                       <CheckBox
-                        label={<FormattedMessage {...messages.PrivateEntrance} />}
+                        label={
+                          <FormattedMessage {...messages.PrivateEntrance} />
+                        }
                         checked={utilitie.indexOf('loi_di_rieng') !== -1}
                         onChange={e => {
                           const index = utilitie.indexOf('loi_di_rieng');
@@ -775,7 +810,7 @@ export function UpdateRoom(props) {
                       />
                     </Col>
                   </Row>
-                  <Row className='button-container'>
+                  <Row className="button-container">
                     <Col xs={4} sm={3}>
                       <Button
                         className="btn-block"
@@ -792,7 +827,11 @@ export function UpdateRoom(props) {
                       </Button>
                     </Col>
                     <Col xs={4} sm={3}>
-                      <Button color="primary" className="btn-block" type="submit">
+                      <Button
+                        color="primary"
+                        className="btn-block"
+                        type="submit"
+                      >
                         <FormattedMessage {...messages.UpdateRoom} />
                       </Button>
                     </Col>
@@ -801,9 +840,8 @@ export function UpdateRoom(props) {
               </Container>
             </form>
           </div>
-        )
-        }
-      </Formik >
+        )}
+      </Formik>
       <SuccessPopup
         content={content}
         visible={showSuccessPopup}
@@ -819,7 +857,7 @@ export function UpdateRoom(props) {
           props.changeStoreData('showDelete', false);
         }}
       />
-    </div >
+    </div>
   );
 }
 

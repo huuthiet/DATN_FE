@@ -202,15 +202,14 @@ export default defineMessages({
     id: `${scope}.ErrPopup`,
     defaultMessage: 'Bạn Muốn Xóa Phòng Này',
   },
-  //edit
+  // edit
   EditRoom: {
     id: `${scope}.EditRoom`,
     defaultMessage: 'Chỉnh sửa',
   },
-  //delete
+  // delete
   DeleteRoom: {
     id: `${scope}.DeleteRoom`,
     defaultMessage: 'Xóa phòng',
   },
-
 });

@@ -18,12 +18,14 @@ export function* apiGetListRoom(payload) {
   // Chuyển đổi endDate thành chuỗi ngày theo định dạng "YYYY-MM-DD"
   const endDateFormatted = endDate.toISOString().split('T')[0];
 
-  console.log("startDateFormatted:", startDateFormatted);
-  console.log("endDateFormatted:", endDateFormatted);
+  console.log('startDateFormatted:', startDateFormatted);
+  console.log('endDateFormatted:', endDateFormatted);
   console.log('data', data);
   // const requestUrl = `${urlLink.api.serverUrl}${urlLink.api.motelListDetail
   //   }/jobList/MotelRoom/owner`;
-  const revenueRequest = `${urlLink.api.serverUrl}${urlLink.api.buildingRevenue}${data.id}/${startDateFormatted}/${endDateFormatted}`;
+  const revenueRequest = `${urlLink.api.serverUrl}${
+    urlLink.api.buildingRevenue
+  }${data.id}/${startDateFormatted}/${endDateFormatted}`;
   console.log('revenueRequest', revenueRequest);
   try {
     const revenueResponse = yield axios.get(revenueRequest);

@@ -15,7 +15,12 @@ function MarkerPrice(props) {
   const { item, setRoom } = props;
   console.log('item', item);
   let address = {};
-  if (item && item.address && item.address.geometry && item.address.geometry.location) {
+  if (
+    item &&
+    item.address &&
+    item.address.geometry &&
+    item.address.geometry.location
+  ) {
     address = {
       lat: item.address.geometry.location[0],
       lng: item.address.geometry.location[1],

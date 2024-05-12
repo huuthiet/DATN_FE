@@ -80,13 +80,10 @@ export function ManagerEnergyBuildingsHost(props) {
     setLoading(true);
     setEnableExport(true);
 
-    const square = (num) => {
-      return num * num;
-    };
+    const square = num => num * num;
 
     const result = square(5);
-    console.log("Bình phương của 5 là:", result);
-
+    console.log('Bình phương của 5 là:', result);
 
     try {
       const current = new Date();

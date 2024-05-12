@@ -120,7 +120,6 @@ export function MotelDetail(props) {
           onClick={() => {
             status !== '3' && setStatus('3');
           }}
-
         >
           <div style={homelandContent}>
             <div className="content">
@@ -136,7 +135,7 @@ export function MotelDetail(props) {
           })}
           onClick={() => {
             status !== '4' && setStatus('4');
-            console.log({ status })
+            console.log({ status });
           }}
         >
           <div style={homelandContent}>

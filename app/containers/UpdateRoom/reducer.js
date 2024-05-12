@@ -57,7 +57,7 @@ const updateRoomReducer = (state = initialState, action) =>
         draft.images.push(URL.createObjectURL(action.image));
         break;
       case REMOVE_IMAGE:
-        draft.images = draft.images.filter(function (value) {
+        draft.images = draft.images.filter(function(value) {
           return value !== action.image;
         });
         break;

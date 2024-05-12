@@ -185,7 +185,10 @@ export function App(props) {
         <Route path="/terms" component={Terms} />
         <Route path="/about" component={About} />
         <Route path="/roomManage" component={RoomManage} />
-        <Route path="/job-detail/:id/:idElectricMetter" component={JobDetailUser} />
+        <Route
+          path="/job-detail/:id/:idElectricMetter"
+          component={JobDetailUser}
+        />
         <Route path="/job-verify/:id/:idElectricMetter" component={JobVerify} />
         <Route path="/payment-return" component={PaymentReturn} />
         <Route path="/order-pay/:id" component={OrderPay} />
@@ -319,7 +322,6 @@ export function App(props) {
           path="/admin/manager-energy-buildings-host/:id/:name"
           component={ManagerEnergyBuildingsAdmin}
         />
-
 
         <Route
           path="/admin/manager-energy-rooms-admin/:id/:name"

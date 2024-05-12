@@ -107,7 +107,7 @@ export function HostMotelRoomDetailUser(props) {
       </Helmet>
       <div className="title">Danh sách chi tiết phòng cho thuê</div>
       <div className="job-list-wrapper container-fluid">
-        <Row className='action-container'>
+        <Row className="action-container">
           <Col md={4}>
             <Row>
               <Col md={6}>
@@ -164,28 +164,25 @@ export function HostMotelRoomDetailUser(props) {
                 </Button>
               </Col>
             </Row>
-
           </Col>
         </Row>
-        <Row className='dashboard-container'>
-          <Col xs={12} sm={5} className='revenue-container'>
+        <Row className="dashboard-container">
+          <Col xs={12} sm={5} className="revenue-container">
             {Object.values(listRoom).map((item, index) => (
               <div key={index}>
-                <span>{item.name}</span>{' '}
-                <span>{item.totalRevenue}</span>
+                <span>{item.name}</span> <span>{item.totalRevenue}</span>
               </div>
             ))}
-
           </Col>
-          <Col xs={12} sm={6} className='compare-container'>
+          <Col xs={12} sm={6} className="compare-container">
             Comparing Container
           </Col>
         </Row>
-        <Row className='dashboard-container'>
-          <Col xs={12} sm={5} className='monthly-chart'>
+        <Row className="dashboard-container">
+          <Col xs={12} sm={5} className="monthly-chart">
             Monthly chart
           </Col>
-          <Col xs={12} sm={6} className='target-actual-chart'>
+          <Col xs={12} sm={6} className="target-actual-chart">
             Target vs Actual Chart
           </Col>
         </Row>

@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useRef, useEffect } from 'react';
 import ClassNames from 'classnames';
-import { NavLink, useHistory } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { NavLink, useHistory, useLocation } from 'react-router-dom';
+
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import './style.scss';
@@ -439,7 +439,9 @@ const Navbar = props => {
                               : ''
                           }
                           onClick={() => {
-                            history.push(`/user/hostRevenue/${currentUser._id}`);
+                            history.push(
+                              `/user/hostRevenue/${currentUser._id}`,
+                            );
                           }}
                         >
                           <LibraryBooksOutlined className="icon" />

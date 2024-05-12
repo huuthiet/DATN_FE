@@ -4,12 +4,12 @@
  *
  */
 
-import React from 'react';
-import { useState } from 'react';
+import { useState } from React from 'react';
+
 import PropTypes from 'prop-types';
 import ClassNames from 'classnames';
-import messages from './messages';
 import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 import './style.scss';
 import { useHistory } from 'react-router-dom';
 import { Button, Col, Container, Row, UncontrolledCarousel } from 'reactstrap';
@@ -18,12 +18,12 @@ import {
   InfoOutlined,
   VpnKeyOutlined,
   AttachMoneyOutlined,
-} from '@material-ui/icons';
+ MonetizationOnOutlined, LocalAtmOutlined, Waves, EmojiObjects, Wifi } from '@material-ui/icons';
 import defaultRoomImage from '../../images/defaul-room.jpg';
 import Money from '../../containers/App/format';
 import useLongPress from './longpress';
 import ModalComponent from './modal';
-import { MonetizationOnOutlined, LocalAtmOutlined, Waves, EmojiObjects, Wifi } from '@material-ui/icons';
+
 import { roomStatus, roomStatusCode } from '../../helper/constants';
 
 function Room(props) {
@@ -46,13 +46,14 @@ function Room(props) {
     },
   } = item;
 
-  const items = images.map((image, index) => ({
-    key: index,
-    src: image,
-    altText: '',
-    caption: '',
-    header: '',
-  })) || [];
+  const items =
+    images.map((image, index) => ({
+      key: index,
+      src: image,
+      altText: '',
+      caption: '',
+      header: '',
+    })) || [];
   const [modal, setModal] = useState(false);
   const history = useHistory();
   /* eslint no-underscore-dangle: 0 */
@@ -115,7 +116,6 @@ function Room(props) {
         // }
       }}
     >
-
       <ModalComponent
         modal={modal}
         toggle={() => setModal(false)}
@@ -126,17 +126,18 @@ function Room(props) {
             <Button color="secondary" onClick={() => setModal(false)}>
               Đóng
             </Button>
-            <Button color="primary" onClick={() => {
-              if (isHost) {
-                history.push(`/room-detail/${item._id}`);
-              } else if (!isEdit) {
-                history.push('/auth/login');
-              } else {
-                /* eslint no-underscore-dangle: 0 */
-                history.push(`/room-detail/${item._id}`);
-              }
-            }
-            }>
+            <Button
+color="primary" onClick={() => {
+                if (isHost) {
+                  history.push(`/room-detail/${item._id}`);
+                } else if (!isEdit) {
+                  history.push('/auth/login');
+                } else {
+                  /* eslint no-underscore-dangle: 0 */
+                  history.push(`/room-detail/${item._id}`);
+                }
+              }}
+            >
               Xem chi tiết
             </Button>
           </>
@@ -147,14 +148,14 @@ function Room(props) {
             {items.length > 0 ? (
               <UncontrolledCarousel className="image-slider" items={items} />
             ) : (
-              <Row className='room-infor'>
-                <Col xs={12} className='room-image'>
+              <Row className="room-infor">
+                <Col xs={12} className="room-image">
                   <img src={defaultRoomImage} alt="default" />
                 </Col>
               </Row>
             )}
-            <Row className='room-infor'>
-              <Col xs={12} className='room-detail'>
+            <Row className="room-infor">
+              <Col xs={12} className="room-detail">
                 <Row>
                   <div className="name-room">
                     <FormattedMessage {...messages.Information} /> {name}
@@ -163,15 +164,18 @@ function Room(props) {
                 <Row>
                   <Col xs={12}>
                     <div className="price-room">
-                      <div className='price-title'>
-                        <MonetizationOnOutlined className='price-icon' />
-                        <FormattedMessage {...messages.Price} className='price-text' />
+                      <div className="price-title">
+                        <MonetizationOnOutlined className="price-icon" />
+                        <FormattedMessage
+                          {...messages.Price}
+                          className="price-text"
+                        />
                       </div>
                       {Money(price)} đ
                     </div>
                     <div className="price-deposit">
-                      <div className='deposit-title'>
-                        <LocalAtmOutlined className='deposit-icon' />
+                      <div className="deposit-title">
+                        <LocalAtmOutlined className="deposit-icon" />
                         <FormattedMessage {...messages.DepositPrice} />{' '}
                       </div>
                       {Money(price / 2)} đ
@@ -181,8 +185,8 @@ function Room(props) {
                 <Row>
                   <Col xs={4}>
                     <div className="item">
-                      <div className='electric-title'>
-                        <EmojiObjects className='electric-icon' />
+                      <div className="electric-title">
+                        <EmojiObjects className="electric-icon" />
                         <FormattedMessage {...messages.ElectricPrice} />
                       </div>
                       {Money(electricityPrice)} đ
@@ -190,8 +194,8 @@ function Room(props) {
                   </Col>
                   <Col xs={4}>
                     <div className="item">
-                      <div className='water-title'>
-                        <Waves className='water-icon' />
+                      <div className="water-title">
+                        <Waves className="water-icon" />
                         <FormattedMessage {...messages.WaterPrice} />
                       </div>
                       {Money(wifiPrice)} đ
@@ -199,8 +203,8 @@ function Room(props) {
                   </Col>
                   <Col xs={4}>
                     <div className="item">
-                      <div className='wifi-title'>
-                        <Wifi className='wifi-icon' />
+                      <div className="wifi-title">
+                        <Wifi className="wifi-icon" />
                         <FormattedMessage {...messages.WifiPrice} />
                       </div>
                       {Money(waterPrice)} đ

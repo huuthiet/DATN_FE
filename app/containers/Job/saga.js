@@ -8,7 +8,12 @@ import { apiGetRoom } from '../RoomDetail/saga';
 // import { take, call, put, select } from 'redux-saga/effects';
 import { urlLink } from '../../helper/route';
 import { loadRepos, reposLoaded } from '../App/actions';
-import { postJobFail, postJobSuccess, getBankInfoListSuccess, getBankInfoListFail } from './actions';
+import {
+  postJobFail,
+  postJobSuccess,
+  getBankInfoListSuccess,
+  getBankInfoListFail,
+} from './actions';
 import { GET_BANK_INFO, POST_JOB } from './constants';
 // import { GET_ROOM } from '../RoomPage/constants';
 
@@ -21,15 +26,16 @@ export function* apiPostJob(payload) {
   let response_job;
 
   try {
-    console.log("Check formData: ", formData);
+    console.log('Check formData: ', formData);
 
     // Kiểm tra xem có file không
     if (formData.imageFile instanceof File) {
       const reader = new FileReader();
 
-      reader.onload = function (event) {
+      reader.onload = function(event) {
         formData.imageBase64 = event.target.result;
-        axios.post(requestUrl, formData)
+        axios
+          .post(requestUrl, formData)
           .then(response => {
             console.log('response_job: ', response);
             response_job = response;
@@ -57,14 +63,12 @@ export function* apiPostJob(payload) {
         const response = yield axios.put(requestUrlPayWallet, payloadOder);
         // check user have NID
         try {
-          const requestUrlProfile =
-            urlLink.api.serverUrl + urlLink.api.profile;
+          const requestUrlProfile = urlLink.api.serverUrl + urlLink.api.profile;
           const responseProfile = yield axios.get(requestUrlProfile, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
             ContentType: 'multipart/form-data',
-
           });
           if (responseProfile.data.data) {
             const profile = responseProfile.data.data;
@@ -112,21 +116,18 @@ export function* apiBankInfo() {
       console.log('apiBankInfo -> responseeee', response);
       yield put(getBankInfoListSuccess(response.data.data));
     } else {
-      yield put(getBankInfoListFail("Invalid response format"));
+      yield put(getBankInfoListFail('Invalid response format'));
     }
   } catch (error) {
     if (error.response && error.response.data) {
       yield put(getBankInfoListFail(error.response.data));
     } else {
-      yield put(getBankInfoListFail("Unknown error occurred"));
+      yield put(getBankInfoListFail('Unknown error occurred'));
     }
   }
 }
 
-
-
-export
-  function isEmpty(str) {
+export function isEmpty(str) {
   return !str || str.length === 0;
 }
 // Individual exports for testing

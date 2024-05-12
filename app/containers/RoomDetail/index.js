@@ -11,30 +11,37 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
 import localStoreService from 'local-storage';
-import defaultRoomImage from '../../images/defaul-room.jpg';
 import _ from 'lodash';
 import localStore from 'local-storage';
-import { MonetizationOnOutlined } from '@material-ui/icons';
+import {
+  MonetizationOnOutlined,
+  LocalAtmOutlined,
+  Waves,
+  EmojiObjects,
+  Wifi,
+  EditOutlined,
+  DeleteOutline,
+  RoomService,
+  MoreHoriz,
+} from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import { Button, Col, Container, Row, UncontrolledCarousel } from 'reactstrap';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
+import Tooltip from '@material-ui/core/Tooltip';
+import { Collapse, IconButton } from '@material-ui/core';
 import WarningPopup from '../../components/WarningPopup';
 import Money from '../App/format';
-import { LocalAtmOutlined, Waves, EmojiObjects, Wifi } from '@material-ui/icons';
-import { EditOutlined } from '@material-ui/icons';
-import { DeleteOutline } from '@material-ui/icons';
-import { RoomService } from '@material-ui/icons';
+
 import { changeStoreData, deleteRoom, getRoom } from './actions';
 import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
 import makeSelectRoomDetail from './selectors';
-import { MoreHoriz } from '@material-ui/icons';
-import Tooltip from '@material-ui/core/Tooltip';
-import { Collapse, IconButton } from '@material-ui/core';
+
+import defaultRoomImage from '../../images/defaul-room.jpg';
 
 import './style.scss';
 
@@ -44,7 +51,6 @@ export function RoomDetail(props) {
   useInjectSaga({ key: 'roomDetail', saga });
   const [isAdmin, setIsAdmin] = useState(false);
   const [open, setOpen] = useState(false);
-
 
   const handleClick = event => {
     setOpen(!open);
@@ -91,13 +97,14 @@ export function RoomDetail(props) {
       ? false
       : motelRoomDataDetail.owner === localStore.get('user')._id;
 
-  const items = images.map((image, index) => ({
-    key: index,
-    src: image,
-    altText: '',
-    caption: '',
-    header: '',
-  })) || [];
+  const items =
+    images.map((image, index) => ({
+      key: index,
+      src: image,
+      altText: '',
+      caption: '',
+      header: '',
+    })) || [];
 
   return (
     <div className="room-detail-wrapper">
@@ -112,80 +119,82 @@ export function RoomDetail(props) {
 
         <Container>
           <div className="room-container">
-            <Row className='room-infor'>
-              <Col xs={12} sm={4} className='room-image'>
+            <Row className="room-infor">
+              <Col xs={12} sm={4} className="room-image">
                 {images && images.length > 0 ? (
-                  <img
-                    className="image"
-                    src={images[0]}
-                    alt="motel"
-                  />
+                  <img className="image" src={images[0]} alt="motel" />
                 ) : (
-                  <img
-                    className="image"
-                    src={defaultRoomImage}
-                    alt="motel"
-                  />
+                  <img className="image" src={defaultRoomImage} alt="motel" />
                 )}
               </Col>
-              <Col xs={12} sm={8} className='room-detail'>
+              <Col xs={12} sm={8} className="room-detail">
                 <Row>
                   <Col xs={12} sm={6} className="name-room">
                     <FormattedMessage {...messages.Information} /> {name}
                   </Col>
-                  <Col xs={12} sm={5} className='button-container'>
+                  <Col xs={12} sm={5} className="button-container">
                     {localStoreService.get('user').role.length > 1 && isEdit && (
                       <>
-                        <Tooltip title="Chỉnh sửa thông tin" placement="top" arrow>
-
-                          <IconButton onClick={handleClick} className='action-button'>
+                        <Tooltip
+                          title="Chỉnh sửa thông tin"
+                          placement="top"
+                          arrow
+                        >
+                          <IconButton
+                            onClick={handleClick}
+                            className="action-button"
+                          >
                             <MoreHoriz />
                           </IconButton>
                         </Tooltip>
-                        <Collapse in={open} className='collapse'>
+                        <Collapse in={open} className="collapse">
                           <div>
-                            <button className="edit-button-detail"
+                            <button
+                              className="edit-button-detail"
                               onClick={() => {
                                 history.push(`/room-detail-update/${_id}`);
                               }}
                             >
-                              <EditOutlined className='edit-icon' />
+                              <EditOutlined className="edit-icon" />
                               <FormattedMessage {...messages.EditRoom} />
                             </button>
-                            <button className="delete-button-detail"
+                            <button
+                              className="delete-button-detail"
                               onClick={() => {
                                 props.changeStoreData('showWarningPopup', true);
                                 setOpen(false);
                               }}
                             >
-                              <DeleteOutline className='delete-icon' />
+                              <DeleteOutline className="delete-icon" />
                               <FormattedMessage {...messages.DeleteRoom} />
                             </button>
                           </div>
                         </Collapse>
-
                       </>
                     )}
                   </Col>
                 </Row>
                 <Row>
                   <div className="price-room">
-                    <Col xs={12} sm={6} className='price-title'>
-                      <MonetizationOnOutlined className='price-icon' />
-                      <FormattedMessage {...messages.Price} className='price-text' />
-                      <span className='price-text'>{Money(price)} đ</span>
+                    <Col xs={12} sm={6} className="price-title">
+                      <MonetizationOnOutlined className="price-icon" />
+                      <FormattedMessage
+                        {...messages.Price}
+                        className="price-text"
+                      />
+                      <span className="price-text">{Money(price)} đ</span>
                     </Col>
                   </div>
                   <div className="price-deposit">
-                    <Col xs={12} className='deposit-title'>
-                      <LocalAtmOutlined className='deposit-icon' />
+                    <Col xs={12} className="deposit-title">
+                      <LocalAtmOutlined className="deposit-icon" />
                       <FormattedMessage {...messages.DepositPrice} />{' '}
                       {Money(price / 2)} đ
                     </Col>
                   </div>
-                  <div className='minimum-month'>
+                  <div className="minimum-month">
                     <Col xs={12}>
-                      <span className='minimum-month-title'>
+                      <span className="minimum-month-title">
                         <FormattedMessage {...messages.MinimumMonth} />
                         {minimumMonths}
                       </span>
@@ -195,8 +204,8 @@ export function RoomDetail(props) {
                 <Row>
                   <Col xs={6} sm={3}>
                     <div className="item">
-                      <div className='electric-title'>
-                        <EmojiObjects className='electric-icon' />
+                      <div className="electric-title">
+                        <EmojiObjects className="electric-icon" />
                         <FormattedMessage {...messages.ElectricPrice} />
                       </div>
                       {Money(electricityPrice)} đ
@@ -204,8 +213,8 @@ export function RoomDetail(props) {
                   </Col>
                   <Col xs={6} sm={3}>
                     <div className="item">
-                      <div className='water-title'>
-                        <Waves className='water-icon' />
+                      <div className="water-title">
+                        <Waves className="water-icon" />
                         <FormattedMessage {...messages.WaterPrice} />
                       </div>
                       {Money(wifiPrice)} đ
@@ -213,8 +222,8 @@ export function RoomDetail(props) {
                   </Col>
                   <Col xs={6} sm={3}>
                     <div className="item">
-                      <div className='wifi-title'>
-                        <Wifi className='wifi-icon' />
+                      <div className="wifi-title">
+                        <Wifi className="wifi-icon" />
                         <FormattedMessage {...messages.WifiPrice} />
                       </div>
                       {Money(waterPrice)} đ
@@ -222,8 +231,8 @@ export function RoomDetail(props) {
                   </Col>
                   <Col xs={6} sm={3}>
                     <div className="item">
-                      <div className='garbage-title'>
-                        <RoomService className='garbage-icon' />
+                      <div className="garbage-title">
+                        <RoomService className="garbage-icon" />
                         <FormattedMessage {...messages.GarbagePrice} />
                       </div>
                       {Money(garbagePrice)} đ
@@ -286,7 +295,6 @@ export function RoomDetail(props) {
                       <div className="name">
                         <FormattedMessage {...messages.WoodFloor} />
                       </div>
-
                     </div>
                   )}
                 </Col>
@@ -299,7 +307,6 @@ export function RoomDetail(props) {
                       <div className="name">
                         <FormattedMessage {...messages.toiletBowl} />
                       </div>
-
                     </div>
                   )}
                 </Col>
@@ -318,7 +325,6 @@ export function RoomDetail(props) {
               </Row>
             </div>
 
-
             <div className="utilities">
               <div className="title">
                 <FormattedMessage {...messages.Utilities} />
@@ -335,7 +341,6 @@ export function RoomDetail(props) {
                       </div>
                     </div>
                   )}
-
                 </Col>
                 <Col xs={4}>
                   {utilities.includes('giat_ui') && (
@@ -348,7 +353,6 @@ export function RoomDetail(props) {
                       </div>
                     </div>
                   )}
-
                 </Col>
                 <Col xs={4}>
                   {utilities.includes('giu_xe') && (
@@ -361,20 +365,21 @@ export function RoomDetail(props) {
                       </div>
                     </div>
                   )}
-
                 </Col>
                 <Col xs={4}>
                   {utilities.includes('dieu_hoa') && (
                     <div className="furniture-item">
                       <div className="icon">
-                        <img src="../air_conditioner.png" alt="air conditioner" />
+                        <img
+                          src="../air_conditioner.png"
+                          alt="air conditioner"
+                        />
                       </div>
                       <div className="name">
                         <FormattedMessage {...messages.AirConditioner} />
                       </div>
                     </div>
                   )}
-
                 </Col>
                 <Col xs={4}>
                   {utilities.includes('don_phong') && (
@@ -387,7 +392,6 @@ export function RoomDetail(props) {
                       </div>
                     </div>
                   )}
-
                 </Col>
                 <Col xs={4}>
                   {utilities.includes('truyen_hinh') && (
@@ -412,7 +416,6 @@ export function RoomDetail(props) {
                       </div>
                     </div>
                   )}
-
                 </Col>
                 <Col xs={4}>
                   {utilities.includes('loi_di_rieng') && (
@@ -429,29 +432,26 @@ export function RoomDetail(props) {
               </Row>
               <Row className="button">
                 <Col xs={6} className="button-deposit">
-                  {
-                    !isAdmin && (
-                      <>
-                        <Button
-                          onClick={() => {
-                            history.push(`/job/${id}`);
-                          }}
-                          color="primary"
-                          className="btn-block"
-                          disabled={room.status !== 'available'}
-                        >
-                          <FormattedMessage {...messages.Deposit} />
-                        </Button>
-                      </>
-                    )
-                  }
+                  {!isAdmin && (
+                    <>
+                      <Button
+                        onClick={() => {
+                          history.push(`/job/${id}`);
+                        }}
+                        color="primary"
+                        className="btn-block"
+                        disabled={room.status !== 'available'}
+                      >
+                        <FormattedMessage {...messages.Deposit} />
+                      </Button>
+                    </>
+                  )}
                 </Col>
               </Row>
             </div>
           </div>
         </Container>
-      </div >
-
+      </div>
 
       <WarningPopup
         visible={showWarningPopup}
@@ -462,7 +462,7 @@ export function RoomDetail(props) {
           props.changeStoreData('showWarningPopup', false);
         }}
       />
-    </div >
+    </div>
   );
 }
 
