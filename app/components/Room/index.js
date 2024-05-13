@@ -4,7 +4,7 @@
  *
  */
 
-import { useState } from React from 'react';
+import React, { useState } from 'react';
 
 import PropTypes from 'prop-types';
 import ClassNames from 'classnames';

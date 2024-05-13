@@ -84,14 +84,14 @@ export const urlLink = {
     backupData: '/v1/homeKey/energy/devices/backUpData', // + /:startTime/:endTime
     exportBillRoom: '/v1/homeKey/energy/device/exportBillRoom/', // + /:idMotel/:idRoom/:startTime/:endTime
     exportBillAllRoom: '/v1/homeKey/energy/device/exportBillAllRoom/', // + /:idMotel/:startTime/:endTime
-    getUserBill: 'v1/homeKey/bill/customer',
+    // getUserBill: 'v1/homeKey/bill/customer',
     getDataEnergyPerDayByTime:
       '/v1/homeKey/energy/device/getDataPerDayTimeToTime/' /* + id/:startTime/:endTime */,
     getDataEnergyPerMonth: '/v1/homeKey/energy/device/historyDataPerMon/',
-    getListIdMetterElectric:
-    '/v1/homeKey/energy/device/getListIdMetterElectricByRoom/', //+idRoom
-    addIdMetterElectric:
-    '/v1/homeKey/energy/device/addIdMetterElectricForRoom/', //+:id/:time/:newIdMetter
+    // getListIdMetterElectric:
+    // '/v1/homeKey/energy/device/getListIdMetterElectricByRoom/', //+idRoom
+    // addIdMetterElectric:
+    // '/v1/homeKey/energy/device/addIdMetterElectricForRoom/', //+:id/:time/:newIdMetter
     getBankUser: '/v1/user/bank',
     postRequestWithdraw: '/v1/user/requestWithdraws/',
     getRequestWithdrawUserList: '/v1/user/requestWithdraws/list',
