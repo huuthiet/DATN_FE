@@ -76,6 +76,7 @@ export const urlLink = {
     getDataEnergyInDayPerHour:
       '/v1/homeKey/energy/device/dataInDayPerHourByTime/', // +/:id/:time
     getDataEnergyPerDay: '/v1/homeKey/energy/device/currentMonDataPerDay/',
+    getDataEnergyPerDayV2: '/v1/homeKey/energy/device/currentMonDataPerDayV2/',
     getNameRoomByIdDevice: '/v1/homeKey/energy/device/getNameRoomById/',
     getAllData: '/v1/homeKey/energy/device/getAllDataByYearMonth',
     getLastRecordsOfPreviousMonth:

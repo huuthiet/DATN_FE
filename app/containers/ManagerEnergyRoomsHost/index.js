@@ -169,6 +169,8 @@ const ManagerEnergyRoomsHost = props => {
         showToast('Phòng chưa được thuê!');
       } else if (status === "Room no id metter") {
         showToast('Phòng chưa được đặt đồng hồ năng lượng!');
+      } else if (status === "No data in this time") {
+        showToast('Phòng không có dữ liệu điện trong thời gian xuất hóa đơn');
       }
 
       //reset date

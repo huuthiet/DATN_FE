@@ -82,8 +82,9 @@ export function ManagerEnergyRoomsUser(props) {
   const classes = useStyles();
   // useInjectReducer({ key: 'profile', reducer });
   // useInjectSaga({ key: 'profile', saga });
-  const [urlImgCloud, setUrlImgCloud] = useState('');
+  // const [urlImgCloud, setUrlImgCloud] = useState('');
   const currentUser = localStore.get('user') || {};
+
   const {
     _id = '',
     lastName = '',
@@ -92,6 +93,7 @@ export function ManagerEnergyRoomsUser(props) {
     phoneNumber = {},
   } = currentUser;
   const history = useHistory();
+
 
   const {
     jobs = [],
@@ -106,14 +108,14 @@ export function ManagerEnergyRoomsUser(props) {
     const fetchData = async () => {
       const promises = jobs.map(async job => {
         try {
-          const { idElectricMetter } = job.room;
-          const currentYear = new Date().getFullYear();
-          const currentMonth = new Date().getMonth() + 1;
+          const { _id } = job;
+          console.log({_id});
+
           const totalKWhApi =
             `${urlLink.api.serverUrl +
-            urlLink.api.getDataEnergyPerDay}${idElectricMetter}` +
-            `/${currentYear}` +
-            `/${currentMonth}`;
+            urlLink.api.getDataEnergyPerDayV2}${_id}`;
+
+            console.log({totalKWhApi});
           const response = await axios.get(totalKWhApi, {
             headers: {
               Authorization: `Bearer ${localStoreService.get('user').token}`,
@@ -122,14 +124,11 @@ export function ManagerEnergyRoomsUser(props) {
 
           const { data } = response.data;
 
-          if (data) {
-            const totalKWh = data.totalkWhMon.toFixed(2);
+          if (data !== null) {
+            const totalKWh = data.toFixed(2);
             console.log('totalKWh', totalKWh);
 
-            if (totalKWh) {
-              return totalKWh;
-            }
-            return 'Chưa có dữ liệu';
+            return totalKWh;
           }
           console.log('Chưa có dữ liệu');
           return 'Chưa có dữ liệu';
@@ -186,7 +185,7 @@ export function ManagerEnergyRoomsUser(props) {
 
   useEffect(() => {
     props.getJobs();
-  }, [urlImgCloud]);
+  }, []);
   const {
     motelList,
     error,
@@ -202,7 +201,7 @@ export function ManagerEnergyRoomsUser(props) {
   return (
     <div className="user-profile-wrapper container">
       <Helmet>
-        <title>Profile</title>
+        <title>Energy Rooms</title>
         <meta name="description" content="Description of Profile" />
       </Helmet>
       <Grid container align="center">
@@ -215,7 +214,7 @@ export function ManagerEnergyRoomsUser(props) {
                     <th>Người thuê</th>
                     <th>Số điện thoại</th>
                     <th>Phòng</th>
-                    <th>Mã đồng hồ</th>
+                    <th>Số đồng hồ đã sử dụng</th>
                     <th>Số điện hiện tại (kWh)</th>
                     <th>Chi tiết</th>
                   </tr>
@@ -227,7 +226,7 @@ export function ManagerEnergyRoomsUser(props) {
                       <td>{job.fullName || 'Chưa có dữ liệu'}</td>
                       <td>{job.phoneNumber || 'Chưa có dữ liệu'}</td>
                       <td>{job.room.name || 'Chưa có dữ liệu'}</td>
-                      <td>{job.room.idElectricMetter || 'Chưa có dữ liệu'}</td>
+                      <td>{(job.room.listIdElectricMetter)? job.room.listIdElectricMetter.length : 0 }</td>
                       <td>
                         {dataEnergyPerMonth[index]
                           ? `${dataEnergyPerMonth[index]}`
