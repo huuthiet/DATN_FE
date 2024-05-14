@@ -215,7 +215,7 @@ export function ManagerEnergyRoomsUser(props) {
                     <th>Số điện thoại</th>
                     <th>Phòng</th>
                     <th>Số đồng hồ đã sử dụng</th>
-                    <th>Số điện hiện tại (kWh)</th>
+                    <th>Số điện tháng hiện tại (kWh)</th>
                     <th>Chi tiết</th>
                   </tr>
                 </thead>
@@ -238,9 +238,9 @@ export function ManagerEnergyRoomsUser(props) {
                           color="primary"
                           onClick={() => {
                             history.push(
-                              `/follow-energy/${job.room.idElectricMetter}/${job.room.name
-                              }`,
+                              `/follow-energy/${job.room._id}/${job.room.name}`,
                             );
+                            // /follow-energy/:id/:roomId/:idMetter/:name"
                           }}
                         >
                           Xem

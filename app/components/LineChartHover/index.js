@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { urlLink } from '../../helper/route';
+import { toast } from 'react-toastify';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,6 +14,7 @@ import {
 } from 'chart.js';
 
 import { Line } from 'react-chartjs-2';
+import moment from 'moment';
 
 ChartJS.register(
   CategoryScale,
@@ -24,10 +26,12 @@ ChartJS.register(
   Legend,
 );
 
-const LineChartHover = ({ textY, nameChart, dataEnergy, labelsEnergy, idMetter }) => {
+const LineChartHover = ({ textY, nameChart, dataEnergy, labelsEnergy, roomId }) => {
   //popup
   const [popupData, setPopupData] = useState(null);
   const [titlePopup, setTitlePopup] = useState('');
+
+  const [totalkWhTime, setTotalkWhTime] = useState(-1);
 
   const labels = labelsEnergy;
 
@@ -85,6 +89,7 @@ const LineChartHover = ({ textY, nameChart, dataEnergy, labelsEnergy, idMetter }
         },
       },
       onClick: async (event, chartElement) => {
+        console.log("chartElement", chartElement);
         if (chartElement[0]) {
           // console.log('hover chart');
           const pointIndex = chartElement[0].index;
@@ -92,48 +97,76 @@ const LineChartHover = ({ textY, nameChart, dataEnergy, labelsEnergy, idMetter }
           if (pointIndex !== undefined) {
             const clickedLabel = labels[pointIndex];
             const clickedValue = dataLine[pointIndex];
-
+            console.log("clickedLabel", clickedLabel);
             //Trong tháng
             if (clickedLabel[clickedLabel.length - 1] !== 'h') {
-              // Tháng được chọn
+              
+              // Tháng được chọn: đã được lọc qua filter
               if (clickedLabel.length > 4) {
+                console.log("XXXXX");
+                console.log({clickedLabel})
                 setTitlePopup(clickedLabel);
 
                 const apiGetDay =
-                  urlLink.api.serverUrl + urlLink.api.getDataEnergyInDayPerHour + idMetter + '/' + clickedLabel;
+                  urlLink.api.serverUrl + urlLink.api.getTotalKWhPerHourInOneDayV2 + roomId + '/' + clickedLabel;
                 console.log("apiGetDay", apiGetDay);
 
                 try {
                   const response = await axios.get(apiGetDay);
 
                   setPopupData(response.data.data.kWhData);
+                  setTotalkWhTime(response.data.data.totalkWhTime);
                 } catch (e) {
-                  console.log({ e });
+                  console.log(e.response.data.errors[0].errorMessage);
+                  toast.error(
+                    e.response.data.errors[0].errorMessage,
+                    {
+                      position: toast.POSITION.TOP_RIGHT,
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      pauseOnHover: true,
+                      draggable: true,
+                    },
+                  );
                 }
               } else {
-                //Tháng hiện tại
-                const today = new Date();
-                let month = today.getMonth() + 1;
-                if (month < 10) {
-                  month = '0' + month;
-                }
+                console.log("YYYYYY");
+                console.log({clickedLabel});
+                //Tháng hiện tại: mặc định chọn 1 tháng ở hiện tại
+                const today = moment();
+                let yearMonth = today.format("YYYY-MM");
+                // if (month < 10) {
+                //   month = '0' + month;
+                // }
                 let day = clickedLabel;
                 if (day < 10) {
                   day = '0' + day;
                 }
-                const year = today.getFullYear();
 
-                const timeQuery = year + '-' + month + '-' + day;
+                const timeQuery = yearMonth + '-' + day;
                 setTitlePopup(timeQuery);
                 const apiGetDay =
-                  urlLink.api.serverUrl + urlLink.api.getDataEnergyInDayPerHour + idMetter + '/' + timeQuery;
+                  urlLink.api.serverUrl + urlLink.api.getTotalKWhPerHourInOneDayV2 + roomId + '/' + timeQuery;
+                
+                console.log({apiGetDay});
 
                 try {
                   const response = await axios.get(apiGetDay);
 
                   setPopupData(response.data.data.kWhData);
+                  setTotalkWhTime(response.data.data.totalkWhTime);
                 } catch (e) {
-                  console.log({ e });
+                  console.log(e.response.data.errors[0].errorMessage);
+                  toast.error(
+                    e.response.data.errors[0].errorMessage,
+                    {
+                      position: toast.POSITION.TOP_RIGHT,
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      pauseOnHover: true,
+                      draggable: true,
+                    },
+                  );
                 }
               }
             } else {
@@ -151,6 +184,7 @@ const LineChartHover = ({ textY, nameChart, dataEnergy, labelsEnergy, idMetter }
 
   // chart pupop
   const timeArray = [
+    '0h',
     '1h',
     '2h',
     '3h',
@@ -174,16 +208,15 @@ const LineChartHover = ({ textY, nameChart, dataEnergy, labelsEnergy, idMetter }
     '21h',
     '22h',
     '23h',
-    '24h',
   ];
   const dataPopup = {
     // labels,
     labels: timeArray,
     datasets: [
       {
-        label: `Total kWh at ${titlePopup}`,
+        label: `Total kWh at ${titlePopup}: ${totalkWhTime}`,
         data: popupData,
-        label: nameChart,
+        // label: nameChart,
         fill: true,
         backgroundColor: 'rgba(75, 192, 192, 0.25)',
         smooth: true,

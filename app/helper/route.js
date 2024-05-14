@@ -89,10 +89,18 @@ export const urlLink = {
     getDataEnergyPerDayByTime:
       '/v1/homeKey/energy/device/getDataPerDayTimeToTime/' /* + id/:startTime/:endTime */,
     getDataEnergyPerMonth: '/v1/homeKey/energy/device/historyDataPerMon/',
-    // getListIdMetterElectric:
-    // '/v1/homeKey/energy/device/getListIdMetterElectricByRoom/', //+idRoom
-    // addIdMetterElectric:
-    // '/v1/homeKey/energy/device/addIdMetterElectricForRoom/', //+:id/:time/:newIdMetter
+
+    getTotalKWhPerHourInOneDayV2:
+    '/v1/homeKey/energy/device/getTotalKWhPerHourInOneDayV2/', //  idRoom/:day
+    getTotalKWhPerDayInOneMonthV2:
+    '/v1/homeKey/energy/device/getTotalKWhPerDayInOneMonthV2/', // :idRoom/:month
+    
+    getTotalKWhPerDayForDayToDayV2:
+    '/v1/homeKey/energy/device/getTotalKWhPerDayForDayToDayV2/', // :idRoom/:start/:end
+    getListIdMetterElectric:
+    '/v1/homeKey/energy/device/getListIdMetterElectricByRoom/', // +idRoom
+    addIdMetterElectric:
+    '/v1/homeKey/energy/device/addIdMetterElectricForRoom/', // +:id/:time/:newIdMetter
     getBankUser: '/v1/user/bank',
     postRequestWithdraw: '/v1/user/requestWithdraws/',
     getRequestWithdrawUserList: '/v1/user/requestWithdraws/list',

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Grid, Tabs, Tab, Box } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
+import { toast } from 'react-toastify';
 import {
   Cancel,
   GetApp,
@@ -32,6 +33,7 @@ import Calendar from 'moedim';
 import moment from 'moment-timezone';
 
 const labelsInDay = [
+  '0h',
   '1h',
   '2h',
   '3h',
@@ -55,7 +57,6 @@ const labelsInDay = [
   '21h',
   '22h',
   '23h',
-  '24h',
 ];
 
 function getDaysInCurrentMonth() {
@@ -81,8 +82,8 @@ const FollowEnergyUser = props => {
 
   const [currentDay, setCurrentDay] = useState(new Date());
   // get Device Id
-  const { idMetter, name } = useParams();
-  console.log('idMetter', idMetter);
+  const { name, roomId } = useParams();
+  console.log('roomId', roomId);
 
   // note
   const [info, setInfo] = useState({});
@@ -138,18 +139,17 @@ const FollowEnergyUser = props => {
   const handleButtonFilter = async () => {
     if (endDateDisplay < startDateDisplay) {
       setShowAlert(true);
-      // console.log("kết quả so sánh", endDateDisplay < startDateDisplay);
     } else {
-      // console.log("kết quả so sánh", endDateDisplay < startDateDisplay);
       setShowAlert(false);
 
       const apiGetDay = `${urlLink.api.serverUrl +
-        urlLink.api.getDataEnergyPerDayByTime +
-        idMetter}/${startDateDisplay}/${endDateDisplay}`;
+        urlLink.api.getTotalKWhPerDayForDayToDayV2 +
+        roomId}/${startDateDisplay}/${endDateDisplay}`;
 
       console.log("apiGetDay", apiGetDay);
 
       try {
+        setValue(2);
         startLoading();
         const totalKWhtitle = document.getElementById('total-kwh-title');
         const detailKwhTitle = document.getElementById('detail-kwh-title');
@@ -157,9 +157,6 @@ const FollowEnergyUser = props => {
         detailKwhTitle.setAttribute('hidden', true);
         const response = await axios.get(apiGetDay);
         console.log('response', response);
-
-        // <LineChart textY='(kWh)' nameChart={`Total kWh: ${totalkWh}`}
-        // dataEnergy={currentKwh} labelsEnergy={labelLineChart}/>
 
         const result = response.data.data;
         console.log('resultttttttttttttttttttttttttttt', result);
@@ -253,6 +250,16 @@ const FollowEnergyUser = props => {
         }
       } catch (error) {
         console.error('Error fetching data from API:', error);
+        toast.error(
+          error.response.data.errors[0].errorMessage,
+          {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 3000,
+            hideProgressBar: false,
+            pauseOnHover: true,
+            draggable: true,
+          },
+        );
       } finally {
         stopLoading();
       }
@@ -523,11 +530,23 @@ const FollowEnergyUser = props => {
   const [labelLineChart, setLabelLineChart] = useState(labelsInDay);
 
   // let apiKwh = `http://localhost:5502/api/v1/homeKey/energy/device/currentDayDataPerHour/${id}`;
+  // const resultData = {
+  //   totalkWhDay: totalkWhDay,
+  //   kWhData: kWhData,
+  //   dataBeforeDay: dataBeforeDay,
+  //   dataInDay: dataWithNulls,
+  //   activePowerPerHour: activePowerPerHour,
+  //   electricPerHour: electricPerHour,
+  // };
 
-  const apiKwh =
-    urlLink.api.serverUrl + urlLink.api.getDataEnergyPerHour + idMetter;
+  // const apiKwh =
+  //   urlLink.api.serverUrl + urlLink.api.getDataEnergyPerHour + idMetter;
+
+  const apiKwh = urlLink.api.serverUrl + urlLink.api.getTotalKWhPerHourInOneDayV2 
+                            + roomId + "/" + moment().format("YYYY-MM-DD");
 
   console.log('apiKwh', apiKwh);
+
 
   const [value, setValue] = useState(0);
   const handleChangeTime = (event, newValue) => {
@@ -544,34 +563,6 @@ const FollowEnergyUser = props => {
     setLoading(false);
   };
 
-  const [currentElectric, setCurrentElectric] = useState(70);
-  // per 15 minutes
-  const getCurrentElectric = async () => {
-    const apiUrl = `${urlLink.api.serverUrl +
-      urlLink.api.getLatestDataDeviceEnergy}${idMetter}`;
-    if (idMetter !== undefined) {
-      try {
-        const response = await axios.get(apiUrl);
-
-        setCurrentElectric(response.data.data.Current);
-
-        // console.log("getCurrentElectric", response.data)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    }
-  };
-
-  useEffect(() => {
-    getCurrentElectric();
-
-    const intervalId = setInterval(() => {
-      getCurrentElectric();
-    }, 1000 * 60 * 60);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
   const [currentDayData, setCurrentDayData] = useState([]);
   const [currentKwh, setCurrentKwh] = useState([]);
 
@@ -579,56 +570,82 @@ const FollowEnergyUser = props => {
     console.log('value', value);
     startLoading();
 
-    const current = new Date();
-
-    const currentYear = current.getFullYear();
-    const currentMon = current.getMonth() + 1;
-
-    const apiUrl = apiKwh;
     const apiUrlDay =
-      urlLink.api.serverUrl + urlLink.api.getDataEnergyPerHour + idMetter;
-    const apiUrlMon = `${urlLink.api.serverUrl +
-      urlLink.api.getDataEnergyPerDay +
-      idMetter}/${currentYear}/${currentMon}`;
+    urlLink.api.serverUrl + urlLink.api.getTotalKWhPerHourInOneDayV2 
+    + roomId + "/" + moment().format("YYYY-MM-DD");
+    console.log({apiUrlDay});
 
-    if (idMetter !== undefined) {
-      try {
+    const apiUrlMon = urlLink.api.serverUrl + urlLink.api.getTotalKWhPerDayInOneMonthV2 
+      + roomId + "/" + moment().format("YYYY-MM");
+      console.log({apiUrlMon});
+
+    try {
+      // console.log("Data day", responseDay.data.data.kWhData);
+      // console.log("Data mon", responseMon.data.data.kWhData);
+
+      if (value === 0) {
         const responseDay = await axios.get(apiUrlDay);
+        setCurrentKwh(responseDay.data.data.kWhData); 
+        const formattedTotalkWh = parseFloat(
+          responseDay.data.data.totalkWhTime,
+        ).toFixed(2);
+        setTotalkWh(formattedTotalkWh);
+
+        setLabelLineChart(labelsInDay);
+
+        setTitleKwhChart(`Total kWh today`);
+      } else if (value === 1) {
         const responseMon = await axios.get(apiUrlMon);
+        const formattedTotalkWh = parseFloat(
+          responseMon.data.data.totalkWhTime,
+        ).toFixed(2);
+        setTotalkWh(formattedTotalkWh);
+        setCurrentKwh(responseMon.data.data.kWhData);
 
-        if (value === 0) {
-          setCurrentKwh(responseDay.data.data.kWhData);
-          const formattedTotalkWh = parseFloat(
-            responseDay.data.data.totalkWhDay,
-          ).toFixed(2);
-          setTotalkWh(formattedTotalkWh);
+        setLabelLineChart(labelsInMon);
 
-          setLabelLineChart(labelsInDay);
+        setTitleKwhChart(`Total kWh this month`);
+      } else if (value === 2) {
+      // Đang thực hiện filter từ ngày tới ngày
+        const apiGetDay = `${urlLink.api.serverUrl +
+          urlLink.api.getTotalKWhPerDayForDayToDayV2 +
+          roomId}/${startDateDisplay}/${endDateDisplay}`;
 
-          setTitleKwhChart(`Total kWh today`);
-        } else if (value === 1) {
-          const formattedTotalkWh = parseFloat(
-            responseMon.data.data.totalkWhMon,
-          ).toFixed(2);
-          setTotalkWh(formattedTotalkWh);
-          setCurrentKwh(responseMon.data.data.kWhData);
+        const response = await axios.get(apiGetDay);
 
-          setLabelLineChart(labelsInMon);
+        const result = response.data.data;
+        console.log('resultttttttttttttttttttttttttttt', result);
 
-          setTitleKwhChart(`Total kWh this month`);
-        }
-        setCurrentDayData(responseDay.data.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        stopLoading();
-        // reposLoaded();
+        setInfo(result);
+
+        // parseFloat(responseMon.data.data.totalkWhMon).toFixed(2);
+
+        setTotalkWh(parseFloat(result.totalkWhTime).toFixed(2));
+        setCurrentKwh(result.kWhData);
+        setLabelLineChart(result.labelTime);
       }
-    } else {
+      // setCurrentDayData(responseDay.data.data);
+    } catch (error) {
+      setCurrentKwh([]);
+      setTotalkWh(0);
+      console.error('Error fetching data:', error);
+      toast.error(
+        error.response.data.errors[0].errorMessage,
+        {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 3000,
+          hideProgressBar: false,
+          pauseOnHover: true,
+          draggable: true,
+        },
+      );
+    } finally {
       stopLoading();
       // reposLoaded();
     }
   };
+
+  console.log("iiiiiiiiiiiiii", currentKwh);
 
   useEffect(() => {
 
@@ -636,7 +653,7 @@ const FollowEnergyUser = props => {
 
     const intervalId = setInterval(() => {
       getCurrentDayData();
-    }, 1000 * 60 * 60);
+    }, 1000 * 15);
 
     return () => clearInterval(intervalId);
   }, [value]);
@@ -764,7 +781,6 @@ const FollowEnergyUser = props => {
             />
           </Grid> */}
 
-          {/* note */}
           <Grid
             item
             xs={12}
@@ -782,34 +798,7 @@ const FollowEnergyUser = props => {
               nameChart={`${titleKwhChart}: ${totalkWh}`}
               dataEnergy={currentKwh}
               labelsEnergy={labelLineChart}
-              idMetter={idMetter}
-            />
-          </Grid>
-          {/* note */}
-
-          <Grid
-            item
-            xs={12}
-            sm={4}
-            md={3}
-            style={{
-              backgroundColor: 'white',
-              height: '300px',
-              margin: '8px',
-              justifyContent: 'center',
-              alignItems: 'center',
-              textAlign: 'center',
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column',
-              borderRadius: '6px',
-              boxShadow: '1px 1px 16px 2px rgba(0, 0, 0, 0.1)',
-            }}
-          >
-            <Speedometer
-              id="dial6"
-              value={currentElectric}
-              title="Electric (A)"
+              roomId={roomId}
             />
           </Grid>
 
@@ -826,8 +815,8 @@ const FollowEnergyUser = props => {
             }}
           >
             <LineChart
-              textY="(kW)"
-              nameChart="Active Power"
+              textY="(V)"
+              nameChart="Volt"
               dataEnergy={currentDayData.activePowerPerHour}
               labelsEnergy={labelsInDay}
             />
@@ -847,7 +836,7 @@ const FollowEnergyUser = props => {
           >
             <LineChart
               textY="(A)"
-              nameChart="Current Electric per 1 hour"
+              nameChart="Current"
               dataEnergy={currentDayData.electricPerHour}
               labelsEnergy={labelsInDay}
             />

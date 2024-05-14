@@ -273,7 +273,7 @@ export function App(props) {
         <Route path="/follow-energy-2/" component={FollowEnergyUser2} />
 
         <Route
-          path="/follow-energy/:id/:roomId/:idMetter/:name"
+          path="/follow-energy/:roomId/:name"
           component={FollowEnergyUser}
         />
 
