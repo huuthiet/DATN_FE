@@ -1,9 +1,11 @@
 import axios from 'axios';
+import localStoreService from 'local-storage';
 import axiosFormData from 'axios';
 import FormData from 'form-data';
 import { put, takeLatest } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import { GET_ROOM } from '../RoomDetail/constants';
+
 import { apiGetRoom } from '../RoomDetail/saga';
 // import { take, call, put, select } from 'redux-saga/effects';
 import { urlLink } from '../../helper/route';
@@ -26,81 +28,45 @@ export function* apiPostJob(payload) {
   let response_job;
 
   try {
-    console.log('Check formData: ', formData);
-
-    // Kiểm tra xem có file không
-    if (formData.imageFile instanceof File) {
-      const reader = new FileReader();
-
-      reader.onload = function(event) {
-        formData.imageBase64 = event.target.result;
-        axios
-          .post(requestUrl, formData)
-          .then(response => {
-            console.log('response_job: ', response);
-            response_job = response;
-          })
-          .catch(error => {
-            console.error('Error posting job:', error);
-          });
-      };
-
-      reader.readAsDataURL(formData.imageFile);
-    } else {
+    if (formData.type === "wallet") {
+      console.log("Thanh toán ví nội bộ");
+      console.log({formData});
       response_job = yield axios.post(requestUrl, formData);
       console.log('response_job: ', response_job);
+    } else if (formData.type === "cash") {
+      console.log("Thanh toán bằng tiền")
+      console.log({formData});
+
+      const urlCreateJobAndTransactions =
+        urlLink.api.serverUrl +
+        urlLink.api.postTransactionsPendingBanking +
+        formData.keyPayment;
+
+      const response = yield axios.post(urlCreateJobAndTransactions, formData);
+      console.log("response cccccre", response);
+
     }
 
     try {
       if (formData.type === 'wallet') {
-        // eslint-disable-next-line no-underscore-dangle
         const id = response_job.data.data.currentOrder._id;
-        console.log('id: ', id);
         const payloadOder = {
           orderId: id,
           type: formData.type,
         };
         const response = yield axios.put(requestUrlPayWallet, payloadOder);
-        // check user have NID
-        try {
-          const requestUrlProfile = urlLink.api.serverUrl + urlLink.api.profile;
-          const responseProfile = yield axios.get(requestUrlProfile, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-            ContentType: 'multipart/form-data',
-          });
-          if (responseProfile.data.data) {
-            const profile = responseProfile.data.data;
-            // eslint-disable-next-line eqeqeq
-            if (!isEmpty(profile.backId) && !isEmpty(profile.frontId)) {
-              // have NID- update NID to jobModel
-              try {
-                const requestUrlUpdateModel = `${urlLink.api.serverUrl +
-                  urlLink.api.job}/${response.data.data.job}/images/profile`;
-                yield axios.put(requestUrlUpdateModel, null);
-
-                yield put(push('/profile'));
-              } catch (error) {
-                yield put(postJobSuccess(response));
-              }
-            } else {
-              yield put(postJobSuccess(response));
-            }
-          }
-        } catch (error) {
-          yield put(postJobSuccess(response));
-        }
-      } else {
-        yield put(postJobSuccess(response_job));
-
         yield put(push('/profile'));
+      } else {
+        console.log("Đã gọiiii");
+        yield put(push('/transaction-banking-cash-log'));
       }
+
     } catch (error) {
       yield put(postJobFail(error.response.data));
     } finally {
       yield put(reposLoaded());
     }
+
   } catch (error) {
     yield put(postJobFail(error.response.data));
   } finally {
@@ -108,8 +74,29 @@ export function* apiPostJob(payload) {
   }
 }
 
-export function* apiBankInfo() {
-  const requestUrl = urlLink.api.serverUrl + urlLink.api.getBankMasterList;
+export function* apiPostPaymentUser(payload) {
+  const data = payload.payload;
+  const requestUrl =
+    urlLink.api.serverUrl +
+    urlLink.api.getTransactionPaymentList +
+    data.keyPayment;
+
+  yield put(loadRepos());
+  try {
+    const response = yield axios.post(requestUrl, data);
+    yield put(postPaymentUserSuccess(response.data.data));
+    yield put(push(`/transaction/user/list`));
+  } catch (error) {
+    yield put(postPaymentUserFail(error.response.data));
+  } finally {
+    yield put(reposLoaded());
+  }
+}
+
+
+export function* apiBankInfo(payload) {
+  console.log("payyyy", payload);
+  const requestUrl = urlLink.api.serverUrl + urlLink.api.getBankOwnerRoom + payload.id;
   try {
     const response = yield axios.get(requestUrl);
     if (response && response.data) {

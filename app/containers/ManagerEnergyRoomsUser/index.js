@@ -80,8 +80,8 @@ const useStyles = makeStyles(theme => ({
 }));
 export function ManagerEnergyRoomsUser(props) {
   const classes = useStyles();
-  // useInjectReducer({ key: 'profile', reducer });
-  // useInjectSaga({ key: 'profile', saga });
+  useInjectReducer({ key: 'profile', reducer });
+  useInjectSaga({ key: 'profile', saga });
   // const [urlImgCloud, setUrlImgCloud] = useState('');
   const currentUser = localStore.get('user') || {};
 

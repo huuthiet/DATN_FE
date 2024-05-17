@@ -10,6 +10,7 @@ export function* apiGetOrderListHost() {
   yield put(loadRepos());
   try {
     const response = yield axios.get(requestUrl);
+    console.log({response});
     yield put(getOrderListHostSuccess(response.data.data));
   } catch (error) {
     yield put(getOrderListHostFail(error.response.data));

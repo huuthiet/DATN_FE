@@ -59,6 +59,7 @@ export const urlLink = {
     adminGetOrderDetail: '/v1/admin/homeKey/order/',
     getOrderDetail: '/v1/admin/order/',
     getTransactionPaymentList: '/v1/admin/transactions/',
+    postTransactionsPendingBanking: '/v1/admin/transactionsPendingBanking/',
     getTransactionPaymentUserList: '/v1/admin/transactions/user/',
     getResetPassWord: '/v1/admin/resetPassword/',
     postBank: '/v1/admin/bank/',
@@ -110,6 +111,7 @@ export const urlLink = {
     postBankUser: '/v1/user/bank/' /* + id */,
     getBankNameList: '/v1/user/bankname',
     getBankMasterList: '/v1/user/bankmastername',
+    getBankOwnerRoom: '/v1/user/bankOwnerRoom/', //+idroom
     adminHost: '/v1/admin/host',
     getListMotelByHost: '/v1/admin/listMotel/host/',
     exportBill: '/v1/homeKey/energy/device/exportBillRoom/',
@@ -118,6 +120,14 @@ export const urlLink = {
     // /v1/homeKey/energy/device/exportBillAllRoom/:idMotel/2024-03-01/2024-03-15
     exportBillBuilding: '/v1/homeKey/energy/device/exportBillBuilding/', // + /:idMotel/:startTime/:endTime
     buildingRevenue: '/v1/homeKey/energy/device/buildingRevenue/', // +/:idMotel/:startTime/:endTime
+    getPayDepositList: '/v1/homeKey/order/getPayDepositList/',
+    putPayDeposit: '/v1/homeKey/order/payDeposit/', //+id
+    getBankingCashTransactionList:
+    '/v1/homeKey/order/bankingCashTransactionsList/', 
+    getBankingCashPendingDepositListByMotel:
+    '/v1/homeKey/order/bankingCashPendingDepositListByMotel/',  // + idMotel
+    putBankingCashPendingDepositByMotel:
+    '/v1/homeKey/order/putBankingCashPendingDepositByMotel/',  // + idMotel
     // -------
   },
   auth: {

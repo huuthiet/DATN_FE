@@ -21,9 +21,10 @@ export function defaultAction() {
     };
 }
 
-export function getBankInfo() {
+export function getBankInfo(id) {
     return {
         type: GET_BANK_INFO,
+        id
     };
 
 }

@@ -80,6 +80,7 @@ export function* apiPutRoomDetailUpdate(payload) {
 }
 const apiPostImg = async payload => {
   const { id, formData } = payload;
+  console.log({formData});
   // eslint-disable-next-line no-useless-concat
   const requestUrl = `${urlLink.api.serverUrl}/v1/uploading/img/${id}/user`;
   const config = {

@@ -40,6 +40,8 @@ export function TransactionPayMentListHost(props) {
     showSuccessapprove,
   } = props.transactionPaymentListHost;
 
+  console.log({transactionPayment});
+
   const columns = [
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 150 },
     {
