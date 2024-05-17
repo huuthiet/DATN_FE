@@ -542,8 +542,8 @@ const FollowEnergyUser = props => {
   // const apiKwh =
   //   urlLink.api.serverUrl + urlLink.api.getDataEnergyPerHour + idMetter;
 
-  const apiKwh = urlLink.api.serverUrl + urlLink.api.getTotalKWhPerHourInOneDayV2 
-                            + roomId + "/" + moment().format("YYYY-MM-DD");
+  const apiKwh = urlLink.api.serverUrl + urlLink.api.getTotalKWhPerHourInOneDayV2
+    + roomId + "/" + moment().format("YYYY-MM-DD");
 
   console.log('apiKwh', apiKwh);
 
@@ -571,13 +571,13 @@ const FollowEnergyUser = props => {
     startLoading();
 
     const apiUrlDay =
-    urlLink.api.serverUrl + urlLink.api.getTotalKWhPerHourInOneDayV2 
-    + roomId + "/" + moment().format("YYYY-MM-DD");
-    console.log({apiUrlDay});
+      urlLink.api.serverUrl + urlLink.api.getTotalKWhPerHourInOneDayV2
+      + roomId + "/" + moment().format("YYYY-MM-DD");
+    console.log({ apiUrlDay });
 
-    const apiUrlMon = urlLink.api.serverUrl + urlLink.api.getTotalKWhPerDayInOneMonthV2 
+    const apiUrlMon = urlLink.api.serverUrl + urlLink.api.getTotalKWhPerDayInOneMonthV2
       + roomId + "/" + moment().format("YYYY-MM");
-      console.log({apiUrlMon});
+    console.log({ apiUrlMon });
 
     try {
       // console.log("Data day", responseDay.data.data.kWhData);
@@ -585,7 +585,7 @@ const FollowEnergyUser = props => {
 
       if (value === 0) {
         const responseDay = await axios.get(apiUrlDay);
-        setCurrentKwh(responseDay.data.data.kWhData); 
+        setCurrentKwh(responseDay.data.data.kWhData);
         const formattedTotalkWh = parseFloat(
           responseDay.data.data.totalkWhTime,
         ).toFixed(2);
@@ -606,7 +606,7 @@ const FollowEnergyUser = props => {
 
         setTitleKwhChart(`Total kWh this month`);
       } else if (value === 2) {
-      // Đang thực hiện filter từ ngày tới ngày
+        // Đang thực hiện filter từ ngày tới ngày
         const apiGetDay = `${urlLink.api.serverUrl +
           urlLink.api.getTotalKWhPerDayForDayToDayV2 +
           roomId}/${startDateDisplay}/${endDateDisplay}`;
@@ -653,7 +653,7 @@ const FollowEnergyUser = props => {
 
     const intervalId = setInterval(() => {
       getCurrentDayData();
-    }, 1000 * 15);
+    }, 1000 * 15 * 60);
 
     return () => clearInterval(intervalId);
   }, [value]);
@@ -785,12 +785,13 @@ const FollowEnergyUser = props => {
             item
             xs={12}
             sm={7}
-            md={5}
+            md={7}
             style={{
-              height: '300px',
+              height: '350px',
               margin: '8px',
+              padding: '12px',
               borderRadius: '6px',
-              boxShadow: '1px 1px 16px 2px rgba(0, 0, 0, 0.1)',
+              boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
             }}
           >
             <LineChartHover
@@ -806,12 +807,13 @@ const FollowEnergyUser = props => {
             item
             xs={12}
             sm={12}
-            md={3}
+            md={4}
             style={{
-              height: '300px',
+              height: '350px',
               margin: '8px',
+              padding: '12px',
               borderRadius: '6px',
-              boxShadow: '1px 1px 16px 2px rgba(0, 0, 0, 0.1)',
+              boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
             }}
           >
             <LineChart
@@ -828,10 +830,11 @@ const FollowEnergyUser = props => {
             sm={7}
             md={7}
             style={{
-              height: '300px',
+              height: '350px',
               margin: '8px',
+              padding: '12px',
               borderRadius: '6px',
-              boxShadow: '1px 1px 16px 2px rgba(0, 0, 0, 0.1)',
+              boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
             }}
           >
             <LineChart
@@ -848,10 +851,11 @@ const FollowEnergyUser = props => {
             sm={4}
             md={4}
             style={{
-              height: '300px',
+              height: '350px',
               margin: '8px',
+              padding: '12px',
               borderRadius: '6px',
-              boxShadow: '1px 1px 16px 2px rgba(0, 0, 0, 0.1)',
+              boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
               justifyContent: 'center',
               alignItems: 'center',
               textAlign: 'center',
@@ -878,10 +882,11 @@ const FollowEnergyUser = props => {
               sm={12}
               md={12}
               style={{
-                height: '300px',
+                height: '350px',
                 margin: '8px',
+                padding: '12px',
                 borderRadius: '6px',
-                boxShadow: '1px 1px 16px 2px rgba(0, 0, 0, 0.1)',
+                boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
               }}
             >
               <LineChart
@@ -901,10 +906,11 @@ const FollowEnergyUser = props => {
               sm={4}
               md={12}
               style={{
-                height: '300px',
+                height: '350px',
                 margin: '8px',
+                padding: '12px',
                 borderRadius: '6px',
-                boxShadow: '1px 1px 16px 2px rgba(0, 0, 0, 0.1)',
+                boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
               }}
             >
               <span className="title" id="total-kwh-title">

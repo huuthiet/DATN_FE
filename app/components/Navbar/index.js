@@ -384,7 +384,7 @@ const Navbar = props => {
                           <DnsOutlined className="icon" />
                           <FormattedMessage {...messages.energyManagerHost} />
                         </DropdownItem> */}
-                        <DropdownItem
+                        {/* <DropdownItem
                           className={
                             pathname.includes('/roomManage') ? 'active' : ''
                           }
@@ -394,7 +394,7 @@ const Navbar = props => {
                         >
                           <HomeOutlined className="icon" />
                           <FormattedMessage {...messages.roomManager} />
-                        </DropdownItem>
+                        </DropdownItem> */}
                         <DropdownItem
                           className={
                             pathname.includes('/manager-energy-buildings-host')
@@ -647,21 +647,7 @@ const Navbar = props => {
                             <FormattedMessage {...messages.energyRoomsUser} />
                           </DropdownItem>
 
-                          <DropdownItem
-                            className={
-                              pathname.includes('/energy-rooms-bill-user')
-                                ? 'active'
-                                : ''
-                            }
-                            onClick={() => {
-                              history.push('/energy-rooms-bill-user');
-                            }}
-                          >
-                            <ReceiptOutlined className="icon" />
-                            <FormattedMessage
-                              {...messages.energyRoomsBillUser}
-                            />
-                          </DropdownItem>
+
 
                           {/* Report problem */}
                           <DropdownItem

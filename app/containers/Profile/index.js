@@ -66,7 +66,7 @@ import localStoreService from 'local-storage';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Person from '@material-ui/icons/Person';
-import { LocalPhone } from '@material-ui/icons';
+import { Home, LocalPhone } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -308,7 +308,7 @@ export function Profile(props) {
                           history.push(`/profile/${_id}`);
                         }}
                       >
-                        {<FormattedMessage {...messages.profile} />}
+                        {<FormattedMessage {...messages.profileupdate} />}
                       </Button>
                     </Col>
                   </Row>
@@ -342,15 +342,17 @@ export function Profile(props) {
                       </ListItemAvatar>
                       <ListItemText secondary="Quản lý phòng thuê" />
                       <ListItemSecondaryAction>
-                        <IconButton
-                          edge="end"
-                          aria-label="comments"
-                          onClick={() => {
-                            history.push('/roomManage');
-                          }}
-                        >
-                          <ViewComfyIcon />
-                        </IconButton>
+                        <Tooltip title="Danh sách phòng" placement='top'>
+                          <IconButton
+                            edge="end"
+                            aria-label="comments"
+                            onClick={() => {
+                              history.push('/roomManage');
+                            }}
+                          >
+                            <ViewComfyIcon />
+                          </IconButton>
+                        </Tooltip>
                       </ListItemSecondaryAction>
                     </ListItem>
                     <ListItem>
@@ -416,27 +418,6 @@ export function Profile(props) {
                             </Button>
                           </label>
                         </div>
-                        {(role[1] !== 'master') & (role[0] !== 'master') ? (
-                          <div>
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              component="span"
-                              onClick={() => {
-                                history.push('/create-motel');
-                              }}
-                            >
-                              <div className="add-new-icon">
-                                <i className="fa fa-plus" aria-hidden="true" />
-                              </div>
-                              <div>
-                                {<FormattedMessage {...messages.addnew} />}
-                              </div>
-                            </Button>
-                          </div>
-                        ) : (
-                          ''
-                        )}
                       </Col>
                       <Col
                         style={{
@@ -481,10 +462,33 @@ export function Profile(props) {
                 </Col>
               </Row>
             </div>
-            <span className='motel-title'>Danh sách tòa nhà</span>
+            {(role[1] !== 'master') & (role[0] !== 'master') ? (
+              <Row xs={12} className='motel-title'>
+                <Col xs={6} className='motellist-title'>
+                  <FormattedMessage {...messages.listbuilding} className="add-new-title" />
+                </Col>
+                <Col xs={6} className='add-new-button-container'>
+                  <Button
+                    className='add-new-btn'
+                    component="span"
+                    onClick={() => {
+                      history.push('/create-motel');
+                    }}
+                  >
+                    <div className="add-new-icon">
+                      <i className="fa fa-plus" aria-hidden="true" />
+                    </div>
+                    <div>
+                      {<FormattedMessage {...messages.addnew} />}
+                    </div>
+                  </Button>
+                </Col>
+              </Row>
+            ) : (
+              ''
+            )}
             {motelList.length > 0 ? (
               <>
-
                 <ul>
                   {motelList.map((motel, index) => (
                     <li key={motel._id}>
@@ -534,10 +538,20 @@ export function Profile(props) {
       </div>
       <div className='job-container'>
         <div className='job-title'>
-          Danh sách thuê phòng
+          <FormattedMessage {...messages.listroom} />
         </div>
         {jobs.length !== 0 ? (
           <>
+            {/* <div className='job-header'>
+              <div className='job-fullname'>
+                <Person className='fullname-icon' />
+                Tên
+              </div>
+              <div className='job-motel'>
+                <Home className='motel-icon' />
+                Tên tòa nhà
+              </div>
+            </div> */}
             {jobs.map((job, index) => (
               <Grid item xs={12} key={job._id}>
                 <div className='job-information'>
@@ -552,8 +566,8 @@ export function Profile(props) {
                       </div>
 
                       <div className='job-phone'>
-                        <LocalPhone className='phone-icon' />
-                        <Typography className='phone-text'>{job.phoneNumber}</Typography>
+                        <Home className='phone-icon' />
+                        <Typography className='phone-text'>{job.motelName}</Typography>
                       </div>
                     </div>
                     <div className='job-item2'>

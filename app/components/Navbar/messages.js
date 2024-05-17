@@ -18,7 +18,7 @@ export default defineMessages({
   },
   energyRoomsUser: {
     id: `${scope}.energyRoomsUser`,
-    defaultMessage: 'Quản lý năng lượng các phòng đã thuê',
+    defaultMessage: 'Quản lý các phòng đã thuê',
   },
   energyRoomsBillUser: {
     id: `${scope}.energyRoomsBillUser`,

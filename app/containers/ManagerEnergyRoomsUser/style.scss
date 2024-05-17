@@ -1,4 +1,15 @@
 .user-profile-wrapper {
+  max-width: 90%;
+  .title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    text-align: center;
+    font-weight: bold;
+    color: #4a4a4a;
+    margin: 20px;
+  }
   .list-motel {
     ul {
       list-style-type: none;
@@ -50,9 +61,22 @@
             color: white;
           }
           th, td {
-            padding: 12px;
+            padding: 10px 4px;
+            min-width: 100px;
             border: 1px solid #ddd;
             text-align: center;
+          }
+          .energy-room-detail-button{
+            cursor: pointer;
+            font-size: 17px;
+            font-style: none;
+            text-decoration: none;
+            color: #858585;
+            transition: all 0.3s;
+            &:hover{
+              color: #457bc5;
+            }
+          
           }
         }
       }

@@ -34,15 +34,29 @@
         }
       }
       .motel-title{
+        // display: flex;
+        flex-direction: row;
         color: rgb(91, 91, 91);
         font-size: 26px;
         font-weight: 500;
         padding: 10px 4px !important;
-        display: flex;
-        justify-content: center;
+        // display: flex;
+        // justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid gray;
+        .add-new-button-container{
+          display: flex;
+          justify-content: end;
 
+        }
+        .add-new-btn{
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          min-width: 200px;
+        }
       }
       .job-empty{
         display: flex;
@@ -173,7 +187,7 @@
               color: #6e6e6e;
             }
             .fullname-text{
-              font-size: 20px;
+              font-size: 17px;
               font-weight: 500;
               color: #6e6e6e;
             }
@@ -188,7 +202,7 @@
               color: #6e6e6e;
             }
             .phone-text{
-              font-size: 20px;
+              font-size: 17px;
               font-weight: 500;
               color: #6e6e6e;
             }
@@ -227,5 +241,4 @@
       margin: 20px 0;
     }
   }
-
 }

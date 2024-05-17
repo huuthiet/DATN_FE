@@ -56,6 +56,7 @@ export function* apiResetPWAdminUser(payload) {
   yield put(loadRepos());
   try {
     const response = yield axios.get(requestUrl);
+    console.log('response', response);
     if (response && response.data.data) {
       yield put(resetPWAdminUserSuccess(response.data.data));
       toast.success(`Reset mật khẩu thành công!`, {

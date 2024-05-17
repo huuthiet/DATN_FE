@@ -21,6 +21,10 @@ export default defineMessages({
     id: `${scope}.profile`,
     defaultMessage: 'Thông tin cá nhân',
   },
+  profileupdate: {
+    id: `${scope}.profileupdate`,
+    defaultMessage: 'Cập nhật thông tin',
+  },
   name: {
     id: `${scope}.name`,
     defaultMessage: 'Tên',
@@ -31,7 +35,7 @@ export default defineMessages({
   },
   uploadAvata: {
     id: `${scope}.uploadAvata`,
-    defaultMessage: 'Tải Ảnh',
+    defaultMessage: 'Tải ảnh',
   },
 
   sdt: {
@@ -57,6 +61,16 @@ export default defineMessages({
   empty: {
     id: `${scope}.empty`,
     defaultMessage: 'Danh sách trống',
+  },
+  //danh sách phòng đã thuê
+  listroom: {
+    id: `${scope}.listroom`,
+    defaultMessage: 'Danh sách phòng đã thuê',
+  },
+  //danh sách các tòa nhà
+  listbuilding: {
+    id: `${scope}.listbuilding`,
+    defaultMessage: 'Danh sách tòa nhà',
   },
   detelesuccess: {
     id: `${scope}.detelesuccess`,

@@ -25,29 +25,13 @@ import {
 } from '@material-ui/core';
 import { Table, Col, Row } from 'reactstrap';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
-import AddIcon from '@material-ui/icons/Add';
-import ContactsIcon from '@material-ui/icons/Contacts';
-import DeleteIcon from '@material-ui/icons/Delete';
-import PermIdentityIcon from '@material-ui/icons/PermIdentity';
-import PhoneIcon from '@material-ui/icons/Phone';
-import RoomIcon from '@material-ui/icons/Room';
-import TocIcon from '@material-ui/icons/Toc';
-import ReportIcon from '@material-ui/icons/Report';
-import ViewComfyIcon from '@material-ui/icons/ViewComfy';
 import localStore from 'local-storage';
 import { FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-import AlertDialog from '../../components/AlertDialog/Loadable';
-import PaperWrapper from '../../components/PaperWrapper/Loadable';
-import SuccessPopup from '../../components/SuccessPopup';
-import WarningPopup from '../../components/WarningPopup';
-import Money from '../../helper/format';
 import { changeStoreData, getJobs } from './actions';
 import messages from './messages';
 import reducer from './reducer';
@@ -59,7 +43,6 @@ import axios from 'axios';
 import localStoreService from 'local-storage';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { set } from 'lodash';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -80,8 +63,8 @@ const useStyles = makeStyles(theme => ({
 }));
 export function ManagerEnergyRoomsUser(props) {
   const classes = useStyles();
-  // useInjectReducer({ key: 'profile', reducer });
-  // useInjectSaga({ key: 'profile', saga });
+  useInjectReducer({ key: 'profile', reducer });
+  useInjectSaga({ key: 'profile', saga });
   // const [urlImgCloud, setUrlImgCloud] = useState('');
   const currentUser = localStore.get('user') || {};
 
@@ -109,13 +92,13 @@ export function ManagerEnergyRoomsUser(props) {
       const promises = jobs.map(async job => {
         try {
           const { _id } = job;
-          console.log({_id});
+          console.log({ _id });
 
           const totalKWhApi =
             `${urlLink.api.serverUrl +
             urlLink.api.getDataEnergyPerDayV2}${_id}`;
 
-            console.log({totalKWhApi});
+          console.log({ totalKWhApi });
           const response = await axios.get(totalKWhApi, {
             headers: {
               Authorization: `Bearer ${localStoreService.get('user').token}`,
@@ -205,8 +188,14 @@ export function ManagerEnergyRoomsUser(props) {
         <meta name="description" content="Description of Profile" />
       </Helmet>
       <Grid container align="center">
+
         <>
           <Grid item xs={12} className="user-room-container">
+            <Row xs={12} className='title'>
+              <span>
+                <FormattedMessage {...messages.energyRoomsUser} />
+              </span>
+            </Row>
             <div className="table-responsive">
               <table striped className="user-room-table">
                 <thead>
@@ -214,8 +203,10 @@ export function ManagerEnergyRoomsUser(props) {
                     <th>Người thuê</th>
                     <th>Số điện thoại</th>
                     <th>Phòng</th>
+                    <th>Tòa nhà</th>
                     <th>Số đồng hồ đã sử dụng</th>
                     <th>Số điện tháng hiện tại (kWh)</th>
+                    <th>Hóa đơn</th>
                     <th>Chi tiết</th>
                   </tr>
                 </thead>
@@ -226,16 +217,28 @@ export function ManagerEnergyRoomsUser(props) {
                       <td>{job.fullName || 'Chưa có dữ liệu'}</td>
                       <td>{job.phoneNumber || 'Chưa có dữ liệu'}</td>
                       <td>{job.room.name || 'Chưa có dữ liệu'}</td>
-                      <td>{(job.room.listIdElectricMetter)? job.room.listIdElectricMetter.length : 0 }</td>
+                      <td>{job.motelName || 'Chưa có dữ liệu'}</td>
+                      <td>{(job.room.listIdElectricMetter) ? job.room.listIdElectricMetter.length : 0}</td>
                       <td>
                         {dataEnergyPerMonth[index]
                           ? `${dataEnergyPerMonth[index]}`
                           : 'Chưa có dữ liệu'}
                       </td>
                       <td>
-                        <Button
-                          variant="contained"
-                          color="primary"
+                        <a
+                          className='energy-room-detail-button'
+                          onClick={() => {
+                            history.push(
+                              `/energy-rooms-bill-user`,
+                            );
+                          }}
+                        >
+                          Xem hóa đơn
+                        </a>
+                      </td>
+                      <td>
+                        <a
+                          className='energy-room-detail-button'
                           onClick={() => {
                             history.push(
                               `/follow-energy/${job.room._id}/${job.room.name}`,
@@ -243,8 +246,8 @@ export function ManagerEnergyRoomsUser(props) {
                             // /follow-energy/:id/:roomId/:idMetter/:name"
                           }}
                         >
-                          Xem
-                        </Button>
+                          Xem chi tiết
+                        </a>
                       </td>
                     </tr>
                   ))}
