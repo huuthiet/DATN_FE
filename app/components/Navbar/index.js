@@ -750,6 +750,17 @@ const Navbar = props => {
                       <FormattedMessage {...messages.TransactionLog} />
                     </DropdownItem>
                     <DropdownItem
+                      className={
+                        pathname.includes('/transaction-banking-cash-log') ? 'active' : ''
+                      }
+                      onClick={() => {
+                        history.push('/transaction-banking-cash-log');
+                      }}
+                    >
+                      <ReceiptOutlined className="icon" />
+                      <FormattedMessage {...messages.TransactionBankingCashLog} />
+                    </DropdownItem>
+                    <DropdownItem
                       className={pathname.includes('/recharge') ? 'active' : ''}
                       onClick={() => {
                         history.push('/recharge');

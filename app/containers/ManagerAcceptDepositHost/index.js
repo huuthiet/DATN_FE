@@ -29,6 +29,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import localStore from 'local-storage';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -150,23 +151,27 @@ export function ManagerAcceptDepositHost(props) {
   console.log({showWarningapprove})
   console.log({pendingAcceptDepositList});
 
-  // const transformedData= [];
-  const transformedData = pendingAcceptDepositList.map((item, index) => ({
-    key: index + 1, // STT
-    nameUser: `${item.user.lastName} ${item.user.firstName}`, // Người thuê
-    phone: `${item.user.phoneNumber.countryCode}${item.user.phoneNumber.number}`, // Số điện thoại
-    roomName: (item.room.name) ? (item.room.name) : "N/A", // Phòng
-    amount: Money(item.amount) + " VNĐ", // Số tiền cọc
-    description: item.description,
-    keyPayment: item.keyPayment,
-    status: item.status === 'waiting' ? 'Đang chờ duyệt' :
-                          item.status === 'faild' ? 'Thất bại' :
-                          item.status === 'success' ? 'Thành công' :
-                          item.status === 'cancel' ? 'Đã hủy': 'N/A',
-    // ...item,
-    file: item.file,
-    _id: item._id,
-  }));
+  let transformedData= [];
+  if (pendingAcceptDepositList.length !== 0) {
+    transformedData = pendingAcceptDepositList.map((item, index) => ({
+      key: index + 1, // STT
+      nameUser: `${item.user.lastName} ${item.user.firstName}`, // Người thuê
+      phone: `${item.user.phoneNumber.countryCode}${item.user.phoneNumber.number}`, // Số điện thoại
+      roomName: (item.room.name) ? (item.room.name) : "N/A", // Phòng
+      amount: Money(item.amount) + " VNĐ", // Số tiền cọc
+      description: item.description,
+      keyPayment: item.keyPayment,
+      status: item.status === 'waiting' ? 'Đang chờ duyệt' :
+                            item.status === 'faild' ? 'Thất bại' :
+                            item.status === 'success' ? 'Thành công' :
+                            item.status === 'cancel' ? 'Đã hủy': 'N/A',
+    time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
+    payment_Method: (item.paymentMethod === "cash")?"Tiền mặt": "Ngân hàng",
+      // ...item,
+      file: item.file,
+      _id: item._id,
+    }));
+  }
 
   // console.log({transformedData});s
 
@@ -191,6 +196,20 @@ export function ManagerAcceptDepositHost(props) {
       headerName: 'Phòng',
       headerAlign: 'center',
       width: 150,
+      headerClassName: 'header-bold',
+    },
+    {
+      field: 'time',
+      headerName: 'Thời gian',
+      headerAlign: 'center',
+      width: 150,
+      headerClassName: 'header-bold',
+    },
+    {
+      field: 'payment_Method',
+      headerName: 'Phương thức thanh toán',
+      headerAlign: 'center',
+      width: 250,
       headerClassName: 'header-bold',
     },
     {

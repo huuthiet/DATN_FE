@@ -33,6 +33,7 @@ import makeSelectPendingAcceptBankCashList from './selectors';
 import localStoreService from 'local-storage';
 import * as localStore from 'local-storage';
 import { CloudUpload } from '@material-ui/icons';
+import moment from 'moment';
 
 export function TransactionBankingCashLog(props) {
   useInjectReducer({ key: 'pendingAcceptBankCashList', reducer });
@@ -90,12 +91,18 @@ export function TransactionBankingCashLog(props) {
 
   console.log({pendingAcceptBankCashList});
 
-  const transformedData = pendingAcceptBankCashList.map((item, index) => ({
-    key: index + 1, // STT
-    nameMotelRoom: (item.motel.name) ? (item.motel.name) : "N/A",
-    nameRoom: (item.room.name) ? (item.room.name) : "N/A",
-    ...item,
-  }));
+  let transformedData = [];
+
+  if(pendingAcceptBankCashList.length !== 0) {
+    transformedData = pendingAcceptBankCashList.map((item, index) => ({
+      key: index + 1, // STT
+      nameMotelRoom: (item.motel && item.motel.name) ? item.motel.name : "N/A",
+      nameRoom: (item.room && item.room.name) ? item.room.name : "N/A",
+      time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
+      payment_Method: (item.paymentMethod === "cash")?"Tiền mặt": "Ngân hàng",
+      ...item,
+    }));
+  }
 
   console.log("transformedData", transformedData);
 
@@ -159,7 +166,14 @@ export function TransactionBankingCashLog(props) {
       headerClassName: 'header-bold',
     },
     {
-      field: 'paymentMethod',
+      field: 'time',
+      headerName: 'Thời gian',
+      headerAlign: 'center',
+      width: 150,
+      headerClassName: 'header-bold',
+    },
+    {
+      field: 'payment_Method',
       headerName: 'Phương thức thanh toán',
       headerAlign: 'center',
       width: 200,
@@ -176,7 +190,7 @@ export function TransactionBankingCashLog(props) {
       field: 'nameRoom',
       headerName: 'Phòng',
       headerAlign: 'center',
-      width: 250,
+      width: 150,
       headerClassName: 'header-bold',
     },
     {
