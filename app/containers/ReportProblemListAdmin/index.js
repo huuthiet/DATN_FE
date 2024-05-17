@@ -30,6 +30,7 @@ export function ReportProblemListAdmin(props) {
   const { listReportProblem = [], action2 = 0 } = props.reportProblemListAdmin;
   const [isAdmin, setIsAdmin] = useState(false);
   const history = useHistory();
+  console.log({listReportProblem});
   useEffect(() => {
     if (_.isArray(localStoreService.get('user').role)) {
       for (
@@ -43,12 +44,12 @@ export function ReportProblemListAdmin(props) {
         }
       }
     }
-    // const data = {
-    //   startDate,
-    //   endDate,
-    //   isAdmin,
-    // };
-    // props.getListReportProblem(data);
+    const data = {
+      startDate,
+      endDate,
+      isAdmin,
+    };
+    props.getListReportProblem(data);
   }, [action2]);
   const dateNow = new Date();
   const beforeNow = dateNow.setDate(dateNow.getDate() - 1);
