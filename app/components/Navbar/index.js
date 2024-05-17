@@ -408,12 +408,23 @@ const Navbar = props => {
                           <BlurOn className="icon" />
                           <FormattedMessage {...messages.energyManager} />
                         </DropdownItem>
-                        <DropdownItem
+                        {/* <DropdownItem
                           className={
                             pathname.includes('/order/list') ? 'active' : ''
                           }
                           onClick={() => {
                             history.push('/order/list');
+                          }}
+                        >
+                          <LocalOfferOutlined className="icon" />
+                          <FormattedMessage {...messages.order} />
+                        </DropdownItem> */}
+                        <DropdownItem
+                          className={
+                            pathname.includes('/manage-deposit') ? 'active' : ''
+                          }
+                          onClick={() => {
+                            history.push('/manage-deposit');
                           }}
                         >
                           <LocalOfferOutlined className="icon" />
@@ -723,6 +734,17 @@ const Navbar = props => {
                     >
                       <ReceiptOutlined className="icon" />
                       <FormattedMessage {...messages.TransactionLog} />
+                    </DropdownItem>
+                    <DropdownItem
+                      className={
+                        pathname.includes('/transaction-banking-cash-log') ? 'active' : ''
+                      }
+                      onClick={() => {
+                        history.push('/transaction-banking-cash-log');
+                      }}
+                    >
+                      <ReceiptOutlined className="icon" />
+                      <FormattedMessage {...messages.TransactionBankingCashLog} />
                     </DropdownItem>
                     <DropdownItem
                       className={pathname.includes('/recharge') ? 'active' : ''}

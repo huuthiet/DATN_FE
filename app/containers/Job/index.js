@@ -36,6 +36,7 @@ import makeSelectJob from './selectors';
 import makeSelectBankInfo from './selectors';
 import './style.scss';
 import ModalComponent from './modal';
+import { object } from 'prop-types';
 
 const validateForm = Yup.object().shape({
   checkInTime: Yup.string().required(
@@ -266,7 +267,7 @@ export function Job(props) {
   useEffect(() => {
     console.log("Check props: ", props);
     props.getRoom(id);
-    props.getBankInfo();
+    props.getBankInfo(id);
     Modal.setAppElement('body');
   }, []);
 
@@ -284,8 +285,35 @@ export function Job(props) {
   const [selectedBankName, setSelectedBankName] = useState('');
   const [selectedBankNumber, setSelectedBankNumber] = useState('');
   const [selectedBankUsername, setSelectedBankUsername] = useState('');
-  const [imageFile, setImageFile] = useState(null);
+  const [imageFile, setImageFile] = useState();
   const [isSubmitted, setIsSubmitted] = useState({});
+
+  const [banking, setBanking] = useState('');
+  const [keyPayment, setKeyPayment] = useState('');
+  // let banking = '';
+
+  let MaThanhToan= '';
+
+  const getRandomInt = (min, max) =>
+    Math.floor(Math.random() * (max - min)) + min;
+  const getRandomString = (length, base) => {
+    let result = '';
+    const baseLength = base.length;
+
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < length; i++) {
+      const randomIndex = getRandomInt(0, baseLength);
+      result += base[randomIndex];
+    }
+
+    return result;
+  };
+  const getRandomHex2 = () => {
+    const baseString = '0123456789ABCDEF';
+    const ma = `${getRandomString(8, baseString)}`;
+    MaThanhToan = ma;
+    return ma;
+  };
 
   function toggleModal() {
     setIsOpen(!isOpen);
@@ -308,11 +336,20 @@ export function Job(props) {
     }
   };
 
-  const handleFileChange = (evt) => {
-    const file = evt.target.files[0];
-    console.log('file', file);
-    setImageFile(file);
-  };
+  // const handleFileChange = (evt) => {
+  //   const file = evt.target.files[0];
+  //   console.log('file', file);
+
+  //   const formData = new FormData();
+
+  //   formData.append('file', file);
+  //   try {
+  //     setImageFile(formData);
+  //     // eslint-disable-next-line no-empty
+  //   } catch (error) { 
+  //     console.log({error});
+  //   }
+  // };
 
   const [checkMonth, setCheckMonth] = useState(false);
 
@@ -329,15 +366,20 @@ export function Job(props) {
 
   const SubmitCashModal = () => {
     console.log('isSubmitted', isSubmitted);
-    console.log('hahaha', imageFile);
+    // console.log('hahaha', imageFile);
     // setIsSubmitted({ ...isSubmitted, imageFile });
-    const requestData = { ...isSubmitted, imageFile };
+    const requestData = { ...isSubmitted };
     console.log("check request data", requestData);
     setIsOpenTransfer(!isOpenTransfer);
     //reset lại giá trị của state
     setSelectedBankName('');
     setSelectedBankNumber('');
     setSelectedBankUsername('');
+
+    requestData.banking = banking;
+    requestData.keyPayment = keyPayment;
+
+    console.log({requestData});
 
     if (requestData.rentalPeriod >= minimumMonths) {
       setCheckMonth(false);
@@ -452,6 +494,7 @@ export function Job(props) {
             validationSchema={validateForm}
             onSubmit={evt => {
               const formData = { ...evt, type };
+              console.log("bankingggggg", banking);
               console.log("evt in form: ", evt)
               console.log('formData start', formData);
               console.log('imageFile', imageFile);
@@ -551,6 +594,7 @@ export function Job(props) {
                             bankName: bankItem.nameTkLable,
                             bankNumber: bankItem.stk,
                             bankUsername: bankItem.nameTk,
+                            objectBankId: bankItem._id,
                           }))}
                           onChange={selectedOption => {
                             // Xử lý khi người dùng chọn một ngân hàng
@@ -559,6 +603,11 @@ export function Job(props) {
                             setSelectedBankName(selectedOption.bankName);
                             setSelectedBankNumber(selectedOption.bankNumber);
                             setSelectedBankUsername(selectedOption.bankUsername);
+                            setBanking(selectedOption.objectBankId);
+                            setKeyPayment(getRandomHex2());
+                            // banking = selectedOption.objectBankId;
+
+                            // console.log("bbbank", banking);
                           }}
                         />
                       </div>
@@ -579,13 +628,33 @@ export function Job(props) {
                             <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Tên người nhận</span>
                             <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{selectedBankUsername}</span>
                           </div>
-                          <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
-                            <span style={{ color: 'brown', fontSize: '14px', margin: '0px 0 6px 3px' }}>Vui lòng tải ảnh hóa đơn để xác nhận thanh toán</span>
 
-                            <input
+                          <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+                            <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Nội dung thanh toán</span>
+                            <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{keyPayment}</span>
+                          </div>
+
+                          <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+                            <span style={{ color: 'brown', fontSize: '14px', margin: '0px 0 6px 3px' }}>Sau khi bấm "Chấp nhận", bạn sẽ được chuyển đến trang giao dịch. Vui lòng tải ảnh hóa đơn để xác nhận thanh toán và chờ chủ trọ phê duyệt!</span>
+
+                            {/* <input
                               type="file"
-                              onChange={handleFileChange}
-                            />
+                              onChange={evt => {
+                                handleFileChange(evt);
+                              }}
+                            /> */}
+                            {/* <InputForm
+                              label={"Minh chứng"}
+                              placeholder={"Minh chứng"}
+                              name="image"
+                              accept=".png, .jpg"
+                              type="file"
+                              autoComplete="image"
+                              onChange={evt => {
+                                handleFileChange(evt);
+                              }}
+                              onBlur={handleBlur}
+                            /> */}
                           </div>
                         </div>
                       )}
@@ -857,8 +926,8 @@ function mapDispatchToProps(dispatch) {
     postJob: formData => {
       dispatch(postJob(formData));
     },
-    getBankInfo: () => {
-      dispatch(getBankInfo());
+    getBankInfo: (id) => {
+      dispatch(getBankInfo(id));
     },
     changeStoreData: (key, value) => {
       dispatch(changeStoreData(key, value));

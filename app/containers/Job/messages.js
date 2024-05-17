@@ -34,7 +34,7 @@ export default defineMessages({
   },
   InternalCash: {
     id: `${scope}.InternalCash`,
-    defaultMessage: 'Ví nội bộ',
+    defaultMessage: 'Tiền mặt',
   },
   AmountOfMoney: {
     id: `${scope}.AmountOfMoney`,

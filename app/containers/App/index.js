@@ -51,6 +51,8 @@ import RoomManagePage from 'containers/EnergyBillingManage/RoomManage/Loadable';
 import RoomBillingManage from 'containers/EnergyBillingManage/RoomBillingManage/Loadable';
 import EnergyRoomsBillUser from 'containers/EnergyRoomsBillUser/Loadable';
 import MonthlyOrderList from 'containers/MonthlyOrderList/Loadable';
+import ManagerPayDepositHost from 'containers/ManagerPayDepositHost/Loadable';
+import ManageDeposit from 'containers/ManageDeposit/Loadable';
 
 // note
 import ManagerEnergyRooms from 'containers/ManagerEnergyRooms/Loadable';
@@ -68,11 +70,13 @@ import ManagerEnergyBuildingsHost from 'containers/ManagerEnergyBuildingsHost/Lo
 import ManagerEnergyRoomsHost from 'containers/ManagerEnergyRoomsHost/Loadable';
 import ManagerEnergyBuildingSummaryReport from 'containers/ManagerEnergyBuildingSummaryReport/Loadable';
 import ManagerEnergyRoomsUser from 'containers/ManagerEnergyRoomsUser/Loadable';
+import ManagerAcceptDepositHost from 'containers/ManagerAcceptDepositHost/Loadable';
 
 import ManagerEnergyHostAdmin from 'containers/ManagerEnergyHostAdmin/Loadable';
 import ManageMotelListAdmin from 'containers/ManageMotelListAdmin/Loadable';
 import ManagerEnergyBuildingsAdmin from 'containers/ManagerEnergyBuildingsAdmin/Loadable';
 import ManagerEnergyRoomsAdmin from 'containers/ManagerEnergyRoomsAdmin/Loadable';
+import TransactionBankingCashLog from 'containers/TransactionBankingCashLog/Loadable';
 
 //----------------------------
 import PropTypes from 'prop-types';
@@ -232,6 +236,10 @@ export function App(props) {
         />
         <Route path="/createroom/:id" component={CreateRoom} />
         <Route path="/transactionLog" component={TransactionLog} />
+        <Route
+          path="/transaction-banking-cash-log"
+          component={TransactionBankingCashLog}
+        />
         {/* <Route path="/user/hostMotelRoom" component={HostMotelRoomUser} /> */}
         <Route path="/admin/hostMotelRoom" component={HostMotelRoom} />
         <Route path="/hostMotelRoom/:id" component={HostMotelRoomDetail} />
@@ -276,7 +284,18 @@ export function App(props) {
           path="/follow-energy/:roomId/:name"
           component={FollowEnergyUser}
         />
-
+        <Route
+          path="/manage-deposit/pay-deposit/:id"
+          component={ManagerPayDepositHost}
+        />
+        <Route
+          path="/manage-deposit/accept-deposit/:id"
+          component={ManagerAcceptDepositHost}
+        />
+        <Route
+          path="/manage-deposit/"
+          component={ManageDeposit}
+        />
         <Route path="/withdraw" component={Withdraw} />
 
         <Route

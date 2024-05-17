@@ -73,6 +73,10 @@ export default defineMessages({
     id: `${scope}.hostRoomHist`,
     defaultMessage: 'Lịch sử Thuê Phòng',
   },
+  managerRoom: {
+    id: `${scope}.managerRoom`,
+    defaultMessage: 'Quản lý phòng',
+  },
   billList: {
     id: `${scope}.billList`,
     defaultMessage: 'Danh Sách Hóa Đơn',
@@ -141,6 +145,10 @@ export default defineMessages({
   TransactionLog: {
     id: `${scope}.TransactionLog`,
     defaultMessage: 'Nhật ký giao dịch',
+  },
+  TransactionBankingCashLog: {
+    id: `${scope}.TransactionBankingCashLog`,
+    defaultMessage: 'Nhật ký giao dịch MỚI',
   },
   addMoney: {
     id: `${scope}.addMoney`,
