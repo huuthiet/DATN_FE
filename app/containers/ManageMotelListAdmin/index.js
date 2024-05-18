@@ -44,8 +44,6 @@ export function ManagerEnergyBuildingsAdmin(props) {
 
   const [revenue, setRevenue] = useState(props.profile.buildingRevenue || 0);
 
-  console.log('revenue', revenue);
-
 
   useEffect(() => {
     props.getMotelList(id);
@@ -53,6 +51,7 @@ export function ManagerEnergyBuildingsAdmin(props) {
     setLoading(false);
   }, [id]);
 
+  console.log('check props: ', props.profile.buildingRevenue);
   const columns = [
     { field: 'index', headerName: 'STT', headerAlign: 'center', width: 150, headerClassName: 'header-bold', align: 'center' },
     { field: 'name', headerName: 'Tên tòa nhà', width: 200, headerAlign: 'center', headerClassName: 'header-bold' },
@@ -60,7 +59,7 @@ export function ManagerEnergyBuildingsAdmin(props) {
     { field: 'addressUser', headerName: 'Địa chỉ', width: 600, headerAlign: 'center', headerClassName: 'header-bold' },
     {
       field: 'totalAll', headerName: 'Tổng doanh thu', width: 200, headerAlign: 'center', headerClassName: 'header-bold', renderCell: params => (
-        <span>{params.row.totalAll.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span>
+        <span>{params.row.totalAll}</span>
       )
     },
     {

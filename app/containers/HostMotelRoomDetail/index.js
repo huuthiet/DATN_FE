@@ -135,8 +135,7 @@ export function HostMotelRoomDetail(props) {
             onClick={() => {
               // eslint-disable-next-line no-underscore-dangle
               history.push(
-                `/bill/motel/${params.row.motelRoom._id}/room/${
-                  params.row.room._id
+                `/bill/motel/${params.row.motelRoom._id}/room/${params.row.room._id
                 }/user/${params.row.user._id}`,
               );
             }}

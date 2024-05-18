@@ -32,6 +32,7 @@ export function MonthlyOrderList(props) {
   useEffect(() => {
     props.getMonthlyOrderList();
   }, []);
+  console.log("Check props: ", props);
   const { orders, orderArrNone } = props.monthlyOrderList;
 
   const columns = [
