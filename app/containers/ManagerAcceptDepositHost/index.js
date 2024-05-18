@@ -139,17 +139,21 @@ export function ManagerAcceptDepositHost(props) {
   //   fetchData();
   // }, [jobs]);
 
-  useEffect(() => {
-    props.getPayDepositList(id);
-  }, []);
-
   const {
     pendingAcceptDepositList = [],
     showWarningapprove,
     showSuccessapprove,
+    action = 0,
   } = props.pendingAcceptDepositList;
   console.log({showWarningapprove})
   console.log({pendingAcceptDepositList});
+  console.log("accctionnnn", action);
+
+  useEffect(() => {
+    props.getPayDepositList(id);
+  }, [action]);
+
+  
 
   let transformedData= [];
   if (pendingAcceptDepositList.length !== 0) {

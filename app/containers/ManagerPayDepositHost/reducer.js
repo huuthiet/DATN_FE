@@ -15,6 +15,7 @@ import {
 
 export const initialState = {
   error: {},
+  action: false,
   payDepositList: [],
   showWarningapprove: false,
   showSuccessapprove: false,
@@ -34,9 +35,11 @@ const payDepositListReducer = (state = initialState, action) =>
         draft[action.key] = action.value;
         break;
       case PUT_PAY_DEPOSIT_LIST_SUCCESS:
+        draft.action = !draft.action;
         draft.showSuccessapprove = true;
         break;
       case PUT_PAY_DEPOSIT_LIST_FAIL:
+        draft.action = !draft.action;
         draft.error = action.error;
         draft.showErrorsapprove = true;
         break;

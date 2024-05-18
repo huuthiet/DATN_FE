@@ -31,6 +31,8 @@ export function ReportProblemListAdmin(props) {
   const [isAdmin, setIsAdmin] = useState(false);
   const history = useHistory();
   console.log({listReportProblem});
+
+  console.log("action222", action2);
   useEffect(() => {
     if (_.isArray(localStoreService.get('user').role)) {
       for (
@@ -51,6 +53,7 @@ export function ReportProblemListAdmin(props) {
     };
     props.getListReportProblem(data);
   }, [action2]);
+  
   const dateNow = new Date();
   const beforeNow = dateNow.setDate(dateNow.getDate() - 1);
   const [startDate, setStartDate] = useState(new Date(beforeNow));
@@ -101,26 +104,38 @@ export function ReportProblemListAdmin(props) {
       headerClassName: 'header-bold',
     },
     {
-      field: 'image',
-      headerName: 'Ảnh Khu Trọ',
+      field: 'description',
+      headerName: 'Mô Tả',
       headerAlign: 'center',
-      width: 250,
+      width: 350,
       headerClassName: 'header-bold',
-      renderCell: params => {
-        // eslint-disable-next-line no-unused-expressions
-        return (
-          <>
-            <Avatar
-              style={{
-                width: '250px',
-              }}
-              variant="square"
-              alt="Avatar"
-              src={params.value}
-            />
-          </>
-        );
-      },
+    },
+    {
+      field: 'image',
+      headerName: 'Ảnh Mô Tả',
+      headerAlign: 'center',
+      width: 150,
+      headerClassName: 'header-bold',
+      // renderCell: params => {
+      //   // eslint-disable-next-line no-unused-expressions
+      //   return (
+      //     <>
+      //       <Avatar
+      //         style={{
+      //           width: '250px',
+      //         }}
+      //         variant="square"
+      //         alt="Avatar"
+      //         src={params.value}
+      //       />
+      //     </>
+      //   );
+      // },
+      renderCell: params => (
+        <a href={params.row.image} target="bank">
+          LINK
+        </a>
+      ),
     },
     {
       field: 'processing',
