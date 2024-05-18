@@ -21,7 +21,7 @@ import { loadRepos, reposLoaded } from '../App/actions';
 export function* apiGetPayDepositList(payload) {
   const requestUrl = urlLink.api.serverUrl + urlLink.api.getPayDepositList + payload.payload;
   // payload = payload;
-  // console.log({id});
+  console.log("apy", payload.payload);
   // console.log("xxx", payload.payload);
   yield put(loadRepos());
   try {

@@ -85,24 +85,36 @@ export function ReportProblemList(props) {
       headerClassName: 'header-bold',
     },
     {
-      field: 'image',
-      headerName: 'Ảnh Khu Trọ',
+      field: 'description',
+      headerName: 'Mô Tả',
       headerAlign: 'center',
-      width: 250,
+      width: 350,
       headerClassName: 'header-bold',
-      renderCell: params => {
-        // eslint-disable-next-line no-unused-expressions
-        return (
-          <Avatar
-            style={{
-              width: '250px',
-            }}
-            variant="square"
-            alt="Avatar"
-            src={params.value}
-          />
-        );
-      },
+    },
+    {
+      field: 'image',
+      headerName: 'Ảnh MôTả',
+      headerAlign: 'center',
+      width: 150,
+      headerClassName: 'header-bold',
+      // renderCell: params => {
+      //   // eslint-disable-next-line no-unused-expressions
+      //   return (
+      //     <Avatar
+      //       style={{
+      //         width: '250px',
+      //       }}
+      //       variant="square"
+      //       alt="Avatar"
+      //       src={params.value}
+      //     />
+      //   );
+      // },
+      renderCell: params => (
+        <a href={params.row.image} target="bank">
+          LINK
+        </a>
+      ),
     },
   ];
 

@@ -139,17 +139,21 @@ export function ManagerPayDepositHost(props) {
   //   fetchData();
   // }, [jobs]);
 
-  useEffect(() => {
-    props.getPayDepositList(id);
-  }, []);
-
   const {
     payDepositList = [],
     showWarningapprove,
     showSuccessapprove,
+    action = 0,
   } = props.payDepositList;
   console.log({showWarningapprove})
   console.log({payDepositList});
+
+  console.log("acction", action);
+  useEffect(() => {
+    props.getPayDepositList(id);
+  }, [action]);
+
+  
 
   const transformedData = payDepositList.map((item, index) => ({
     key: index + 1, // STT

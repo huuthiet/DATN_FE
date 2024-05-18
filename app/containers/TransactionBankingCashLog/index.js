@@ -34,6 +34,7 @@ import localStoreService from 'local-storage';
 import * as localStore from 'local-storage';
 import { CloudUpload } from '@material-ui/icons';
 import moment from 'moment';
+import Money from '../App/format';
 
 export function TransactionBankingCashLog(props) {
   useInjectReducer({ key: 'pendingAcceptBankCashList', reducer });
@@ -99,6 +100,7 @@ export function TransactionBankingCashLog(props) {
       nameMotelRoom: (item.motel && item.motel.name) ? item.motel.name : "N/A",
       nameRoom: (item.room && item.room.name) ? item.room.name : "N/A",
       time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
+      amount_tranform: Money(item.amount) + " VNĐ",
       payment_Method: (item.paymentMethod === "cash")?"Tiền mặt": "Ngân hàng",
       ...item,
     }));
@@ -159,7 +161,7 @@ export function TransactionBankingCashLog(props) {
       headerClassName: 'header-bold',
     },
     {
-      field: 'amount',
+      field: 'amount_tranform',
       headerName: 'Số tiền',
       headerAlign: 'center',
       width: 150,

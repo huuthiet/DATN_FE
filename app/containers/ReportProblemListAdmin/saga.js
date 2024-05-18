@@ -16,6 +16,7 @@ import {
 
 export function* apiGetListReportProblem(payload) {
   const { data } = payload;
+  console.log({data});
   let requestUrl = '';
   console.log(data.isAdmin);
   if (data.isAdmin) {

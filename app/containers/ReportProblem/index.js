@@ -181,6 +181,7 @@ export function ReportProblem(props) {
               validationSchema={validateForm}
               onSubmit={evt => {
                 const data = { ...evt, IdMotelRoom, IdRoom, IdUser };
+                console.log({data});
                 downloadFile(data);
               }}
             >
