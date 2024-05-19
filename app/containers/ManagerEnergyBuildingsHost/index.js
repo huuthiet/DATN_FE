@@ -182,7 +182,7 @@ export function ManagerEnergyBuildingsHost(props) {
       {role.length === 2 && role[0] === 'host' ? (
         <>
           <div className="card-wrap">
-            {motelList.length > 0 &&
+            {motelList && motelList.length > 0 &&
               motelList.map((motel, key) => (
                 <div className="motel-card" key={key}>
                   <ModalComponent

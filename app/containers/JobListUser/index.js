@@ -29,7 +29,10 @@ export function JobListUser(props) {
     props.getJobListUser(id);
   }, []);
   // eslint-disable-next-line react/prop-types
-  const { jobsUser } = props.jobList;
+  const { jobsUser = [] } = props.jobList;
+  console.log({jobsUser});
+
+  // const jobsUser= [];
 
   const columns = [
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 150 },

@@ -10,11 +10,13 @@ import { GET_JOB_LIST_USER } from './constants';
 // Individual exports for testing
 export function* apiGetJobListUser(payload) {
   const { id } = payload;
+  console.log({id})
   const requestUrl = `${urlLink.api.serverUrl +
     urlLink.api.adminJobListUser}/${id}`;
   yield put(loadRepos());
   try {
     const response = yield axios.get(requestUrl);
+    console.log({response})
     yield put(getJobListUserSuccess(response.data.data));
   } catch (error) {
     yield put(getJobListUserFail(error.response.data));

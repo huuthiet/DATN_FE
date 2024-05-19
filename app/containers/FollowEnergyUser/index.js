@@ -146,7 +146,7 @@ const FollowEnergyUser = props => {
         urlLink.api.getTotalKWhPerDayForDayToDayV2 +
         roomId}/${startDateDisplay}/${endDateDisplay}`;
 
-      console.log("apiGetDay", apiGetDay);
+      // console.log("apiGetDay", apiGetDay);
 
       try {
         setValue(2);
@@ -156,10 +156,10 @@ const FollowEnergyUser = props => {
         totalKWhtitle.setAttribute('hidden', true);
         detailKwhTitle.setAttribute('hidden', true);
         const response = await axios.get(apiGetDay);
-        console.log('response', response);
+        // console.log('response', response);
 
         const result = response.data.data;
-        console.log('resultttttttttttttttttttttttttttt', result);
+        // console.log('resultttttttttttttttttttttttttttt', result);
 
         setInfo(result);
 
@@ -221,7 +221,7 @@ const FollowEnergyUser = props => {
         const { rawData } = result;
         if (rawData) {
           const latestTotalKwh = rawData[rawData.length - 1];
-          console.log('latestTotalKwh', latestTotalKwh);
+          // console.log('latestTotalKwh', latestTotalKwh);
           if (latestTotalKwh.Total_kWh) {
             setExportLatestKwh(
               latestTotalKwh.Total_kWh.toLocaleString('vi-VN', {
@@ -291,7 +291,7 @@ const FollowEnergyUser = props => {
 
     // Hàm tính toán totalPrice
     const calculateTotalPrice = (electricUsage, waterUsage) => {
-      console.log('electricUsagehỉhrkfhdfkdfdkhfkdh', electricUsage, 'waterUsage', waterUsage);
+      // console.log('electricUsagehỉhrkfhdfkdfdkhfkdh', electricUsage, 'waterUsage', waterUsage);
       if (electricUsage === undefined) {
         electricUsage = 0;
       }
@@ -354,7 +354,7 @@ const FollowEnergyUser = props => {
         exportElectricUsage[index] !== undefined
           ? exportElectricUsage[index]
           : 0;
-      console.log('electricUsage', electricUsage);
+      // console.log('electricUsage', electricUsage);
       const waterUsage =
         exportWaterUsage[index] !== undefined ? exportWaterUsage[index] : 0;
       const totalPrice = calculateTotalPrice(electricUsage, waterUsage);
@@ -466,7 +466,7 @@ const FollowEnergyUser = props => {
   const handleExportPreview = () => {
     // Toggle the export state
     setExportState(true);
-    console.log('exportState', exportState);
+    // console.log('exportState', exportState);
 
     // Elements to toggle visibility
     const pdfExportContainer = document.getElementById('pdf-export-container');
@@ -565,9 +565,10 @@ const FollowEnergyUser = props => {
 
   const [currentDayData, setCurrentDayData] = useState([]);
   const [currentKwh, setCurrentKwh] = useState([]);
+  const [currentCurrent, setCurrentCurrent] = useState([]);
+  const [currentVoltage, setCurrentVoltage] = useState([]);
 
   const getCurrentDayData = async () => {
-    console.log('value', value);
     startLoading();
 
     const apiUrlDay =
@@ -580,9 +581,6 @@ const FollowEnergyUser = props => {
     console.log({ apiUrlMon });
 
     try {
-      // console.log("Data day", responseDay.data.data.kWhData);
-      // console.log("Data mon", responseMon.data.data.kWhData);
-
       if (value === 0) {
         const responseDay = await axios.get(apiUrlDay);
         setCurrentKwh(responseDay.data.data.kWhData);
@@ -590,12 +588,17 @@ const FollowEnergyUser = props => {
           responseDay.data.data.totalkWhTime,
         ).toFixed(2);
         setTotalkWh(formattedTotalkWh);
+        setCurrentVoltage(responseDay.data.data.voltageData);
+        setCurrentCurrent(responseDay.data.data.currentData);
 
         setLabelLineChart(labelsInDay);
+
+        console.log({responseDay})
 
         setTitleKwhChart(`Total kWh today`);
       } else if (value === 1) {
         const responseMon = await axios.get(apiUrlMon);
+        console.log({responseMon});
         const formattedTotalkWh = parseFloat(
           responseMon.data.data.totalkWhTime,
         ).toFixed(2);
@@ -605,6 +608,10 @@ const FollowEnergyUser = props => {
         setLabelLineChart(labelsInMon);
 
         setTitleKwhChart(`Total kWh this month`);
+
+        const responseDay = await axios.get(apiUrlDay);
+        setCurrentVoltage(responseDay.data.data.voltageData);
+        setCurrentCurrent(responseDay.data.data.currentData);
       } else if (value === 2) {
         // Đang thực hiện filter từ ngày tới ngày
         const apiGetDay = `${urlLink.api.serverUrl +
@@ -614,7 +621,6 @@ const FollowEnergyUser = props => {
         const response = await axios.get(apiGetDay);
 
         const result = response.data.data;
-        console.log('resultttttttttttttttttttttttttttt', result);
 
         setInfo(result);
 
@@ -623,10 +629,16 @@ const FollowEnergyUser = props => {
         setTotalkWh(parseFloat(result.totalkWhTime).toFixed(2));
         setCurrentKwh(result.kWhData);
         setLabelLineChart(result.labelTime);
+
+        const responseDay = await axios.get(apiUrlDay);
+        setCurrentVoltage(responseDay.data.data.voltageData);
+        setCurrentCurrent(responseDay.data.data.currentData);
       }
       // setCurrentDayData(responseDay.data.data);
     } catch (error) {
       setCurrentKwh([]);
+      setCurrentVoltage([]);
+      setCurrentCurrent([]);
       setTotalkWh(0);
       console.error('Error fetching data:', error);
       toast.error(
@@ -645,7 +657,6 @@ const FollowEnergyUser = props => {
     }
   };
 
-  console.log("iiiiiiiiiiiiii", currentKwh);
 
   useEffect(() => {
 
@@ -653,7 +664,7 @@ const FollowEnergyUser = props => {
 
     const intervalId = setInterval(() => {
       getCurrentDayData();
-    }, 1000 * 15 * 60);
+    }, 1000 * 15 );
 
     return () => clearInterval(intervalId);
   }, [value]);
@@ -819,7 +830,7 @@ const FollowEnergyUser = props => {
             <LineChart
               textY="(V)"
               nameChart="Volt"
-              dataEnergy={currentDayData.activePowerPerHour}
+              dataEnergy={currentVoltage}
               labelsEnergy={labelsInDay}
             />
           </Grid>
@@ -840,7 +851,7 @@ const FollowEnergyUser = props => {
             <LineChart
               textY="(A)"
               nameChart="Current"
-              dataEnergy={currentDayData.electricPerHour}
+              dataEnergy={currentCurrent}
               labelsEnergy={labelsInDay}
             />
           </Grid>
