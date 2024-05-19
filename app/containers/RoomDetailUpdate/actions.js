@@ -14,6 +14,9 @@ import {
   PUT_ROOM_DETAIL_UPDATE,
   PUT_ROOM_DETAIL_UPDATE_SUCCESS,
   PUT_ROOM_DETAIL_UPDATE_FAIL,
+  ADD_METER,
+  ADD_METER_SUCCESS,
+  ADD_METER_FAIL,
 } from './constants';
 
 export function defaultAction() {
@@ -47,6 +50,27 @@ export function postMotelSuccess(response) {
 export function postMotelFail(error) {
   return {
     type: POST_MOTEL_FAIL,
+    error,
+  };
+}
+
+export function putMeter(payload) {
+  return {
+    type: ADD_METER,
+    payload,
+  };
+}
+
+export function putMeterSuccess(response) {
+  return {
+    type: ADD_METER_SUCCESS,
+    response,
+  };
+}
+
+export function putMeterFail(error) {
+  return {
+    type: ADD_METER_FAIL,
     error,
   };
 }

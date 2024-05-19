@@ -59,7 +59,7 @@ export const urlLink = {
     adminGetOrderDetail: '/v1/admin/homeKey/order/',
     getOrderDetail: '/v1/admin/order/',
     getTransactionPaymentList: '/v1/admin/transactions/',
-    postTransactionsPendingBanking: '/v1/admin/transactionsPendingBanking/',
+    postTransactionsDepositPendingBanking: '/v1/admin/postTransactionsDepositPendingBanking/',
     getTransactionPaymentUserList: '/v1/admin/transactions/user/',
     getResetPassWord: '/v1/admin/resetPassword/',
     postBank: '/v1/admin/bank/',
@@ -126,8 +126,16 @@ export const urlLink = {
     '/v1/homeKey/order/bankingCashTransactionsList/', 
     getBankingCashPendingDepositListByMotel:
     '/v1/homeKey/order/bankingCashPendingDepositListByMotel/',  // + idMotel
-    putBankingCashPendingDepositByMotel:
-    '/v1/homeKey/order/putBankingCashPendingDepositByMotel/',  // + idMotel
+    
+    getBankingCashPendingAfterCheckInCostListByMotel:
+    '/v1/homeKey/order/bankingCashPendingAfterCheckInCostListByMotel/',  // + idMotel
+    getBankingCashPendingMonthlyByMotel:
+    '/v1/homeKey/order/bankingCashPendingMonthlyByMotel/',  // + idMotel
+    putBankingCashPendingTransactionByMotel:
+    '/v1/homeKey/order/putBankingCashPendingTransactionByMotel/',  // + idMotel
+    // -------
+    postTransactionAfterCheckInCostPendingBanking:
+    '/v1/homeKey/order/postTransactionAfterCheckInCostPendingBanking/',  
     // -------
   },
   auth: {

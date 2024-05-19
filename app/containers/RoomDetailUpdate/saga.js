@@ -1,14 +1,17 @@
 // import { take, call, put, select } from 'redux-saga/effects';
 import { put, takeLatest } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import { push } from 'react-router-redux';
-import { POST_MOTEL, GET_ROOM, PUT_ROOM_DETAIL_UPDATE } from './constants';
+import { POST_MOTEL, GET_ROOM, PUT_ROOM_DETAIL_UPDATE, ADD_METER } from './constants';
 import { urlLink } from '../../helper/route';
 import {
   postMotelSuccess,
   postMotelFail,
   putRoomDetailUpdateSuccess,
   putRoomDetailUpdateFail,
+  putMeterSuccess,
+  putMeterFail,
 } from './actions';
 import { loadRepos, reposLoaded } from '../App/actions';
 // Individual exports for testing
@@ -34,6 +37,38 @@ export function* apiGetRoom(payload) {
     yield put(getRoomSuccess(response.data.data));
   } catch (error) {
     yield put(getRoomFail(error.response.data));
+  } finally {
+    yield put(reposLoaded());
+  }
+}
+
+export function* apiPutMeter(payload) {
+  const { id, time, newIdMeter } = payload.payload;
+  const data = payload.payload;
+  console.log({data});
+  console.log({payload});
+  console.log({id});
+  console.log({time});
+  console.log({newIdMeter});
+  const requestUrl = urlLink.api.serverUrl + urlLink.api.addIdMetterElectric;
+  yield put(loadRepos());
+  try {
+    const response = yield axios.put(requestUrl, data);
+    yield put(putMeterSuccess(response.data.data));
+    toast.success("Thêm ID đồng hồ thành công");
+    yield put(push(`/room-detail/${id}`));
+  } catch (error) {
+    yield put(putMeterFail(error.response.data));
+    toast.error(
+      error.response.data.errors[0].errorMessage,
+      {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+        hideProgressBar: false,
+        pauseOnHover: true,
+        draggable: true,
+      },
+    );
   } finally {
     yield put(reposLoaded());
   }
@@ -121,4 +156,5 @@ export default function* roomDetailSaga() {
   yield takeLatest(POST_MOTEL, apiPostMotel);
   yield takeLatest(GET_ROOM, apiGetRoom);
   yield takeLatest(PUT_ROOM_DETAIL_UPDATE, apiPutRoomDetailUpdate);
+  yield takeLatest(ADD_METER, apiPutMeter);
 }

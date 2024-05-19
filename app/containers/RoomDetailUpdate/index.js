@@ -5,14 +5,14 @@
  */
 
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
 import { Avatar } from '@material-ui/core';
-import { Alert, Button, Col, Container, Row } from 'reactstrap';
+import { Alert, Button, Col, Container, Label, Row } from 'reactstrap';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 
@@ -32,7 +32,7 @@ import reducer from './reducer';
 import CheckBox from '../../components/CheckBox';
 import InputForm from '../../components/InputForm';
 import { urlLink } from '../../helper/route';
-import { changeStoreData, postMotel, putRoomDetailUpdate } from './actions';
+import { changeStoreData, postMotel, putRoomDetailUpdate, putMeter } from './actions';
 import messages from './messages';
 import ModalComponent from './modal';
 
@@ -48,6 +48,11 @@ export function RoomDetail(props) {
   const [modalWarning, setModalWarning] = useState(false); // no action
 
   const [modalDeletedJob, setModalDeleteJob] = useState(false);
+  const [isAddMeter, setIsAddMeter] = useState(false);
+
+  const [newIdMeter, setNewIdMeter] = useState(null);
+  const [timeMeter, setTimeMeter] = useState(moment().format("YYYY-MM-DD HH:mm:ss"));
+  console.log({timeMeter});
 
   const toggle = (motelName, id) => {
     setModal(!modal);
@@ -63,6 +68,9 @@ export function RoomDetail(props) {
 
   const cancelToggleDeleteJob = () => {
     setModalDeleteJob(!modalDeletedJob);
+  }
+  const cancelToggleAddMeter = () => {
+    setIsAddMeter(!isAddMeter);
   }
 
   const { room = {} } = props.roomDetail;
@@ -304,6 +312,23 @@ export function RoomDetail(props) {
   const [idElectricMetter, setIdElectricMetter] = useState(
     room.idElectricMetter === '0' ? null : room.idElectricMetter
   );
+  // const [numberOfMeter, setNumberOfMeter] = useState(
+  //   (!room.listIdElectricMetter )? 0 :
+  //   (room.listIdElectricMetter && room.listIdElectricMetter.length === 0) :
+  //   (room.listIdElectricMetter && room.listIdElectricMetter.length !== 0) : room.listIdElectricMetter.length: 0;
+  // );
+  const numberOfMeter = useMemo(() => {
+    if (!room.listIdElectricMetter) {
+      return 0;
+    } else if (room.listIdElectricMetter.length === 0) {
+      return 0;
+    } else {
+      return room.listIdElectricMetter.length;
+    }
+  }, [room.listIdElectricMetter]);
+
+  console.log({numberOfMeter});
+
   const [price, setprice] = useState(room.price);
   const [waterPrice, setwaterPrice] = useState(room.waterPrice);
   const [minimumMonths, setMinimumMonths] = useState(room.minimumMonths);
@@ -390,6 +415,23 @@ export function RoomDetail(props) {
     }
   };
 
+  const openModalAddMeter = () => {
+    if(newIdMeter === null || newIdMeter.length === 0) {
+      alert("Vui lòng nhập ID đồng hồ");
+    } else {
+      setIsAddMeter(!isAddMeter);
+    }
+  }
+
+  const handleAddMeter = () => {
+    const data = {
+      id: id,
+      time: timeMeter,
+      newIdMeter: newIdMeter
+    }
+    props.putMeter(data);
+  }
+
 
   return (
     <div className="login-page-wrapper">
@@ -467,6 +509,33 @@ export function RoomDetail(props) {
             một khoảng thời gian dài. */}
             {contentNotify}
           </div>
+        </ModalComponent>
+        <ModalComponent
+          modal={isAddMeter}
+          toggle={cancelToggleAddMeter}
+          modalTitle="Xác nhận thêm đồng hồ mới cho phòng!"
+          footer={
+            <div>
+              <Button variant='outlined' color="secondary" onClick={cancelToggleAddMeter}>
+                Hủy
+              </Button>{' '}
+              <Button
+                variant='outlined'
+                color="primary"
+                onClick={handleAddMeter}
+              >
+                Xác nhận
+              </Button>
+            </div>
+          }
+        >
+          <div>
+            Hãy chắc chắn đồng hồ cũ không còn hoạt động, thêm đúng ID và thời gian hoạt đồng của đồng hồ mới.
+          </div>
+          <hr/>
+          <div><strong>Xác nhận:</strong> </div>
+          <div>Id đồng hồ mới: {newIdMeter} </div>
+          <div>Thời gian bắt đầu hoạt động: {timeMeter} </div>
         </ModalComponent>
         <div className="title mb-3">
           <h3>
@@ -549,18 +618,6 @@ export function RoomDetail(props) {
               autoComplete="description"
               onChange={evt => {
                 setAcreage(evt.target.value);
-              }}
-            />
-          </Col>
-          <Col md={3}>
-            <InputForm
-              type="text"
-              label={<FormattedMessage {...messages.electricMetter} />}
-              // min={0}
-              name="electricMetter"
-              value={idElectricMetter}
-              onChange={evt => {
-                setIdElectricMetter(evt.target.value);
               }}
             />
           </Col>
@@ -715,6 +772,56 @@ export function RoomDetail(props) {
                 handleFileInputChangeFile(e);
               }}
             />
+          </Col>
+        </Row>
+        <hr/>
+        <Row>
+          <Col md={3}>
+            <InputForm
+              type="text"
+              label={<FormattedMessage {...messages.electricMetter} />}
+              // min={0}
+              name="electricMetter"
+              value={numberOfMeter}
+              readOnly
+              // onChange={evt => {
+              //   setIdElectricMetter(evt.target.value);
+              // }}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col md={3}>
+            <Label>Thêm đồng hồ</Label>
+          </Col>
+          <Col md={3}>
+            <InputForm
+              type="text"
+              label={<FormattedMessage {...messages.idMetter} />}
+              name="electricMetter"
+              value={newIdMeter}
+              onChange={evt => {
+                console.log(evt.target.value);
+                setNewIdMeter(evt.target.value);
+              }}
+            />
+          </Col>
+          <Col md={3}>
+            <InputForm
+              type="datetime"
+              label={<FormattedMessage {...messages.timeMeter} />}
+              // min={0}
+              name="electricMetter"
+              value={timeMeter}
+              onChange={evt => {
+                setTimeMeter(evt.target.value);
+              }}
+            />
+          </Col>
+          <Col md={3}>
+            <Button color="primary" onClick={openModalAddMeter}>
+              {<FormattedMessage {...messages.addMeter} />}
+            </Button>
           </Col>
         </Row>
         <Row>
@@ -1114,6 +1221,7 @@ RoomDetail.propTypes = {
   roomDetail: PropTypes.object,
   changeStoreData: PropTypes.func,
   putRoomDetailUpdate: PropTypes.func,
+  putMeter: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -1124,6 +1232,9 @@ function mapDispatchToProps(dispatch) {
   return {
     postMotel: data => {
       dispatch(postMotel(data));
+    },
+    putMeter: data => {
+      dispatch(putMeter(data));
     },
     putRoomDetailUpdate: data => {
       dispatch(putRoomDetailUpdate(data));

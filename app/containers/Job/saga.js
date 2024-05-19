@@ -39,7 +39,7 @@ export function* apiPostJob(payload) {
 
       const urlCreateJobAndTransactions =
         urlLink.api.serverUrl +
-        urlLink.api.postTransactionsPendingBanking +
+        urlLink.api.postTransactionsDepositPendingBanking +
         formData.keyPayment;
 
       const response = yield axios.post(urlCreateJobAndTransactions, formData);

@@ -18,6 +18,10 @@ export const GET_ROOM = 'app/RoomDetail/GET_ROOM';
 export const GET_ROOM_SUCCESS = 'app/RoomDetail/GET_ROOM_SUCCESS';
 export const GET_ROOM_FAIL = 'app/RoomDetail/GET_ROOM_FAIL';
 
+export const ADD_METER = 'app/RoomDetail/ADD_METER';
+export const ADD_METER_SUCCESS = 'app/RoomDetail/ADD_METER_SUCCESS';
+export const ADD_METER_FAIL = 'app/RoomDetail/ADD_METER_FAIL';
+
 
 export const PUT_ROOM_DETAIL_UPDATE = 'app/RoomDetail/PUT_ROOM_DETAIL_UPDATE';
 export const PUT_ROOM_DETAIL_UPDATE_SUCCESS = 'app/RoomDetail/PUT_ROOM_DETAIL_UPDATE_SUCCESS';

@@ -8,6 +8,14 @@ export const GET_JOB = 'app/JobDetail/GET_JOB';
 export const GET_JOB_SUCCESS = 'app/JobDetail/GET_JOB_SUCCESS';
 export const GET_JOB_FAIL = 'app/JobDetail/GET_JOB_FAIL';
 
+export const POST_TRANSACTION = 'app/JobDetail/POST_TRANSACTION';
+export const POST_TRANSACTION_SUCCESS = 'app/JobDetail/POST_TRANSACTION_SUCCESS';
+export const POST_TRANSACTION_FAIL = 'app/JobDetail/POST_TRANSACTION_FAIL';
+
+export const GET_BANK_INFO = 'app/JobDetail/GET_BANK_INFO';
+export const GET_BANK_INFO_SUCCESS = 'app/JobDetail/GET_BANK_INFO_SUCCESS';
+export const GET_BANK_INFO_FAIL = 'app/JobDetail/GET_BANK_INFO_FAIL';
+
 export const GET_DATA_SUCCESS = 'app/JobDetail/GET_DATA_SUCCESS';
 export const GET_DATA_FAIL = 'app/JobDetail/GET_DATA_FAIL';
 

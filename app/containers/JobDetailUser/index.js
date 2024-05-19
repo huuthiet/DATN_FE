@@ -60,11 +60,13 @@ import {
   putDeposit,
   putCheckOut,
   putJob,
+  getBankInfo,
+  postTransaction
 } from './actions';
 import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
-import makeSelectJobDetailUser from './selectors';
+import  makeSelectJobDetailUser  from './selectors';
 import './style.scss';
 import { functionsIn } from 'lodash';
 import ModalComponent from './modal';
@@ -278,18 +280,48 @@ export function JobDetailUser(props) {
   useInjectReducer({ key: 'jobDetailUser', reducer });
   useInjectSaga({ key: 'jobDetailUser', saga });
   const classes = useStyles();
-  const { id = '', idElectricMetter = '' } = useParams();
-  // console.log('idElectricMetter in index: ', idElectricMetter);
+  const { id = '', idRoom = '' } = useParams();
+  console.log({idRoom});
 
   const history = useHistory();
   const today = new Date();
   const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+  useEffect(() => {
+    if (id && idRoom) {
+      console.log('id in index: ', id);
+      console.log('idRoom in index: ', idRoom);
+      // getBankInfo(idRoom);
+      props.getJob(id, idRoom);
+      props.getProfile();
+    }
+  }, [id, idRoom]);
+
+  useEffect(() => {
+    props.getJob(id, idRoom);
+  }, []);
+
   const {
     job,
-    dataEnergy,
+    // dataEnergy,
     profile: { wallet = '' },
     flagDeposit,
+    bankInfo = [],
   } = props.jobDetailUser;
+
+
+  console.log("props.jobDetailUser", props.jobDetailUser);
+
+  const {
+    bank = '',
+    image = [],
+    nameTk = '',
+    nameTkLable = '',
+    stk = '',
+
+  } = bankInfo;
+
+  console.log({bankInfo});
 
   const {
     fullName = '',
@@ -313,31 +345,113 @@ export function JobDetailUser(props) {
 
   console.log('job in index: ', job);
 
-  let roundedTotalkWhTime = 0;
-  let totalElectric = 0;
+  // let roundedTotalkWhTime = 0;// số điện
+  // let totalElectric = 0; // tiền điện
+  // let totalElectricNumber = 0;
+  // let electricPrice = 0; // giá điện
+  // let roundedTotalElectric = 0; // tổng tiền điện đã format
+  // let waterNumber = 0;
+  // let waterPrice = 0;
+  // let totalWater = 0;
+  // let garbagePrice = 0; // giá dịch vụ
+  // let wifiPrice = 0; // giá xe
+  // let numberVihicle = 0;
+  // let totalPriceVihicle = 0;
+  // let roundedTotalWater = 0; // tổng tiền nước
+
+  // // const { totalkWhTime = 0 } = dataEnergy;
+  // if (job && job.room) {
+  //   if(currentOrder.type === "monthly") {
+  //     roundedTotalkWhTime = currentOrder.electricNumber;
+  //     totalElectric = Money(currentOrder.electricPrice);
+  //     totalElectricNumber = parseInt(job.currentOrder.electricPrice.toFixed(0));
+  //   }
+  //   numberVihicle = room.vihicle;
+  //   electricPrice = Money(room.electricityPrice);
+  //   roundedTotalElectric = (totalElectric);
+  //   waterNumber = room.person;
+  //   waterPrice = Money(room.waterPrice);
+  //   totalWater = waterNumber * room.waterPrice;
+  //   garbagePrice = Money(room.garbagePrice);
+  //   wifiPrice = Money(room.wifiPrice);
+  //   totalPriceVihicle = Money(room.wifiPrice * room.vihicle);
+  //   roundedTotalWater = Money(totalWater);
+  // }
+
+  // const [numberDayStay, setNumberDayStay] = useState(0);
+  let numberDayStay = 0;
+  // // const [electricNumber, setElectricNumber] = useState(0);
+  let electricNumber = 0;
+  // // const [electricPrice, setElectricPrice] = useState(0);
   let electricPrice = 0;
-  let roundedTotalElectric = 0;
-  let waterNumber = 0;
+  // // const [electricPricePerKwh, setElectricPricePerKwh] = useState(0);
+  let electricPricePerKwh = 0;
+  // // const [roomPrice, setRoomPrice] = useState(0);
+  let roomPrice = 0;
+  let roomPricePerMon = 0;
+  // // const [numberPerson, setNumberPerson] = useState(0);
+  let numberPerson = 0;
+  // // const [waterPrice, setWaterPrice] = useState(0);
   let waterPrice = 0;
-  let totalWater = 0;
-  let garbagePrice = 0;
-  let wifiPrice = 0;
-  let roundedTotalWater = 0;
+  // // const [waterPricePerPerson, setWaterPricePerPerson] = useState(0);
+  let waterPricePerPerson = 0;
+  // // const [vehiclePrice, setVehiclePrice] = useState(0);
+  let vehiclePrice = 0;
+  // // const [vehiclePricePer, setVehiclePricePer] = useState(0);
+  let vehiclePricePer = 0;
+  // // const [numberVehicle, setNumberVehicle] = useState(0);
+  let numberVehicle = 0;
+  // // const [servicePrice, setServicePrice] = useState(0);
+  let servicePrice = 0;
+  // // const [totalPrice, setTotalPrice] = useState(0);
+  let totalPrice = 0;
+  // const {
+  //   numberDayStay = 0,
+  //   electricNumber = 0,
+  //   electricPrice = 0,
+  //   electricPricePerKwh = 0,
+  //   roomPrice = 0,
+  //   numberPerson = 0,
+  //   waterPrice = 0,
+  //   waterPricePerPerson = 0,
+  //   vehiclePrice = 0,
 
-  const { totalkWhTime = 0 } = dataEnergy;
+  // }
+
+
   if (job && job.room) {
-    roundedTotalkWhTime = totalkWhTime.toFixed(2);
-
-    totalElectric = roundedTotalkWhTime * room.electricityPrice;
-    electricPrice = Money(room.electricityPrice);
-    roundedTotalElectric = Money(totalElectric);
-    waterNumber = dataEnergy.waterNumber || 0;
-    waterPrice = Money(room.waterPrice);
-    totalWater = waterNumber * room.waterPrice;
-    garbagePrice = Money(room.garbagePrice);
-    wifiPrice = Money(room.wifiPrice);
-    roundedTotalWater = Money(totalWater);
+    if(currentOrder.type === "monthly") {
+      // setNumberDayStay(currentOrder.numberDayStay);
+      numberDayStay = currentOrder.numberDayStay;
+      roomPricePerMon = room.price;
+      // setElectricNumber(currentOrder.electricNumber);
+      electricNumber = currentOrder.electricNumber;
+      // setElectricPrice(currentOrder.electricPrice);
+      electricPrice = parseInt(currentOrder.electricPrice.toFixed(0));
+      // setElectricPricePerKwh(room.electricityPrice);
+      electricPricePerKwh = room.electricityPrice;
+      // setRoomPrice(parseInt(currentOrder.amount.toFixed(0)));
+      roomPrice = parseInt(currentOrder.roomPrice.toFixed(0));
+      // setNumberPerson(room.person);
+      numberPerson = room.person;
+      // setWaterPrice(currentOrder.waterPrice);
+      waterPrice = parseInt(currentOrder.waterPrice.toFixed(0));
+      // setWaterPricePerPerson(room.waterPrice);
+      waterPricePerPerson = parseInt(room.waterPrice.toFixed(0));
+      // setVehiclePrice(currentOrder.vehiclePrice);
+      vehiclePrice = parseInt(currentOrder.vehiclePrice.toFixed(0));
+      // setNumberVehicle(room.vihicle);
+      numberVehicle = room.vihicle;
+      vehiclePricePer = room.wifiPrice;
+      // setServicePrice(currentOrder.servicePrice);
+      // setVehiclePricePer(room.garbagePrice);
+      servicePrice = parseInt(room.garbagePrice.toFixed(0));
+      // setTotalPrice(parseInt(currentOrder.amount.toFixed(0)));
+      totalPrice = parseInt(currentOrder.amount.toFixed(0));
+    }
   }
+
+
 
   for (let index = 0; index < optionsRentalPeriod.length; index++) {
     const element = optionsRentalPeriod[index];
@@ -349,7 +463,60 @@ export function JobDetailUser(props) {
   const [datepicker, setDatepicker] = useState(returnRoomDate);
 
   const [numberMonRenew, setNumberMonRenew] = useState(0);
+  const [selectedBankName, setSelectedBankName] = useState('');
+  const [selectedBankNumber, setSelectedBankNumber] = useState('');
+  const [selectedBankUsername, setSelectedBankUsername] = useState('');
+  const [banking, setBanking] = useState('');
+  const [keyPayment, setKeyPayment] = useState('');
   // const [numberMonRenewUpdate, setNumberMonRenewUp] = useState(0);
+
+
+  let MaThanhToan= '';
+
+  const getRandomInt = (min, max) =>
+    Math.floor(Math.random() * (max - min)) + min;
+  const getRandomString = (length, base) => {
+    let result = '';
+    const baseLength = base.length;
+
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < length; i++) {
+      const randomIndex = getRandomInt(0, baseLength);
+      result += base[randomIndex];
+    }
+
+    return result;
+  };
+  const getRandomHex2 = () => {
+    const baseString = '0123456789ABCDEF';
+    const ma = `${getRandomString(8, baseString)}`;
+    MaThanhToan = ma;
+    return ma;
+  };
+
+  const SubmitCashModal = () => {
+    if (job) {
+      let formData = {
+        order: job.currentOrder._id,
+        afterCheckInCost: job.afterCheckInCost,
+        deposit: job.deposit,
+        rentalPeriod: job.rentalPeriod,
+        user: job.user._id,
+        fullName: job.fullName,
+        job: job._id,
+        motel: job.motelRoom._id,
+        room:  job.room._id,
+        type: job.currentOrder.type,
+        keyPayment: keyPayment,
+        banking: banking,
+        paymentMethod: "cash",
+      }
+
+      console.log({formData});
+
+      props.postTransaction(formData);
+    }
+  }
 
   const checkOutDate = new Date(checkInTime).setMonth(
     new Date(checkInTime).getMonth() + Number(rentalPeriod),
@@ -389,6 +556,7 @@ export function JobDetailUser(props) {
   };
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenBankingMonthly, setIsOpenBankingMonthly] = useState(false);
 
   const [modalRenewContract, setModalRenewContract] = useState(false);
 
@@ -401,11 +569,14 @@ export function JobDetailUser(props) {
     setModalRenewContract(!modalRenewContract);
     console.log('gọi renew');
 
-    props.putRenewContract(job._id, numberMonRenew);
+    props.putRenewContract(job._id, numberMonRenew, idRoom);
   }
 
   function toggleModal() {
     setIsOpen(!isOpen);
+  }
+  function toggleModalBankingMonthly() {
+    setIsOpenBankingMonthly(!isOpenBankingMonthly);
   }
   const [isOpenCheckIn, setIsOpenCheckIn] = useState(false);
   const toggleCheckInModal = () => {
@@ -414,8 +585,30 @@ export function JobDetailUser(props) {
 
   function SubmitModal() {
     setIsOpen(!isOpen);
-    props.putJob(id);
+    if (job) {
+      let formData = {
+        order: job.currentOrder._id,
+        afterCheckInCost: job.afterCheckInCost,
+        deposit: job.deposit,
+        rentalPeriod: job.rentalPeriod,
+        user: job.user._id,
+        fullName: job.fullName,
+        job: job._id,
+        motel: job.motelRoom._id,
+        room:  job.room._id,
+        type: job.currentOrder.type,
+        keyPayment: keyPayment,
+        banking: banking,
+        paymentMethod: "cash",
+      }
+      console.log({formData});
+      props.postTransaction(formData);
+    }
   }
+  // function SubmitModal() {
+  //   setIsOpen(!isOpen);
+  //   props.putJob(id);
+  // }
 
   const submitCheckInModal = () => {
     setIsOpenCheckIn(!isOpenCheckIn);
@@ -425,13 +618,7 @@ export function JobDetailUser(props) {
   const [moneyWallet, setMoneyWallet] = useState();
   const [total, setTotal] = useState(0);
 
-  useEffect(() => {
-    if (id && idElectricMetter) {
-      console.log('id in index: ', id);
-      props.getJob(id, idElectricMetter);
-      props.getProfile();
-    }
-  }, [id, idElectricMetter]);
+  
 
   const ExampleCustomInput = ({ value, onClick }) => (
     <button className="example-custom-input" onClick={onClick}>
@@ -439,6 +626,18 @@ export function JobDetailUser(props) {
       {value}
     </button>
   );
+
+  let bankOptions = [];
+  if (bankInfo.length !== 0){
+    bankOptions = bankInfo.map(bankItem => ({
+      label: bankItem.nameTkLable,
+      value: bankItem.id,
+      bankName: bankItem.nameTkLable,
+      bankNumber: bankItem.stk,
+      bankUsername: bankItem.nameTk,
+      objectBankId: bankItem._id,
+    }))
+  }
 
   return (
     <div className="job-detail-wrapper">
@@ -575,7 +774,7 @@ export function JobDetailUser(props) {
                   // đã có thông tin xác nhân kích hoạt phòng luôn
                   props.putActive(id);
                 } else {
-                  history.push(`/job-verify/${id}/${idElectricMetter}`);
+                  history.push(`/job-verify/${id}/${idRoom}`);
                 }
               }}
             >
@@ -789,21 +988,6 @@ export function JobDetailUser(props) {
                 currentOrder.isCompleted
               }
               onClick={() => {
-                // history.push(`/payment/${id}`);
-                // convert to number
-                const roomPriceRounded = parseInt(
-                  job.currentOrder.amount.toFixed(0),
-                );
-                setMoneyWallet(Money(roomPriceRounded));
-
-                const total =
-                  roomPriceRounded +
-                  totalElectric +
-                  totalWater +
-                  room.wifiPrice +
-                  room.garbagePrice;
-                const roundedTotal = Money(total);
-                setTotal(roundedTotal);
                 toggleModal();
               }}
             >
@@ -841,7 +1025,7 @@ export function JobDetailUser(props) {
         </List>
       </div>
       {/* MODAL THANH TOÁN "THANH TOÁN KHI NHẬN PHÒNG" */}
-      <ModalComponent
+      {/* <ModalComponent
         modal={isOpenCheckIn}
         modalTitle="Xác nhận thanh toán"
         footer={
@@ -873,10 +1057,110 @@ export function JobDetailUser(props) {
             <span>{Money(afterCheckInCost)}</span>
           </div>
         </div>
+      </ModalComponent> */}
+      {/* <ModalComponent
+        modal={isOpenCheckIn}
+        modalTitle="Xác nhận thanh toán"
+        footer={
+          <>
+            <Button className="btn btn-secondary" onClick={toggleCheckInModal}>
+              {<FormattedMessage {...messages.Cancel} />}
+            </Button>
+            <Button className="btn btn-success" onClick={submitCheckInModal}>
+              {<FormattedMessage {...messages.Accept} />}
+            </Button>
+          </>
+        }
+      >
+        <div
+          className="bill-content"
+          style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span style={{ minWidth: '300px' }}>
+              <FormattedMessage {...messages.TotalMoney} />
+              {': '}
+            </span>
+            <span>{Money(afterCheckInCost)}</span>
+          </div>
+        </div>
+      </ModalComponent> */}
+
+      <ModalComponent
+        modal={isOpenCheckIn}
+        toggle={toggleCheckInModal}
+        modalTitle="Xác nhận thanh toán chuyển khoản ngân hàng!"
+        footer={
+          <div>
+            <Button color="secondary" onClick={toggleCheckInModal}>
+              <FormattedMessage {...messages.Cancel} />
+            </Button>{' '}
+            <Button onClick={SubmitCashModal} color="primary">
+              <FormattedMessage {...messages.Accept} />
+            </Button>
+          </div>
+        }
+      >
+        <div className="deposit" style={{ minHeight: '200px' }}>
+          <h5>
+            <FormattedMessage {...messages.AmountOfMoney} />
+            {Money(afterCheckInCost)} đ
+          </h5>
+          <div style={{ minHeight: '50px' }}>
+            <FormattedMessage {...messages.AmountOfMoneyTransfer} />
+          </div>
+          <div style={{ boxShadow: 'rgba(3, 7, 18, 0.01) 0px -1px 3px, rgba(3, 7, 18, 0.03) 0px -2px 12px, rgba(3, 7, 18, 0.04) 0px -5px 27px, rgba(3, 7, 18, 0.04) 1px -10px 47px, rgba(3, 7, 18, 0.04) 1px -15px 74px;' }}>
+            <Select
+              placeholder="Chọn ngân hàng"
+              options={bankOptions}
+              onChange={selectedOption => {
+                console.log('Selected bank:', selectedOption);
+                setSelectedBankName(selectedOption.bankName);
+                setSelectedBankNumber(selectedOption.bankNumber);
+                setSelectedBankUsername(selectedOption.bankUsername);
+                setBanking(selectedOption.objectBankId);
+                setKeyPayment(getRandomHex2());
+              }}
+            />
+          </div>
+
+          {selectedBankName && (
+            <div style={{ position: 'relative', top: '20px', padding: '0px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+                <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Ngân hàng</span>
+                <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{selectedBankName}</span>
+
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+                <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Số tài khoản</span>
+                <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{selectedBankNumber}</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+                <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Tên người nhận</span>
+                <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{selectedBankUsername}</span>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+                <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Nội dung thanh toán</span>
+                <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{keyPayment}</span>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+                <span style={{ color: 'brown', fontSize: '14px', margin: '0px 0 6px 3px' }}>Sau khi bấm "Chấp nhận", bạn sẽ được chuyển đến trang giao dịch. Vui lòng tải ảnh hóa đơn để xác nhận thanh toán và chờ chủ trọ phê duyệt!</span>
+              </div>
+            </div>
+          )}
+        </div>
       </ModalComponent>
 
-      {/* MODAL THANH TOÁN "NGÀY THANH TOÁN" */}
-      <ModalComponent
+      {/* MODAL THANH TOÁN "NGÀY THANH TOÁN" BẰNG VÍ NỘI BỘ*/}
+      {/* <ModalComponent
         modal={isOpen}
         modalTitle="Xác nhận thanh toán"
         footer={
@@ -1040,6 +1324,266 @@ export function JobDetailUser(props) {
             </span>
           </div>
         </div>
+      </ModalComponent> */}
+      {/* THANH TOÁN HÀNG THÁNG BẰNG NGÂN HÀNG */}
+      <ModalComponent
+        modal={isOpen}
+        modalTitle="Xác nhận thanh toán"
+        footer={
+          <>
+            <Button className="btn btn-secondary" onClick={toggleModal}>
+              {<FormattedMessage {...messages.Cancel} />}
+            </Button>
+            <Button className="btn btn-success" onClick={SubmitModal}>
+              {<FormattedMessage {...messages.Accept} />}
+            </Button>
+          </>
+        }
+      >
+        <div
+          className="bill-content"
+          style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span style={{ minWidth: '300px' }}>
+              <FormattedMessage {...messages.numberDayStay} />
+              {': '}
+            </span>
+            <span>{numberDayStay} (ngày)</span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span style={{ minWidth: '300px' }}>
+              <FormattedMessage {...messages.RoomPrice} />
+              {/* {': '} */}
+            </span>
+            <span>{Money(roomPricePerMon)}/tháng</span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span style={{ minWidth: '300px' }}>
+              <FormattedMessage {...messages.totalRoomPrice} />
+              {': '}
+            </span>
+            <span>{Money(roomPrice)}</span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span style={{ minWidth: '300px' }}>
+              <FormattedMessage {...messages.ElectricNumber} />
+              {': '}
+            </span>
+            <span>{electricNumber} (kWh)</span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span style={{ minWidth: '300px' }}>
+              <FormattedMessage {...messages.ElectricPrice} />
+              {': '}
+            </span>
+            <span>{Money(electricPricePerKwh)}</span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span style={{ minWidth: '300px' }}>
+              <FormattedMessage {...messages.TotalElectric} />
+              {': '}
+            </span>
+            <span>{Money(electricPrice)}</span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span style={{ minWidth: '300px' }}>
+              <FormattedMessage {...messages.numberOfPerson} />
+              {': '}
+            </span>
+            <span>{numberPerson} (người)</span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span style={{ minWidth: '300px' }}>
+              <FormattedMessage {...messages.WaterPrice} />
+              {': '}
+            </span>
+            <span>{Money(waterPricePerPerson)}</span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span style={{ minWidth: '300px' }}>
+              <FormattedMessage {...messages.TotalWater} />
+              {': '}
+            </span>
+            <span>{Money(waterPrice)}</span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span style={{ minWidth: '300px' }}>
+              <FormattedMessage {...messages.numberOfVihicle} />
+              {': '}
+            </span>
+            <span>{numberVehicle} (chiếc)</span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span style={{ minWidth: '300px' }}>
+              <FormattedMessage {...messages.VehiclePrice} />
+              {': '}
+            </span>
+            <span>{Money(vehiclePricePer)}</span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span style={{ minWidth: '300px' }}>
+              <FormattedMessage {...messages.totalVihicle} />
+              {': '}
+            </span>
+            <span>{Money(vehiclePrice)}</span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              borderBottom: '1px solid grey',
+              paddingBottom: '6px',
+            }}
+          >
+            <span style={{ minWidth: '300px' }}>
+              <FormattedMessage {...messages.ServicePrice} />
+              {': '}
+            </span>
+            <span>{Money(servicePrice)}</span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span
+              style={{ minWidth: '300px', fontSize: '18px', fontWeight: '700' }}
+            >
+              <FormattedMessage {...messages.TotalPrice} />
+              {': '}
+            </span>
+            <span style={{ fontSize: '18px', fontWeight: '700' }}>{Money(totalPrice)}</span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span style={{ minWidth: '300px' }}>
+              {/* <FormattedMessage {...messages.AmountOfMoneyDec} /> */}
+              Vui lòng chọn ngân hàng để thanh toán
+            </span>
+          </div>
+          <div>
+            <Select
+              placeholder="Chọn ngân hàng"
+              options={bankOptions}
+              onChange={selectedOption => {
+                console.log('Selected bank:', selectedOption);
+                setSelectedBankName(selectedOption.bankName);
+                setSelectedBankNumber(selectedOption.bankNumber);
+                setSelectedBankUsername(selectedOption.bankUsername);
+                setBanking(selectedOption.objectBankId);
+                setKeyPayment(getRandomHex2());
+              }}
+            />
+          </div>
+
+          {selectedBankName && (
+            <div style={{ position: 'relative', top: '20px', padding: '0px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+                <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Ngân hàng</span>
+                <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{selectedBankName}</span>
+
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+                <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Số tài khoản</span>
+                <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{selectedBankNumber}</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+                <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Tên người nhận</span>
+                <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{selectedBankUsername}</span>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+                <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Nội dung thanh toán</span>
+                <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{keyPayment}</span>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+                <span style={{ color: 'brown', fontSize: '14px', margin: '0px 0 6px 3px' }}>Sau khi bấm "Chấp nhận", bạn sẽ được chuyển đến trang giao dịch. Vui lòng tải ảnh hóa đơn để xác nhận thanh toán và chờ chủ trọ phê duyệt!</span>
+              </div>
+            </div>
+          )}
+        </div>
       </ModalComponent>
 
       <ModalComponent
@@ -1110,6 +1654,8 @@ export function JobDetailUser(props) {
 
 JobDetailUser.propTypes = {
   dispatch: PropTypes.func,
+  getBankInfo: PropTypes.func,
+  postTransaction: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -1118,8 +1664,14 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    getJob: (id, idElectricMetter) => {
-      dispatch(getJob(id, idElectricMetter));
+    getBankInfo: id => {
+      dispatch(getBankInfo(id));
+    },
+    postTransaction: payload => {
+      dispatch(postTransaction(payload));
+    },
+    getJob: (id, idRoom) => {
+      dispatch(getJob(id, idRoom));
     },
     getProfile: () => {
       dispatch(getProfile());
@@ -1127,8 +1679,8 @@ function mapDispatchToProps(dispatch) {
     putActive: id => {
       dispatch(putActive(id));
     },
-    putRenewContract: (id, numberMon) => {
-      dispatch(putRenewContract(id, numberMon));
+    putRenewContract: (id, numberMon, idRoom) => {
+      dispatch(putRenewContract(id, numberMon, idRoom));
     },
     putDeposit: payload => {
       dispatch(putDeposit(payload));

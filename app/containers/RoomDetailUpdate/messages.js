@@ -63,7 +63,19 @@ export default defineMessages({
   },
   electricMetter: {
     id: `${scope}.electricMetter`,
-    defaultMessage: 'Mã số đồng hồ điện',
+    defaultMessage: 'Số đồng hồ đã sử dụng',
+  },
+  idMetter: {
+    id: `${scope}.idMetter`,
+    defaultMessage: 'ID đồng hồ',
+  },
+  timeMeter: {
+    id: `${scope}.timeMeter`,
+    defaultMessage: 'Thời gian lắp',
+  },
+  addMeter: {
+    id: `${scope}.addMeter`,
+    defaultMessage: 'Thêm',
   },
   electricityPrice: {
     id: `${scope}.electricityPrice`,

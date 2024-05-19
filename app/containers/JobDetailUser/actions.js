@@ -8,6 +8,9 @@ import {
   GET_JOB,
   GET_JOB_SUCCESS,
   GET_JOB_FAIL,
+  POST_TRANSACTION,
+  POST_TRANSACTION_SUCCESS,
+  POST_TRANSACTION_FAIL,
   GET_DATA_SUCCESS,
   GET_DATA_FAIL,
   PUT_ACTIVE,
@@ -26,7 +29,35 @@ import {
   PUT_DEPOSIT,
   PUT_DEPOSIT_SUCCESS,
   PUT_DEPOSIT_FAIL,
+  GET_BANK_INFO,
+  GET_BANK_INFO_SUCCESS,
+  GET_BANK_INFO_FAIL,
 } from './constants';
+
+
+export function getBankInfo(id) {
+  console.log("idroom in actions", id);
+  return {
+    type: GET_BANK_INFO,
+    id,
+  };
+}
+
+export function getBankInfoSuccess(response) {
+  console.log("idroom in actions SUCCESS", response);
+  return {
+      type: GET_BANK_INFO_SUCCESS,
+      response,
+  };
+}
+
+export function getBankInfoFail(error) {
+  console.log("idroom in actions FAIL", error);
+  return {
+      type: GET_BANK_INFO_FAIL,
+      error,
+  };
+}
 
 export function putJob(id) {
   return {
@@ -48,10 +79,30 @@ export function putJobFail(error) {
     error,
   };
 }
-export function getJob(id, idElectricMetter) {
+export function postTransaction(payload) {
+  return {
+    type: POST_TRANSACTION,
+    payload,
+  };
+}
+
+export function postTransactionSuccess(response) {
+  return {
+    type: POST_TRANSACTION_SUCCESS,
+    response,
+  };
+}
+
+export function postTransactionFail(error) {
+  return {
+    type: POST_TRANSACTION_FAIL,
+    error,
+  };
+}
+export function getJob(id, idRoom) {
   return {
     type: GET_JOB,
-    id, idElectricMetter,
+    id, idRoom,
   };
 }
 
@@ -104,11 +155,12 @@ export function putActiveFail(error) {
   };
 }
 
-export function putRenewContract(id, numberMon) {
+export function putRenewContract(id, numberMon, idRoom) {
   return {
     type: PUT_RENEW_CONTRACT,
     id,
     numberMon,
+    idRoom,
   };
 }
 

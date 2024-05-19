@@ -71,7 +71,7 @@ export default defineMessages({
   },
   hostRoomHist: {
     id: `${scope}.hostRoomHist`,
-    defaultMessage: 'Lịch sử Thuê Phòng',
+    defaultMessage: 'Quản lý tòa nhà',
   },
   managerRoom: {
     id: `${scope}.managerRoom`,
@@ -109,6 +109,10 @@ export default defineMessages({
   order: {
     id: `${scope}.order`,
     defaultMessage: 'Quản lý đặt cọc',
+  },
+  manageMonthly: {
+    id: `${scope}.manageMonthly`,
+    defaultMessage: 'Quản lý thanh toán hàng tháng MỚI',
   },
   monthlyOrder: {
     id: `${scope}.monthlyOrder`,

@@ -125,10 +125,10 @@ export function HistoryFloorsRoomHost(props) {
   return (
     <div className="login-page-wrapper">
       <Helmet>
-        <title>HistoryFloorsRoomHost</title>
+        <title>Manage Room</title>
         <meta
           name="description"
-          content="Description of HistoryFloorsRoomHost"
+          content="Description of ManageRoom"
         />
       </Helmet>
       <div className="title">Danh sách phòng</div>
