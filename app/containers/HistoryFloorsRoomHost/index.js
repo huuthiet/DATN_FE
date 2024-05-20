@@ -98,24 +98,25 @@ export function HistoryFloorsRoomHost(props) {
       headerName: 'Chi Tiết',
       headerAlign: 'center',
       width: 400,
+      align: 'center',
       headerClassName: 'header-bold',
       renderCell: params => {
         return (
           <>
-            <Button
+            <a className="btn-detail"
               color="primary"
               onClick={() => {
                 history.push(
                   // eslint-disable-next-line no-underscore-dangle
                   `/historyRoomHost/room/${params.row.motelRoomId}/roomdetail/${
-                    // eslint-disable-next-line no-underscore-dangle
-                    params.row._id
+                  // eslint-disable-next-line no-underscore-dangle
+                  params.row._id
                   }`,
                 );
               }}
             >
               Chi tiết phòng
-            </Button>
+            </a>
           </>
         );
       },
@@ -131,7 +132,7 @@ export function HistoryFloorsRoomHost(props) {
           content="Description of HistoryFloorsRoomHost"
         />
       </Helmet>
-      <div className="title">Danh sách phòng</div>
+      <div className="title">Lịch sử đặt cọc</div>
       <div className="job-list-wrapper container-fluid">
         <div style={{ width: '100%' }}>
           <DataGrid

@@ -38,12 +38,12 @@ const LineChart = ({ textY, nameChart, dataEnergy, labelsEnergy }) => {
         data: dataLine,
         fill: true,
         backgroundColor: 'rgba(75, 192, 192, 0.25)',
-        smooth: true,
+        smooth: false,
         borderColor: 'rgb(75, 192, 192)',
-        tension: 0.01,
-        borderWidth: 1, // Set border width
+        // tension: 0.01,
+        // borderWidth: 1, // Set border width
         pointRadius: 3,
-        cubicInterpolationMode: 'monotone',
+        // cubicInterpolationMode: 'monotone',
       },
     ],
   };

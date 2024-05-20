@@ -1,7 +1,10 @@
-.title-abc {
+.container{
+  max-width: 90%;
+  .title-abc {
     color: rgb(0, 183, 255);
     font-size: 18px;
     text-align: center;
     padding: 10px;
     font-weight: 500;
   }
+}

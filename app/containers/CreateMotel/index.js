@@ -110,9 +110,9 @@ export function CreateMotel(props) {
         <title>CreateMotel</title>
         <meta name="description" content="Description of CreateMotel" />
       </Helmet>
-      <Container>
+      <Container className=''>
         <div className="header">
-          <FormattedMessage {...messages.AccommodationSize} />
+          <FormattedMessage {...messages.AccommodationInformation} />
         </div>
         <Formik
           initialValues={{
@@ -153,7 +153,7 @@ export function CreateMotel(props) {
               <form onSubmit={handleSubmit}>
                 <div
                   className="show"
-                  // style={{ display: !showMore ? 'block' : 'none' }}
+                // style={{ display: !showMore ? 'block' : 'none' }}
                 >
                   {
                     <FormattedMessage {...messages.enterFloors}>
@@ -204,141 +204,8 @@ export function CreateMotel(props) {
                       }
                     </div>
                   ))}
-                  {/* {<FormattedMessage {...messages.quantityRoom}>
-										{(msg) => (
-											<InputForm
-												label={msg}
-												value={listToFloor(values.floors)}
-												readOnly
-											/>
-										)}
-									</FormattedMessage>} */}
-                  {/* <div className="status-wrapper">
-										{<FormattedMessage {...messages.enterRoom}>
-											{(msg) => (
-												<InputForm
-													value={values.rentedRoom}
-													touched={touched.rentedRoom}
-													error={errors.rentedRoom}
-													label={<FormattedMessage {...messages.rented} />}
-													placeholder={msg}
-													name="rentedRoom"
-													autoComplete="rented-room"
-													type="number"
-													min={0}
-													max={listToFloor(values.floors) - values.depositedRoom}
-													onChange={evt => {
-														setRentedRoom(evt.target.value);
-													}}
-													onBlur={handleBlur}
-												/>
-											)}
-										</FormattedMessage>}
-										<div className="status">
-											<div className="red-box" />
-										</div>
-									</div>
-									<div className="status-wrapper">
-										{<FormattedMessage {...messages.enterFloors}>
-											{(msg) => (
-												<InputForm
-													value={values.depositedRoom}
-													touched={touched.depositedRoom}
-													error={errors.depositedRoom}
-													label={<FormattedMessage {...messages.deposited} />}
-													placeholder={msg}
-													name="depositedRoom"
-													autoComplete="deposited-room"
-													type="number"
-													min={0}
-													max={listToFloor(values.floors) - values.rentedRoom}
-													onChange={evt => {
-														setDepositedRoom(evt.target.value);
-													}}
-													onBlur={handleBlur}
-												/>
-											)}
-										</FormattedMessage>}
-
-										<div className="status">
-											<div className="orange-box" />
-										</div>
-									</div>
-
-									<div className="status-wrapper">
-										<InputForm label={<FormattedMessage {...messages.roomAreAvailable} />} value={availRoom} readOnly />
-										<div className="status">
-											<div className="green-box" />
-										</div>
-									</div> */}
-                  <div>
-                    {
-                      // values.rooms.map((item, index) => (
-                      /* eslint no-underscore-dangle: 0 */
-                      // <Row key={index.toString()}>
-                      // 	<Col xs={3}>
-                      // 		{<FormattedMessage {...messages.Floor}>
-                      // 			{(msg) => (
-                      // 				<InputForm
-                      // 					label={msg}
-                      // 					type="number"
-                      // 					onChange={e => {
-                      // 						const newArr = [...values.rooms];
-                      // 						const str = newArr[index].roomKey.split('-');
-                      // 						str[0] = `F${e.target.value}`;
-                      // 						newArr[index] = {
-                      // 							roomKey: `${str[0]}-${str[1]}`,
-                      // 							availableDate: newArr[index].availableDate,
-                      // 						};
-                      // 						setRooms(newArr);
-                      // 					}}
-                      // 				// readOnly
-                      // 				// value={index + 1}
-                      // 				/>
-                      // 			)}
-                      // 		</FormattedMessage>}
-                      // 	</Col>
-                      // 	<Col xs={3}>
-                      // 		<InputForm
-                      // 			label={<FormattedMessage {...messages.Room} />}
-                      // 			type="number"
-                      // 			onChange={e => {
-                      // 				const newArr = [...values.rooms];
-                      // 				const str = newArr[index].roomKey.split('-');
-                      // 				str[1] = `R${e.target.value}`;
-                      // 				newArr[index] = {
-                      // 					roomKey: `${str[0]}-${str[1]}`,
-                      // 					availableDate: newArr[index].availableDate,
-                      // 				};
-                      // 				setRooms(newArr);
-                      // 			}}
-                      // 		/>
-                      // 	</Col>
-                      // 	<Col xs={6}>
-                      // 		<DatePicker
-                      // 			dateFormat="dd/MM/yyyy"
-                      // 			selected={moment(
-                      // 				values.rooms[index].availableDate,
-                      // 				'MM/DD/YYYY',
-                      // 			).toDate()}
-                      // 			onChange={date => {
-                      // 				const newArr = [...values.rooms];
-                      // 				newArr[index] = {
-                      // 					roomKey: newArr[index].roomKey,
-                      // 					availableDate: moment(date).format('MM/DD/YYYY'),
-                      // 				};
-                      // 				setRooms(newArr);
-                      // 			}}
-                      // 			customInput={<InputForm label={<FormattedMessage {...messages.RoomAvailableFrom} />} />}
-                      // 		/>
-                      // 	</Col>
-                      // </Row>
-                      // ))
-                    }
-                  </div>
-
                   <Row>
-                    <Col xs={4}>
+                    <Col xs={6} md={4}>
                       <CheckBox
                         label="Internet"
                         onChange={e => {
@@ -357,7 +224,7 @@ export function CreateMotel(props) {
                         }}
                       />
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={6} md={4}>
                       <CheckBox
                         label={<FormattedMessage {...messages.washingDrying} />}
                         onChange={e => {
@@ -376,7 +243,7 @@ export function CreateMotel(props) {
                         }}
                       />
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={6} md={4}>
                       <CheckBox
                         label={<FormattedMessage {...messages.parkingLot} />}
                         onChange={e => {
@@ -395,7 +262,7 @@ export function CreateMotel(props) {
                         }}
                       />
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={6} md={4}>
                       <CheckBox
                         label={<FormattedMessage {...messages.television} />}
                         onChange={e => {
@@ -414,7 +281,7 @@ export function CreateMotel(props) {
                         }}
                       />
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={6} md={4}>
                       <CheckBox
                         label={
                           <FormattedMessage {...messages.AirConditioner} />
@@ -435,7 +302,7 @@ export function CreateMotel(props) {
                         }}
                       />
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={6} md={4}>
                       <CheckBox
                         label={<FormattedMessage {...messages.toiletBowl} />}
                         onChange={e => {
@@ -454,7 +321,7 @@ export function CreateMotel(props) {
                         }}
                       />
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={6} md={4}>
                       <CheckBox
                         label={<FormattedMessage {...messages.Mezzanine} />}
                         onChange={e => {
@@ -473,7 +340,7 @@ export function CreateMotel(props) {
                         }}
                       />
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={6} md={4}>
                       <CheckBox
                         label={<FormattedMessage {...messages.washstand} />}
                         onChange={e => {
@@ -492,7 +359,7 @@ export function CreateMotel(props) {
                         }}
                       />
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={6} md={4}>
                       <CheckBox
                         label={<FormattedMessage {...messages.clearTheRoom} />}
                         onChange={e => {
@@ -511,7 +378,7 @@ export function CreateMotel(props) {
                         }}
                       />
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={6} md={4}>
                       <CheckBox
                         label={<FormattedMessage {...messages.WoodFloor} />}
                         onChange={e => {
@@ -530,7 +397,7 @@ export function CreateMotel(props) {
                         }}
                       />
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={6} md={4}>
                       <CheckBox
                         label={<FormattedMessage {...messages.Wardrobe} />}
                         onChange={e => {
@@ -549,7 +416,7 @@ export function CreateMotel(props) {
                         }}
                       />
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={6} md={4}>
                       <CheckBox
                         label={<FormattedMessage {...messages.shower} />}
                         onChange={e => {
@@ -568,7 +435,7 @@ export function CreateMotel(props) {
                         }}
                       />
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={6} md={4}>
                       <CheckBox
                         label={<FormattedMessage {...messages.FreeTime} />}
                         onChange={e => {
@@ -587,7 +454,7 @@ export function CreateMotel(props) {
                         }}
                       />
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={6} md={4}>
                       <CheckBox
                         label={
                           <FormattedMessage {...messages.PrivateEntrance} />
@@ -610,217 +477,230 @@ export function CreateMotel(props) {
                     </Col>
                   </Row>
                 </div>
-                <div className="show">
-                  {
-                    <FormattedMessage {...messages.NameofMotel}>
-                      {msg => (
-                        <InputForm
-                          label={msg}
-                          placeholder={msg}
-                          name="name"
-                          autoComplete="name"
-                          value={values.name}
-                          touched={touched.name}
-                          error={errors.name}
-                          onChange={evt => {
-                            handleChange(evt);
-                          }}
-                          onBlur={handleBlur}
-                        />
-                      )}
-                    </FormattedMessage>
-                  }
-                  {
-                    <FormattedMessage {...messages.Address}>
-                      {msg => (
-                        <InputLocation
-                          label={msg}
-                          placeholder={msg}
-                          name="address"
-                          autoComplete="address"
-                          touched={touched.address}
-                          error={errors.address}
-                          onSelect={address => {
-                            setFieldValue('address', address.formatted_address);
-                          }}
-                          onBlur={handleBlur}
-                        />
-                      )}
-                    </FormattedMessage>
-                  }
+                <Row className="show">
+                  <Col xs={12} md={6}>
+                    {
+                      <FormattedMessage {...messages.NameofMotel}>
+                        {msg => (
+                          <InputForm
+                            label={msg}
+                            placeholder={msg}
+                            name="name"
+                            autoComplete="name"
+                            value={values.name}
+                            touched={touched.name}
+                            error={errors.name}
+                            onChange={evt => {
+                              handleChange(evt);
+                            }}
+                            onBlur={handleBlur}
+                          />
+                        )}
+                      </FormattedMessage>
+                    }
+                  </Col>
+                  <Col xs={12} md={6}>
+                    {
+                      <FormattedMessage {...messages.Address}>
+                        {msg => (
+                          <InputLocation
+                            label={msg}
+                            placeholder={msg}
+                            name="address"
+                            autoComplete="address"
+                            touched={touched.address}
+                            error={errors.address}
+                            onSelect={address => {
+                              setFieldValue('address', address.formatted_address);
+                            }}
+                            onBlur={handleBlur}
+                          />
+                        )}
+                      </FormattedMessage>
+                    }
+                  </Col>
 
-                  <div>{<FormattedMessage {...messages.rangePrice} />}</div>
-                  <Row>
-                    <Col>
-                      <InputForm
-                        type="number"
-                        label={<FormattedMessage {...messages.minPrice} />}
-                        min={0}
-                        name="minPrice"
-                        value={values.minPrice}
-                        touched={touched.minPrice}
-                        error={errors.minPrice}
-                        onChange={evt => {
-                          handleChange(evt);
-                        }}
-                        onBlur={handleBlur}
-                      />
-                    </Col>
-                    <Col>
-                      <InputForm
-                        type="number"
-                        label={<FormattedMessage {...messages.maxPrice} />}
-                        min={0}
-                        name="maxPrice"
-                        value={values.maxPrice}
-                        touched={touched.maxPrice}
-                        error={errors.maxPrice}
-                        onChange={evt => {
-                          handleChange(evt);
-                        }}
-                        onBlur={handleBlur}
-                      />
-                    </Col>
-                    <Col>
-                      <InputForm
-                        type="number"
-                        label={<FormattedMessage {...messages.roomAcreage} />}
-                        min={0}
-                        name="roomAcreage"
-                        value={values.roomAcreage}
-                        touched={touched.roomAcreage}
-                        error={errors.roomAcreage}
-                        onChange={evt => {
-                          handleChange(evt);
-                        }}
-                        onBlur={handleBlur}
-                      />
-                    </Col>
-                  </Row>
-                  {
-                    <FormattedMessage {...messages.EnterNumberPhone}>
-                      {msg => (
-                        <InputForm
-                          label={<FormattedMessage {...messages.ProfileRoom} />}
-                          placeholder={msg}
-                          name="contactPhone"
-                          autoComplete="contactPhone"
-                          touched={touched.contactPhone}
-                          error={errors.contactPhone}
-                          onChange={evt => {
-                            handleChange(evt);
-                          }}
-                          onBlur={handleBlur}
-                        />
-                      )}
-                    </FormattedMessage>
-                  }
-                  {
-                    <FormattedMessage {...messages.enterDescription}>
-                      {msg => (
-                        <InputForm
-                          type="textarea"
-                          label={msg}
-                          placeholder={msg}
-                          name="description"
-                          autoComplete="description"
-                          value={values.description}
-                          touched={touched.description}
-                          error={errors.description}
-                          onChange={evt => {
-                            handleChange(evt);
-                          }}
-                          onBlur={handleBlur}
-                        />
-                      )}
-                    </FormattedMessage>
-                  }
+                  <Col xs={12}>
 
-                  <Row>
-                    <Col xs={6} md={3}>
-                      <InputForm
-                        label={
-                          <FormattedMessage {...messages.electricityPrice} />
+                    <FormattedMessage {...messages.rangePrice} />
+                  </Col>
+                  <Col xs={12} spacing={2}>
+                    <Row>
+                      <Col xs={12} md={3}>
+                        <InputForm
+                          type="number"
+                          label={<FormattedMessage {...messages.minPrice} />}
+                          min={0}
+                          name="minPrice"
+                          value={values.minPrice}
+                          touched={touched.minPrice}
+                          error={errors.minPrice}
+                          onChange={evt => {
+                            handleChange(evt);
+                          }}
+                          onBlur={handleBlur}
+                        />
+                      </Col>
+                      <Col xs={12} md={3}>
+                        <InputForm
+                          type="number"
+                          label={<FormattedMessage {...messages.maxPrice} />}
+                          min={0}
+                          name="maxPrice"
+                          value={values.maxPrice}
+                          touched={touched.maxPrice}
+                          error={errors.maxPrice}
+                          onChange={evt => {
+                            handleChange(evt);
+                          }}
+                          onBlur={handleBlur}
+                        />
+                      </Col>
+                      <Col xs={12} md={3}>
+                        <InputForm
+                          type="number"
+                          label={<FormattedMessage {...messages.roomAcreage} />}
+                          min={0}
+                          name="roomAcreage"
+                          value={values.roomAcreage}
+                          touched={touched.roomAcreage}
+                          error={errors.roomAcreage}
+                          onChange={evt => {
+                            handleChange(evt);
+                          }}
+                          onBlur={handleBlur}
+                        />
+                      </Col>
+                      <Col xs={12} md={3}>
+                        {
+                          <FormattedMessage {...messages.EnterNumberPhone}>
+                            {msg => (
+                              <InputForm
+                                label={<FormattedMessage {...messages.ProfileRoom} />}
+                                placeholder={msg}
+                                name="contactPhone"
+                                autoComplete="contactPhone"
+                                touched={touched.contactPhone}
+                                error={errors.contactPhone}
+                                onChange={evt => {
+                                  handleChange(evt);
+                                }}
+                                onBlur={handleBlur}
+                              />
+                            )}
+                          </FormattedMessage>
                         }
-                        type="number"
-                        min={0}
-                        placeholder="VND"
-                        name="electricityPrice"
-                        autoComplete="description"
-                        value={values.electricityPrice}
-                        touched={touched.electricityPrice}
-                        error={errors.electricityPrice}
-                        onChange={evt => {
-                          handleChange(evt);
-                        }}
-                        onBlur={handleBlur}
-                      />
-                    </Col>
-                    <Col xs={6} md={3}>
-                      <InputForm
-                        label={<FormattedMessage {...messages.waterPrice} />}
-                        type="number"
-                        min={0}
-                        placeholder="VND"
-                        name="waterPrice"
-                        autoComplete="waterPrice"
-                        value={values.waterPrice}
-                        touched={touched.waterPrice}
-                        error={errors.waterPrice}
-                        onChange={evt => {
-                          handleChange(evt);
-                        }}
-                        onBlur={handleBlur}
-                      />
-                    </Col>
-                    <Col xs={6} md={3}>
-                      <InputForm
-                        label={<FormattedMessage {...messages.wifiPrice} />}
-                        type="number"
-                        min={0}
-                        placeholder="VND"
-                        name="wifiPrice"
-                        autoComplete="wifiPrice"
-                        value={values.wifiPrice}
-                        touched={touched.wifiPrice}
-                        error={errors.wifiPrice}
-                        onChange={evt => {
-                          handleChange(evt);
-                        }}
-                        onBlur={handleBlur}
-                      />
-                    </Col>
-                    <Col xs={6} md={3}>
-                      <InputForm
-                        label={<FormattedMessage {...messages.garbagePrice} />}
-                        type="number"
-                        min={0}
-                        placeholder="VND"
-                        name="garbagePrice"
-                        autoComplete="garbagePrice"
-                        value={values.garbagePrice}
-                        touched={touched.garbagePrice}
-                        error={errors.garbagePrice}
-                        onChange={evt => {
-                          handleChange(evt);
-                        }}
-                        onBlur={handleBlur}
-                      />
-                    </Col>
-                  </Row>
+                      </Col>
+                    </Row>
+                  </Col>
 
-                  <Row>
-                    <Col xs={12}>
-                      <Button
-                        className="btn-block"
-                        color="success"
-                        type="submit"
-                      >
-                        {<FormattedMessage {...messages.Finish} />}
-                      </Button>
-                    </Col>
-                  </Row>
-                </div>
+                  <Col xs={12}>
+                    {
+                      <FormattedMessage {...messages.enterDescription}>
+                        {msg => (
+                          <InputForm
+                            type="textarea"
+                            label={msg}
+                            placeholder={msg}
+                            name="description"
+                            autoComplete="description"
+                            value={values.description}
+                            touched={touched.description}
+                            error={errors.description}
+                            onChange={evt => {
+                              handleChange(evt);
+                            }}
+                            onBlur={handleBlur}
+                          />
+                        )}
+                      </FormattedMessage>
+                    }
+                  </Col>
+
+                  <Col xs={12}>
+                    <Row>
+                      <Col xs={12} md={3}>
+                        <InputForm
+                          label={
+                            <FormattedMessage {...messages.electricityPrice} />
+                          }
+                          type="number"
+                          min={0}
+                          placeholder="VND"
+                          name="electricityPrice"
+                          autoComplete="description"
+                          value={values.electricityPrice}
+                          touched={touched.electricityPrice}
+                          error={errors.electricityPrice}
+                          onChange={evt => {
+                            handleChange(evt);
+                          }}
+                          onBlur={handleBlur}
+                        />
+                      </Col>
+                      <Col xs={12} md={3}>
+                        <InputForm
+                          label={<FormattedMessage {...messages.waterPrice} />}
+                          type="number"
+                          min={0}
+                          placeholder="VND"
+                          name="waterPrice"
+                          autoComplete="waterPrice"
+                          value={values.waterPrice}
+                          touched={touched.waterPrice}
+                          error={errors.waterPrice}
+                          onChange={evt => {
+                            handleChange(evt);
+                          }}
+                          onBlur={handleBlur}
+                        />
+                      </Col>
+                      <Col xs={12} md={3}>
+                        <InputForm
+                          label={<FormattedMessage {...messages.wifiPrice} />}
+                          type="number"
+                          min={0}
+                          placeholder="VND"
+                          name="wifiPrice"
+                          autoComplete="wifiPrice"
+                          value={values.wifiPrice}
+                          touched={touched.wifiPrice}
+                          error={errors.wifiPrice}
+                          onChange={evt => {
+                            handleChange(evt);
+                          }}
+                          onBlur={handleBlur}
+                        />
+                      </Col>
+                      <Col xs={12} md={3}>
+                        <InputForm
+                          label={<FormattedMessage {...messages.garbagePrice} />}
+                          type="number"
+                          min={0}
+                          placeholder="VND"
+                          name="garbagePrice"
+                          autoComplete="garbagePrice"
+                          value={values.garbagePrice}
+                          touched={touched.garbagePrice}
+                          error={errors.garbagePrice}
+                          onChange={evt => {
+                            handleChange(evt);
+                          }}
+                          onBlur={handleBlur}
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col xs={12}>
+                    <Button
+                      className="btn-block"
+                      color="success"
+                      type="submit"
+                    >
+                      {<FormattedMessage {...messages.Finish} />}
+                    </Button>
+                  </Col>
+                </Row>
               </form>
             </div>
           )}

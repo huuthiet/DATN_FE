@@ -127,6 +127,7 @@ const FollowEnergyUser = props => {
 
   const handleStartDateDisplayChange = event => {
     const newDate = event.target.value;
+    console.log('newDate', newDate);
 
     setStartDateDisplay(newDate);
   };
@@ -146,7 +147,7 @@ const FollowEnergyUser = props => {
         urlLink.api.getTotalKWhPerDayForDayToDayV2 +
         roomId}/${startDateDisplay}/${endDateDisplay}`;
 
-      console.log("apiGetDay", apiGetDay);
+      console.log("apiGetDay hihi: ", apiGetDay);
 
       try {
         setValue(2);
@@ -155,6 +156,7 @@ const FollowEnergyUser = props => {
         const detailKwhTitle = document.getElementById('detail-kwh-title');
         totalKWhtitle.setAttribute('hidden', true);
         detailKwhTitle.setAttribute('hidden', true);
+        console.log("apiGetDay hihi: ", apiGetDay);
         const response = await axios.get(apiGetDay);
         console.log('response', response);
 
@@ -542,10 +544,10 @@ const FollowEnergyUser = props => {
   // const apiKwh =
   //   urlLink.api.serverUrl + urlLink.api.getDataEnergyPerHour + idMetter;
 
-  const apiKwh = urlLink.api.serverUrl + urlLink.api.getTotalKWhPerHourInOneDayV2
-    + roomId + "/" + moment().format("YYYY-MM-DD");
+  // const apiKwh = urlLink.api.serverUrl + urlLink.api.getTotalKWhPerHourInOneDayV2
+  //   + roomId + "/" + moment().format("YYYY-MM-DD");
 
-  console.log('apiKwh', apiKwh);
+  // console.log('apiKwh', apiKwh);
 
 
   const [value, setValue] = useState(0);

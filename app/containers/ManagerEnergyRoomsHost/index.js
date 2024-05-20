@@ -33,7 +33,7 @@ import {
   Col,
   Row,
 } from 'reactstrap';
-import { MoreHoriz } from '@material-ui/icons';
+import { MoreHoriz, Speed } from '@material-ui/icons';
 
 
 import { Link, useHistory } from 'react-router-dom';
@@ -58,6 +58,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Tooltip from '@material-ui/core/Tooltip';
 import { ArrowForwardIos } from '@material-ui/icons';
+import { Clock } from '@material-ui/pickers';
+
 
 const electricMetterStyled = room => ({
   color:
@@ -67,10 +69,11 @@ const electricMetterStyled = room => ({
     room.idElectricMetter === '0' || !room.idElectricMetter
       ? '1px solid red'
       : '1px solid green',
-  padding: room.idElectricMetter === '0' || '5px 8px',
-  width: room.idElectricMeter === '0' ? '30px' : '',
-  minWidth: room.idElectricMeter === '0' ? '30px' : '', // Sửa đổi minWidth ở đây
-  borderRadius: room.idElectricMetter === '0' || '5px',
+  width: '30px',
+  padding: '4px',
+  minWidth: '30px', // Sửa đổi minWidth ở đây
+  borderRadius: '5px',
+  fontSize: '12px',
   backgroundColor:
     room.idElectricMetter === '0' || !room.idElectricMetter
       ? 'rgba(255, 0, 0, 0.1)'
@@ -92,6 +95,7 @@ const ManagerEnergyRoomsHost = props => {
   const [endDate, setEndDate] = useState('');
   const [roomName, setRoomName] = useState({});
   const [roomId, setRoomId] = useState({});
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const getFirstDayOfCurrentMonth = () => {
     const currentDate = new Date();
@@ -209,6 +213,7 @@ const ManagerEnergyRoomsHost = props => {
   console.log('motel', motel);
 
   const cardStyle = {
+
     border: 'none',
     boxShadow: 'none',
     background: '#FAFAFA',
@@ -236,21 +241,43 @@ const ManagerEnergyRoomsHost = props => {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #F2F2F2;
+    background-color: #ebebeb;
     border: none;
-    color: #6d6d6d;
+    color: #797979;
     font-size: 15px;
-    padding: 5px 12px;
+    padding: 8px 12px;
     transition: background-color 0.5s;
-    border-radius: 10px;
+    border-radius: 20px;
     margin: 40px 0 10px 0;
+    width: calc(50% - 10px);
     &:hover {
       background-color: #dedede;
     }
     @media (max-width: 600px) {
-      width: calc(50% - 30px);
+      width: calc(50% - 20px);
     }
   `;
+
+  const StyledButton2 = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #6f41cb;
+  border: none;
+  color: white;
+  font-size: 15px;
+  padding: 8px 12px;
+  transition: background-color 0.5s;
+  border-radius: 20px;
+  margin: 40px 0 10px 0;
+  width: calc(50% - 10px);
+  &:hover {
+    background-color: #3a1486;
+  }
+  @media (max-width: 600px) {
+    width: calc(50% - 20px);
+  }
+`;
   const StyleMoreButton = styled.button`
     display: flex;
     justify-content: center;
@@ -274,11 +301,14 @@ const ManagerEnergyRoomsHost = props => {
     color: '#7B7B7B',
     fontSize: '20px',
     fontWeight: 'bold',
+
+    width: '100%',
   };
 
   const cardContentStyle = {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'justify-start',
+    gap: '4px',
   }
 
   return (
@@ -296,13 +326,14 @@ const ManagerEnergyRoomsHost = props => {
         }}
       >
         <InsertDriveFile className="summary-icon" />
-        Summary Report
+        Báo cáo tổng hợp
       </Button>
       {currentUser.role.length === 2 && currentUser.role.includes('host') ? (
         <Grid lg={12} container spacing={2}>
           {floors.map((floor, floorIndex) =>
             floor.rooms.map((room, roomIndex) => (
               <Grid Grid key={`room-${roomIndex}`} item lg={3} md={4} sm={6} xs={12}>
+
                 <ModalComponent
                   modal={modal}
                   toggle={cancelToggle}
@@ -367,6 +398,7 @@ const ManagerEnergyRoomsHost = props => {
                       </Tooltip>
                     </Typography>
 
+
                     <Typography
                       gutterBottom
                       variant="h5"
@@ -374,13 +406,12 @@ const ManagerEnergyRoomsHost = props => {
                       style={cardNameStyle}
                     >
                       <div style={cardContentStyle}>
-                        <span>{room.name}</span>
-
+                        Tên phòng: {' '}<span>{room.name}</span>
                       </div>
                     </Typography>
 
                     <Typography variant="body2" color="text.secondary">
-                      ID đồng hồ: &nbsp;
+                      <Speed style={{ fontSize: '22px', marginRight: '5px' }} />
                       <span style={electricMetterStyled(room)}>
                         {room.idElectricMetter === '0' ||
                           !room.idElectricMetter ? (
@@ -403,7 +434,7 @@ const ManagerEnergyRoomsHost = props => {
                         Xem chi tiết
                       </Link>
                     </StyledButton>
-                    <StyledButton onClick={() => toggle(room.name, room._id)}>Xuất hóa đơn</StyledButton>
+                    <StyledButton2 onClick={() => toggle(room.name, room._id)}>Xuất hóa đơn</StyledButton2>
                   </CardActions>
                 </Card>
               </Grid>

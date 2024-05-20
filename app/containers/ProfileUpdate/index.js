@@ -262,7 +262,7 @@ export function ProfileUpdate(props) {
                 props.postUpdateProfile(body);
 
                 // Chạy toast
-                toast.success('Đã cập nhật thành công? Hãy đợi để về trang Login', {
+                toast.success('Đã cập nhật thành công! Hãy đợi để về trang Login', {
                   position: 'top-right',
                   autoClose: 2000,
                   hideProgressBar: false,
@@ -283,7 +283,6 @@ export function ProfileUpdate(props) {
                   hideProgressBar: false,
                 });
               }
-
             }}
           >
             {({
@@ -298,8 +297,8 @@ export function ProfileUpdate(props) {
               <div className='profile-update-container'>
                 <form onSubmit={handleSubmit}>
                   <span className='profile-title'>Thông tin cá nhân</span>
-                  <Row className="infor" style={{ paddingTop: '50px' }}>
-                    <Col md={12}>
+                  <Row className="infor">
+                    {/* <Col md={12}>
                       <ListItem>
                         <ListItemAvatar>
                           <Avatar>
@@ -314,42 +313,46 @@ export function ProfileUpdate(props) {
                           }
                         />
                       </ListItem>
-                    </Col>
+                    </Col> */}
 
-                    <Col md={4}>
+                    <Col md={4} className="information">
+                      <span className="infor-title">
+                        <FormattedMessage {...messages.phoneNumberenter} />
+                      </span>
                       {
-                        <FormattedMessage {...messages.phoneNumberenter}>
-                          {msg => (
-                            <InputForm
-                              label={<FormattedMessage {...messages.phoneNumberenter} />}
-                              placeholder={msg}
-                              name="phoneNumber.number" // Đặt tên là "phoneNumber.number" thay vì "number"
-                              icon="fa fa-user"
-                              value={`${values.phoneNumber.number}`}
-                              touched={touched.phoneNumber && touched.phoneNumber.number} // Thêm && để kiểm tra cả số điện thoại
-                              error={errors.phoneNumber && errors.phoneNumber.number} // Thêm && để kiểm tra cả số điện thoại
-                              autoComplete="phoneNumber"
-                              onChange={evt => {
-                                setFieldValue("phoneNumber.number", evt.target.value); // Sử dụng setFieldValue để cập nhật giá trị của số điện thoại
-                              }}
-                              onBlur={handleBlur}
-                            />
-                          )}
-                        </FormattedMessage>
+                        <>
+                          <FormattedMessage {...messages.phoneNumberenter} >
+                            {msg => (
+                              <InputForm
+                                placeholder={msg}
+                                name="phoneNumber.number" // Đặt tên là "phoneNumber.number" thay vì "number"
+                                icon="fa fa-user"
+                                value={`${values.phoneNumber.number}`}
+                                touched={touched.phoneNumber && touched.phoneNumber.number} // Thêm && để kiểm tra cả số điện thoại
+                                error={errors.phoneNumber && errors.phoneNumber.number} // Thêm && để kiểm tra cả số điện thoại
+                                autoComplete="phoneNumber"
+                                onChange={evt => {
+                                  setFieldValue("phoneNumber.number", evt.target.value); // Sử dụng setFieldValue để cập nhật giá trị của số điện thoại
+                                }}
+                                onBlur={handleBlur}
+                              />
+                            )}
+                          </FormattedMessage>
+                        </>
 
                       }
                     </Col>
 
-                    <Col md={4}>
+                    <Col md={4} className="information">
+                      <span className="infor-title">
+                        <FormattedMessage
+                          {...messages.firstNameenter}
+                        />
+                      </span>
                       {
                         <FormattedMessage {...messages.firstNameenter}>
                           {msg => (
                             <InputForm
-                              label={
-                                <FormattedMessage
-                                  {...messages.firstNameenter}
-                                />
-                              }
                               placeholder={msg}
                               name="firstName"
                               icon="fa fa-user"
@@ -366,16 +369,14 @@ export function ProfileUpdate(props) {
                         </FormattedMessage>
                       }
                     </Col>
-                    <Col md={4}>
+                    <Col md={4} className="information">
+                      <span className="infor-title">
+                        <FormattedMessage {...messages.lastNameenter} />
+                      </span>
                       {
                         <FormattedMessage {...messages.lastNameenter}>
                           {msg => (
                             <InputForm
-                              label={
-                                <FormattedMessage
-                                  {...messages.lastNameenter}
-                                />
-                              }
                               placeholder={msg}
                               name="lastName"
                               icon="fa fa-user"
@@ -392,8 +393,8 @@ export function ProfileUpdate(props) {
                         </FormattedMessage>
                       }
                     </Col>
-                    <Col md={6}>
-                      <span style={{ fontWeight: 'bold' }}>
+                    <Col md={4} className="information">
+                      <span className="infor-title">
                         <FormattedMessage {...messages.gender} />
                       </span>
                       {
@@ -404,7 +405,6 @@ export function ProfileUpdate(props) {
                               placeholder={msg}
                               value={values.gender}
                               options={options}
-                              className="mb-3"
                               onChange={evt => {
                                 setFieldValue(
                                   'gender',
@@ -416,14 +416,60 @@ export function ProfileUpdate(props) {
                         </FormattedMessage>
                       }
                     </Col>
-                    <Col md={6}>
+                    <Col md={4} className="information">
+                      <span className="infor-title">
+                        <FormattedMessage {...messages.nationalId} />
+                      </span>
+                      {
+                        <FormattedMessage {...messages.nationalId}>
+                          {msg => (
+                            <InputForm
+                              placeholder={msg}
+                              name="nationalId"
+                              icon="fa fa-lock"
+                              value={values.nationalId}
+                              touched={touched.nationalId}
+                              error={errors.nationalId}
+                              autoComplete="nationalId"
+                              onChange={evt => {
+                                handleChange(evt);
+                              }}
+                              onBlur={handleBlur}
+                            />
+                          )}
+                        </FormattedMessage>
+                      }
+                    </Col>
+                    <Col md={4} className="information">
+                      <span className="infor-title">
+                        {<FormattedMessage {...messages.dob} />}
+                      </span>
+                      {
+                        <DatePicker
+                          dateFormat="dd/MM/yyyy"
+                          showMonthDropdown
+                          showYearDropdown
+                          selected={moment(values.dobAction).toDate()}
+                          onChange={date => {
+                            setDobAction(moment(date).format('DD/MM/YYYY'));
+                            setFieldValue('dobAction', date);
+                          }}
+                          customInput={
+                            <InputForm
+                              icon="fa fa-calendar"
+                            />
+                          }
+                        />
+                      }
+                    </Col>
+                    <Col md={5} className="information">
+                      <span className="infor-title">
+                        <FormattedMessage {...messages.emailenter} />
+                      </span>
                       {
                         <FormattedMessage {...messages.emailenter}>
                           {msg => (
                             <InputForm
-                              label={
-                                <FormattedMessage {...messages.emailenter} />
-                              }
                               placeholder={msg}
                               name="email"
                               icon="fa fa-envelope"
@@ -441,58 +487,15 @@ export function ProfileUpdate(props) {
                         </FormattedMessage>
                       }
                     </Col>
-                    <Col md={6}>
-                      {
-                        <FormattedMessage {...messages.nationalId}>
-                          {msg => (
-                            <InputForm
-                              label={
-                                <FormattedMessage {...messages.nationalId} />
-                              }
-                              placeholder={msg}
-                              name="nationalId"
-                              icon="fa fa-lock"
-                              value={values.nationalId}
-                              touched={touched.nationalId}
-                              error={errors.nationalId}
-                              autoComplete="nationalId"
-                              onChange={evt => {
-                                handleChange(evt);
-                              }}
-                              onBlur={handleBlur}
-                            />
-                          )}
-                        </FormattedMessage>
-                      }
-                    </Col>
-                    <Col md={6}>
-                      {
-                        <DatePicker
-                          dateFormat="dd/MM/yyyy"
-                          showMonthDropdown
-                          showYearDropdown
-                          selected={moment(values.dobAction).toDate()}
-                          onChange={date => {
-                            setDobAction(moment(date).format('DD/MM/YYYY'));
-                            setFieldValue('dobAction', date);
-                          }}
-                          customInput={
-                            <InputForm
-                              label={<FormattedMessage {...messages.dob} />}
-                              icon="fa fa-calendar"
-                            />
-                          }
-                        />
-                      }
-                    </Col>
-                    <Col md={12}>
+
+                    <Col md={7} className="information">
+                      <span className="infor-title">
+                        <FormattedMessage {...messages.address} />
+                      </span>
                       {
                         <FormattedMessage {...messages.address}>
                           {msg => (
                             <InputForm
-                              label={
-                                <FormattedMessage {...messages.address} />
-                              }
                               placeholder={msg}
                               name="address"
                               icon="fa fa-home"
@@ -510,14 +513,14 @@ export function ProfileUpdate(props) {
                         </FormattedMessage>
                       }
                     </Col>
-                    <Col md={4}>
+                    <Col md={4} className="information">
+                      <span className="infor-title">
+                        <FormattedMessage {...messages.uploadAvata} />
+                      </span>
                       {
                         <FormattedMessage {...messages.uploadAvata}>
                           {msg => (
                             <InputForm
-                              label={
-                                <FormattedMessage {...messages.uploadAvata} />
-                              }
                               placeholder={msg}
                               name="uploadAvata"
                               accept=".png, .jpg"
@@ -531,14 +534,14 @@ export function ProfileUpdate(props) {
                         </FormattedMessage>
                       }
                     </Col>
-                    <Col md={4}>
+                    <Col md={4} className="information">
+                      <span className="infor-title">
+                        <FormattedMessage {...messages.frontId} />
+                      </span>
                       {
                         <FormattedMessage {...messages.frontId}>
                           {msg => (
                             <InputForm
-                              label={
-                                <FormattedMessage {...messages.frontId} />
-                              }
                               placeholder={msg}
                               name="frontId"
                               accept=".png, .jpg"
@@ -553,14 +556,14 @@ export function ProfileUpdate(props) {
                         </FormattedMessage>
                       }
                     </Col>
-                    <Col md={4}>
+                    <Col md={4} className="information">
+                      <span className="infor-title">
+                        <FormattedMessage {...messages.backId} />
+                      </span>
                       {
                         <FormattedMessage {...messages.backId}>
                           {msg => (
                             <InputForm
-                              label={
-                                <FormattedMessage {...messages.backId} />
-                              }
                               placeholder={msg}
                               name="backId"
                               accept=".png, .jpg"
@@ -576,12 +579,12 @@ export function ProfileUpdate(props) {
                       }
                     </Col>
                     {/* Image */}
-                    <Col md={4}>
+                    <Col md={4} className="information">
                       {avatarFile ? (
                         <Avatar
                           style={{
                             width: '100%',
-                            height: '200px',
+                            height: '160px',
                             margin: '10px auto',
                           }}
                           variant="square"
@@ -592,7 +595,7 @@ export function ProfileUpdate(props) {
                         <Avatar
                           style={{
                             width: '100%',
-                            height: '200px',
+                            height: '160px',
                             margin: '10px auto',
                           }}
                           variant="square"
@@ -608,7 +611,7 @@ export function ProfileUpdate(props) {
                         <Avatar
                           style={{
                             width: '100%',
-                            height: '200px',
+                            height: '160px',
                             margin: '10px auto',
                           }}
                           variant="square"
@@ -619,7 +622,7 @@ export function ProfileUpdate(props) {
                         <Avatar
                           style={{
                             width: '100%',
-                            height: '200px',
+                            height: '160px',
                             margin: '10px auto',
                             borderRadius: '4px',
                           }}
@@ -636,7 +639,7 @@ export function ProfileUpdate(props) {
                         <Avatar
                           style={{
                             width: '100%',
-                            height: '200px',
+                            height: '160px',
                             margin: '10px auto',
                             borderRadius: '4px',
                           }}
@@ -648,7 +651,7 @@ export function ProfileUpdate(props) {
                         <Avatar
                           style={{
                             width: '100%',
-                            height: '200px',
+                            height: '160px',
                             margin: '10px auto',
                             borderRadius: '4px',
                           }}
@@ -668,7 +671,7 @@ export function ProfileUpdate(props) {
                       </Alert>
                     </Container>
                   )}
-                  <div className="login" style={{ padding: '20px 0' }}>
+                  <div className="login">
                     <Button
                       className="button-class"
                       color="primary"
@@ -683,8 +686,8 @@ export function ProfileUpdate(props) {
           </Formik>
 
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
 

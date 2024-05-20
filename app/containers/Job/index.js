@@ -239,7 +239,8 @@ const optionsRentalPeriod = [
 export function Job(props) {
   const history = useHistory();
   const { id } = useParams();
-  const [type, setType] = useState('wallet');
+  // const [type, setType] = useState('wallet');
+  const [type, setType] = useState('cash');
   useInjectReducer({ key: 'job', reducer });
   useInjectSaga({ key: 'job', saga });
   const { room = {}, jobError, jobErrorNuber } = props.job;
@@ -292,7 +293,7 @@ export function Job(props) {
   const [keyPayment, setKeyPayment] = useState('');
   // let banking = '';
 
-  let MaThanhToan= '';
+  let MaThanhToan = '';
 
   const getRandomInt = (min, max) =>
     Math.floor(Math.random() * (max - min)) + min;
@@ -379,7 +380,7 @@ export function Job(props) {
     requestData.banking = banking;
     requestData.keyPayment = keyPayment;
 
-    console.log({requestData});
+    console.log({ requestData });
 
     if (requestData.rentalPeriod >= minimumMonths) {
       setCheckMonth(false);
@@ -406,7 +407,7 @@ export function Job(props) {
               <FormattedMessage {...messages.ErrrPayment} />
             </div>
             <Row className="type-wrapper">
-              <Col>
+              {/* <Col>
                 <div
                   className="type"
                   onClick={() => {
@@ -424,8 +425,8 @@ export function Job(props) {
                     </div>
                   )}
                 </div>
-              </Col>
-              <Col>
+              </Col> */}
+              {/* <Col>
                 <div
                   className="type"
                   onClick={() => {
@@ -442,8 +443,8 @@ export function Job(props) {
                     </div>
                   )}
                 </div>
-              </Col>
-              <Col>
+              </Col> */}
+              <Col xs={12}>
                 <div
                   className="type"
                   onClick={() => {
@@ -533,7 +534,7 @@ export function Job(props) {
                 <form onSubmit={handleSubmit}>
 
                   {/* THANH TOÁN VÍ NỘI BỘ */}
-                  <ModalComponent
+                  {/* <ModalComponent
                     modal={isOpen}
                     toggle={toggleModal}
                     modalTitle="Xác nhận thanh toán ví nội bộ"
@@ -551,14 +552,14 @@ export function Job(props) {
                   >
                     <div className="deposit">
                       <h5>
-                        <FormattedMessage {...messages.AmountOfMoney} />
+                        <FormattedMessage {...messages.AmountOfMoney} />{' '}
                         {Money(values.deposit)} đ
                       </h5>
                       <span>
                         <FormattedMessage {...messages.AmountOfMoneyDec} />
                       </span>
                     </div>
-                  </ModalComponent>
+                  </ModalComponent> */}
 
                   {/* THANH TOÁN CHUYỂN KHOẢN NGÂN HÀNG */}
 
@@ -579,7 +580,7 @@ export function Job(props) {
                   >
                     <div className="deposit" style={{ minHeight: '200px' }}>
                       <h5>
-                        <FormattedMessage {...messages.AmountOfMoney} />
+                        <FormattedMessage {...messages.AmountOfMoney} />{' '}
                         {Money(values.deposit)} đ
                       </h5>
                       <div style={{ minHeight: '50px' }}>

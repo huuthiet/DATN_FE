@@ -1,4 +1,18 @@
-.create-motel-wrapper {
+.create-room-wrapper {
+    max-width: 90%;
+    margin: 20px auto;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 2px 2px 20px 8px rgba(0, 0, 0, 0.05);
+    .header{
+        color: rgb(21, 93, 121);
+        font-size: 22px;
+        text-align: center;
+        padding: 10px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    }
     .react-datepicker-popper {
         left: -45px !important;
     }

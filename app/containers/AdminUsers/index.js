@@ -79,50 +79,50 @@ export function AdminUsers(props) {
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 150 },
     {
       field: 'fullName',
-      headerName: 'Họ và Tên',
+      headerName: 'Họ và tên',
       headerAlign: 'center',
-      width: 200,
+      width: 300,
       headerClassName: 'header-bold',
     },
     {
       field: 'phoneNumber',
       headerName: 'Số điện thoại',
       headerAlign: 'center',
-      width: 200,
+      width: 250,
       headerClassName: 'header-bold',
     },
     {
       field: 'email',
       headerName: 'Email',
       headerAlign: 'center',
-      width: 200,
+      width: 350,
       headerClassName: 'header-bold',
     },
     {
       field: 'role',
       headerName: 'Quyền',
       headerAlign: 'center',
-      width: 200,
+      width: 250,
       headerClassName: 'header-bold',
       renderCell: params => {
         return <div>{params.value.join(',')}</div>;
       },
     },
-    {
-      field: 'wallet',
-      headerName: 'Số tiền trong ví',
-      headerAlign: 'center',
-      width: 200,
-      headerClassName: 'header-bold',
-      valueGetter: params => {
-        return `${Money(params.value)} đ`;
-      },
-    },
+    // {
+    //   field: 'wallet',
+    //   headerName: 'Số tiền trong ví',
+    //   headerAlign: 'center',
+    //   width: 200,
+    //   headerClassName: 'header-bold',
+    //   valueGetter: params => {
+    //     return `${Money(params.value)} đ`;
+    //   },
+    // },
     {
       field: 'edit',
       headerName: 'Sự kiện',
       headerAlign: 'center',
-      width: 250,
+      width: 280,
       align: 'center',
       headerClassName: 'header-bold',
       renderCell: params => {

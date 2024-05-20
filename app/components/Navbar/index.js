@@ -296,7 +296,7 @@ const Navbar = props => {
           {toggle && <div>hello</div>}
           <ul className="site-main-menu">
             {/* note */}
-            {!_.isEmpty(currentUser) && (
+            {/* {!_.isEmpty(currentUser) && (
               <li>
                 <strong>
                   <FormattedMessage {...messages.wallet} />:{' '}
@@ -305,9 +305,9 @@ const Navbar = props => {
                   ? `${Money(Number(profile.wallet))} VND`
                   : 'Chưa có dữ liệu'}
               </li>
-            )}
+            )} */}
 
-            {!_.isEmpty(currentUser) && !currentUser.role.includes('master') && (
+            {/* {!_.isEmpty(currentUser) && !currentUser.role.includes('master') && (
               <li>
                 <NavLink
                   exact
@@ -319,7 +319,7 @@ const Navbar = props => {
                   <FormattedMessage {...messages.withdraw} />
                 </NavLink>
               </li>
-            )}
+            )} */}
             {/* ------------------------------- */}
             <li>
               <NavLink

@@ -149,6 +149,11 @@ export function UpdateMotel(props) {
           }) => (
             <form onSubmit={handleSubmit}>
               <Row>
+                <Col xs={12}>
+                  <div className='title'>
+                    <FormattedMessage {...messages.UpdateMotel} />
+                  </div>
+                </Col>
                 <Col xs={6} md={3}>
                   <InputForm
                     label={<FormattedMessage {...messages.electricityPrice} />}

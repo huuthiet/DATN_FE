@@ -9,6 +9,10 @@ export const scope = 'UpdateMotel.containers';
 export const scopeCreateModel = 'CreateMotel.containers';
 
 export default defineMessages({
+  UpdateMotel: {
+    id: `${scope}.UpdateMotel`,
+    defaultMessage: 'Cập nhật thông tin nhà trọ',
+  },
   errorwifiPrice: {
     id: `${scopeCreateModel}.errorwifiPrice`,
     defaultMessage: 'Vui lòng nhập giá xe',

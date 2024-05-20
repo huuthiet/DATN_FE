@@ -33,7 +33,12 @@ import ModalComponent from './modal';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { urlLink } from '../../helper/route';
-import { set } from 'lodash';
+import {
+  Grid,
+  CardActions,
+  CardContent,
+  Typography,
+} from '@material-ui/core';
 
 export function ManagerEnergyBuildingsHost(props) {
   useInjectReducer({ key: 'motelprofileList', reducer });
@@ -181,10 +186,10 @@ export function ManagerEnergyBuildingsHost(props) {
 
       {role.length === 2 && role[0] === 'host' ? (
         <>
-          <div className="card-wrap">
+          <Grid lg={12} container spacing={2} className="card-wrap">
             {motelList.length > 0 &&
               motelList.map((motel, key) => (
-                <div className="motel-card" key={key}>
+                <Grid className="motel-card" key={key} lg={3} md={4} sm={6} xs={12}>
                   <ModalComponent
                     modal={modal}
                     toggle={cancelToggle}
@@ -287,9 +292,9 @@ export function ManagerEnergyBuildingsHost(props) {
                       </button>
                     </div>
                   </Card>
-                </div>
+                </Grid>
               ))}
-          </div>
+          </Grid>
         </>
       ) : (
         ''

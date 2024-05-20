@@ -517,7 +517,7 @@ export function JobDetailUser(props) {
             </ListItemAvatar>
             <ListItemText
               primary={<FormattedMessage {...messages.Motel} />}
-              // secondary={name}
+            // secondary={name}
             />
             {flagDeposit === true && (
               <FormattedMessage {...messages.PaymentDeposit} />
@@ -650,17 +650,17 @@ export function JobDetailUser(props) {
               }}
             >
               {!isActived ||
-              (currentOrder.type === 'afterCheckInCost' &&
-                currentOrder.isCompleted === true) ||
-              currentOrder.type !== 'afterCheckInCost' ? (
+                (currentOrder.type === 'afterCheckInCost' &&
+                  currentOrder.isCompleted === true) ||
+                currentOrder.type !== 'afterCheckInCost' ? (
                 <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      gap: '4px',
-                    }}
-                  >
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '4px',
+                  }}
+                >
                   <CheckCircleOutline style={{ fontSize: '20px' }} />
                   <FormattedMessage {...messages.Paid} />
                 </div>
@@ -669,8 +669,8 @@ export function JobDetailUser(props) {
               )}
             </Button>
           </ListItem>
-          <Divider variant="inset" component="li" />
-          <ListItem>
+          {/* <Divider variant="inset" component="li" /> */}
+          {/* <ListItem>
             <ListItemAvatar>
               <Avatar>
                 <VpnKeyIcon />
@@ -680,7 +680,7 @@ export function JobDetailUser(props) {
               primary={<FormattedMessage {...messages.RoomLockCode} />}
               secondary={roomPassword}
             />
-          </ListItem>
+          </ListItem> */}
           <Divider variant="inset" component="li" />
           <ListItem>
             <ListItemAvatar>
@@ -699,12 +699,12 @@ export function JobDetailUser(props) {
               minDate={minDate}
               onChange={handleCheckOut}
               customInput={<ExampleCustomInput />}
-              // customInput={
-              // 	<InputForm
-              // 		// icon="fa fa-calendar"
-              // 		style={{width:'10px'}}
-              // 	/>
-              // }
+            // customInput={
+            // 	<InputForm
+            // 		// icon="fa fa-calendar"
+            // 		style={{width:'10px'}}
+            // 	/>
+            // }
             />
             {/* <ListItemText
 								primary="Ngày trả phòng"
@@ -808,16 +808,16 @@ export function JobDetailUser(props) {
               }}
             >
               {!isActived ||
-              currentOrder.type !== 'monthly' ||
-              (currentOrder.type === 'monthly' && currentOrder.isCompleted) ? (
+                currentOrder.type !== 'monthly' ||
+                (currentOrder.type === 'monthly' && currentOrder.isCompleted) ? (
                 <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      gap: '4px',
-                    }}
-                  >
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '4px',
+                  }}
+                >
                   <CheckCircleOutline style={{ fontSize: '20px' }} />
                   <FormattedMessage {...messages.Paid} />
                 </div>
@@ -826,8 +826,8 @@ export function JobDetailUser(props) {
               )}
             </Button>
           </ListItem>
-          <Divider variant="inset" component="li" />
-          <ListItem>
+          {/* <Divider variant="inset" component="li" /> */}
+          {/* <ListItem>
             <ListItemAvatar>
               <Avatar>
                 <AccountBalanceWalletIcon />
@@ -837,7 +837,7 @@ export function JobDetailUser(props) {
               primary={<FormattedMessage {...messages.BalanceInWallet} />}
               secondary={Money(wallet)}
             />
-          </ListItem>
+          </ListItem> */}
         </List>
       </div>
       {/* MODAL THANH TOÁN "THANH TOÁN KHI NHẬN PHÒNG" */}

@@ -135,16 +135,16 @@ export function CreateRoom(props) {
   };
 
   return (
-    <div className="login-page-wrapper">
+    <div className="create-room-wrapper">
       <Helmet>
         <title>CreateRoom</title>
         <meta name="description" content="Description of ForgotPassword" />
       </Helmet>
       <Container>
         <div className="title mb-3">
-          <h3>
+          <div className='header'>
             <FormattedMessage {...messages.CreateNewRoom} />
-          </h3>
+          </div>
         </div>
         <Row>
           <Col md={3}>
@@ -215,7 +215,7 @@ export function CreateRoom(props) {
           </Col>
         </Row>
         <Row>
-          <Col md={3} xs={6}>
+          <Col md={4} xs={6}>
             <InputForm
               label={<FormattedMessage {...messages.electricityPrice} />}
               type="number"
@@ -229,7 +229,7 @@ export function CreateRoom(props) {
               }}
             />
           </Col>
-          <Col md={3} xs={6}>
+          <Col md={4} xs={6}>
             <InputForm
               label={<FormattedMessage {...messages.waterPrice} />}
               type="number"
@@ -243,7 +243,7 @@ export function CreateRoom(props) {
               }}
             />
           </Col>
-          <Col md={3} xs={6}>
+          {/* <Col md={4} xs={6}>
             <InputForm
               label="Mã Khóa Phòng"
               type="number"
@@ -257,10 +257,10 @@ export function CreateRoom(props) {
                 setRoomPassword(evt.target.value);
               }}
             />
-          </Col>
-          <Col md={3} xs={6}>
+          </Col> */}
+          <Col md={4} xs={6}>
             <InputForm
-              label="Tiền Thế Chân"
+              label={<FormattedMessage {...messages.depositPrice} />}
               type="number"
               min={0}
               placeholder="VND"
@@ -339,26 +339,13 @@ export function CreateRoom(props) {
             />
           </Col>
         </Row>
-        {/* <Row>
-          <Col md={6} xs={12}>
-            <input
-              type="file"
-              id="fileupload"
-              accept=".png, .jpg"
-              multiple="multiple"
-              onChange={e => {
-                handleFileInputChangeFile(e);
-              }}
-            />
-          </Col>
-        </Row> */}
         <Row>
           <Col xs={12}>
             <h4 className="text-center">
               {<FormattedMessage {...messages.ListRoomAcc} />}
             </h4>
           </Col>
-          <Col xs={4}>
+          <Col xs={6} md={4}>
             <CheckBox
               label="Internet"
               onChange={e => {
@@ -377,7 +364,7 @@ export function CreateRoom(props) {
               }}
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={6} md={4}>
             <CheckBox
               label={<FormattedMessage {...messages.washingDrying} />}
               onChange={e => {
@@ -396,7 +383,7 @@ export function CreateRoom(props) {
               }}
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={6} md={4}>
             <CheckBox
               label={<FormattedMessage {...messages.parkingLot} />}
               onChange={e => {
@@ -415,7 +402,7 @@ export function CreateRoom(props) {
               }}
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={6} md={4}>
             <CheckBox
               label={<FormattedMessage {...messages.television} />}
               onChange={e => {
@@ -436,7 +423,7 @@ export function CreateRoom(props) {
               }}
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={6} md={4}>
             <CheckBox
               label={<FormattedMessage {...messages.AirConditioner} />}
               onChange={e => {
@@ -455,7 +442,7 @@ export function CreateRoom(props) {
               }}
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={6} md={4}>
             <CheckBox
               label={<FormattedMessage {...messages.toiletBowl} />}
               onChange={e => {
@@ -474,7 +461,7 @@ export function CreateRoom(props) {
               }}
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={6} md={4}>
             <CheckBox
               label={<FormattedMessage {...messages.Mezzanine} />}
               onChange={e => {
@@ -493,7 +480,7 @@ export function CreateRoom(props) {
               }}
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={6} md={4}>
             <CheckBox
               label={<FormattedMessage {...messages.washstand} />}
               onChange={e => {
@@ -512,7 +499,7 @@ export function CreateRoom(props) {
               }}
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={6} md={4}>
             <CheckBox
               label={<FormattedMessage {...messages.clearTheRoom} />}
               onChange={e => {
@@ -531,7 +518,7 @@ export function CreateRoom(props) {
               }}
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={6} md={4}>
             <CheckBox
               label={<FormattedMessage {...messages.WoodFloor} />}
               onChange={e => {
@@ -550,7 +537,7 @@ export function CreateRoom(props) {
               }}
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={6} md={4}>
             <CheckBox
               label={<FormattedMessage {...messages.Wardrobe} />}
               onChange={e => {
@@ -569,7 +556,7 @@ export function CreateRoom(props) {
               }}
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={6} md={4}>
             <CheckBox
               label={<FormattedMessage {...messages.shower} />}
               onChange={e => {
@@ -588,7 +575,7 @@ export function CreateRoom(props) {
               }}
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={6} md={4}>
             <CheckBox
               label={<FormattedMessage {...messages.FreeTime} />}
               onChange={e => {
@@ -607,7 +594,7 @@ export function CreateRoom(props) {
               }}
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={6} md={4}>
             <CheckBox
               label={<FormattedMessage {...messages.PrivateEntrance} />}
               onChange={e => {

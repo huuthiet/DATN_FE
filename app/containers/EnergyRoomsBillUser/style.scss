@@ -1,5 +1,4 @@
 .user-profile-wrapper {
-  min-width: 1300px;
   .loading-overlay {
     position: fixed;
     top: 0;
@@ -28,51 +27,19 @@
     }
   }
   .user-room-container {
-    .user-room-table{
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .table-responsive {
+    .bill-container{
       overflow-x: auto;
-      margin-top: 40px;
-
-      .user-room-table{
-        thead{
-          background-color: #457bc5;
-          color: white;
-        }
-        th, td {
-          min-width: 160px;
-          padding: 12px;
-          border: 1px solid #ddd;
-          text-align: center;
-        }
-      }
     }
 
-
-    
-    @media (max-width: 600px) {
-      .user-room-table th, .user-room-table td {
-        font-size: 8px;
-        min-width: 100px;
-        padding: 8px;
-      }
-    
-      .hide-on-mobile {
-        display: none;
-      }
-    }
 }
-.no-data{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: 26px;
-  font-weight: 600;
-  margin: 100px auto;
-  color: rgb(0, 0, 0);
-}
+  .no-data{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 26px;
+    font-weight: 600;
+    margin: 100px auto;
+    color: rgb(98, 98, 98);
+  }
 }

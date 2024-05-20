@@ -47,11 +47,11 @@ export function ManagerEnergyBuildingsAdmin(props) {
 
   useEffect(() => {
     props.getMotelList(id);
-    setMotelList(props.profile.motelList || []);
+    setMotelList(props.profile.buildingRevenue || []);
     setLoading(false);
   }, [id]);
 
-  console.log('check props: ', props.profile.buildingRevenue);
+  console.log('check props: ', motelList);
   const columns = [
     { field: 'index', headerName: 'STT', headerAlign: 'center', width: 150, headerClassName: 'header-bold', align: 'center' },
     { field: 'name', headerName: 'Tên tòa nhà', width: 200, headerAlign: 'center', headerClassName: 'header-bold' },
@@ -100,16 +100,21 @@ export function ManagerEnergyBuildingsAdmin(props) {
   for (const motelName in revenue) {
     console.log('motelName', motelName);
     const motelData = revenue[motelName].jsonMotel;
+    console.log('motelData', motelData);
     if (!motelData) continue;
 
     rows.push({
-      _id: motelData.idMotel, // Sử dụng idMotel làm id duy nhất
+      id: motelData.idMotel, // Sử dụng idMotel làm id duy nhất cho DataGrid
+      _id: motelData.idMotel,
       index: rows.length + 1,
       name: motelData.name,
       phoneUser: motelData.phone,
       addressUser: motelData.address,
       totalAll: revenue[motelName].totalRevenue
     });
+
+
+    console.log('rows', rows);
   }
   const handleButtonClick = useCallback((row) => {
     history.push(`/hostMotelRoom/${row._id}`);
@@ -204,61 +209,16 @@ export function ManagerEnergyBuildingsAdmin(props) {
       {role.length === 2 && role.includes('master') && (
         <div className="card-wrap">
           {loading && <div className="loading-overlay" />}
-          {motelList && motelList.length > 0 ? (
-            <>
-              <ModalComponent
-                modal={modal}
-                toggle={cancelToggle}
-                modalTitle="Xuất hóa đơn"
-                footer={
-                  <div>
-                    <Button color="secondary" onClick={cancelToggle}>Hủy</Button>{' '}
-                    <Button color="primary" onClick={handleExport}>Xác nhận</Button>
-                  </div>
-                }
-              >
-                <FormGroup>
-                  <Label for="startDateBackup">Từ ngày</Label>
-                  <Input
-                    id="startDateBackup"
-                    name="date"
-                    placeholder="Ngày bắt đầu..."
-                    type="date"
-                    // defaultValue={getFirstDayOfCurrentMonth()}
-                    onChange={getStartDay}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="endDateBackup">Đến ngày</Label>
-                  <Input
-                    id="endDateBackup"
-                    name="date"
-                    placeholder="Ngày kết thúc..."
-                    type="date"
-                    // defaultValue={getCurrentDate()}
-                    onChange={getEndDay}
-                  />
-                </FormGroup>
-                <div>
-                  Hóa đơn các phòng của tòa {motelName} sẽ được gửi vào email của bạn. Xác nhận xuất hóa đơn!
-                </div>
-              </ModalComponent>
-
-              <div className='table-container'>
-                <DataGrid
-                  getRowId={row => row._id}
-                  rows={rows}
-                  columns={columns}
-                  pageSize={10}
-                  rowsPerPageOptions={[10]}
-                  disableSelectionOnClick
-                  autoHeight
-                />
-              </div>
-
-            </>
-          ) : (
-            <p className="text-center">Không có phòng</p>
+          {props.profile.buildingRevenue && (
+            <DataGrid
+              getRowId={row => row._id}
+              rows={rows}
+              columns={columns}
+              pageSize={10}
+              rowsPerPageOptions={[10]}
+              disableSelectionOnClick
+              autoHeight
+            />
           )}
         </div>
       )}

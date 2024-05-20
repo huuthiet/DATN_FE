@@ -223,7 +223,7 @@ export function Profile(props) {
                   </ListItem>
                   <Divider variant="inset" component="li" />
                   <ListItem>
-                    <ListItemAvatar>
+                    {/* <ListItemAvatar>
                       <Avatar>
                         <AccountBalanceWalletIcon />
                       </Avatar>
@@ -242,7 +242,7 @@ export function Profile(props) {
                       >
                         <AddIcon />
                       </IconButton>
-                    </ListItemSecondaryAction>
+                    </ListItemSecondaryAction> */}
                   </ListItem>
                   <Row
                     style={{
@@ -267,6 +267,7 @@ export function Profile(props) {
                             variant="contained"
                             color="primary"
                             component="span"
+
                           >
                             {<FormattedMessage {...messages.uploadAvata} />}
                           </Button>
@@ -380,7 +381,7 @@ export function Profile(props) {
                       />
                     </ListItem>
                     <Divider variant="inset" component="li" />
-                    <ListItem>
+                    {/* <ListItem>
                       <ListItemAvatar>
                         <Avatar>
                           <AccountBalanceWalletIcon />
@@ -390,7 +391,7 @@ export function Profile(props) {
                         primary={<FormattedMessage {...messages.wallet} />}
                         secondary={Money(Number(profile.wallet))}
                       />
-                    </ListItem>
+                    </ListItem> */}
                     <Row style={{
                       display: 'flex',
                       justifyContent: 'center',

@@ -25,17 +25,17 @@ export function* apiGetMotelList(payload) {
 
   const requestRevenueUrl = urlLink.api.serverUrl + urlLink.api.buildingRevenue + id + `/${formattedStartDate}/${formattedCurrentDate}`;
 
-  const requestUrl = urlLink.api.serverUrl + urlLink.api.getListMotelByHost + id;
-  //GET MOTEL LIST
-  try {
-    const response = yield axios.get(requestUrl);
-    console.log("response motel list: ", response.data.data);
-    yield put(getMotelListSuccess(response.data.data));
-  } catch (error) {
-    yield put(getMotelListFail(error.response.data));
-  } finally {
-    yield put(reposLoaded());
-  }
+  // const requestUrl = urlLink.api.serverUrl + urlLink.api.getListMotelByHost + id;
+  // //GET MOTEL LIST
+  // try {
+  //   const response = yield axios.get(requestUrl);
+  //   console.log("response motel list: ", response.data.data);
+  //   yield put(getMotelListSuccess(response.data.data));
+  // } catch (error) {
+  //   yield put(getMotelListFail(error.response.data));
+  // } finally {
+  //   yield put(reposLoaded());
+  // }
   yield put(loadRepos());
   //GET BUILDING REVENUE
   try {
