@@ -39,10 +39,10 @@ import { getMotel } from '../Motel/actions';
 
 const electricMetterStyled = room => ({
   color:
-    room.idElectricMetter === '0' || !room.idElectricMetter ? 'red' : 'green',
-  fontWeight: room.idElectricMetter === '0' || 'bold',
+  (room.listIdElectricMetter && room.listIdElectricMetter.length === 0) ? 'red' : 'green',
+  fontWeight: (room.listIdElectricMetter && room.listIdElectricMetter.length === 0) || 'bold',
   border:
-    room.idElectricMetter === '0' || !room.idElectricMetter
+    (room.listIdElectricMetter && room.listIdElectricMetter.length === 0) || !room.listIdElectricMetter
       ? '1px solid red'
       : '1px solid green',
   width: '30px',
@@ -51,7 +51,7 @@ const electricMetterStyled = room => ({
   borderRadius: '5px',
   fontSize: '12px',
   backgroundColor:
-    room.idElectricMetter === '0' || !room.idElectricMetter
+    (room.listIdElectricMetter && room.listIdElectricMetter.length === 0) || !room.listIdElectricMetter
       ? 'rgba(255, 0, 0, 0.1)'
       : '#DAFFE9',
 });
@@ -189,22 +189,23 @@ const ManagerEnergyRoomsAdmin = props => {
                     </Typography>
 
                     <Typography variant="body2" color="text.secondary">
-                      <Speed style={{ fontSize: '22px', marginRight: '5px' }} />
+                      Số lượng đồng hồ: &nbsp;
+                      {/* <Speed style={{ fontSize: '22px', marginRight: '5px' }} /> */}
                       <span style={electricMetterStyled(room)}>
-                        {room.idElectricMetter === '0' ||
-                          !room.idElectricMetter ? (
+                      {!room.listIdElectricMetter ||
+                        (room.listIdElectricMetter && room.listIdElectricMetter.length === 0) ? (
                           <span style={{ fontWeight: 'bold' }}>
-                            Chưa được đặt
+                            Chưa có đồng hồ
                           </span>
                         ) : (
-                          room.idElectricMetter
+                          room.listIdElectricMetter.length
                         )}
                       </span>
                     </Typography>
                   </CardContent>
                   <CardActions style={{ justifyContent: 'center', height: '50px', margin: '10px 0' }}>
                     <Link
-                      to={`/admin/follow-energy/${motel._id}/${room._id}/${room.idElectricMetter}/${room.name
+                      to={`/admin/follow-energy/${motel._id}/${room._id}/${room.name
                         }`}
                       style={{ textDecoration: 'none' }}
                     >

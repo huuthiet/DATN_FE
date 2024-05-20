@@ -147,8 +147,6 @@ const FollowEnergyUser = props => {
         urlLink.api.getTotalKWhPerDayForDayToDayV2 +
         roomId}/${startDateDisplay}/${endDateDisplay}`;
 
-      console.log("apiGetDay hihi: ", apiGetDay);
-
       try {
         setValue(2);
         startLoading();
@@ -164,8 +162,6 @@ const FollowEnergyUser = props => {
         // console.log('resultttttttttttttttttttttttttttt', result);
 
         setInfo(result);
-
-        // parseFloat(responseMon.data.data.totalkWhMon).toFixed(2);
 
         setTotalkWh(parseFloat(result.totalkWhTime).toFixed(2));
         setCurrentKwh(result.kWhData);
@@ -531,25 +527,6 @@ const FollowEnergyUser = props => {
 
   const [labelLineChart, setLabelLineChart] = useState(labelsInDay);
 
-  // let apiKwh = `http://localhost:5502/api/v1/homeKey/energy/device/currentDayDataPerHour/${id}`;
-  // const resultData = {
-  //   totalkWhDay: totalkWhDay,
-  //   kWhData: kWhData,
-  //   dataBeforeDay: dataBeforeDay,
-  //   dataInDay: dataWithNulls,
-  //   activePowerPerHour: activePowerPerHour,
-  //   electricPerHour: electricPerHour,
-  // };
-
-  // const apiKwh =
-  //   urlLink.api.serverUrl + urlLink.api.getDataEnergyPerHour + idMetter;
-
-  // const apiKwh = urlLink.api.serverUrl + urlLink.api.getTotalKWhPerHourInOneDayV2
-  //   + roomId + "/" + moment().format("YYYY-MM-DD");
-
-  // console.log('apiKwh', apiKwh);
-
-
   const [value, setValue] = useState(0);
   const handleChangeTime = (event, newValue) => {
     setValue(newValue);
@@ -580,7 +557,6 @@ const FollowEnergyUser = props => {
 
     const apiUrlMon = urlLink.api.serverUrl + urlLink.api.getTotalKWhPerDayInOneMonthV2
       + roomId + "/" + moment().format("YYYY-MM");
-    console.log({ apiUrlMon });
 
     try {
       if (value === 0) {
@@ -595,12 +571,9 @@ const FollowEnergyUser = props => {
 
         setLabelLineChart(labelsInDay);
 
-        console.log({ responseDay })
-
         setTitleKwhChart(`Total kWh today`);
       } else if (value === 1) {
         const responseMon = await axios.get(apiUrlMon);
-        console.log({ responseMon });
         const formattedTotalkWh = parseFloat(
           responseMon.data.data.totalkWhTime,
         ).toFixed(2);
@@ -655,15 +628,13 @@ const FollowEnergyUser = props => {
       );
     } finally {
       stopLoading();
-      // reposLoaded();
     }
   };
 
 
   useEffect(() => {
-
     getCurrentDayData();
-
+    
     const intervalId = setInterval(() => {
       getCurrentDayData();
     }, 1000 * 15);
@@ -831,7 +802,7 @@ const FollowEnergyUser = props => {
           >
             <LineChart
               textY="(V)"
-              nameChart="Volt"
+              nameChart="Voltage"
               dataEnergy={currentVoltage}
               labelsEnergy={labelsInDay}
             />

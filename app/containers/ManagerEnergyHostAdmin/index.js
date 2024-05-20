@@ -134,7 +134,7 @@ export function ManagerEnergyHostAdmin(props) {
     props.getMotelList();
   }, []);
   console.log(props);
-  const { hosts } = props.buildingHost;
+  const { hosts = [] } = props.motelprofileList;
   console.log("hosts admin", hosts);
 
   const toggle = () => {
@@ -728,11 +728,13 @@ ManagerEnergyHostAdmin.propTypes = {
   dispatch: PropTypes.func,
   getRoomList: PropTypes.func,
   changeStoreData: PropTypes.func,
-  buildingHost: PropTypes.object,
+  // buildingHost: PropTypes.object,
+  motelprofileList: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
-  buildingHost: makeSelectManagerBuildingHost(),
+  // buildingHost: makeSelectManagerBuildingHost(),
+  motelprofileList: makeSelectManagerBuildingHost(),
 });
 
 function mapDispatchToProps(dispatch) {
