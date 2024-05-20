@@ -664,7 +664,7 @@ const FollowEnergyUser = props => {
 
     const intervalId = setInterval(() => {
       getCurrentDayData();
-    }, 1000 * 15 );
+    }, 1000 * 15 * 60);
 
     return () => clearInterval(intervalId);
   }, [value]);

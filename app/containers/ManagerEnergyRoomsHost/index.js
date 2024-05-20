@@ -380,15 +380,15 @@ const ManagerEnergyRoomsHost = props => {
                     </Typography>
 
                     <Typography variant="body2" color="text.secondary">
-                      ID đồng hồ: &nbsp;
+                      Số lượng đồng hồ: &nbsp;
                       <span style={electricMetterStyled(room)}>
-                        {room.idElectricMetter === '0' ||
-                          !room.idElectricMetter ? (
+                        {!room.listIdElectricMetter ||
+                          (room.listIdElectricMetter && room.listIdElectricMetter.length === 0) ? (
                           <span style={{ fontWeight: 'bold' }}>
-                            Chưa được đặt
+                            Chưa có đồng hồ
                           </span>
                         ) : (
-                          room.idElectricMetter
+                          room.listIdElectricMetter.length
                         )}
                       </span>
                     </Typography>
