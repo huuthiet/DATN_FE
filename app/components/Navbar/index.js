@@ -441,7 +441,7 @@ const Navbar = props => {
                           <LocalOfferOutlined className="icon" />
                           <FormattedMessage {...messages.manageMonthly} />
                         </DropdownItem>
-                        <DropdownItem
+                        {/* <DropdownItem
                           className={
                             pathname.includes('/monthly-order/list')
                               ? 'active'
@@ -453,7 +453,7 @@ const Navbar = props => {
                         >
                           <ShoppingCartOutlined className="icon" />
                           <FormattedMessage {...messages.monthlyOrder} />
-                        </DropdownItem>
+                        </DropdownItem> */}
                         <DropdownItem
                           className={
                             pathname.includes('/user/hostMotelRoom')
@@ -548,7 +548,7 @@ const Navbar = props => {
                           <BlurOn className="icon" />
                           <FormattedMessage {...messages.managerHost} />
                         </DropdownItem>
-                        <DropdownItem
+                        {/* <DropdownItem
                           className={
                             pathname.includes('/admin/order/list')
                               ? 'active'
@@ -560,8 +560,8 @@ const Navbar = props => {
                         >
                           <ShoppingCartOutlined className="icon" />
                           <FormattedMessage {...messages.order} />
-                        </DropdownItem>
-                        <DropdownItem
+                        </DropdownItem> */}
+                        {/* <DropdownItem
                           className={
                             pathname.includes('/admin/monthly-order/list')
                               ? 'active'
@@ -573,8 +573,8 @@ const Navbar = props => {
                         >
                           <ShoppingCartOutlined className="icon" />
                           <FormattedMessage {...messages.monthlyOrder} />
-                        </DropdownItem>
-                        <DropdownItem
+                        </DropdownItem> */}
+                        {/* <DropdownItem
                           className={
                             pathname.includes('/admin/transaction/list')
                               ? 'active'
@@ -586,8 +586,8 @@ const Navbar = props => {
                         >
                           <PaymentOutlined className="icon" />
                           <FormattedMessage {...messages.transactionPayment} />
-                        </DropdownItem>
-                        <DropdownItem
+                        </DropdownItem> */}
+                        {/* <DropdownItem
                           className={
                             pathname.includes('/admin/requestWithdraw/list')
                               ? 'active'
@@ -599,7 +599,7 @@ const Navbar = props => {
                         >
                           <AccountBalanceOutlined className="icon" />
                           <FormattedMessage {...messages.withdrawPayment} />
-                        </DropdownItem>
+                        </DropdownItem> */}
                         <DropdownItem
                           className={
                             pathname.includes('/admin/hostMotelRoom')
@@ -624,7 +624,7 @@ const Navbar = props => {
                           <RestoreOutlined className="icon" />
                           <FormattedMessage {...messages.hostRoomHist} />
                         </DropdownItem>
-                        <DropdownItem
+                        {/* <DropdownItem
                           className={
                             pathname.includes('/admin/bill-list')
                               ? 'active'
@@ -634,7 +634,7 @@ const Navbar = props => {
                         >
                           <ReceiptOutlined className="icon" />
                           <FormattedMessage {...messages.billList} />
-                        </DropdownItem>
+                        </DropdownItem> */}
                         <DropdownItem
                           className={
                             pathname.includes('/admin/report-problem-list')
@@ -709,7 +709,7 @@ const Navbar = props => {
                       <SyncAltOutlined className="icon" />
                       <FormattedMessage {...messages.changepassword} />
                     </DropdownItem>
-                    <DropdownItem
+                    {/* <DropdownItem
                       className={
                         pathname.includes('/transaction/user/list')
                           ? 'active'
@@ -721,8 +721,8 @@ const Navbar = props => {
                     >
                       <CreditCardOutlined className="icon" />
                       <FormattedMessage {...messages.LogtransactionPayment} />
-                    </DropdownItem>
-                    <DropdownItem
+                    </DropdownItem> */}
+                    {/* <DropdownItem
                       className={
                         pathname.includes('/requestWithdraw/user/list')
                           ? 'active'
@@ -734,8 +734,8 @@ const Navbar = props => {
                     >
                       <AccountBalanceWalletOutlined className="icon" />
                       <FormattedMessage {...messages.LogRequestWithdraw} />
-                    </DropdownItem>
-                    <DropdownItem
+                    </DropdownItem> */}
+                    {/* <DropdownItem
                       className={
                         pathname.includes('/transactionLog') ? 'active' : ''
                       }
@@ -745,7 +745,7 @@ const Navbar = props => {
                     >
                       <ReceiptOutlined className="icon" />
                       <FormattedMessage {...messages.TransactionLog} />
-                    </DropdownItem>
+                    </DropdownItem> */}
                     <DropdownItem
                       className={
                         pathname.includes('/transaction-banking-cash-log') ? 'active' : ''
@@ -757,7 +757,7 @@ const Navbar = props => {
                       <ReceiptOutlined className="icon" />
                       <FormattedMessage {...messages.TransactionBankingCashLog} />
                     </DropdownItem>
-                    <DropdownItem
+                    {/* <DropdownItem
                       className={pathname.includes('/recharge') ? 'active' : ''}
                       onClick={() => {
                         history.push('/recharge');
@@ -765,7 +765,7 @@ const Navbar = props => {
                     >
                       <CreditCardOutlined className="icon" />
                       <FormattedMessage {...messages.addMoney} />
-                    </DropdownItem>
+                    </DropdownItem> */}
                     <DropdownItem divider />
                     <DropdownItem
                       onClick={() => {
