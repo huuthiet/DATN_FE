@@ -61,6 +61,10 @@ export default defineMessages({
     id: `${scope}.AccommodationSize`,
     defaultMessage: 'Quy mô nhà trọ',
   },
+  AccommodationInformation: {
+    id: `${scope}.AccommodationInformation`,
+    defaultMessage: 'Thông tin nhà trọ',
+  },
   floors: {
     id: `${scope}.floors`,
     defaultMessage: 'Số tầng',

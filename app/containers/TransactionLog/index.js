@@ -231,7 +231,7 @@ export function TransantionLog(props) {
             columns={columns}
             pageSize={10}
             autoHeight
-            isCellEditable={params => params.key}
+          // isCellEditable={params => params.key}
           />
         </div>
       </div>

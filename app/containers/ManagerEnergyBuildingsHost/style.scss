@@ -1,5 +1,5 @@
 .user-profile-wrapper {
-  width: 100%;
+  max-width: 90%;
 
   .title-abc {
     color: rgb(21, 93, 121);
@@ -43,14 +43,7 @@
     gap: 20px;
     flex-wrap: wrap;
     .motel-card {
-      width: 25%;
-      display: flex;
-      flex-wrap: wrap;
-      min-width: 330px;
-      @media (max-width: 767px) {
-        width: 100%;
-        left: 0;
-      }
+
 
       .modal-export-bill{
         width: 50%;

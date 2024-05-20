@@ -12,7 +12,7 @@ import localStore from 'local-storage';
 import { createStructuredSelector } from 'reselect';
 import styled from 'styled-components';
 import Tooltip from '@material-ui/core/Tooltip';
-import { MoreHoriz } from '@material-ui/icons';
+import { MoreHoriz, Speed } from '@material-ui/icons';
 
 import {
   Grid,
@@ -45,8 +45,11 @@ const electricMetterStyled = room => ({
     room.idElectricMetter === '0' || !room.idElectricMetter
       ? '1px solid red'
       : '1px solid green',
-  padding: room.idElectricMetter === '0' || '5px',
-  borderRadius: room.idElectricMetter === '0' || '5px',
+  width: '30px',
+  padding: '4px',
+  minWidth: '30px', // Sửa đổi minWidth ở đây
+  borderRadius: '5px',
+  fontSize: '12px',
   backgroundColor:
     room.idElectricMetter === '0' || !room.idElectricMetter
       ? 'rgba(255, 0, 0, 0.1)'
@@ -107,8 +110,9 @@ const StyleMoreButton = styled.button`
 `;
 
 const cardNameStyle = {
-  alignItems: 'center',
-  justifyContent: 'center',
+  display: 'flex',
+  justifyContent: 'start',
+  gap: '4px',
   color: '#7B7B7B',
   fontSize: '20px',
   fontWeight: 'bold',
@@ -181,11 +185,11 @@ const ManagerEnergyRoomsAdmin = props => {
                       component="div"
                       style={cardNameStyle}
                     >
-                      {room.name}
+                      Tên phòng: {' '}{room.name}
                     </Typography>
 
                     <Typography variant="body2" color="text.secondary">
-                      ID đồng hồ: &nbsp;
+                      <Speed style={{ fontSize: '22px', marginRight: '5px' }} />
                       <span style={electricMetterStyled(room)}>
                         {room.idElectricMetter === '0' ||
                           !room.idElectricMetter ? (

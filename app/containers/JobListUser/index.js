@@ -34,11 +34,13 @@ export function JobListUser(props) {
 
   // const jobsUser= [];
 
+  console.log(jobsUser);
+
   const columns = [
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 150 },
     {
       field: 'amount',
-      headerName: 'Số Tiền',
+      headerName: 'Số tiền',
       headerAlign: 'center',
       width: 150,
       headerClassName: 'header-bold',
@@ -57,16 +59,16 @@ export function JobListUser(props) {
       width: 400,
       headerClassName: 'header-bold',
     },
-    {
-      field: 'type',
-      headerName: 'Hình Thức Thanh Toán',
-      headerAlign: 'center',
-      width: 200,
-      headerClassName: 'header-bold',
-    },
+    // {
+    //   field: 'type',
+    //   headerName: 'Hình thứcoán',
+    //   headerAlign: 'center',
+    //   width: 200,
+    //   headerClassName: 'header-bold',
+    // },
     {
       field: 'action',
-      headerName: 'Sự Kiện',
+      headerName: 'Sự kiện',
       headerAlign: 'center',
       width: 400,
       headerClassName: 'header-bold',

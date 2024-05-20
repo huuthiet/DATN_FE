@@ -12,6 +12,8 @@ import _ from 'lodash';
 import { useHistory } from 'react-router-dom';
 import localStoreService from 'local-storage';
 import Room from '../Room';
+import { FormattedMessage } from 'react-intl';
+import { Add } from '@material-ui/icons';
 
 function FloorDetail(props) {
   const { floors = [] } = props.motelDetail.motel;
@@ -22,8 +24,8 @@ function FloorDetail(props) {
     localStore.get('user') === null
       ? false
       : props.owner === localStore.get('user')._id
-      ? true
-      : localStore.get('user').role.length == 1;
+        ? true
+        : localStore.get('user').role.length == 1;
   let isHost = false;
   if (localStore.get('user') && localStore.get('user').role) {
     if (localStore.get('user').role.length) {
@@ -73,17 +75,20 @@ function FloorDetail(props) {
         {localStoreService.get('user') === null
           ? history.push(`/auth/login`)
           : localStoreService.get('user').role.length > 1 && (
-              <div
-                className={ClassNames('button-add', { hidden: !isEdit })}
-                onClick={() => {
-                  // console.log(floors[index]._id,
+            <button
+              className={ClassNames('button-add', { hidden: !isEdit })}
+              onClick={() => {
+                // console.log(floors[index]._id,
 
-                  history.push(`/createroom/${floors[index]._id}`);
-                }}
-              >
-                <img src="/icon_add.png" />
-              </div>
-            )}
+                history.push(`/createroom/${floors[index]._id}`);
+              }}
+            >
+              <Add className='add-icon' />
+              Thêm phòng
+              {/* <FormattedMessage {...messages.addRoom} /> */}
+              {/* <img src="/icon_add.png" /> */}
+            </button>
+          )}
 
         <div className="room-wrapper">
           <div className={ClassNames('room-container')}>

@@ -276,7 +276,7 @@ function Room(props) {
                 <>
                   <AttachMoneyOutlined className={ClassNames('icon')} />
                   {item.status === roomStatus.SOONEXPIRECONTRACT
-                    ? 'Sắp hết hạn thuê'
+                    ? 'Sắp trống'
                     : 'Chưa cập nhật'}
                 </>
               ) : (
@@ -331,7 +331,7 @@ function Room(props) {
                 <>
                   <AttachMoneyOutlined className={ClassNames('icon')} />
                   {item.status === roomStatus.SOONEXPIRECONTRACT
-                    ? 'Sắp hết hạn thuê'
+                    ? 'Sắp trống'
                     : 'Chưa cập nhật'}
                 </>
               ) : (

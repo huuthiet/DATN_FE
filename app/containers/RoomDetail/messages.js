@@ -80,7 +80,7 @@ export default defineMessages({
   },
   ListRoomAcc: {
     id: `${scope}.ListRoomAcc`,
-    defaultMessage: 'Danh sách phụ kiện trong phòng',
+    defaultMessage: 'Danh sách cơ sở vật chất trong phòng',
   },
   washingDrying: {
     id: `${scope}.washingDrying`,

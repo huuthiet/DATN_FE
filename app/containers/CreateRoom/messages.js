@@ -14,7 +14,7 @@ export default defineMessages({
   },
   garbagePrice: {
     id: `${scopeCreateModel}.garbagePrice`,
-    defaultMessage: 'Phí Dịch Vụ',
+    defaultMessage: 'Phí dịch vụ',
   },
   available: {
     id: `${scope}.available`,
@@ -22,7 +22,7 @@ export default defineMessages({
   },
   rented: {
     id: `${scope}.rented`,
-    defaultMessage: 'Đã Thuê',
+    defaultMessage: 'Đã thuê',
   },
   unknown: {
     id: `${scope}.unknown`,
@@ -64,13 +64,17 @@ export default defineMessages({
     id: `${scope}.MultipleImage`,
     defaultMessage: '',
   },
+  depositPrice: {
+    id: `${scope}.depositPrice`,
+    defaultMessage: 'Giá đặt cọc',
+  },
   ImageUpload: {
     id: `${scope}.ImageUpload`,
-    defaultMessage: 'Upload Hình',
+    defaultMessage: 'Upload hình',
   },
   MinMonthRented: {
     id: `${scope}.MinMonthRented`,
-    defaultMessage: 'Số Tháng Tối Thiểu Thuê',
+    defaultMessage: 'Số tháng thuê tối thiểu',
   },
   CheckInDate: {
     id: `${scope}.CheckInDate`,
@@ -82,7 +86,7 @@ export default defineMessages({
   },
   ListRoomAcc: {
     id: `${scope}.ListRoomAcc`,
-    defaultMessage: 'Danh sách phụ kiện trong phòng',
+    defaultMessage: 'Danh sách cơ sở vật chất trong phòng',
   },
   washingDrying: {
     id: `${scope}.washingDrying`,

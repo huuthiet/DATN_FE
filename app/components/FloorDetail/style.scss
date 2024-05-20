@@ -48,19 +48,33 @@
       padding: 0;
     }
     .button-add {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 6px 8px;
+      width: 160px;
+      height: 44px;
       position: absolute;
-      right: 20px;
-      top: 200px;
+      right: 10px;
+      top: 230px;
+      color: rgb(62, 62, 62);
+      border: none;
+      border-radius: 8px;
       z-index: 1;
-      transition: 0.3s linear;
+      transition: all 0.3s;
+      .icon{
+        font-size: 20px;
+        margin-right: 5px;
+      }
     
       &:hover {
         cursor: pointer;
-        transform: scale(1.2);
+        background: #757575;
+        color: white;
       }
-      img {
-        width: 50px;
-      }
+      // img {
+      //   width: 50px;
+      // }
     }
     .room-container {
       display: grid;

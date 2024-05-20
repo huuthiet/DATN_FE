@@ -35,7 +35,7 @@ export default defineMessages({
   },
   soonExpireContract: {
     id: `${scope}.soonExpireContract`,
-    defaultMessage: 'Sắp hết hạn thuê',
+    defaultMessage: 'Sắp trống',
   },
   monthlyPayment: {
     id: `${scope}.monthlyPayment`,
@@ -107,7 +107,7 @@ export default defineMessages({
   },
   ListRoomAcc: {
     id: `${scope}.ListRoomAcc`,
-    defaultMessage: 'Danh sách phụ kiện trong phòng',
+    defaultMessage: 'Danh sách cơ sở vật chất trong phòng',
   },
   washingDrying: {
     id: `${scope}.washingDrying`,

@@ -89,6 +89,7 @@ const useStyles = makeStyles(theme => ({
   },
   listStyle: {
     display: 'flex',
+
     flexDirection: 'column',
     gap: '5px',
     backgroundColor: 'white',

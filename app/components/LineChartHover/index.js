@@ -100,11 +100,11 @@ const LineChartHover = ({ textY, nameChart, dataEnergy, labelsEnergy, roomId }) 
             console.log("clickedLabel", clickedLabel);
             //Trong tháng
             if (clickedLabel[clickedLabel.length - 1] !== 'h') {
-              
+
               // Tháng được chọn: đã được lọc qua filter
               if (clickedLabel.length > 4) {
                 console.log("XXXXX");
-                console.log({clickedLabel})
+                console.log({ clickedLabel })
                 setTitlePopup(clickedLabel);
 
                 const apiGetDay =
@@ -131,7 +131,7 @@ const LineChartHover = ({ textY, nameChart, dataEnergy, labelsEnergy, roomId }) 
                 }
               } else {
                 console.log("YYYYYY");
-                console.log({clickedLabel});
+                console.log({ clickedLabel });
                 //Tháng hiện tại: mặc định chọn 1 tháng ở hiện tại
                 const today = moment();
                 let yearMonth = today.format("YYYY-MM");
@@ -147,8 +147,8 @@ const LineChartHover = ({ textY, nameChart, dataEnergy, labelsEnergy, roomId }) 
                 setTitlePopup(timeQuery);
                 const apiGetDay =
                   urlLink.api.serverUrl + urlLink.api.getTotalKWhPerHourInOneDayV2 + roomId + '/' + timeQuery;
-                
-                console.log({apiGetDay});
+
+                console.log({ apiGetDay });
 
                 try {
                   const response = await axios.get(apiGetDay);

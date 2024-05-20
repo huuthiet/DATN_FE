@@ -73,7 +73,6 @@ export function RoomDetail(props) {
   }, []);
   const history = useHistory();
   const { room = {}, showWarningPopup } = props.roomDetail;
-  console.log('room', room);
   const {
     _id,
     utilities = [],
@@ -247,8 +246,9 @@ export function RoomDetail(props) {
                 <FormattedMessage {...messages.Furniture} />
               </div>
               <Row>
-                <Col xs={4}>
-                  {utilities.includes('gac_lung') && (
+                {utilities.includes('gac_lung') && (
+                  <Col xs={2}>
+
                     <div className="interior-item">
                       <div className="icon">
                         <img src="../stairs.png" alt="stairs" />
@@ -257,10 +257,11 @@ export function RoomDetail(props) {
                         <FormattedMessage {...messages.Mezzanine} />
                       </div>
                     </div>
-                  )}
-                </Col>
-                <Col xs={4}>
-                  {utilities.includes('tu_quan_ao') && (
+
+                  </Col>
+                )}
+                {utilities.includes('tu_quan_ao') && (
+                  <Col xs={2}>
                     <div className="interior-item">
                       <div className="icon">
                         <img src="../wardrobe.png" alt="wardrobe" />
@@ -268,14 +269,11 @@ export function RoomDetail(props) {
                       <div className="name">
                         <FormattedMessage {...messages.Wardrobe} />
                       </div>
-                      <div className="checked">
-                        <img src="/checked.png" alt="checked" />
-                      </div>
                     </div>
-                  )}
-                </Col>
-                <Col xs={4}>
-                  {utilities.includes('tu_bep') && (
+                  </Col>
+                )}
+                {utilities.includes('tu_bep') && (
+                  <Col xs={2}>
                     <div className="interior-item">
                       <div className="icon">
                         <img src="../kitchen.png" alt="kitchen" />
@@ -284,10 +282,10 @@ export function RoomDetail(props) {
                         <FormattedMessage {...messages.Kitchen} />
                       </div>
                     </div>
-                  )}
-                </Col>
-                <Col xs={4}>
-                  {utilities.includes('san_go') && (
+                  </Col>
+                )}
+                {utilities.includes('san_go') && (
+                  <Col xs={2}>
                     <div className="interior-item">
                       <div className="icon">
                         <img src="../dropceiling.png" alt="dropceiling" />
@@ -296,22 +294,22 @@ export function RoomDetail(props) {
                         <FormattedMessage {...messages.WoodFloor} />
                       </div>
                     </div>
-                  )}
-                </Col>
-                <Col xs={4}>
-                  {utilities.includes('bon_cau') && (
+                  </Col>
+                )}
+                {utilities.includes('bon_cau') && (
+                  <Col xs={2}>
                     <div className="interior-item">
                       <div className="icon">
-                        <img src="../toilet.png" alt="toilet" />
+                        <img src="../toiletbowl.png" alt="toilet" />
                       </div>
                       <div className="name">
                         <FormattedMessage {...messages.toiletBowl} />
                       </div>
                     </div>
-                  )}
-                </Col>
-                <Col xs={4}>
-                  {utilities.includes('bon_rua_mat') && (
+                  </Col>
+                )}
+                {utilities.includes('bon_rua_mat') && (
+                  <Col xs={2}>
                     <div className="interior-item">
                       <div className="icon">
                         <img src="../washstand.png" alt="washstand" />
@@ -320,8 +318,8 @@ export function RoomDetail(props) {
                         <FormattedMessage {...messages.washstand} />
                       </div>
                     </div>
-                  )}
-                </Col>
+                  </Col>
+                )}
               </Row>
             </div>
 
@@ -330,8 +328,8 @@ export function RoomDetail(props) {
                 <FormattedMessage {...messages.Utilities} />
               </div>
               <Row>
-                <Col xs={4}>
-                  {utilities.includes('wifi') && (
+                {utilities.includes('wifi') && (
+                  <Col xs={2}>
                     <div className="furniture-item">
                       <div className="icon">
                         <img src="../wifi.png" alt="wifi" />
@@ -340,10 +338,10 @@ export function RoomDetail(props) {
                         <FormattedMessage {...messages.wifi} />
                       </div>
                     </div>
-                  )}
-                </Col>
-                <Col xs={4}>
-                  {utilities.includes('giat_ui') && (
+                  </Col>
+                )}
+                {utilities.includes('giat_ui') && (
+                  <Col xs={2}>
                     <div className="furniture-item">
                       <div className="icon">
                         <img src="../laundry.png" alt="laundry" />
@@ -352,10 +350,10 @@ export function RoomDetail(props) {
                         <FormattedMessage {...messages.washingDrying} />
                       </div>
                     </div>
-                  )}
-                </Col>
-                <Col xs={4}>
-                  {utilities.includes('giu_xe') && (
+                  </Col>
+                )}
+                {utilities.includes('giu_xe') && (
+                  <Col xs={2}>
                     <div className="furniture-item">
                       <div className="icon">
                         <img src="../delivery.png" alt="delivery" />
@@ -364,10 +362,10 @@ export function RoomDetail(props) {
                         <FormattedMessage {...messages.parkingLot} />
                       </div>
                     </div>
-                  )}
-                </Col>
-                <Col xs={4}>
-                  {utilities.includes('dieu_hoa') && (
+                  </Col>
+                )}
+                {utilities.includes('dieu_hoa') && (
+                  <Col xs={2}>
                     <div className="furniture-item">
                       <div className="icon">
                         <img
@@ -379,10 +377,10 @@ export function RoomDetail(props) {
                         <FormattedMessage {...messages.AirConditioner} />
                       </div>
                     </div>
-                  )}
-                </Col>
-                <Col xs={4}>
-                  {utilities.includes('don_phong') && (
+                  </Col>
+                )}
+                {utilities.includes('don_phong') && (
+                  <Col xs={2}>
                     <div className="furniture-item">
                       <div className="icon">
                         <img src="../broom.png" alt="broom" />
@@ -391,10 +389,10 @@ export function RoomDetail(props) {
                         <FormattedMessage {...messages.clearTheRoom} />
                       </div>
                     </div>
-                  )}
-                </Col>
-                <Col xs={4}>
-                  {utilities.includes('truyen_hinh') && (
+                  </Col>
+                )}
+                {utilities.includes('truyen_hinh') && (
+                  <Col xs={2}>
                     <div className="furniture-item">
                       <div className="icon">
                         <img src="../television.png" alt="television" />
@@ -403,10 +401,10 @@ export function RoomDetail(props) {
                         <FormattedMessage {...messages.television} />
                       </div>
                     </div>
-                  )}
-                </Col>
-                <Col xs={4}>
-                  {utilities.includes('gio_giac_tu_do') && (
+                  </Col>
+                )}
+                {utilities.includes('gio_giac_tu_do') && (
+                  <Col xs={2}>
                     <div className="furniture-item">
                       <div className="icon">
                         <img src="../time.png" alt="time" />
@@ -415,10 +413,10 @@ export function RoomDetail(props) {
                         <FormattedMessage {...messages.FreeTime} />
                       </div>
                     </div>
-                  )}
-                </Col>
-                <Col xs={4}>
-                  {utilities.includes('loi_di_rieng') && (
+                  </Col>
+                )}
+                {utilities.includes('loi_di_rieng') && (
+                  <Col xs={2}>
                     <div className="furniture-item">
                       <div className="icon">
                         <img src="../gate.png" alt="gate" />
@@ -427,8 +425,8 @@ export function RoomDetail(props) {
                         <FormattedMessage {...messages.PrivateEntrance} />
                       </div>
                     </div>
-                  )}
-                </Col>
+                  </Col>
+                )}
               </Row>
               <Row className="button">
                 <Col xs={6} className="button-deposit">
