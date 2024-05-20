@@ -12,6 +12,8 @@ import {
     GET_ROOM_FAIL,
     PUT_ROOM_DETAIL_UPDATE_SUCCESS,
     PUT_ROOM_DETAIL_UPDATE_FAIL,
+    ADD_METER_SUCCESS,
+    ADD_METER_FAIL,
 } from './constants';
 
 
@@ -35,6 +37,10 @@ const roomDetailReducer = (state = initialState, action) =>
             case POST_MOTEL_FAIL:
                 draft.showErrorPopup = true;
                 draft.action = 2;
+                break;
+            case ADD_METER_SUCCESS:
+                break;
+            case ADD_METER_FAIL:
                 break;
             case CHANGE_STORE_DATA:
                 draft[action.key] = action.value;

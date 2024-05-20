@@ -16,10 +16,11 @@ const selectJobDetailUserDomain = state => state.jobDetailUser || initialState;
  */
 
 const makeSelectJobDetailUser = () =>
-    createSelector(
-        selectJobDetailUserDomain,
-        substate => substate,
-    );
+  createSelector(
+    selectJobDetailUserDomain,
+    substate => substate,
+  );
+
 
 export default makeSelectJobDetailUser;
 export { selectJobDetailUserDomain };

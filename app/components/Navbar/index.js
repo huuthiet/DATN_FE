@@ -432,6 +432,17 @@ const Navbar = props => {
                         </DropdownItem>
                         <DropdownItem
                           className={
+                            pathname.includes('/manage-monthly-order') ? 'active' : ''
+                          }
+                          onClick={() => {
+                            history.push('/manage-monthly-order');
+                          }}
+                        >
+                          <LocalOfferOutlined className="icon" />
+                          <FormattedMessage {...messages.manageMonthly} />
+                        </DropdownItem>
+                        <DropdownItem
+                          className={
                             pathname.includes('/monthly-order/list')
                               ? 'active'
                               : ''
@@ -495,7 +506,7 @@ const Navbar = props => {
                           <NotificationImportantOutlined className="icon" />
                           <FormattedMessage {...messages.reportProblemList} />
                         </DropdownItem>
-                        <DropdownItem
+                        {/* <DropdownItem
                           className={
                             pathname.includes('/host/transaction/list')
                               ? 'active'
@@ -507,7 +518,7 @@ const Navbar = props => {
                         >
                           <PaymentOutlined className="icon" />
                           <FormattedMessage {...messages.transactionPayment} />
-                        </DropdownItem>
+                        </DropdownItem> */}
                       </>
                     )}
                     {/* Admin role */}

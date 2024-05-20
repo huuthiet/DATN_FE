@@ -20,7 +20,7 @@ import { loadRepos, reposLoaded } from '../App/actions';
 export function* apiGetPayDepositList(payload) {
   const requestUrl =
   urlLink.api.serverUrl 
-  + urlLink.api.getBankingCashPendingDepositListByMotel 
+  + urlLink.api.getBankingCashPendingAfterCheckInCostListByMotel 
   + payload.payload;
   yield put(loadRepos());
   try {

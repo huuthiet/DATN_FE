@@ -52,17 +52,29 @@ export default defineMessages({
     id: `${scope}.WaterNumber`,
     defaultMessage: 'Số nước',
   },
+  numberOfPerson: {
+    id: `${scope}.numberOfPerson`,
+    defaultMessage: 'Số người ở',
+  },
   WaterPrice: {
     id: `${scope}.WaterPrice`,
     defaultMessage: 'Giá nước',
   },
   TotalWater: {
     id: `${scope}.TotalWater`,
-    defaultMessage: 'Tổng tiền nước',
+    defaultMessage: 'Tổng tiền nước ( = số người x giá nước)',
   },
   VehiclePrice: {
     id: `${scope}.VehiclePrice`,
     defaultMessage: 'Giá xe',
+  },
+  totalVihicle: {
+    id: `${scope}.totalVihicle`,
+    defaultMessage: 'Tổng tiền xe',
+  },
+  numberOfVihicle: {
+    id: `${scope}.numberOfVihicle`,
+    defaultMessage: 'Số xe',
   },
   ServicePrice: {
     id: `${scope}.DifferentPrice`,
@@ -74,12 +86,12 @@ export default defineMessages({
   },
   AmountOfMoney: {
     id: `${scope}.AmountOfMoney`,
-    defaultMessage: 'Hóa đơn là',
+    defaultMessage: 'Số tiền ',
   },
   AmountOfMoneyDec: {
     id: `${scope}.AmountOfMoneyDec`,
     defaultMessage:
-      'Số tiền sẽ được trừ vào ví của bạn, bạn có thực sự muốn thanh toán không?',
+      'Vui lòng chọn ngân hàng để tiến hành thanh toán',
   },
   Accept: {
     id: `${scope}.Accept`,
@@ -125,7 +137,10 @@ export default defineMessages({
     id: `${scope}.TotalMoney`,
     defaultMessage: 'Tổng tiền',
   },
-
+  AmountOfMoneyTransfer: {
+    id: `${scope}.AmountOfMoneyTransfer`,
+    defaultMessage: 'Vui lòng chọn tên ngân hàng để thực hiện chuyển tiền!',
+  },
   PaymentUponCheckIn: {
     id: `${scope}.PaymentUponCheckIn`,
     defaultMessage: 'Thanh toán khi nhận phòng',
@@ -191,6 +206,14 @@ export default defineMessages({
   Deposited: {
     id: `${scope}.Deposited`,
     defaultMessage: 'Tiền cọc giữ phòng',
+  },
+  numberDayStay: {
+    id: `${scope}.numberDayStay`,
+    defaultMessage: 'Số ngày ở',
+  },
+  totalRoomPrice: {
+    id: `${scope}.numberDayStay`,
+    defaultMessage: 'Tổng tiền phòng',
   },
   RoomLockCode: {
     id: `${scope}.RoomLockCode`,

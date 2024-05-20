@@ -37,6 +37,8 @@ export function JobDetail(props) {
     showErrorPopup,
     showWarningPopup,
   } = props.jobDetail;
+
+  console.log({job});
   const {
     fullName = '',
     phoneNumber = '',

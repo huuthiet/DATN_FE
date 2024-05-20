@@ -36,7 +36,7 @@
   "navbar.containers.user": "User Management",
   "navbar.containers.host": "Host Management",
   "navbar.containers.hostRoomRevenue": "Revenue Management",
-  "navbar.containers.hostRoomHist": "His Room",
+  "navbar.containers.hostRoomHist": "Manage Room",
   "navbar.containers.billList": "List Bill",
   "navbar.containers.reportProblemList": "List Report Problem",
   "navbar.containers.roomManager": "Host Management",

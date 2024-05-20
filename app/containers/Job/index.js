@@ -246,8 +246,9 @@ export function Job(props) {
   const { room = {}, jobError, jobErrorNuber } = props.job;
   console.log('check job: ', props.job);
   console.log('check job error: ', jobErrorNuber);
-  const { bankInfo } = props.bankInfo;
+  const { bankInfo = [] } = props.bankInfo;
   console.log('bankInfo', bankInfo);
+  console.log('props.bankInfo;', props.bankInfo);
 
   const {
     bank = '',
@@ -391,6 +392,22 @@ export function Job(props) {
   }
 
   console.log("minimumMonths room: ", minimumMonths);
+
+  let bankOptions = [];
+
+
+  if (bankInfo.length !== 0){
+    bankOptions = bankInfo.map(bankItem => ({
+      label: bankItem.nameTkLable,
+      value: bankItem.id,
+      bankName: bankItem.nameTkLable,
+      bankNumber: bankItem.stk,
+      bankUsername: bankItem.nameTk,
+      objectBankId: bankItem._id,
+    }))
+  }
+
+  console.log({bankOptions});
 
   return (
     <div>
@@ -589,14 +606,15 @@ export function Job(props) {
                       <div style={{ boxShadow: 'rgba(3, 7, 18, 0.01) 0px -1px 3px, rgba(3, 7, 18, 0.03) 0px -2px 12px, rgba(3, 7, 18, 0.04) 0px -5px 27px, rgba(3, 7, 18, 0.04) 1px -10px 47px, rgba(3, 7, 18, 0.04) 1px -15px 74px;' }}>
                         <Select
                           placeholder="Chọn ngân hàng"
-                          options={bankInfo.map(bankItem => ({
-                            label: bankItem.nameTkLable,
-                            value: bankItem.id,
-                            bankName: bankItem.nameTkLable,
-                            bankNumber: bankItem.stk,
-                            bankUsername: bankItem.nameTk,
-                            objectBankId: bankItem._id,
-                          }))}
+                          // options={bankInfo.map(bankItem => ({
+                          //   label: bankItem.nameTkLable,
+                          //   value: bankItem.id,
+                          //   bankName: bankItem.nameTkLable,
+                          //   bankNumber: bankItem.stk,
+                          //   bankUsername: bankItem.nameTk,
+                          //   objectBankId: bankItem._id,
+                          // }))}
+                          options={bankOptions}
                           onChange={selectedOption => {
                             // Xử lý khi người dùng chọn một ngân hàng
                             console.log('Selected bank:', selectedOption);

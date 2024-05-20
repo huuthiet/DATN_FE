@@ -80,7 +80,7 @@ export function HistoryRoomHost(props) {
 
     {
       field: 'action',
-      headerName: 'Chi tiết',
+      headerName: 'Quản lý phòng',
       headerAlign: 'center',
       width: 400,
       headerClassName: 'header-bold',
@@ -105,10 +105,10 @@ export function HistoryRoomHost(props) {
   return (
     <div className="login-page-wrapper">
       <Helmet>
-        <title>Lịch sử thuê phòng</title>
-        <meta name="description" content="Description of HistoryRoomHost" />
+        <title>Manage Motel</title>
+        <meta name="description" content="Description of Manage Motel" />
       </Helmet>
-      <div className="title">Lịch sử thuê phòng</div>
+      <div className="title">Quản lý tòa nhà</div>
       <div className="job-list-wrapper container-fluid">
         <div style={{ width: '100%' }}>
           <DataGrid

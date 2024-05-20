@@ -53,6 +53,8 @@ import EnergyRoomsBillUser from 'containers/EnergyRoomsBillUser/Loadable';
 import MonthlyOrderList from 'containers/MonthlyOrderList/Loadable';
 import ManagerPayDepositHost from 'containers/ManagerPayDepositHost/Loadable';
 import ManageDeposit from 'containers/ManageDeposit/Loadable';
+import ManageMonthly from 'containers/ManageMonthly/Loadable';
+import ManagerAcceptMonthlyHost from 'containers/ManagerAcceptMonthlyHost/Loadable';
 
 // note
 import ManagerEnergyRooms from 'containers/ManagerEnergyRooms/Loadable';
@@ -71,6 +73,7 @@ import ManagerEnergyRoomsHost from 'containers/ManagerEnergyRoomsHost/Loadable';
 import ManagerEnergyBuildingSummaryReport from 'containers/ManagerEnergyBuildingSummaryReport/Loadable';
 import ManagerEnergyRoomsUser from 'containers/ManagerEnergyRoomsUser/Loadable';
 import ManagerAcceptDepositHost from 'containers/ManagerAcceptDepositHost/Loadable';
+import ManagerAcceptAfterCheckInCostHost from 'containers/ManagerAcceptAfterCheckInCostHost/Loadable';
 
 import ManagerEnergyHostAdmin from 'containers/ManagerEnergyHostAdmin/Loadable';
 import ManageMotelListAdmin from 'containers/ManageMotelListAdmin/Loadable';
@@ -190,7 +193,7 @@ export function App(props) {
         <Route path="/about" component={About} />
         <Route path="/roomManage" component={RoomManage} />
         <Route
-          path="/job-detail/:id/:idElectricMetter"
+          path="/job-detail/:id/:idRoom"
           component={JobDetailUser}
         />
         <Route path="/job-verify/:id/:idElectricMetter" component={JobVerify} />
@@ -293,8 +296,20 @@ export function App(props) {
           component={ManagerAcceptDepositHost}
         />
         <Route
+          path="/manage-deposit/accept-after-check-in-cost/:id"
+          component={ManagerAcceptAfterCheckInCostHost}
+        />
+        <Route
           path="/manage-deposit/"
           component={ManageDeposit}
+        />
+        <Route
+          path="/manage-monthly-order/manage-accept-order/:id"
+          component={ManagerAcceptMonthlyHost}
+        />
+        <Route
+          path="/manage-monthly-order/"
+          component={ManageMonthly}
         />
         <Route path="/withdraw" component={Withdraw} />
 

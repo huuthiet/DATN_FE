@@ -22,7 +22,7 @@ import './style.scss';
 import { Avatar } from '@material-ui/core';
 // import localStore from 'local-storage';
 
-export function ManageDeposit(props) {
+export function ManageMonthly(props) {
   useInjectReducer({ key: 'historyRoomHost', reducer });
   useInjectSaga({ key: 'historyRoomHost', saga });
   const history = useHistory();
@@ -59,9 +59,9 @@ export function ManageDeposit(props) {
 
     {
       field: 'action-1',
-      headerName: 'Quản lý duyệt cọc',
+      headerName: 'Quản lý duyệt thanh toán',
       headerAlign: 'center',
-      width: 200,
+      width: 300,
       headerClassName: 'header-bold',
       renderCell: params => {
         // eslint-disable-next-line no-unused-expressions
@@ -70,7 +70,7 @@ export function ManageDeposit(props) {
             <a
               className='btn-detail'
               onClick={() => {
-                history.push(`/manage-deposit/accept-deposit/${params.row._id}`);
+                history.push(`/manage-monthly-order/manage-accept-order/${params.row._id}`);
               }}
             >
               Xem chi tiết
@@ -81,7 +81,7 @@ export function ManageDeposit(props) {
     },
     {
       field: 'action-2',
-      headerName: 'Duyệt thanh toán khi nhận phòng',
+      headerName: 'Lịch sử thanh toán',
       headerAlign: 'center',
       width: 300,
       headerClassName: 'header-bold',
@@ -101,60 +101,15 @@ export function ManageDeposit(props) {
         );
       },
     },
-    {
-      field: 'action-3',
-      headerName: 'Quản lý trả cọc',
-      headerAlign: 'center',
-      width: 200,
-      headerClassName: 'header-bold',
-      renderCell: params => {
-        // eslint-disable-next-line no-unused-expressions
-        return (
-          <>
-            <a
-              className='btn-detail'
-              onClick={() => {
-                history.push(`/manage-deposit/pay-deposit/${params.row._id}`);
-              }}
-            >
-              Xem chi tiết
-            </a>
-          </>
-        );
-      },
-    },
-    {
-      field: 'action-4',
-      headerName: 'Lịch sử đặt cọc',
-      headerAlign: 'center',
-      width: 200,
-      headerClassName: 'header-bold',
-      renderCell: params => {
-        // eslint-disable-next-line no-unused-expressions
-        return (
-          <>
-            <a
-              className='btn-detail'
-              onClick={() => {
-                console.log()
-                history.push(`/historyRoomHost/room/${params.row._id}`);
-              }}
-            >
-              Xem chi tiết
-            </a>
-          </>
-        );
-      },
-    },
   ];
 
   return (
     <div className="login-page-wrapper">
       <Helmet>
-        <title>Manage Deposit</title>
-        <meta name="description" content="Description of Manage Deposit" />
+        <title>Manage Monthly Order</title>
+        <meta name="description" content="Description of Manage Monthly Order" />
       </Helmet>
-      <div className="title">Quản lý cọc</div>
+      <div className="title">Quản thanh toán hàng tháng</div>
       <div className="job-list-wrapper container-fluid">
         <div style={{ width: '100%' }}>
           <DataGrid
@@ -171,7 +126,7 @@ export function ManageDeposit(props) {
   );
 }
 
-ManageDeposit.propTypes = {
+ManageMonthly.propTypes = {
   getGetMotelRoom: PropTypes.func,
 };
 
@@ -192,4 +147,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(ManageDeposit);
+export default compose(withConnect)(ManageMonthly);

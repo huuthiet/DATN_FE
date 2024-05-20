@@ -36,7 +36,7 @@
   "navbar.containers.user": "Quản lý người dùng",
   "navbar.containers.host": "Quản lý chủ trọ",
   "navbar.containers.hostRoomRevenue": "Quản lý doanh thu",
-  "navbar.containers.hostRoomHist": "Lịch sử thuê phòng",
+  "navbar.containers.hostRoomHist": "Quản lý tòa nhà",
   "navbar.containers.billList": "Danh sách hóa đơn",
   "navbar.containers.reportProblemList": "Danh sách sự cố",
   "navbar.containers.transactionPayment": "Quản lý giao dịch",

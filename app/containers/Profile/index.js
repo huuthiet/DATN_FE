@@ -574,12 +574,12 @@ export function Profile(props) {
                     <div className='job-item2'>
                       <div className='job-btn'>
                         <Tooltip title="Xem chi tiết" placement='top'>
-                          {job && job.room && job.room.idElectricMetter !== null ? (
+                          {job && job.room && job.room._id !== null ? (
                             <Button
                               variant='contained'
                               color="primary"
                               onClick={() => {
-                                history.push(`/job-detail/${job._id}/${job.room.idElectricMetter}`);
+                                history.push(`/job-detail/${job._id}/${job.room._id}`);
                               }}
                             >
                               <TocIcon />

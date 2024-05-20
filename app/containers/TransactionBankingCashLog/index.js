@@ -100,8 +100,11 @@ export function TransactionBankingCashLog(props) {
       nameMotelRoom: (item.motel && item.motel.name) ? item.motel.name : "N/A",
       nameRoom: (item.room && item.room.name) ? item.room.name : "N/A",
       time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
-      amount_tranform: Money(item.amount) + " VNĐ",
+      amount_tranform: Money(parseInt(item.amount.toFixed(0))) + " VNĐ",
       payment_Method: (item.paymentMethod === "cash")?"Tiền mặt": "Ngân hàng",
+      type_trasaction: (item.type === "deposit")?"Tiền cọc":
+                                (item.type === "monthly")?"Thanh toán hàng tháng":
+                                (item.type === "afterCheckInCost")?"Thanh toán khi nhận phòng": "N/A",
       ...item,
     }));
   }
@@ -196,6 +199,13 @@ export function TransactionBankingCashLog(props) {
       headerClassName: 'header-bold',
     },
     {
+      field: 'type_trasaction',
+      headerName: 'Loại thanh toán',
+      headerAlign: 'center',
+      width: 250,
+      headerClassName: 'header-bold',
+    },
+    {
       field: 'description',
       headerName: 'Ghi chú',
       headerAlign: 'center',
@@ -253,7 +263,7 @@ export function TransactionBankingCashLog(props) {
         <title>TransactionBankingCashLog</title>
         <meta name="description" content="Description of TransactionBankingCashLog" />
       </Helmet>
-      <div className="title">Nhật ký giao dịch chờ duyệt</div>
+      <div className="title">Nhật ký giao dịch</div>
       <div className="job-list-wrapper container-fluid">
         <div style={{ width: '100%' }}>
           <DataGrid
