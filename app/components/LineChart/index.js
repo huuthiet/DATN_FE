@@ -41,7 +41,7 @@ const LineChart = ({ textY, nameChart, dataEnergy, labelsEnergy }) => {
         smooth: false,
         borderColor: 'rgb(75, 192, 192)',
         // tension: 0.01,
-        // borderWidth: 1, // Set border width
+        borderWidth: 1, // Set border width
         pointRadius: 3,
         // cubicInterpolationMode: 'monotone',
       },

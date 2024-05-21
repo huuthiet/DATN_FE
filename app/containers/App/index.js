@@ -274,11 +274,11 @@ export function App(props) {
         <Route path="/admin/manager-energy-detail" component={EnergyDetail} />
         <Route path="/admin/scada-electric-ems" component={ScadaElectricEMS} />
         <Route
-          path="/admin/follow-energy/:id/:roomId/:idMetter/:name"
+          path="/admin/follow-energy/:id/:roomId/:name"
           component={FollowEnergyAdmin}
         />
         <Route
-          path="/host/follow-energy/:id/:roomId/:idMetter/:name"
+          path="/host/follow-energy/:id/:roomId/:name"
           component={FollowEnergyHost}
         />
         <Route path="/follow-energy-2/" component={FollowEnergyUser2} />
