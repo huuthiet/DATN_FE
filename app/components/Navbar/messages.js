@@ -73,10 +73,6 @@ export default defineMessages({
     id: `${scope}.hostRoomHist`,
     defaultMessage: 'Quản lý tòa nhà',
   },
-  managerRoom: {
-    id: `${scope}.managerRoom`,
-    defaultMessage: 'Quản lý phòng',
-  },
   billList: {
     id: `${scope}.billList`,
     defaultMessage: 'Danh Sách Hóa Đơn',

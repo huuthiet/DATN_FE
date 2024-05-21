@@ -384,7 +384,7 @@ const Navbar = props => {
                           <DnsOutlined className="icon" />
                           <FormattedMessage {...messages.energyManagerHost} />
                         </DropdownItem> */}
-                        {/* <DropdownItem
+                        <DropdownItem
                           className={
                             pathname.includes('/roomManage') ? 'active' : ''
                           }
@@ -394,7 +394,7 @@ const Navbar = props => {
                         >
                           <HomeOutlined className="icon" />
                           <FormattedMessage {...messages.roomManager} />
-                        </DropdownItem> */}
+                        </DropdownItem>
                         <DropdownItem
                           className={
                             pathname.includes('/manager-energy-buildings-host')
@@ -506,7 +506,7 @@ const Navbar = props => {
                           <NotificationImportantOutlined className="icon" />
                           <FormattedMessage {...messages.reportProblemList} />
                         </DropdownItem>
-                        {/* <DropdownItem
+                        <DropdownItem
                           className={
                             pathname.includes('/host/transaction/list')
                               ? 'active'
@@ -518,7 +518,7 @@ const Navbar = props => {
                         >
                           <PaymentOutlined className="icon" />
                           <FormattedMessage {...messages.transactionPayment} />
-                        </DropdownItem> */}
+                        </DropdownItem>
                       </>
                     )}
                     {/* Admin role */}
