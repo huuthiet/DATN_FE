@@ -129,6 +129,10 @@ export const urlLink = {
     
     getBankingCashPendingAfterCheckInCostListByMotel:
     '/v1/homeKey/order/bankingCashPendingAfterCheckInCostListByMotel/',  // + idMotel
+    getDepositAfterCheckInCostHistoryList:
+    '/v1/homeKey/order/getDepositAfterCheckInCostHistoryList/',  // + idMotel
+    getMonthlyHistoryList:
+    '/v1/homeKey/order/getMonthlyHistoryList/',  // + idMotel
     getBankingCashPendingMonthlyByMotel:
     '/v1/homeKey/order/bankingCashPendingMonthlyByMotel/',  // + idMotel
     putBankingCashPendingTransactionByMotel:

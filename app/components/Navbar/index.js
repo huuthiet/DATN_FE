@@ -635,7 +635,7 @@ const Navbar = props => {
                           <ReceiptOutlined className="icon" />
                           <FormattedMessage {...messages.billList} />
                         </DropdownItem> */}
-                        <DropdownItem
+                        {/* <DropdownItem
                           className={
                             pathname.includes('/admin/report-problem-list')
                               ? 'active'
@@ -647,7 +647,7 @@ const Navbar = props => {
                         >
                           <NotificationImportantOutlined className="icon" />
                           <FormattedMessage {...messages.reportProblemList} />
-                        </DropdownItem>
+                        </DropdownItem> */}
                       </Fragment>
                     )}
                     {/* Customer role */}

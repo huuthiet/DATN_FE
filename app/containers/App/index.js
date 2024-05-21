@@ -52,6 +52,8 @@ import RoomBillingManage from 'containers/EnergyBillingManage/RoomBillingManage/
 import EnergyRoomsBillUser from 'containers/EnergyRoomsBillUser/Loadable';
 import MonthlyOrderList from 'containers/MonthlyOrderList/Loadable';
 import ManagerPayDepositHost from 'containers/ManagerPayDepositHost/Loadable';
+import HistoryDepositAfterCheckInCost from 'containers/HistoryDepositAfterCheckInCost/Loadable';
+import HistoryMonthly from 'containers/HistoryMonthly/Loadable';
 import ManageDeposit from 'containers/ManageDeposit/Loadable';
 import ManageMonthly from 'containers/ManageMonthly/Loadable';
 import ManagerAcceptMonthlyHost from 'containers/ManagerAcceptMonthlyHost/Loadable';
@@ -292,6 +294,10 @@ export function App(props) {
           component={ManagerPayDepositHost}
         />
         <Route
+          path="/manage-deposit/history-deposit-aftercheckincost/:id"
+          component={HistoryDepositAfterCheckInCost}
+        />
+        <Route
           path="/manage-deposit/accept-deposit/:id"
           component={ManagerAcceptDepositHost}
         />
@@ -306,6 +312,10 @@ export function App(props) {
         <Route
           path="/manage-monthly-order/manage-accept-order/:id"
           component={ManagerAcceptMonthlyHost}
+        />
+        <Route
+          path="/manage-monthly-order/history-monthly/:id"
+          component={HistoryMonthly}
         />
         <Route
           path="/manage-monthly-order/"

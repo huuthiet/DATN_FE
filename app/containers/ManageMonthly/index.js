@@ -92,7 +92,7 @@ export function ManageMonthly(props) {
             <a
               className='btn-detail'
               onClick={() => {
-                history.push(`/manage-deposit/accept-after-check-in-cost/${params.row._id}`);
+                history.push(`/manage-monthly-order/history-monthly/${params.row._id}`);
               }}
             >
               Xem chi tiết

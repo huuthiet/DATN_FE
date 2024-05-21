@@ -137,7 +137,7 @@ export function ManageDeposit(props) {
               className='btn-detail'
               onClick={() => {
                 console.log()
-                history.push(`/historyRoomHost/room/${params.row._id}`);
+                history.push(`/manage-deposit/history-deposit-aftercheckincost/${params.row._id}`);
               }}
             >
               Xem chi tiết
