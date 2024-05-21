@@ -9,7 +9,9 @@ import { loadRepos, reposLoaded, saveCurrentUser } from '../App/actions';
 
 export function* apiPostSignIn(payload) {
   const { payload: data = {} } = payload;
+  console.log('apiPostSignIn -> data', urlLink.api.serverUrl);
   const requestUrl = urlLink.api.serverUrl + urlLink.api.auth.sign_in;
+  console.log('requestUrl', requestUrl);
   yield put(loadRepos());
   try {
     const response = yield axios.post(requestUrl, data);

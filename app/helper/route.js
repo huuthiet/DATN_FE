@@ -1,9 +1,12 @@
+
+
+
 export const urlLink = {
   // AUTHENTICATE
   api: {
-    // serverUrl: 'https://api.homeskeys.net/api',
-    // serverUrl: 'http://115.73.215.28:5502/api',
-    serverUrl: 'http://localhost:5502/api',
+    serverUrl: 'http://localhost:8080/api',
+    //usse dotenv for serverUrl
+    // serverUrl: process.env.REACT_APP_BASE_API_URL,
     auth: {
       sign_up: '/v1/auth/signUp',
       sign_in: '/v1/auth/signIn',
@@ -92,16 +95,16 @@ export const urlLink = {
     getDataEnergyPerMonth: '/v1/homeKey/energy/device/historyDataPerMon/',
 
     getTotalKWhPerHourInOneDayV2:
-    '/v1/homeKey/energy/device/getTotalKWhPerHourInOneDayV2/', //  idRoom/:day
+      '/v1/homeKey/energy/device/getTotalKWhPerHourInOneDayV2/', //  idRoom/:day
     getTotalKWhPerDayInOneMonthV2:
-    '/v1/homeKey/energy/device/getTotalKWhPerDayInOneMonthV2/', // :idRoom/:month
-    
+      '/v1/homeKey/energy/device/getTotalKWhPerDayInOneMonthV2/', // :idRoom/:month
+
     getTotalKWhPerDayForDayToDayV2:
-    '/v1/homeKey/energy/device/getTotalKWhPerDayForDayToDayV2/', // :idRoom/:start/:end
+      '/v1/homeKey/energy/device/getTotalKWhPerDayForDayToDayV2/', // :idRoom/:start/:end
     getListIdMetterElectric:
-    '/v1/homeKey/energy/device/getListIdMetterElectricByRoom/', // +idRoom
+      '/v1/homeKey/energy/device/getListIdMetterElectricByRoom/', // +idRoom
     addIdMetterElectric:
-    '/v1/homeKey/energy/device/addIdMetterElectricForRoom/', // +:id/:time/:newIdMetter
+      '/v1/homeKey/energy/device/addIdMetterElectricForRoom/', // +:id/:time/:newIdMetter
     getBankUser: '/v1/user/bank',
     postRequestWithdraw: '/v1/user/requestWithdraws/',
     getRequestWithdrawUserList: '/v1/user/requestWithdraws/list',
@@ -123,19 +126,19 @@ export const urlLink = {
     getPayDepositList: '/v1/homeKey/order/getPayDepositList/',
     putPayDeposit: '/v1/homeKey/order/payDeposit/', //+id
     getBankingCashTransactionList:
-    '/v1/homeKey/order/bankingCashTransactionsList/', 
+      '/v1/homeKey/order/bankingCashTransactionsList/',
     getBankingCashPendingDepositListByMotel:
-    '/v1/homeKey/order/bankingCashPendingDepositListByMotel/',  // + idMotel
-    
+      '/v1/homeKey/order/bankingCashPendingDepositListByMotel/',  // + idMotel
+
     getBankingCashPendingAfterCheckInCostListByMotel:
-    '/v1/homeKey/order/bankingCashPendingAfterCheckInCostListByMotel/',  // + idMotel
+      '/v1/homeKey/order/bankingCashPendingAfterCheckInCostListByMotel/',  // + idMotel
     getBankingCashPendingMonthlyByMotel:
-    '/v1/homeKey/order/bankingCashPendingMonthlyByMotel/',  // + idMotel
+      '/v1/homeKey/order/bankingCashPendingMonthlyByMotel/',  // + idMotel
     putBankingCashPendingTransactionByMotel:
-    '/v1/homeKey/order/putBankingCashPendingTransactionByMotel/',  // + idMotel
+      '/v1/homeKey/order/putBankingCashPendingTransactionByMotel/',  // + idMotel
     // -------
     postTransactionAfterCheckInCostPendingBanking:
-    '/v1/homeKey/order/postTransactionAfterCheckInCostPendingBanking/',  
+      '/v1/homeKey/order/postTransactionAfterCheckInCostPendingBanking/',
     // -------
   },
   auth: {

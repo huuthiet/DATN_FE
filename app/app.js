@@ -16,6 +16,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
 import 'font-awesome/css/font-awesome.min.css';
+require('dotenv').config();
 
 // Import root app
 import App from 'containers/App';
