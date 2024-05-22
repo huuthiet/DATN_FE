@@ -5,6 +5,7 @@ export const urlLink = {
   // AUTHENTICATE
   api: {
     serverUrl: 'http://localhost:8080/api',
+    // serverUrl: 'http://localhost:5502/api',
     //usse dotenv for serverUrl
     // serverUrl: process.env.REACT_APP_BASE_API_URL,
     auth: {
@@ -124,9 +125,13 @@ export const urlLink = {
     exportBillBuilding: '/v1/homeKey/energy/device/exportBillBuilding/', // + /:idMotel/:startTime/:endTime
     buildingRevenue: '/v1/homeKey/energy/device/buildingRevenue/', // +/:idMotel/:startTime/:endTime
     getPayDepositList: '/v1/homeKey/order/getPayDepositList/',
+    postExportBillRoomPendingPayByOrder: '/v1/homeKey/order/exportBillRoomPendingPayByOrder/',
+    postExportBillPaidBTransaction: '/v1/homeKey/order/exportBillPaidBTransaction/',
     putPayDeposit: '/v1/homeKey/order/payDeposit/', //+id
     getBankingCashTransactionList:
       '/v1/homeKey/order/bankingCashTransactionsList/',
+    getOrderPendingPaymentList:
+      '/v1/homeKey/order/orderPendingPaymentList/',
     getBankingCashPendingDepositListByMotel:
       '/v1/homeKey/order/bankingCashPendingDepositListByMotel/',  // + idMotel
 

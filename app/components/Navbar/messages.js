@@ -90,6 +90,10 @@ export default defineMessages({
     id: `${scope}.money`,
     defaultMessage: 'Quản lý tài khoản ngân hàng',
   },
+  orderPendingPayList: {
+    id: `${scope}.orderPendingPayList`,
+    defaultMessage: 'Hóa đơn chờ thanh toán',
+  },
   transactionPayment: {
     id: `${scope}.transactionPayment`,
     defaultMessage: 'Quản lý giao dịch',

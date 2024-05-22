@@ -82,6 +82,7 @@ import ManageMotelListAdmin from 'containers/ManageMotelListAdmin/Loadable';
 import ManagerEnergyBuildingsAdmin from 'containers/ManagerEnergyBuildingsAdmin/Loadable';
 import ManagerEnergyRoomsAdmin from 'containers/ManagerEnergyRoomsAdmin/Loadable';
 import TransactionBankingCashLog from 'containers/TransactionBankingCashLog/Loadable';
+import OrdersPendingPayUser from 'containers/OrdersPendingPayUser/Loadable';
 
 //----------------------------
 import PropTypes from 'prop-types';
@@ -244,6 +245,10 @@ export function App(props) {
         <Route
           path="/transaction-banking-cash-log"
           component={TransactionBankingCashLog}
+        />
+        <Route
+          path="/orders-pending-pay-user"
+          component={OrdersPendingPayUser}
         />
         {/* <Route path="/user/hostMotelRoom" component={HostMotelRoomUser} /> */}
         <Route path="/admin/hostMotelRoom" component={HostMotelRoom} />

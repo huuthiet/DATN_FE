@@ -12,13 +12,14 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button } from 'reactstrap';
+import * as fileDownload from 'js-file-download';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import * as fileDownload from 'js-file-download';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import { urlLink } from '../../helper/route';
 import { notificationController } from '../../controller/notificationController';
+
 import './style.scss';
 import {
   changeStoreData,
@@ -32,13 +33,13 @@ import makeSelectPendingAcceptBankCashList from './selectors';
 // import localStore  from 'local-storage';
 import localStoreService from 'local-storage';
 import * as localStore from 'local-storage';
-import { CloudUpload } from '@material-ui/icons';
+import { CloudDownload } from '@material-ui/icons';
 import moment from 'moment';
 import Money from '../App/format';
 
-export function TransactionBankingCashLog(props) {
-  useInjectReducer({ key: 'pendingAcceptBankCashList', reducer });
-  useInjectSaga({ key: 'pendingAcceptBankCashList', saga });
+export function OrdersPendingPayUser(props) {
+  useInjectReducer({ key: 'ordersPendingPayUserList', reducer });
+  useInjectSaga({ key: 'ordersPendingPayUserList', saga });
 
   const history = useHistory();
   
@@ -76,6 +77,52 @@ export function TransactionBankingCashLog(props) {
   //   getDataTransactons();
   // }, []);
 
+  const [loading, setLoading] = useState(false);
+  const startLoading = () => {
+    setLoading(true);
+  };
+
+  const stopLoading = () => {
+    setLoading(false);
+  };
+
+  const downloadFile = async id => {
+    startLoading();
+    console.log({id});
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+        Authorization: `Bearer ${localStoreService.get('user').token}`,
+      },
+    };
+    // const requestUrl =
+    //   urlLink.api.serverUrl
+    //   + urlLink.api.postExportBillPaidBTransaction 
+    //   + id;
+    const requestUrl =
+    urlLink.api.serverUrl
+      + urlLink.api.postExportBillRoomPendingPayByOrder 
+      + id;
+      console.log({requestUrl})
+    try {
+      const response = await axios.post(
+        requestUrl,
+        null,
+        {
+          responseType: 'blob',
+        },
+        config,
+      );
+      console.log("file", response.data);
+      fileDownload(response.data, 'export.pdf');
+      stopLoading();
+      notificationController.success('Xuất Hóa Đơn Thành Công');
+    } catch (err) {
+      stopLoading();
+      notificationController.error('Xuất Hóa Đơn Không Thành Công');
+    }
+  };
+
   const fileInputRef = React.useRef(null);
 
   const handleIconClick = () => {
@@ -85,23 +132,23 @@ export function TransactionBankingCashLog(props) {
     props.getPendingAcceptBankingCashList();
   }, [urlImgCloud]);
 
-  // const pendingAcceptBankCashList= [];
+  // const ordersPendingPayUserList= [];
   const {
-    pendingAcceptBankCashList = [],
-  } = props.pendingAcceptBankCashList;
+    ordersPendingPayUserList = [],
+  } = props.ordersPendingPayUserList;
 
-  console.log({pendingAcceptBankCashList});
+  console.log({ordersPendingPayUserList});
 
   let transformedData = [];
 
-  if(pendingAcceptBankCashList.length !== 0) {
-    transformedData = pendingAcceptBankCashList.map((item, index) => ({
+  if(ordersPendingPayUserList.length !== 0) {
+    transformedData = ordersPendingPayUserList.map((item, index) => ({
       key: index + 1, // STT
       nameMotelRoom: (item.motel && item.motel.name) ? item.motel.name : "N/A",
-      nameRoom: (item.room && item.room.name) ? item.room.name : "N/A",
+      nameRoom: (item.job && item.job.room) ? item.job.room.name : "N/A",
       time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
+      time_expire: moment(new Date(item.expireTime)).format("DD-MM-YYYY"),
       amount_tranform: Money(parseInt(item.amount.toFixed(0))) + " VNĐ",
-      payment_Method: (item.paymentMethod === "cash")?"Tiền mặt": "Ngân hàng",
       type_trasaction: (item.type === "deposit")?"Tiền cọc":
                                 (item.type === "monthly")?"Thanh toán hàng tháng":
                                 (item.type === "afterCheckInCost")?"Thanh toán khi nhận phòng": "N/A",
@@ -126,48 +173,6 @@ export function TransactionBankingCashLog(props) {
       apiPostImg(data);
     } catch (error) {
       console.log({error});
-    }
-  };
-
-  const [loading, setLoading] = useState(false);
-  const startLoading = () => {
-    setLoading(true);
-  };
-
-  const stopLoading = () => {
-    setLoading(false);
-  };
-
-  const downloadFile = async id => {
-    startLoading();
-    console.log({id});
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data',
-        Authorization: `Bearer ${localStoreService.get('user').token}`,
-      },
-    };
-    const requestUrl =
-      urlLink.api.serverUrl
-      + urlLink.api.postExportBillPaidBTransaction 
-      + id;
-      console.log({requestUrl})
-    try {
-      const response = await axios.post(
-        requestUrl,
-        null,
-        {
-          responseType: 'blob',
-        },
-        config,
-      );
-      console.log("file", response.data);
-      fileDownload(response.data, 'export.pdf');
-      stopLoading();
-      notificationController.success('Xuất Hóa Đơn Thành Công');
-    } catch (err) {
-      stopLoading();
-      notificationController.error('Xuất Hóa Đơn Không Thành Công');
     }
   };
 
@@ -199,8 +204,8 @@ export function TransactionBankingCashLog(props) {
   const columns = [
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 150 },
     {
-      field: 'keyPayment',
-      headerName: 'Nội dung thanh toán',
+      field: 'time_expire',
+      headerName: 'Hạn cuối thanh toán',
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
@@ -214,14 +219,7 @@ export function TransactionBankingCashLog(props) {
     },
     {
       field: 'time',
-      headerName: 'Thời gian',
-      headerAlign: 'center',
-      width: 150,
-      headerClassName: 'header-bold',
-    },
-    {
-      field: 'payment_Method',
-      headerName: 'Phương thức thanh toán',
+      headerName: 'Thời gian tạo',
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
@@ -255,71 +253,64 @@ export function TransactionBankingCashLog(props) {
       headerClassName: 'header-bold',
     },
     {
-      field: 'status',
-      headerName: 'Trạng thái',
-      headerAlign: 'center',
-      width: 150,
-      headerClassName: 'header-bold',
-    },
-    {
-      field: 'iamgeLink',
-      headerName: 'Minh chứng đã tải',
+      field: 'action-1',
+      headerName: 'Xuất hóa đơn',
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
-      renderCell: params => (
-        <a href={params.row.file} target="bank">
-          LINK
-        </a>
-      ),
-    },
-    {
-      field: 'action',
-      headerName: 'Tải minh chứng',
-      headerAlign: 'center',
-      width: 200,
-      headerClassName: 'header-bold',
-      renderCell: params => (
-        <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '5px', alignItems: 'center' }}>
-          <input
-            type="file"
-            ref={fileInputRef}
-            style={{ display: 'none' }} // Ẩn thẻ input
-            onChange={evt => {
-              console.log({ params });
-              handleFileChange(evt, params.row._id);
-            }}
-          />
-          <CloudUpload 
-            style={{ fontSize: 40, cursor: 'pointer' }} // Kích thước của icon và con trỏ chuột
-            onClick={handleIconClick}
-          />
-        </div>
-      ),
-    },
-    {
-      field: 'bill',
-      headerName: 'Hóa đơn',
-      headerAlign: 'center',
-      width: 200,
-      headerClassName: 'header-bold',
-      // eslint-disable-next-line consistent-return
+      // renderCell: params => (
+      //   <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '5px', alignItems: 'center' }}>
+      //     <input
+      //       type="file"
+      //       ref={fileInputRef}
+      //       style={{ display: 'none' }} // Ẩn thẻ input
+      //       onChange={evt => {
+      //         console.log({ params });
+      //         handleFileChange(evt, params.row._id);
+      //       }}
+      //     />
+      //     <CloudDownload
+      //       style={{ fontSize: 40, cursor: 'pointer' }} // Kích thước của icon và con trỏ chuột
+      //       onClick={handleIconClick}
+      //     />
+      //   </div>
+      // ),
       renderCell: params => {
         // eslint-disable-next-line no-unused-expressions
-        if (params.row.status === "success") {
-          return (
-            <Button
-              onClick={() => {
-                // eslint-disable-next-line no-underscore-dangle
-                downloadFile(params.row._id);
-              }}
-              color="primary"
-            >
-              Xuất Hóa Đơn
+        return (
+          <Button
+            onClick={() => {
+              // eslint-disable-next-line no-underscore-dangle
+              downloadFile(params.row._id);
+            }}
+            color="primary"
+          >
+            Xuất Hóa Đơn
           </Button>
-          );
-        }
-        return '';
+        );
+      },
+    },
+    {
+      field: 'action-2',
+      headerName: 'Thanh toán',
+      headerAlign: 'center',
+      width: 200,
+      headerClassName: 'header-bold',
+      renderCell: params => {
+        // eslint-disable-next-line no-unused-expressions
+        return (
+          <>
+            <a
+              className='btn-detail'
+              onClick={() => {
+                console.log()
+                history.push(`/job-detail/${params.row.job._id}/${params.row.job.room._id}`);
+              }}
+            >
+              Xem chi tiết
+            </a>
+          </>
+        );
       },
     },
   ];
@@ -327,10 +318,10 @@ export function TransactionBankingCashLog(props) {
   return (
     <div className="login-page-wrapper">
       <Helmet>
-        <title>TransactionBankingCashLog</title>
-        <meta name="description" content="Description of TransactionBankingCashLog" />
+        <title>OrdersPendingPayUser</title>
+        <meta name="description" content="Description of OrdersPendingPayUser" />
       </Helmet>
-      <div className="title">Nhật ký giao dịch</div>
+      <div className="title">Danh sách hóa đơn chờ thanh toán</div>
       {loading && <div className="loading-overlay" />}
       <div className="job-list-wrapper container-fluid">
         <div style={{ width: '100%' }}>
@@ -349,13 +340,13 @@ export function TransactionBankingCashLog(props) {
 }
 
 
-TransactionBankingCashLog.propTypes = {
+OrdersPendingPayUser.propTypes = {
   dispatch: PropTypes.func,
   changeStoreData: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  pendingAcceptBankCashList: makeSelectPendingAcceptBankCashList(),
+  ordersPendingPayUserList: makeSelectPendingAcceptBankCashList(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -374,5 +365,5 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(TransactionBankingCashLog);
+export default compose(withConnect)(OrdersPendingPayUser);
 // export default TransactionBankingCashLog;

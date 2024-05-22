@@ -162,7 +162,8 @@ export function ManagerAcceptMonthlyHost(props) {
       nameUser: `${item.user.lastName} ${item.user.firstName}`, // Người thuê
       phone: `${item.user.phoneNumber.countryCode}${item.user.phoneNumber.number}`, // Số điện thoại
       roomName: (item.room.name) ? (item.room.name) : "N/A", // Phòng
-      amount: Money(item.amount) + " VNĐ", // Số tiền cọc
+      amount: Money(parseInt(item.amount)) + " VNĐ", // Số tiền cọc
+      // amount: Money(item.amount), // Số tiền cọc
       description: item.description,
       keyPayment: item.keyPayment,
       status: item.status === 'waiting' ? 'Đang chờ duyệt' :
@@ -177,7 +178,9 @@ export function ManagerAcceptMonthlyHost(props) {
     }));
   }
 
-  // console.log({transformedData});s
+  
+
+  console.log({transformedData});
 
   const columns = [
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 120 },
@@ -218,7 +221,7 @@ export function ManagerAcceptMonthlyHost(props) {
     },
     {
       field: 'amount',
-      headerName: 'Số tiền cọc',
+      headerName: 'Số tiền',
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',

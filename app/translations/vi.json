@@ -62,6 +62,7 @@
   "navbar.containers.energyRoomsUser": "Quản lý năng lượng",
   "navbar.containers.TransactionBankingCashLog": "Lịch sử giao dịch",
   "navbar.containers.manageMonthly": "Quản lý thanh toán hàng tháng",
+  "navbar.containers.orderPendingPayList": "Hóa đơn chờ thanh toán",
   "navbar.containers.energyRoomsBillUser": "Quản lý hóa đơn các phòng đã thuê",
   "navbar.containers.energyManager": "Quản lý năng lượng các tòa",
   "navbar.containers.energyManagerHost": "Quản lý tiền điện, nước",
