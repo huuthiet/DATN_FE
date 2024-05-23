@@ -30,6 +30,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import localStore from 'local-storage';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
+import * as fileDownload from 'js-file-download';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -37,6 +38,7 @@ import { useInjectSaga } from 'utils/injectSaga';
 import Money from '../../containers/App/format';
 import SuccessPopup from '../../components/SuccessPopup';
 import WarningPopup from '../../components/WarningPopup';
+import { notificationController } from '../../controller/notificationController';
 
 import {
   changeStoreData,
@@ -93,51 +95,49 @@ export function HistoryDepositAfterCheckInCost(props) {
     phoneNumber = {},
   } = currentUser;
 
-  const { id } = useParams();
-  console.log({id});
+  const { idRoom = '', nameRoom = '' } = useParams();
 
-  // console.log({currentUser});
+  const [loading, setLoading] = useState(false);
+  const startLoading = () => {
+    setLoading(true);
+  };
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const promises = jobs.map(async job => {
-  //       try {
-  //         const { _id } = job;
-  //         console.log({_id});
+  const stopLoading = () => {
+    setLoading(false);
+  };
 
-  //         const totalKWhApi =
-  //           `${urlLink.api.serverUrl +
-  //           urlLink.api.getDataEnergyPerDayV2}${_id}`;
-
-  //           console.log({totalKWhApi});
-  //         const response = await axios.get(totalKWhApi, {
-  //           headers: {
-  //             Authorization: `Bearer ${localStoreService.get('user').token}`,
-  //           },
-  //         });
-
-  //         const { data } = response.data;
-
-  //         if (data !== null) {
-  //           const totalKWh = data.toFixed(2);
-  //           console.log('totalKWh', totalKWh);
-
-  //           return totalKWh;
-  //         }
-  //         console.log('Chưa có dữ liệu');
-  //         return 'Chưa có dữ liệu';
-  //       } catch (error) {
-  //         console.error('Error fetching data:', error);
-  //         return 'Chưa có dữ liệu';
-  //       }
-  //     });
-
-  //     const results = await Promise.all(promises);
-  //     setDataEnergyPerMonth(results);
-  //   };
-
-  //   fetchData();
-  // }, [jobs]);
+  const downloadFile = async id => {
+    startLoading();
+    console.log({id});
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+        Authorization: `Bearer ${localStoreService.get('user').token}`,
+      },
+    };
+    const requestUrl =
+      urlLink.api.serverUrl
+      + urlLink.api.postExportBillPaidByOrder
+      + id;
+      console.log({requestUrl})
+    try {
+      const response = await axios.post(
+        requestUrl,
+        null,
+        {
+          responseType: 'blob',
+        },
+        config,
+      );
+      console.log("file", response.data);
+      fileDownload(response.data, 'export.pdf');
+      stopLoading();
+      notificationController.success('Xuất Hóa Đơn Thành Công');
+    } catch (err) {
+      stopLoading();
+      notificationController.error('Xuất Hóa Đơn Không Thành Công');
+    }
+  };
 
   const {
     historyDepositAfterCheckInCost = [],
@@ -150,7 +150,7 @@ export function HistoryDepositAfterCheckInCost(props) {
   console.log("accctionnnn", action);
 
   useEffect(() => {
-    props.getPayDepositList(id);
+    props.getPayDepositList(idRoom);
   }, [action]);
 
   
@@ -161,18 +161,15 @@ export function HistoryDepositAfterCheckInCost(props) {
       key: index + 1, // STT
       nameUser: `${item.user.lastName} ${item.user.firstName}`, // Người thuê
       phone: `${item.user.phoneNumber.countryCode}${item.user.phoneNumber.number}`, // Số điện thoại
-      roomName: (item.room.name) ? (item.room.name) : "N/A", // Phòng
       amount: Money(parseInt(item.amount)) + " VNĐ", // Số tiền cọc
       description: item.description,
       keyPayment: item.keyPayment,
-      status: item.status === 'waiting' ? 'Đang chờ duyệt' :
-                            item.status === 'faild' ? 'Thất bại' :
-                            item.status === 'success' ? 'Thành công' :
-                            item.status === 'cancel' ? 'Đã hủy': 'N/A',
-    time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
-    payment_Method: (item.paymentMethod === "cash")?"Tiền mặt": "Ngân hàng",
+      keyOrder: item.keyOrder,
+      time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
+      timePaid: moment(new Date(item.updatedAt)).format("DD-MM-YYYY"),
+      expireTime: moment(new Date(item.expireTime)).format("DD-MM-YYYY"),
+      payment_Method: (item.paymentMethod === "cash")?"Tiền mặt": "Ngân hàng",
       // ...item,
-      file: item.file,
       _id: item._id,
     }));
   }
@@ -196,17 +193,24 @@ export function HistoryDepositAfterCheckInCost(props) {
       headerClassName: 'header-bold',
     },
     {
-      field: 'roomName',
-      headerName: 'Phòng',
+      field: 'time',
+      headerName: 'Thời gian tạo',
       headerAlign: 'center',
-      width: 150,
+      width: 200,
       headerClassName: 'header-bold',
     },
     {
-      field: 'time',
-      headerName: 'Thời gian',
+      field: 'expireTime',
+      headerName: 'Hạn thanh tóa',
       headerAlign: 'center',
-      width: 150,
+      width: 200,
+      headerClassName: 'header-bold',
+    },
+    {
+      field: 'timePaid',
+      headerName: 'Thời gian thanh toán',
+      headerAlign: 'center',
+      width: 200,
       headerClassName: 'header-bold',
     },
     {
@@ -224,8 +228,8 @@ export function HistoryDepositAfterCheckInCost(props) {
       headerClassName: 'header-bold',
     },
     {
-      field: 'keyPayment',
-      headerName: 'Nội dung thanh toán',
+      field: 'keyOrder',
+      headerName: 'Mã hóa đơn',
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
@@ -238,55 +242,23 @@ export function HistoryDepositAfterCheckInCost(props) {
       headerClassName: 'header-bold',
     },
     {
-      field: 'UNC',
-      headerName: 'Minh chứng',
-      headerAlign: 'center',
-      width: 150,
-      headerClassName: 'header-bold',
-      renderCell: params => (
-        <a href={params.row.file} target="bank">
-          LINK
-        </a>
-      ),
-    },
-    {
-      field: 'status',
-      headerName: 'Trạng thái',
-      headerAlign: 'center',
-      width: 250,
-      headerClassName: 'header-bold',
-    },
-    {
-      field: 'exportBill',
-      headerName: 'Xuất hóa đơn',
+      field: 'bill',
+      headerName: 'Hóa đơn',
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
       // eslint-disable-next-line consistent-return
       renderCell: params => {
-        // eslint-disable-next-line no-unused-expressions
-        if (params.row.status === "Thành công") {
-          return (
-            <Button
-              color="success"
-              onClick={() => {
-                /* eslint no-underscore-dangle: 0 */
-                // eslint-disable-next-line no-undef
-                console.log({params})
-                setIdTransaction(params.row._id);
-                // eslint-disable-next-line no-undef
-                setStatus('success');
-                // eslint-disable-next-line no-undef
-                props.changeStoreData('showWarningapprove', true);
-              }}
-            >
-              <i className="fa fa-check" aria-hidden="true">
-                Xuất hóa đơn
-              </i>
-            </Button>
-          );
-        }
-        return '';
+        return (
+          <Button
+            onClick={() => {
+              downloadFile(params.row._id);
+            }}
+            color="primary"
+          >
+            Xuất Hóa Đơn
+        </Button>
+        );
       },
     },
   ];
@@ -299,7 +271,8 @@ export function HistoryDepositAfterCheckInCost(props) {
         <title>History Deposit</title>
         <meta name="description" content="Description of History Deposit" />
       </Helmet>
-      <div className="title">Lịch sử đặt cọc</div>
+      <div className="title">Lịch sử đặt cọc phòng {nameRoom}</div>
+      {loading && <div className="loading-overlay" />}
       <div className="job-list-wrapper container-fluid">
         <div style={{ width: '100%' }}>
           <DataGrid

@@ -21,84 +21,47 @@ import saga from './saga';
 import makeSelectHistoryFloorsRoomHost from './selectors';
 import './style.scss';
 // import localStore from 'local-storage';
-export function HistoryFloorsRoomHost(props) {
+export function OrderMonthlyRoomListByMotel(props) {
   useInjectReducer({ key: 'historyFloorsRoomHost', reducer });
   useInjectSaga({ key: 'historyFloorsRoomHost', saga });
   const history = useHistory();
   const { MotelRoom = [], MotelRoomNone } = props.historyFloorsRoomHost;
-  const { id = '' } = useParams();
+  const { idMotel = '', nameMotel = '' } = useParams();
   console.log({MotelRoom})
   // const currentUser = localStore.get('user') || {};
   // const { _id } = currentUser;
   useEffect(() => {
-    props.getGetMotelRoom(id);
+    props.getGetMotelRoom(idMotel);
   }, []);
 
   const columns = [
     { field: 'stt', headerName: 'STT', headerAlign: 'center', width: 150 },
     {
-      field: 'roomName',
+      field: 'name',
       headerName: 'Tên Phòng',
       headerAlign: 'center',
-      width: 250,
+      width: 200,
       headerClassName: 'header-bold',
     },
     {
-      field: 'image1',
-      headerName: 'Ảnh Phòng 1',
+      field: 'roomName',
+      headerName: 'Mã phòng',
       headerAlign: 'center',
-      width: 250,
+      width: 200,
       headerClassName: 'header-bold',
-      renderCell: params => {
-        // eslint-disable-next-line no-unused-expressions
-        return (
-          <>
-            <Avatar
-              style={{
-                width: '250px',
-              }}
-              variant="square"
-              alt="Avatar"
-              src={params.value}
-            />
-          </>
-        );
-      },
-    },
-    {
-      field: 'image2',
-      headerName: 'Ảnh Phòng 2',
-      headerAlign: 'center',
-      width: 250,
-      headerClassName: 'header-bold',
-      renderCell: params => {
-        // eslint-disable-next-line no-unused-expressions
-        return (
-          <>
-            <Avatar
-              style={{
-                width: '250px',
-              }}
-              variant="square"
-              alt="Avatar"
-              src={params.value}
-            />
-          </>
-        );
-      },
     },
     {
       field: 'status',
       headerName: 'Trạng Thái',
       headerAlign: 'center',
-      width: 250,
+      width: 200,
       headerClassName: 'header-bold',
     },
     {
       field: 'action',
       headerName: 'Chi Tiết',
       headerAlign: 'center',
-      width: 400,
+      width: 250,
       align: 'center',
       headerClassName: 'header-bold',
       renderCell: params => {
@@ -109,14 +72,12 @@ export function HistoryFloorsRoomHost(props) {
               onClick={() => {
                 history.push(
                   // eslint-disable-next-line no-underscore-dangle
-                  `/historyRoomHost/room/${params.row.motelRoomId}/roomdetail/${
-                  // eslint-disable-next-line no-underscore-dangle
-                  params.row._id
-                  }`,
+                  // `/historyRoomHost/room/${params.row.motelRoomId}/roomdetail/${params.row._id}`,
+                  `/manage-monthly-order/history-monthly/motel/${params.row.motelRoomId}/${params.row.motelRoomName}/room/${params.row._id}/${params.row.name}`
                 );
               }}
             >
-              Chi tiết phòng
+              Lịch sử thanh toán
             </a>
           </>
         );
@@ -133,7 +94,7 @@ export function HistoryFloorsRoomHost(props) {
           content="Description of ManageRoom"
         />
       </Helmet>
-      <div className="title">Lịch sử đặt cọc</div>
+      <div className="title">Danh sách phòng tòa {nameMotel}</div>
       <div className="job-list-wrapper container-fluid">
         <div style={{ width: '100%' }}>
           <DataGrid
@@ -150,7 +111,7 @@ export function HistoryFloorsRoomHost(props) {
   );
 }
 
-HistoryFloorsRoomHost.propTypes = {
+OrderMonthlyRoomListByMotel.propTypes = {
   getGetMotelRoom: PropTypes.func,
 };
 
@@ -171,4 +132,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(HistoryFloorsRoomHost);
+export default compose(withConnect)(OrderMonthlyRoomListByMotel);

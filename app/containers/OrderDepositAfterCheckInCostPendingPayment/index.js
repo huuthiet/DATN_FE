@@ -32,7 +32,6 @@ import WarningPopup from '../../components/WarningPopup';
 import {
   changeStoreData,
   getPayDepositList,
-  approvePendingPayDeposit,
 } from './actions';
 import messages from './messages';
 import reducer from './reducer';
@@ -61,7 +60,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export function HistoryMonthly(props) {
+export function OrderDepositAfterCheckInCostPendingPayment(props) {
   useInjectReducer({ key: 'historyMonthly', reducer });
   useInjectSaga({ key: 'historyMonthly', saga });
   // const [urlImgCloud, setUrlImgCloud] = useState('');
@@ -78,8 +77,8 @@ export function HistoryMonthly(props) {
     phoneNumber = {},
   } = currentUser;
 
-  const { idRoom = '', nameRoom = '' } = useParams();
-  console.log({idRoom});
+  const { idMotel = '', nameMotel = '' } = useParams();
+  console.log({idMotel});
 
   const [loading, setLoading] = useState(false);
   const startLoading = () => {
@@ -101,7 +100,7 @@ export function HistoryMonthly(props) {
     };
     const requestUrl =
       urlLink.api.serverUrl
-      + urlLink.api.postExportBillPaidByOrder
+      + urlLink.api.postExportBillRoomPendingPayByOrder
       + id;
       console.log({requestUrl})
     try {
@@ -134,7 +133,7 @@ export function HistoryMonthly(props) {
   console.log("accctionnnn", action);
 
   useEffect(() => {
-    props.getPayDepositList(idRoom);
+    props.getPayDepositList(idMotel);
   }, [action]);
 
   
@@ -143,15 +142,15 @@ export function HistoryMonthly(props) {
   if (historyMonthly.length !== 0) {
     transformedData = historyMonthly.map((item, index) => ({
       key: index + 1, // STT
-      nameUser: `${item.user.lastName} ${item.user.firstName}`, // Người thuê
-      phone: `${item.user.phoneNumber.countryCode}${item.user.phoneNumber.number}`, // Số điện thoại
+      nameUser: (item.userName) ? item.userName : "", // Người thuê
+      phone: (item.userPhone) ? item.userPhone : "", // Số điện thoại
+      roomName: (item.roomName) ? item.roomName : "", // Số điện thoại
       amount: Money(parseInt(item.amount)) + " VNĐ", // Số tiền cọc
       description: item.description,
       keyPayment: item.keyPayment,
       time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
       timePaid: moment(new Date(item.updatedAt)).format("DD-MM-YYYY"),
       expireTime: moment(new Date(item.expireTime)).format("DD-MM-YYYY"),
-      payment_Method: (item.paymentMethod === "cash")?"Tiền mặt": "Ngân hàng",
       keyOrder: item.keyOrder,
       _id: item._id,
     }));
@@ -161,6 +160,13 @@ export function HistoryMonthly(props) {
 
   const columns = [
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 120 },
+    {
+      field: 'roomName',
+      headerName: 'Phòng',
+      headerAlign: 'center',
+      width: 150,
+      headerClassName: 'header-bold',
+    },
     {
       field: 'nameUser',
       headerName: 'Người thuê',
@@ -204,13 +210,6 @@ export function HistoryMonthly(props) {
       headerClassName: 'header-bold',
     },
     {
-      field: 'payment_Method',
-      headerName: 'Phương thức thanh toán',
-      headerAlign: 'center',
-      width: 250,
-      headerClassName: 'header-bold',
-    },
-    {
       field: 'amount',
       headerName: 'Số tiền',
       headerAlign: 'center',
@@ -244,10 +243,10 @@ export function HistoryMonthly(props) {
   return (
     <div className="user-profile-wrapper container">
       <Helmet>
-        <title>History Monthly</title>
-        <meta name="description" content="Description of History Monthly" />
+        <title>Order Deposit</title>
+        <meta name="description" content="Description of Order Deposit" />
       </Helmet>
-      <div className="title">Lịch sử thanh toán hàng tháng phòng {nameRoom}</div>
+      <div className="title">Hóa đơn cọc chờ thanh toán tòa {nameMotel}</div>
       {loading && <div className="loading-overlay" />}
       <div className="job-list-wrapper container-fluid">
         <div style={{ width: '100%' }}>
@@ -280,11 +279,10 @@ export function HistoryMonthly(props) {
   );
 }
 
-HistoryMonthly.propTypes = {
+OrderDepositAfterCheckInCostPendingPayment.propTypes = {
   dispatch: PropTypes.func,
   changeStoreData: PropTypes.func,
   changeStoreData: PropTypes.func,
-  approvePendingPayDeposit: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -299,9 +297,6 @@ function mapDispatchToProps(dispatch) {
     changeStoreData: (key, value) => {
       dispatch(changeStoreData(key, value));
     },
-    approvePendingPayDeposit: (idTransaction, status) => {
-      dispatch(approvePendingPayDeposit(idTransaction, status));
-    },
   };
 }
 
@@ -310,4 +305,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(HistoryMonthly);
+export default compose(withConnect)(OrderDepositAfterCheckInCostPendingPayment);

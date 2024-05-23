@@ -81,6 +81,28 @@ export function ManageMonthly(props) {
     },
     {
       field: 'action-2',
+      headerName: 'Hóa đơn chờ thanh toán',
+      headerAlign: 'center',
+      width: 300,
+      headerClassName: 'header-bold',
+      renderCell: params => {
+        // eslint-disable-next-line no-unused-expressions
+        return (
+          <>
+            <a
+              className='btn-detail'
+              onClick={() => {
+                history.push(`/manage-monthly-order/manage-order-pending-payment/${params.row._id}/${params.row.name}`);
+              }}
+            >
+              Xem chi tiết
+            </a>
+          </>
+        );
+      },
+    },
+    {
+      field: 'action-3',
       headerName: 'Lịch sử thanh toán',
       headerAlign: 'center',
       width: 300,
@@ -92,7 +114,7 @@ export function ManageMonthly(props) {
             <a
               className='btn-detail'
               onClick={() => {
-                history.push(`/manage-monthly-order/history-monthly/${params.row._id}`);
+                history.push(`/manage-monthly-order/history-monthly/motel/${params.row._id}/${params.row.name}`);
               }}
             >
               Xem chi tiết

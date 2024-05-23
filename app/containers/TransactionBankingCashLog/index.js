@@ -149,7 +149,7 @@ export function TransactionBankingCashLog(props) {
     };
     const requestUrl =
       urlLink.api.serverUrl
-      + urlLink.api.postExportBillPaidBTransaction 
+      + urlLink.api.postExportBillPaidByTransaction 
       + id;
       console.log({requestUrl})
     try {
