@@ -61,12 +61,12 @@ import {
   putCheckOut,
   putJob,
   getBankInfo,
-  postTransaction
+  postTransaction,
 } from './actions';
 import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
-import  makeSelectJobDetailUser  from './selectors';
+import makeSelectJobDetailUser from './selectors';
 import './style.scss';
 import { functionsIn } from 'lodash';
 import ModalComponent from './modal';
@@ -281,7 +281,7 @@ export function JobDetailUser(props) {
   useInjectSaga({ key: 'jobDetailUser', saga });
   const classes = useStyles();
   const { id = '', idRoom = '' } = useParams();
-  console.log({idRoom});
+  console.log({ idRoom });
 
   const history = useHistory();
   const today = new Date();
@@ -309,8 +309,7 @@ export function JobDetailUser(props) {
     bankInfo = [],
   } = props.jobDetailUser;
 
-
-  console.log("props.jobDetailUser", props.jobDetailUser);
+  console.log('props.jobDetailUser', props.jobDetailUser);
 
   const {
     bank = '',
@@ -318,10 +317,9 @@ export function JobDetailUser(props) {
     nameTk = '',
     nameTkLable = '',
     stk = '',
-
   } = bankInfo;
 
-  console.log({bankInfo});
+  console.log({ bankInfo });
 
   const {
     fullName = '',
@@ -418,9 +416,8 @@ export function JobDetailUser(props) {
 
   // }
 
-
   if (job && job.room) {
-    if(currentOrder.type === "monthly") {
+    if (currentOrder.type === 'monthly') {
       // setNumberDayStay(currentOrder.numberDayStay);
       numberDayStay = currentOrder.numberDayStay;
       roomPricePerMon = room.price;
@@ -451,8 +448,6 @@ export function JobDetailUser(props) {
     }
   }
 
-
-
   for (let index = 0; index < optionsRentalPeriod.length; index++) {
     const element = optionsRentalPeriod[index];
     if (element.value < room.minimumMonths) {
@@ -470,8 +465,7 @@ export function JobDetailUser(props) {
   const [keyPayment, setKeyPayment] = useState('');
   // const [numberMonRenewUpdate, setNumberMonRenewUp] = useState(0);
 
-
-  let MaThanhToan= '';
+  let MaThanhToan = '';
 
   const getRandomInt = (min, max) =>
     Math.floor(Math.random() * (max - min)) + min;
@@ -496,7 +490,7 @@ export function JobDetailUser(props) {
 
   const SubmitCashModal = () => {
     if (job) {
-      let formData = {
+      const formData = {
         order: job.currentOrder._id,
         afterCheckInCost: job.afterCheckInCost,
         deposit: job.deposit,
@@ -505,18 +499,18 @@ export function JobDetailUser(props) {
         fullName: job.fullName,
         job: job._id,
         motel: job.motelRoom._id,
-        room:  job.room._id,
+        room: job.room._id,
         type: job.currentOrder.type,
-        keyPayment: keyPayment,
-        banking: banking,
-        paymentMethod: "cash",
-      }
+        keyPayment,
+        banking,
+        paymentMethod: 'cash',
+      };
 
-      console.log({formData});
+      console.log({ formData });
 
       props.postTransaction(formData);
     }
-  }
+  };
 
   const checkOutDate = new Date(checkInTime).setMonth(
     new Date(checkInTime).getMonth() + Number(rentalPeriod),
@@ -586,7 +580,7 @@ export function JobDetailUser(props) {
   function SubmitModal() {
     setIsOpen(!isOpen);
     if (job) {
-      let formData = {
+      const formData = {
         order: job.currentOrder._id,
         afterCheckInCost: job.afterCheckInCost,
         deposit: job.deposit,
@@ -595,13 +589,13 @@ export function JobDetailUser(props) {
         fullName: job.fullName,
         job: job._id,
         motel: job.motelRoom._id,
-        room:  job.room._id,
+        room: job.room._id,
         type: job.currentOrder.type,
-        keyPayment: keyPayment,
-        banking: banking,
-        paymentMethod: "cash",
-      }
-      console.log({formData});
+        keyPayment,
+        banking,
+        paymentMethod: 'cash',
+      };
+      console.log({ formData });
       props.postTransaction(formData);
     }
   }
@@ -618,8 +612,6 @@ export function JobDetailUser(props) {
   const [moneyWallet, setMoneyWallet] = useState();
   const [total, setTotal] = useState(0);
 
-  
-
   const ExampleCustomInput = ({ value, onClick }) => (
     <button className="example-custom-input" onClick={onClick}>
       <i className="fa fa-calendar" aria-hidden="true" />
@@ -628,7 +620,7 @@ export function JobDetailUser(props) {
   );
 
   let bankOptions = [];
-  if (bankInfo.length !== 0){
+  if (bankInfo.length !== 0) {
     bankOptions = bankInfo.map(bankItem => ({
       label: bankItem.nameTkLable,
       value: bankItem.id,
@@ -636,7 +628,7 @@ export function JobDetailUser(props) {
       bankNumber: bankItem.stk,
       bankUsername: bankItem.nameTk,
       objectBankId: bankItem._id,
-    }))
+    }));
   }
 
   return (
@@ -849,9 +841,9 @@ export function JobDetailUser(props) {
               }}
             >
               {!isActived ||
-                (currentOrder.type === 'afterCheckInCost' &&
-                  currentOrder.isCompleted === true) ||
-                currentOrder.type !== 'afterCheckInCost' ? (
+              (currentOrder.type === 'afterCheckInCost' &&
+                currentOrder.isCompleted === true) ||
+              currentOrder.type !== 'afterCheckInCost' ? (
                 <div
                   style={{
                     display: 'flex',
@@ -898,12 +890,12 @@ export function JobDetailUser(props) {
               minDate={minDate}
               onChange={handleCheckOut}
               customInput={<ExampleCustomInput />}
-            // customInput={
-            // 	<InputForm
-            // 		// icon="fa fa-calendar"
-            // 		style={{width:'10px'}}
-            // 	/>
-            // }
+              // customInput={
+              // 	<InputForm
+              // 		// icon="fa fa-calendar"
+              // 		style={{width:'10px'}}
+              // 	/>
+              // }
             />
             {/* <ListItemText
 								primary="Ngày trả phòng"
@@ -992,8 +984,8 @@ export function JobDetailUser(props) {
               }}
             >
               {!isActived ||
-                currentOrder.type !== 'monthly' ||
-                (currentOrder.type === 'monthly' && currentOrder.isCompleted) ? (
+              currentOrder.type !== 'monthly' ||
+              (currentOrder.type === 'monthly' && currentOrder.isCompleted) ? (
                 <div
                   style={{
                     display: 'flex',
@@ -1115,7 +1107,12 @@ export function JobDetailUser(props) {
           <div style={{ minHeight: '50px' }}>
             <FormattedMessage {...messages.AmountOfMoneyTransfer} />
           </div>
-          <div style={{ boxShadow: 'rgba(3, 7, 18, 0.01) 0px -1px 3px, rgba(3, 7, 18, 0.03) 0px -2px 12px, rgba(3, 7, 18, 0.04) 0px -5px 27px, rgba(3, 7, 18, 0.04) 1px -10px 47px, rgba(3, 7, 18, 0.04) 1px -15px 74px;' }}>
+          <div
+            style={{
+              boxShadow:
+                'rgba(3, 7, 18, 0.01) 0px -1px 3px, rgba(3, 7, 18, 0.03) 0px -2px 12px, rgba(3, 7, 18, 0.04) 0px -5px 27px, rgba(3, 7, 18, 0.04) 1px -10px 47px, rgba(3, 7, 18, 0.04) 1px -15px 74px;',
+            }}
+          >
             <Select
               placeholder="Chọn ngân hàng"
               options={bankOptions}
@@ -1132,34 +1129,137 @@ export function JobDetailUser(props) {
 
           {selectedBankName && (
             <div style={{ position: 'relative', top: '20px', padding: '0px' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
-                <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Ngân hàng</span>
-                <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{selectedBankName}</span>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  paddingBottom: '10px',
+                }}
+              >
+                <span
+                  style={{
+                    color: 'gray',
+                    fontSize: '14px',
+                    margin: '0px 0 6px 3px',
+                  }}
+                >
+                  Ngân hàng
+                </span>
+                <span
+                  style={{
+                    padding: '8px 8px',
+                    border: '1px solid #E2E2E2',
+                    borderRadius: '6px',
+                  }}
+                >
+                  {selectedBankName}
+                </span>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  paddingBottom: '10px',
+                }}
+              >
+                <span
+                  style={{
+                    color: 'gray',
+                    fontSize: '14px',
+                    margin: '0px 0 6px 3px',
+                  }}
+                >
+                  Số tài khoản
+                </span>
+                <span
+                  style={{
+                    padding: '8px 8px',
+                    border: '1px solid #E2E2E2',
+                    borderRadius: '6px',
+                  }}
+                >
+                  {selectedBankNumber}
+                </span>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  paddingBottom: '10px',
+                }}
+              >
+                <span
+                  style={{
+                    color: 'gray',
+                    fontSize: '14px',
+                    margin: '0px 0 6px 3px',
+                  }}
+                >
+                  Tên người nhận
+                </span>
+                <span
+                  style={{
+                    padding: '8px 8px',
+                    border: '1px solid #E2E2E2',
+                    borderRadius: '6px',
+                  }}
+                >
+                  {selectedBankUsername}
+                </span>
+              </div>
 
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
-                <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Số tài khoản</span>
-                <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{selectedBankNumber}</span>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
-                <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Tên người nhận</span>
-                <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{selectedBankUsername}</span>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  paddingBottom: '10px',
+                }}
+              >
+                <span
+                  style={{
+                    color: 'gray',
+                    fontSize: '14px',
+                    margin: '0px 0 6px 3px',
+                  }}
+                >
+                  Nội dung thanh toán
+                </span>
+                <span
+                  style={{
+                    padding: '8px 8px',
+                    border: '1px solid #E2E2E2',
+                    borderRadius: '6px',
+                  }}
+                >
+                  {keyPayment}
+                </span>
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
-                <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Nội dung thanh toán</span>
-                <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{keyPayment}</span>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
-                <span style={{ color: 'brown', fontSize: '14px', margin: '0px 0 6px 3px' }}>Sau khi bấm "Chấp nhận", bạn sẽ được chuyển đến trang giao dịch. Vui lòng tải ảnh hóa đơn để xác nhận thanh toán và chờ chủ trọ phê duyệt!</span>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  paddingBottom: '10px',
+                }}
+              >
+                <span
+                  style={{
+                    color: 'brown',
+                    fontSize: '14px',
+                    margin: '0px 0 6px 3px',
+                  }}
+                >
+                  Sau khi bấm "Chấp nhận", bạn sẽ được chuyển đến trang giao
+                  dịch. Vui lòng tải ảnh hóa đơn để xác nhận thanh toán và chờ
+                  chủ trọ phê duyệt!
+                </span>
               </div>
             </div>
           )}
         </div>
       </ModalComponent>
 
-      {/* MODAL THANH TOÁN "NGÀY THANH TOÁN" BẰNG VÍ NỘI BỘ*/}
+      {/* MODAL THANH TOÁN "NGÀY THANH TOÁN" BẰNG VÍ NỘI BỘ */}
       {/* <ModalComponent
         modal={isOpen}
         modalTitle="Xác nhận thanh toán"
@@ -1528,7 +1628,9 @@ export function JobDetailUser(props) {
               <FormattedMessage {...messages.TotalPrice} />
               {': '}
             </span>
-            <span style={{ fontSize: '18px', fontWeight: '700' }}>{Money(totalPrice)}</span>
+            <span style={{ fontSize: '18px', fontWeight: '700' }}>
+              {Money(totalPrice)}
+            </span>
           </div>
           <div
             style={{
@@ -1559,27 +1661,130 @@ export function JobDetailUser(props) {
 
           {selectedBankName && (
             <div style={{ position: 'relative', top: '20px', padding: '0px' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
-                <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Ngân hàng</span>
-                <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{selectedBankName}</span>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  paddingBottom: '10px',
+                }}
+              >
+                <span
+                  style={{
+                    color: 'gray',
+                    fontSize: '14px',
+                    margin: '0px 0 6px 3px',
+                  }}
+                >
+                  Ngân hàng
+                </span>
+                <span
+                  style={{
+                    padding: '8px 8px',
+                    border: '1px solid #E2E2E2',
+                    borderRadius: '6px',
+                  }}
+                >
+                  {selectedBankName}
+                </span>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  paddingBottom: '10px',
+                }}
+              >
+                <span
+                  style={{
+                    color: 'gray',
+                    fontSize: '14px',
+                    margin: '0px 0 6px 3px',
+                  }}
+                >
+                  Số tài khoản
+                </span>
+                <span
+                  style={{
+                    padding: '8px 8px',
+                    border: '1px solid #E2E2E2',
+                    borderRadius: '6px',
+                  }}
+                >
+                  {selectedBankNumber}
+                </span>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  paddingBottom: '10px',
+                }}
+              >
+                <span
+                  style={{
+                    color: 'gray',
+                    fontSize: '14px',
+                    margin: '0px 0 6px 3px',
+                  }}
+                >
+                  Tên người nhận
+                </span>
+                <span
+                  style={{
+                    padding: '8px 8px',
+                    border: '1px solid #E2E2E2',
+                    borderRadius: '6px',
+                  }}
+                >
+                  {selectedBankUsername}
+                </span>
+              </div>
 
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
-                <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Số tài khoản</span>
-                <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{selectedBankNumber}</span>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
-                <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Tên người nhận</span>
-                <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{selectedBankUsername}</span>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  paddingBottom: '10px',
+                }}
+              >
+                <span
+                  style={{
+                    color: 'gray',
+                    fontSize: '14px',
+                    margin: '0px 0 6px 3px',
+                  }}
+                >
+                  Nội dung thanh toán
+                </span>
+                <span
+                  style={{
+                    padding: '8px 8px',
+                    border: '1px solid #E2E2E2',
+                    borderRadius: '6px',
+                  }}
+                >
+                  {keyPayment}
+                </span>
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
-                <span style={{ color: 'gray', fontSize: '14px', margin: '0px 0 6px 3px' }}>Nội dung thanh toán</span>
-                <span style={{ padding: '8px 8px', border: '1px solid #E2E2E2', borderRadius: '6px' }}>{keyPayment}</span>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
-                <span style={{ color: 'brown', fontSize: '14px', margin: '0px 0 6px 3px' }}>Sau khi bấm "Chấp nhận", bạn sẽ được chuyển đến trang giao dịch. Vui lòng tải ảnh hóa đơn để xác nhận thanh toán và chờ chủ trọ phê duyệt!</span>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  paddingBottom: '10px',
+                }}
+              >
+                <span
+                  style={{
+                    color: 'brown',
+                    fontSize: '14px',
+                    margin: '0px 0 6px 3px',
+                  }}
+                >
+                  Sau khi bấm "Chấp nhận", bạn sẽ được chuyển đến trang giao
+                  dịch. Vui lòng tải ảnh hóa đơn để xác nhận thanh toán và chờ
+                  chủ trọ phê duyệt!
+                </span>
               </div>
             </div>
           )}

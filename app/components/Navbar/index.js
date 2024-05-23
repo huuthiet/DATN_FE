@@ -432,7 +432,9 @@ const Navbar = props => {
                         </DropdownItem>
                         <DropdownItem
                           className={
-                            pathname.includes('/manage-monthly-order') ? 'active' : ''
+                            pathname.includes('/manage-monthly-order')
+                              ? 'active'
+                              : ''
                           }
                           onClick={() => {
                             history.push('/manage-monthly-order');
@@ -669,8 +671,6 @@ const Navbar = props => {
                             <FormattedMessage {...messages.energyRoomsUser} />
                           </DropdownItem>
 
-
-
                           {/* Report problem */}
                           <DropdownItem
                             className={
@@ -748,18 +748,24 @@ const Navbar = props => {
                     </DropdownItem> */}
                     <DropdownItem
                       className={
-                        pathname.includes('/transaction-banking-cash-log') ? 'active' : ''
+                        pathname.includes('/transaction-banking-cash-log')
+                          ? 'active'
+                          : ''
                       }
                       onClick={() => {
                         history.push('/transaction-banking-cash-log');
                       }}
                     >
                       <ReceiptOutlined className="icon" />
-                      <FormattedMessage {...messages.TransactionBankingCashLog} />
+                      <FormattedMessage
+                        {...messages.TransactionBankingCashLog}
+                      />
                     </DropdownItem>
                     <DropdownItem
                       className={
-                        pathname.includes('/orders-pending-pay-user') ? 'active' : ''
+                        pathname.includes('/orders-pending-pay-user')
+                          ? 'active'
+                          : ''
                       }
                       onClick={() => {
                         history.push('/orders-pending-pay-user');

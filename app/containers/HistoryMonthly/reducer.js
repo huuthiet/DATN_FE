@@ -15,7 +15,7 @@ import {
 
 export const initialState = {
   error: {},
-  action : false,
+  action: false,
   historyMonthly: [],
   showWarningapprove: false,
   showSuccessapprove: false,

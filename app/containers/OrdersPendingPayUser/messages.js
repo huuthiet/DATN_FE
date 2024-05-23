@@ -3,9 +3,7 @@
  *
  * This contains all the text for the NotFoundPage container.
  */
-import {
-  defineMessages
-} from 'react-intl';
+import { defineMessages } from 'react-intl';
 
 export const scope = 'ChangePassword.containers';
 
