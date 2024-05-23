@@ -506,7 +506,7 @@ const Navbar = props => {
                           <NotificationImportantOutlined className="icon" />
                           <FormattedMessage {...messages.reportProblemList} />
                         </DropdownItem>
-                        <DropdownItem
+                        {/* <DropdownItem
                           className={
                             pathname.includes('/host/transaction/list')
                               ? 'active'
@@ -518,7 +518,7 @@ const Navbar = props => {
                         >
                           <PaymentOutlined className="icon" />
                           <FormattedMessage {...messages.transactionPayment} />
-                        </DropdownItem>
+                        </DropdownItem> */}
                       </>
                     )}
                     {/* Admin role */}
@@ -635,7 +635,7 @@ const Navbar = props => {
                           <ReceiptOutlined className="icon" />
                           <FormattedMessage {...messages.billList} />
                         </DropdownItem> */}
-                        <DropdownItem
+                        {/* <DropdownItem
                           className={
                             pathname.includes('/admin/report-problem-list')
                               ? 'active'
@@ -647,7 +647,7 @@ const Navbar = props => {
                         >
                           <NotificationImportantOutlined className="icon" />
                           <FormattedMessage {...messages.reportProblemList} />
-                        </DropdownItem>
+                        </DropdownItem> */}
                       </Fragment>
                     )}
                     {/* Customer role */}
@@ -756,6 +756,17 @@ const Navbar = props => {
                     >
                       <ReceiptOutlined className="icon" />
                       <FormattedMessage {...messages.TransactionBankingCashLog} />
+                    </DropdownItem>
+                    <DropdownItem
+                      className={
+                        pathname.includes('/orders-pending-pay-user') ? 'active' : ''
+                      }
+                      onClick={() => {
+                        history.push('/orders-pending-pay-user');
+                      }}
+                    >
+                      <ReceiptOutlined className="icon" />
+                      <FormattedMessage {...messages.orderPendingPayList} />
                     </DropdownItem>
                     {/* <DropdownItem
                       className={pathname.includes('/recharge') ? 'active' : ''}

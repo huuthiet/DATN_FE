@@ -52,6 +52,8 @@ import RoomBillingManage from 'containers/EnergyBillingManage/RoomBillingManage/
 import EnergyRoomsBillUser from 'containers/EnergyRoomsBillUser/Loadable';
 import MonthlyOrderList from 'containers/MonthlyOrderList/Loadable';
 import ManagerPayDepositHost from 'containers/ManagerPayDepositHost/Loadable';
+import HistoryDepositAfterCheckInCost from 'containers/HistoryDepositAfterCheckInCost/Loadable';
+import HistoryMonthly from 'containers/HistoryMonthly/Loadable';
 import ManageDeposit from 'containers/ManageDeposit/Loadable';
 import ManageMonthly from 'containers/ManageMonthly/Loadable';
 import ManagerAcceptMonthlyHost from 'containers/ManagerAcceptMonthlyHost/Loadable';
@@ -80,6 +82,7 @@ import ManageMotelListAdmin from 'containers/ManageMotelListAdmin/Loadable';
 import ManagerEnergyBuildingsAdmin from 'containers/ManagerEnergyBuildingsAdmin/Loadable';
 import ManagerEnergyRoomsAdmin from 'containers/ManagerEnergyRoomsAdmin/Loadable';
 import TransactionBankingCashLog from 'containers/TransactionBankingCashLog/Loadable';
+import OrdersPendingPayUser from 'containers/OrdersPendingPayUser/Loadable';
 
 //----------------------------
 import PropTypes from 'prop-types';
@@ -243,6 +246,10 @@ export function App(props) {
           path="/transaction-banking-cash-log"
           component={TransactionBankingCashLog}
         />
+        <Route
+          path="/orders-pending-pay-user"
+          component={OrdersPendingPayUser}
+        />
         {/* <Route path="/user/hostMotelRoom" component={HostMotelRoomUser} /> */}
         <Route path="/admin/hostMotelRoom" component={HostMotelRoom} />
         <Route path="/hostMotelRoom/:id" component={HostMotelRoomDetail} />
@@ -292,6 +299,10 @@ export function App(props) {
           component={ManagerPayDepositHost}
         />
         <Route
+          path="/manage-deposit/history-deposit-aftercheckincost/:id"
+          component={HistoryDepositAfterCheckInCost}
+        />
+        <Route
           path="/manage-deposit/accept-deposit/:id"
           component={ManagerAcceptDepositHost}
         />
@@ -306,6 +317,10 @@ export function App(props) {
         <Route
           path="/manage-monthly-order/manage-accept-order/:id"
           component={ManagerAcceptMonthlyHost}
+        />
+        <Route
+          path="/manage-monthly-order/history-monthly/:id"
+          component={HistoryMonthly}
         />
         <Route
           path="/manage-monthly-order/"

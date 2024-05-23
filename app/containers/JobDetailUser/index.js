@@ -716,7 +716,7 @@ export function JobDetailUser(props) {
             </ListItemAvatar>
             <ListItemText
               primary={<FormattedMessage {...messages.Motel} />}
-            // secondary={name}
+              secondary={motelRoom.name}
             />
             {flagDeposit === true && (
               <FormattedMessage {...messages.PaymentDeposit} />

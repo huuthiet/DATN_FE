@@ -18,7 +18,7 @@ export default defineMessages({
   },
   energyRoomsUser: {
     id: `${scope}.energyRoomsUser`,
-    defaultMessage: 'Quản lý các phòng đã thuê',
+    defaultMessage: 'Quản lý năng lượng',
   },
   energyRoomsBillUser: {
     id: `${scope}.energyRoomsBillUser`,
@@ -90,6 +90,10 @@ export default defineMessages({
     id: `${scope}.money`,
     defaultMessage: 'Quản lý tài khoản ngân hàng',
   },
+  orderPendingPayList: {
+    id: `${scope}.orderPendingPayList`,
+    defaultMessage: 'Hóa đơn chờ thanh toán',
+  },
   transactionPayment: {
     id: `${scope}.transactionPayment`,
     defaultMessage: 'Quản lý giao dịch',
@@ -108,7 +112,7 @@ export default defineMessages({
   },
   manageMonthly: {
     id: `${scope}.manageMonthly`,
-    defaultMessage: 'Quản lý thanh toán hàng tháng MỚI',
+    defaultMessage: 'Quản lý thanh toán hàng tháng',
   },
   monthlyOrder: {
     id: `${scope}.monthlyOrder`,
@@ -148,7 +152,7 @@ export default defineMessages({
   },
   TransactionBankingCashLog: {
     id: `${scope}.TransactionBankingCashLog`,
-    defaultMessage: 'Nhật ký giao dịch MỚI',
+    defaultMessage: 'Nhật ký giao dịch',
   },
   addMoney: {
     id: `${scope}.addMoney`,

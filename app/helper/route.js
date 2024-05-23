@@ -123,17 +123,16 @@ export const urlLink = {
     exportBillBuilding: '/v1/homeKey/energy/device/exportBillBuilding/', // + /:idMotel/:startTime/:endTime
     buildingRevenue: '/v1/homeKey/energy/device/buildingRevenue/', // +/:idMotel/:startTime/:endTime
     getPayDepositList: '/v1/homeKey/order/getPayDepositList/',
-    putPayDeposit: '/v1/homeKey/order/payDeposit/', // +id
+    putPayDeposit: '/v1/homeKey/order/payDeposit/', //+id
     getBankingCashTransactionList:
       '/v1/homeKey/order/bankingCashTransactionsList/',
+    getOrderPendingPaymentList:
+      '/v1/homeKey/order/orderPendingPaymentList/',
     getBankingCashPendingDepositListByMotel:
       '/v1/homeKey/order/bankingCashPendingDepositListByMotel/', // + idMotel
 
     getBankingCashPendingAfterCheckInCostListByMotel:
-      '/v1/homeKey/order/bankingCashPendingAfterCheckInCostListByMotel/', // + idMotel
-    getDepositAfterCheckInCostHistoryList:
-      '/v1/homeKey/order/getDepositAfterCheckInCostHistoryList/', // + idMotel
-    getMonthlyHistoryList: '/v1/homeKey/order/getMonthlyHistoryList/', // + idMotel
+      '/v1/homeKey/order/bankingCashPendingAfterCheckInCostListByMotel/',  // + idMotel
     getBankingCashPendingMonthlyByMotel:
       '/v1/homeKey/order/bankingCashPendingMonthlyByMotel/', // + idMotel
     putBankingCashPendingTransactionByMotel:
