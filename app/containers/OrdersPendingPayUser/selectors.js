@@ -5,7 +5,8 @@ import { initialState } from './reducer';
  * Direct selector to the profile state domain
  */
 
-const selectPendingAcceptBankCashListDomain = state => state.ordersPendingPayUserList || initialState;
+const selectPendingAcceptBankCashListDomain = state =>
+  state.ordersPendingPayUserList || initialState;
 
 /**
  * Other specific selectors

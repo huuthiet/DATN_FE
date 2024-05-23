@@ -20,10 +20,7 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { urlLink } from '../../helper/route';
 import { notificationController } from '../../controller/notificationController';
 import './style.scss';
-import {
-  changeStoreData,
-  getPendingAcceptBankingCashList,
-} from './actions';
+import { changeStoreData, getPendingAcceptBankingCashList } from './actions';
 import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
@@ -41,11 +38,11 @@ export function TransactionBankingCashLog(props) {
   useInjectSaga({ key: 'pendingAcceptBankCashList', saga });
 
   const history = useHistory();
-  
+
   const currentUser = localStore.get('user') || {};
   const { _id } = currentUser;
-  console.log({currentUser});
-  
+  console.log({ currentUser });
+
   const [orderArr, setOrderArr] = useState([]);
   const [urlImgCloud, setUrlImgCloud] = useState('');
 
@@ -86,33 +83,34 @@ export function TransactionBankingCashLog(props) {
   }, [urlImgCloud]);
 
   // const pendingAcceptBankCashList= [];
-  const {
-    pendingAcceptBankCashList = [],
-  } = props.pendingAcceptBankCashList;
+  const { pendingAcceptBankCashList = [] } = props.pendingAcceptBankCashList;
 
-  console.log({pendingAcceptBankCashList});
+  console.log({ pendingAcceptBankCashList });
 
   let transformedData = [];
 
-  if(pendingAcceptBankCashList.length !== 0) {
+  if (pendingAcceptBankCashList.length !== 0) {
     transformedData = pendingAcceptBankCashList.map((item, index) => ({
       key: index + 1, // STT
-      nameMotelRoom: (item.motel && item.motel.name) ? item.motel.name : "N/A",
-      nameRoom: (item.room && item.room.name) ? item.room.name : "N/A",
-      time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
-      amount_tranform: Money(parseInt(item.amount.toFixed(0))) + " VNĐ",
-      payment_Method: (item.paymentMethod === "cash")?"Tiền mặt": "Ngân hàng",
-      type_trasaction: (item.type === "deposit")?"Tiền cọc":
-                                (item.type === "monthly")?"Thanh toán hàng tháng":
-                                (item.type === "afterCheckInCost")?"Thanh toán khi nhận phòng": "N/A",
+      nameMotelRoom: item.motel && item.motel.name ? item.motel.name : 'N/A',
+      nameRoom: item.room && item.room.name ? item.room.name : 'N/A',
+      time: moment(new Date(item.createdAt)).format('DD-MM-YYYY'),
+      amount_tranform: `${Money(parseInt(item.amount.toFixed(0)))} VNĐ`,
+      payment_Method: item.paymentMethod === 'cash' ? 'Tiền mặt' : 'Ngân hàng',
+      type_trasaction:
+        item.type === 'deposit'(item.type === 'monthly')
+          ? 'Thanh toán hàng tháng'
+          : item.type === 'afterCheckInCost'
+          ? 'Thanh toán khi nhận phòng'
+          : 'N/A',
       ...item,
     }));
   }
 
-  console.log("transformedData", transformedData);
+  console.log('transformedData', transformedData);
 
   const handleFileChange = async (e, key) => {
-    console.log({key});
+    console.log({ key });
     const abcfile = e.target.files[0];
     const formData = new FormData();
     formData.append('file', abcfile);
@@ -125,7 +123,7 @@ export function TransactionBankingCashLog(props) {
       };
       apiPostImg(data);
     } catch (error) {
-      console.log({error});
+      console.log({ error });
     }
   };
 
@@ -140,7 +138,7 @@ export function TransactionBankingCashLog(props) {
 
   const downloadFile = async id => {
     startLoading();
-    console.log({id});
+    console.log({ id });
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
@@ -161,7 +159,7 @@ export function TransactionBankingCashLog(props) {
         },
         config,
       );
-      console.log("file", response.data);
+      console.log('file', response.data);
       fileDownload(response.data, 'export.pdf');
       stopLoading();
       notificationController.success('Xuất Hóa Đơn Thành Công');
@@ -186,7 +184,7 @@ export function TransactionBankingCashLog(props) {
     };
     try {
       const response = await axios.post(requestUrl, formData, config);
-      console.log("responsexx", response);
+      console.log('responsexx', response);
       if (response.data.data.images) {
         setUrlImgCloud(response.data.data.images.imageUrl);
       }
@@ -194,7 +192,6 @@ export function TransactionBankingCashLog(props) {
       console.error(err);
     }
   };
-
 
   const columns = [
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 150 },
@@ -280,7 +277,14 @@ export function TransactionBankingCashLog(props) {
       width: 200,
       headerClassName: 'header-bold',
       renderCell: params => (
-        <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '5px', alignItems: 'center' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            paddingBottom: '5px',
+            alignItems: 'center',
+          }}
+        >
           <input
             type="file"
             ref={fileInputRef}
@@ -290,7 +294,7 @@ export function TransactionBankingCashLog(props) {
               handleFileChange(evt, params.row._id);
             }}
           />
-          <CloudUpload 
+          <CloudUpload
             style={{ fontSize: 40, cursor: 'pointer' }} // Kích thước của icon và con trỏ chuột
             onClick={handleIconClick}
           />
@@ -306,7 +310,7 @@ export function TransactionBankingCashLog(props) {
       // eslint-disable-next-line consistent-return
       renderCell: params => {
         // eslint-disable-next-line no-unused-expressions
-        if (params.row.status === "success") {
+        if (params.row.status === 'success') {
           return (
             <Button
               onClick={() => {
@@ -316,7 +320,7 @@ export function TransactionBankingCashLog(props) {
               color="primary"
             >
               Xuất Hóa Đơn
-          </Button>
+            </Button>
           );
         }
         return '';
@@ -328,7 +332,10 @@ export function TransactionBankingCashLog(props) {
     <div className="login-page-wrapper">
       <Helmet>
         <title>TransactionBankingCashLog</title>
-        <meta name="description" content="Description of TransactionBankingCashLog" />
+        <meta
+          name="description"
+          content="Description of TransactionBankingCashLog"
+        />
       </Helmet>
       <div className="title">Nhật ký giao dịch</div>
       {loading && <div className="loading-overlay" />}
@@ -347,7 +354,6 @@ export function TransactionBankingCashLog(props) {
     </div>
   );
 }
-
 
 TransactionBankingCashLog.propTypes = {
   dispatch: PropTypes.func,

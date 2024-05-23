@@ -31,7 +31,7 @@ export function ManageMonthly(props) {
     props.getGetMotelRoom();
   }, []);
 
-  console.log({MotelRoom});
+  console.log({ MotelRoom });
 
   const columns = [
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 120 },
@@ -63,21 +63,22 @@ export function ManageMonthly(props) {
       headerAlign: 'center',
       width: 300,
       headerClassName: 'header-bold',
-      renderCell: params => {
+      renderCell: params => 
         // eslint-disable-next-line no-unused-expressions
-        return (
+        (
           <>
-            <a
-              className='btn-detail'
-              onClick={() => {
-                history.push(`/manage-monthly-order/manage-accept-order/${params.row._id}`);
-              }}
-            >
-              Xem chi tiết
-            </a>
-          </>
-        );
-      },
+          <a
+            className="btn-detail"
+            onClick={() => {
+              history.push(
+                `/manage-monthly-order/manage-accept-order/${params.row._id}`,
+              );
+            }}
+          >
+            Xem chi tiết
+          </a>
+        </>
+      ),
     },
     {
       field: 'action-2',
@@ -107,9 +108,9 @@ export function ManageMonthly(props) {
       headerAlign: 'center',
       width: 300,
       headerClassName: 'header-bold',
-      renderCell: params => {
+      renderCell: params => 
         // eslint-disable-next-line no-unused-expressions
-        return (
+        (
           <>
             <a
               className='btn-detail'
@@ -120,8 +121,7 @@ export function ManageMonthly(props) {
               Xem chi tiết
             </a>
           </>
-        );
-      },
+        )
     },
   ];
 
@@ -129,7 +129,10 @@ export function ManageMonthly(props) {
     <div className="login-page-wrapper">
       <Helmet>
         <title>Manage Monthly Order</title>
-        <meta name="description" content="Description of Manage Monthly Order" />
+        <meta
+          name="description"
+          content="Description of Manage Monthly Order"
+        />
       </Helmet>
       <div className="title">Quản thanh toán hàng tháng</div>
       <div className="job-list-wrapper container-fluid">

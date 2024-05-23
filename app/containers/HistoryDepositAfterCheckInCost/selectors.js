@@ -5,7 +5,8 @@ import { initialState } from './reducer';
  * Direct selector to the profile state domain
  */
 
-const selectPayDepositListDomain = state => state.historyDepositAfterCheckInCost || initialState;
+const selectPayDepositListDomain = state =>
+  state.historyDepositAfterCheckInCost || initialState;
 
 /**
  * Other specific selectors

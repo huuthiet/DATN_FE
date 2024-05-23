@@ -31,7 +31,7 @@ export function ManageDeposit(props) {
     props.getGetMotelRoom();
   }, []);
 
-  console.log({MotelRoom});
+  console.log({ MotelRoom });
 
   const columns = [
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 120 },
@@ -63,21 +63,20 @@ export function ManageDeposit(props) {
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
-      renderCell: params => {
+      renderCell: params => 
         // eslint-disable-next-line no-unused-expressions
-        return (
+        (
           <>
-            <a
-              className='btn-detail'
-              onClick={() => {
-                history.push(`/manage-deposit/accept-deposit/${params.row._id}`);
-              }}
-            >
-              Xem chi tiết
-            </a>
-          </>
-        );
-      },
+          <a
+            className="btn-detail"
+            onClick={() => {
+              history.push(`/manage-deposit/accept-deposit/${params.row._id}`);
+            }}
+          >
+            Xem chi tiết
+          </a>
+        </>
+      ),
     },
     {
       field: 'action-2',
@@ -85,21 +84,22 @@ export function ManageDeposit(props) {
       headerAlign: 'center',
       width: 300,
       headerClassName: 'header-bold',
-      renderCell: params => {
+      renderCell: params =>
         // eslint-disable-next-line no-unused-expressions
-        return (
+        (
           <>
-            <a
-              className='btn-detail'
-              onClick={() => {
-                history.push(`/manage-deposit/accept-after-check-in-cost/${params.row._id}`);
-              }}
-            >
-              Xem chi tiết
-            </a>
-          </>
-        );
-      },
+          <a
+            className="btn-detail"
+            onClick={() => {
+              history.push(
+                `/manage-deposit/accept-after-check-in-cost/${params.row._id}`,
+              );
+            }}
+          >
+            Xem chi tiết
+          </a>
+        </>
+      ),
     },
     {
       field: 'action-3',
@@ -129,21 +129,20 @@ export function ManageDeposit(props) {
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
-      renderCell: params => {
+      renderCell: params => 
         // eslint-disable-next-line no-unused-expressions
-        return (
+        (
           <>
-            <a
-              className='btn-detail'
-              onClick={() => {
-                history.push(`/manage-deposit/pay-deposit/${params.row._id}`);
-              }}
-            >
-              Xem chi tiết
-            </a>
-          </>
-        );
-      },
+          <a
+            className="btn-detail"
+            onClick={() => {
+              history.push(`/manage-deposit/pay-deposit/${params.row._id}`);
+            }}
+          >
+            Xem chi tiết
+          </a>
+        </>
+      ),
     },
     {
       field: 'action-5',
@@ -151,9 +150,9 @@ export function ManageDeposit(props) {
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
-      renderCell: params => {
+      renderCell: params =>
         // eslint-disable-next-line no-unused-expressions
-        return (
+        (
           <>
             <a
               className='btn-detail'
@@ -165,8 +164,7 @@ export function ManageDeposit(props) {
               Xem chi tiết
             </a>
           </>
-        );
-      },
+        )
     },
   ];
 

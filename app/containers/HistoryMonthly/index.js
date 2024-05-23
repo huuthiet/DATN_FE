@@ -129,17 +129,15 @@ export function HistoryMonthly(props) {
     showSuccessapprove,
     action = 0,
   } = props.historyMonthly;
-  console.log({showWarningapprove})
-  console.log({historyMonthly});
-  console.log("accctionnnn", action);
+  console.log({ showWarningapprove });
+  console.log({ historyMonthly });
+  console.log('accctionnnn', action);
 
   useEffect(() => {
     props.getPayDepositList(idRoom);
   }, [action]);
 
-  
-
-  let transformedData= [];
+  let transformedData = [];
   if (historyMonthly.length !== 0) {
     transformedData = historyMonthly.map((item, index) => ({
       key: index + 1, // STT

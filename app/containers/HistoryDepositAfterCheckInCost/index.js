@@ -28,7 +28,7 @@ import {
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import localStore from 'local-storage';
-import { useHistory } from 'react-router-dom';
+import { useHistory , useParams } from 'react-router-dom';
 import moment from 'moment';
 import * as fileDownload from 'js-file-download';
 
@@ -58,7 +58,7 @@ import localStoreService from 'local-storage';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { set } from 'lodash';
-import { useParams } from 'react-router-dom';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -145,17 +145,15 @@ export function HistoryDepositAfterCheckInCost(props) {
     showSuccessapprove,
     action = 0,
   } = props.historyDepositAfterCheckInCost;
-  console.log({showWarningapprove})
-  console.log({historyDepositAfterCheckInCost});
-  console.log("accctionnnn", action);
+  console.log({ showWarningapprove });
+  console.log({ historyDepositAfterCheckInCost });
+  console.log('accctionnnn', action);
 
   useEffect(() => {
     props.getPayDepositList(idRoom);
   }, [action]);
 
-  
-
-  let transformedData= [];
+  let transformedData = [];
   if (historyDepositAfterCheckInCost.length !== 0) {
     transformedData = historyDepositAfterCheckInCost.map((item, index) => ({
       key: index + 1, // STT

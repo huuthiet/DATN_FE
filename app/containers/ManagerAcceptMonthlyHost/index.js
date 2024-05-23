@@ -28,7 +28,7 @@ import {
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import localStore from 'local-storage';
-import { useHistory } from 'react-router-dom';
+import { useHistory , useParams } from 'react-router-dom';
 import moment from 'moment';
 
 import { useInjectReducer } from 'utils/injectReducer';
@@ -56,7 +56,7 @@ import localStoreService from 'local-storage';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { set } from 'lodash';
-import { useParams } from 'react-router-dom';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -94,7 +94,7 @@ export function ManagerAcceptMonthlyHost(props) {
   } = currentUser;
 
   const { id } = useParams();
-  console.log({id});
+  console.log({ id });
 
   // console.log({currentUser});
 
@@ -145,42 +145,40 @@ export function ManagerAcceptMonthlyHost(props) {
     showSuccessapprove,
     action = 0,
   } = props.pendingAcceptDepositList;
-  console.log({showWarningapprove})
-  console.log({pendingAcceptDepositList});
-  console.log("accctionnnn", action);
+  console.log({ showWarningapprove });
+  console.log({ pendingAcceptDepositList });
+  console.log('accctionnnn', action);
 
   useEffect(() => {
     props.getPayDepositList(id);
   }, [action]);
 
-  
-
-  let transformedData= [];
+  let transformedData = [];
   if (pendingAcceptDepositList.length !== 0) {
     transformedData = pendingAcceptDepositList.map((item, index) => ({
       key: index + 1, // STT
       nameUser: `${item.user.lastName} ${item.user.firstName}`, // Người thuê
-      phone: `${item.user.phoneNumber.countryCode}${item.user.phoneNumber.number}`, // Số điện thoại
-      roomName: (item.room.name) ? (item.room.name) : "N/A", // Phòng
-      amount: Money(parseInt(item.amount)) + " VNĐ", // Số tiền cọc
+      phone: `${item.user.phoneNumber.countryCode}${
+        item.user.phoneNumber.number
+      }`, // Số điện thoại
+      roomName: item.room.name ? item.room.name : 'N/A', // Phòng
+      amount: `${Money(parseInt(item.amount))  } VNĐ`, // Số tiền cọc
       // amount: Money(item.amount), // Số tiền cọc
       description: item.description,
       keyPayment: item.keyPayment,
-      status: item.status === 'waiting' ? 'Đang chờ duyệt' :
-                            item.status === 'faild' ? 'Thất bại' :
-                            item.status === 'success' ? 'Thành công' :
-                            item.status === 'cancel' ? 'Đã hủy': 'N/A',
-    time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
-    payment_Method: (item.paymentMethod === "cash")?"Tiền mặt": "Ngân hàng",
+      status: item.status === 'waiting' ? 'Đang chờ duyệt':
+          item.status === 'faild' ? 'Thất bại' :
+          item.status === 'success' ? 'Thành công' :
+          item.status === 'cancel' ? 'Đã hủy': 'N/A',
+      time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
+      payment_Method: (item.paymentMethod === "cash")?"Tiền mặt": "Ngân hàng",
       // ...item,
       file: item.file,
       _id: item._id,
     }));
   }
 
-  
-
-  console.log({transformedData});
+  console.log({ transformedData });
 
   const columns = [
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 120 },
@@ -268,14 +266,14 @@ export function ManagerAcceptMonthlyHost(props) {
       // eslint-disable-next-line consistent-return
       renderCell: params => {
         // eslint-disable-next-line no-unused-expressions
-        if (params.row.status === "Đang chờ duyệt") {
+        if (params.row.status === 'Đang chờ duyệt') {
           return (
             <Button
               color="success"
               onClick={() => {
                 /* eslint no-underscore-dangle: 0 */
                 // eslint-disable-next-line no-undef
-                console.log({params})
+                console.log({ params });
                 setIdTransaction(params.row._id);
                 // eslint-disable-next-line no-undef
                 setStatus('success');
@@ -301,7 +299,7 @@ export function ManagerAcceptMonthlyHost(props) {
       // eslint-disable-next-line consistent-return
       renderCell: params => {
         // eslint-disable-next-line no-unused-expressions
-        if (params.row.status === "Đang chờ duyệt") {
+        if (params.row.status === 'Đang chờ duyệt') {
           return (
             <Button
               color="cancel"
@@ -330,9 +328,9 @@ export function ManagerAcceptMonthlyHost(props) {
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
-      renderCell: params => {
+      renderCell: params => 
         // eslint-disable-next-line no-unused-expressions
-        return (
+         (
           <>
             <a
               className='btn-detail'
@@ -344,8 +342,8 @@ export function ManagerAcceptMonthlyHost(props) {
               Xem chi tiết
             </a>
           </>
-        );
-      },
+        )
+      ,
     },
   ];
 
@@ -355,7 +353,10 @@ export function ManagerAcceptMonthlyHost(props) {
     <div className="user-profile-wrapper container">
       <Helmet>
         <title>Accept Monthly Order</title>
-        <meta name="description" content="Description of Accept Monthly Order" />
+        <meta
+          name="description"
+          content="Description of Accept Monthly Order"
+        />
       </Helmet>
       <div className="title">Danh sách phê duyệt Thanh toán hàng tháng</div>
       <div className="job-list-wrapper container-fluid">

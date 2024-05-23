@@ -199,10 +199,7 @@ export function App(props) {
         <Route path="/terms" component={Terms} />
         <Route path="/about" component={About} />
         <Route path="/roomManage" component={RoomManage} />
-        <Route
-          path="/job-detail/:id/:idRoom"
-          component={JobDetailUser}
-        />
+        <Route path="/job-detail/:id/:idRoom" component={JobDetailUser} />
         <Route path="/job-verify/:id/:idElectricMetter" component={JobVerify} />
         <Route path="/payment-return" component={PaymentReturn} />
         <Route path="/order-pay/:id" component={OrderPay} />
@@ -322,10 +319,7 @@ export function App(props) {
           path="/manage-deposit/order-deposit-pending-payment/:idMotel/:nameMotel"
           component={OrderDepositAfterCheckInCostPendingPayment}
         />
-        <Route
-          path="/manage-deposit/"
-          component={ManageDeposit}
-        />
+        <Route path="/manage-deposit/" component={ManageDeposit}/>
         <Route
           path="/manage-monthly-order/history-monthly/motel/:idMotel/:nameMotel/room/:idRoom/:nameRoom"
           component={HistoryMonthly}
@@ -342,10 +336,7 @@ export function App(props) {
           path="/manage-monthly-order/manage-accept-order/:id"
           component={ManagerAcceptMonthlyHost}
         />
-        <Route
-          path="/manage-monthly-order/"
-          component={ManageMonthly}
-        />
+        <Route path="/manage-monthly-order/" component={ManageMonthly} />
         <Route path="/withdraw" component={Withdraw} />
 
         <Route

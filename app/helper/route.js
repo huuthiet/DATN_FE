@@ -1,12 +1,9 @@
-
-
-
 export const urlLink = {
   // AUTHENTICATE
   api: {
-    serverUrl: 'http://localhost:8080/api',
-    // serverUrl: 'http://localhost:5502/api',
-    //usse dotenv for serverUrl
+    serverUrl: 'http://206.189.92.77:8080/api',
+    // serverUrl: 'https://homeland-api.projectenergy.cloud/api',
+    // usse dotenv for serverUrl
     // serverUrl: process.env.REACT_APP_BASE_API_URL,
     auth: {
       sign_up: '/v1/auth/signUp',
@@ -63,7 +60,8 @@ export const urlLink = {
     adminGetOrderDetail: '/v1/admin/homeKey/order/',
     getOrderDetail: '/v1/admin/order/',
     getTransactionPaymentList: '/v1/admin/transactions/',
-    postTransactionsDepositPendingBanking: '/v1/admin/postTransactionsDepositPendingBanking/',
+    postTransactionsDepositPendingBanking:
+      '/v1/admin/postTransactionsDepositPendingBanking/',
     getTransactionPaymentUserList: '/v1/admin/transactions/user/',
     getResetPassWord: '/v1/admin/resetPassword/',
     postBank: '/v1/admin/bank/',
@@ -115,7 +113,7 @@ export const urlLink = {
     postBankUser: '/v1/user/bank/' /* + id */,
     getBankNameList: '/v1/user/bankname',
     getBankMasterList: '/v1/user/bankmastername',
-    getBankOwnerRoom: '/v1/user/bankOwnerRoom/', //+idroom
+    getBankOwnerRoom: '/v1/user/bankOwnerRoom/', // +idroom
     adminHost: '/v1/admin/host',
     getListMotelByHost: '/v1/admin/listMotel/host/',
     exportBill: '/v1/homeKey/energy/device/exportBillRoom/',
@@ -134,7 +132,7 @@ export const urlLink = {
     getOrderPendingPaymentList:
       '/v1/homeKey/order/orderPendingPaymentList/', //user
     getBankingCashPendingDepositListByMotel:
-      '/v1/homeKey/order/bankingCashPendingDepositListByMotel/',  // + idMotel
+      '/v1/homeKey/order/bankingCashPendingDepositListByMotel/', // + idMotel
 
     getBankingCashPendingAfterCheckInCostListByMotel:
     '/v1/homeKey/order/bankingCashPendingAfterCheckInCostListByMotel/',  // + idMotel
@@ -147,9 +145,9 @@ export const urlLink = {
     getOrderDepositAfterCheckInCostPendingPaymentListByMotel:
     '/v1/homeKey/order/orderDepositAfterCheckInCostPendingPaymentListByMotel/',  // + idMotel
     getBankingCashPendingMonthlyByMotel:
-      '/v1/homeKey/order/bankingCashPendingMonthlyByMotel/',  // + idMotel
+      '/v1/homeKey/order/bankingCashPendingMonthlyByMotel/', // + idMotel
     putBankingCashPendingTransactionByMotel:
-      '/v1/homeKey/order/putBankingCashPendingTransactionByMotel/',  // + idMotel
+      '/v1/homeKey/order/putBankingCashPendingTransactionByMotel/', // + idMotel
     // -------
     postTransactionAfterCheckInCostPendingBanking:
       '/v1/homeKey/order/postTransactionAfterCheckInCostPendingBanking/',

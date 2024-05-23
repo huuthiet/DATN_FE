@@ -104,11 +104,11 @@ export function ManagerEnergyHostAdmin(props) {
   let arrData = [];
   if (hosts.length !== 0) {
     arrData = hosts
-    ? hosts.map((host, index) => ({
-      ...host,
-      index: index + 1,
-    }))
-    : [];
+      ? hosts.map((host, index) => ({
+          ...host,
+        index: index + 1,
+        }))
+      : [];
   }
 
   return (

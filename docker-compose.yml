@@ -1,0 +1,11 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: frontend
+    restart: unless-stopped
+    ports:
+      - '80:80'
+    env_file:
+      - .env
