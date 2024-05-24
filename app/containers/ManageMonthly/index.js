@@ -67,17 +67,18 @@ export function ManageMonthly(props) {
         // eslint-disable-next-line no-unused-expressions
         (
           <>
-          <a
-            className="btn-detail"
-            onClick={() => {
-              history.push(
-                `/manage-monthly-order/manage-accept-order/${params.row._id}`,
-              );
-            }}
-          >
-            Xem chi tiết
-          </a>
-        </>
+            <a
+              className="btn-detail"
+              onClick={() => {
+                history.push(
+                  `/manage-monthly-order/manage-accept-order/${params.row._id}`,
+                );
+              }}
+            >
+              Xem chi tiết
+            </a>
+          </>
+        )
       ),
     },
     {
@@ -90,17 +91,18 @@ export function ManageMonthly(props) {
         // eslint-disable-next-line no-unused-expressions
         (
           <>
-          <a
-            className="btn-detail"
-            onClick={() => {
-              history.push(
-                `/manage-monthly-order/history-monthly/${params.row._id}`,
-              );
-            }}
-          >
-            Xem chi tiết
-          </a>
-        </>
+            <a
+              className="btn-detail"
+              onClick={() => {
+                history.push(
+                  `/manage-monthly-order/history-monthly/${params.row._id}`,
+                );
+              }}
+            >
+              Xem chi tiết
+            </a>
+          </>
+        )
       ),
     },
   ];

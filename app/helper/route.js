@@ -126,12 +126,14 @@ export const urlLink = {
     putPayDeposit: '/v1/homeKey/order/payDeposit/', // +id
     getBankingCashTransactionList:
       '/v1/homeKey/order/bankingCashTransactionsList/',
-    getOrderPendingPaymentList: '/v1/homeKey/order/orderPendingPaymentList/',
     getBankingCashPendingDepositListByMotel:
       '/v1/homeKey/order/bankingCashPendingDepositListByMotel/', // + idMotel
 
     getBankingCashPendingAfterCheckInCostListByMotel:
       '/v1/homeKey/order/bankingCashPendingAfterCheckInCostListByMotel/', // + idMotel
+    getDepositAfterCheckInCostHistoryList:
+      '/v1/homeKey/order/getDepositAfterCheckInCostHistoryList/', // + idMotel
+    getMonthlyHistoryList: '/v1/homeKey/order/getMonthlyHistoryList/', // + idMotel
     getBankingCashPendingMonthlyByMotel:
       '/v1/homeKey/order/bankingCashPendingMonthlyByMotel/', // + idMotel
     putBankingCashPendingTransactionByMotel:

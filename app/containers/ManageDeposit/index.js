@@ -67,15 +67,16 @@ export function ManageDeposit(props) {
         // eslint-disable-next-line no-unused-expressions
         (
           <>
-          <a
-            className="btn-detail"
-            onClick={() => {
-              history.push(`/manage-deposit/accept-deposit/${params.row._id}`);
-            }}
-          >
-            Xem chi tiết
-          </a>
-        </>
+            <a
+              className="btn-detail"
+              onClick={() => {
+                history.push(`/manage-deposit/accept-deposit/${params.row._id}`);
+              }}
+            >
+              Xem chi tiết
+            </a>
+          </>
+        )
       ),
     },
     {
@@ -88,17 +89,18 @@ export function ManageDeposit(props) {
         // eslint-disable-next-line no-unused-expressions
         (
           <>
-          <a
-            className="btn-detail"
-            onClick={() => {
-              history.push(
-                `/manage-deposit/accept-after-check-in-cost/${params.row._id}`,
-              );
-            }}
-          >
-            Xem chi tiết
-          </a>
-        </>
+            <a
+              className="btn-detail"
+              onClick={() => {
+                history.push(
+                  `/manage-deposit/accept-after-check-in-cost/${params.row._id}`,
+                );
+              }}
+            >
+              Xem chi tiết
+            </a>
+          </>
+        )
       ),
     },
     {
@@ -111,15 +113,16 @@ export function ManageDeposit(props) {
         // eslint-disable-next-line no-unused-expressions
         (
           <>
-          <a
-            className="btn-detail"
-            onClick={() => {
-              history.push(`/manage-deposit/pay-deposit/${params.row._id}`);
-            }}
-          >
-            Xem chi tiết
-          </a>
-        </>
+            <a
+              className="btn-detail"
+              onClick={() => {
+                history.push(`/manage-deposit/pay-deposit/${params.row._id}`);
+              }}
+            >
+              Xem chi tiết
+            </a>
+          </>
+        )
       ),
     },
     {
@@ -132,20 +135,20 @@ export function ManageDeposit(props) {
         // eslint-disable-next-line no-unused-expressions
         (
           <>
-          <a
-            className="btn-detail"
-            onClick={() => {
-              console.log();
-              history.push(
-                `/manage-deposit/history-deposit-aftercheckincost/${
-                  params.row._id
-                }`,
-              );
-            }}
-          >
-            Xem chi tiết
-          </a>
-        </>
+            <a
+              className="btn-detail"
+              onClick={() => {
+                console.log();
+                history.push(
+                  `/manage-deposit/history-deposit-aftercheckincost/${params.row._id
+                  }`,
+                );
+              }}
+            >
+              Xem chi tiết
+            </a>
+          </>
+        )
       ),
     },
   ];

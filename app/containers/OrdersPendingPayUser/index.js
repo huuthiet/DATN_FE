@@ -148,8 +148,8 @@ export function OrdersPendingPayUser(props) {
         item.type === 'deposit'(item.type === 'monthly')
           ? 'Thanh toán hàng tháng'
           : item.type === 'afterCheckInCost'
-          ? 'Thanh toán khi nhận phòng'
-          : 'N/A',
+            ? 'Thanh toán khi nhận phòng'
+            : 'N/A',
       ...item,
     }));
   }
@@ -276,14 +276,15 @@ export function OrdersPendingPayUser(props) {
         // eslint-disable-next-line no-unused-expressions
         (
           <Button
-          onClick={() => {
-            // eslint-disable-next-line no-underscore-dangle
-            downloadFile(params.row._id);
-          }}
-          color="primary"
-        >
-          Xuất Hóa Đơn
-        </Button>
+            onClick={() => {
+              // eslint-disable-next-line no-underscore-dangle
+              downloadFile(params.row._id);
+            }}
+            color="primary"
+          >
+            Xuất Hóa Đơn
+          </Button>
+        )
       ),
     },
     {
@@ -296,18 +297,19 @@ export function OrdersPendingPayUser(props) {
         // eslint-disable-next-line no-unused-expressions
         (
           <>
-          <a
-            className="btn-detail"
-            onClick={() => {
-              console.log();
-              history.push(
-                `/job-detail/${params.row.job._id}/${params.row.job.room._id}`,
-              );
-            }}
-          >
-            Xem chi tiết
-          </a>
-        </>
+            <a
+              className="btn-detail"
+              onClick={() => {
+                console.log();
+                history.push(
+                  `/job-detail/${params.row.job._id}/${params.row.job.room._id}`,
+                );
+              }}
+            >
+              Xem chi tiết
+            </a>
+          </>
+        )
       ),
     },
   ];
