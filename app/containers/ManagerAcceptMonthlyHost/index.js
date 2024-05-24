@@ -165,10 +165,8 @@ export function ManagerAcceptMonthlyHost(props) {
       // amount: Money(item.amount), // Số tiền cọc
       description: item.description,
       keyPayment: item.keyPayment,
-      status:
-        item.status === 'waiting'
-          ? 'Đang chờ duyệt'
-          :
+      status: item.status === 'waiting' ? 'Đang chờ duyệt' :
+        item.status === 'faild' ? 'Thất bại' :
           item.status === 'success' ? 'Thành công' :
             item.status === 'cancel' ? 'Đã hủy' : 'N/A',
       time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),

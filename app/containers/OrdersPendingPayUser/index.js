@@ -272,7 +272,7 @@ export function OrdersPendingPayUser(props) {
       //     />
       //   </div>
       // ),
-      renderCell: params => (
+      renderCell: params => 
         // eslint-disable-next-line no-unused-expressions
         (
           <Button
@@ -293,7 +293,7 @@ export function OrdersPendingPayUser(props) {
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
-      renderCell: params => (
+      renderCell: params =>
         // eslint-disable-next-line no-unused-expressions
         (
           <>

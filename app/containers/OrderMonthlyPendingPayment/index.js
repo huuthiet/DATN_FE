@@ -13,23 +13,13 @@ import { createStructuredSelector } from 'reselect';
 import { toast } from 'react-toastify';
 import { DataGrid } from '@mui/x-data-grid';
 
-import {
-  Avatar,
-  Button,
-  Divider,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemSecondaryAction,
-  ListItemText,
-  colors,
-} from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
+import { Button } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import localStore from 'local-storage';
-import { useHistory, useParams } from 'react-router-dom';
 import moment from 'moment';
+import axios from 'axios';
+import localStoreService from 'local-storage';
+import { useParams } from 'react-router-dom';
 import * as fileDownload from 'js-file-download';
 
 import { useInjectReducer } from 'utils/injectReducer';
@@ -38,12 +28,10 @@ import { useInjectSaga } from 'utils/injectSaga';
 import Money from '../../containers/App/format';
 import SuccessPopup from '../../components/SuccessPopup';
 import WarningPopup from '../../components/WarningPopup';
-import { notificationController } from '../../controller/notificationController';
 
 import {
   changeStoreData,
   getPayDepositList,
-  approvePendingPayDeposit,
 } from './actions';
 import messages from './messages';
 import reducer from './reducer';
@@ -51,13 +39,7 @@ import saga from './saga';
 import makeSelectPayDepositList from './selectors';
 import './style.scss';
 import { urlLink } from '../../helper/route';
-import axios from 'axios';
-import localStoreService from 'local-storage';
-
-
-
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { set } from 'lodash';
+import { notificationController } from '../../controller/notificationController';
 
 
 const useStyles = makeStyles(theme => ({
@@ -78,9 +60,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export function HistoryDepositAfterCheckInCost(props) {
-  useInjectReducer({ key: 'historyDepositAfterCheckInCost', reducer });
-  useInjectSaga({ key: 'historyDepositAfterCheckInCost', saga });
+export function OrderMonthlyPendingPayment(props) {
+  useInjectReducer({ key: 'historyMonthly', reducer });
+  useInjectSaga({ key: 'historyMonthly', saga });
   // const [urlImgCloud, setUrlImgCloud] = useState('');
   const currentUser = localStore.get('user') || {};
 
@@ -95,7 +77,8 @@ export function HistoryDepositAfterCheckInCost(props) {
     phoneNumber = {},
   } = currentUser;
 
-  const { idRoom = '', nameRoom = '' } = useParams();
+  const { idMotel = '', nameMotel = '' } = useParams();
+  console.log({idMotel});
 
   const [loading, setLoading] = useState(false);
   const startLoading = () => {
@@ -108,7 +91,7 @@ export function HistoryDepositAfterCheckInCost(props) {
 
   const downloadFile = async id => {
     startLoading();
-    console.log({ id });
+    console.log({id});
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
@@ -117,9 +100,9 @@ export function HistoryDepositAfterCheckInCost(props) {
     };
     const requestUrl =
       urlLink.api.serverUrl
-      + urlLink.api.postExportBillPaidByOrder
+      + urlLink.api.postExportBillRoomPendingPayByOrder
       + id;
-    console.log({ requestUrl })
+      console.log({requestUrl})
     try {
       const response = await axios.post(
         requestUrl,
@@ -140,38 +123,35 @@ export function HistoryDepositAfterCheckInCost(props) {
   };
 
   const {
-    historyDepositAfterCheckInCost = [],
+    historyMonthly = [],
     showWarningapprove,
     showSuccessapprove,
     action = 0,
-  } = props.historyDepositAfterCheckInCost;
-  console.log({ showWarningapprove });
-  console.log({ historyDepositAfterCheckInCost });
-  console.log('accctionnnn', action);
+  } = props.historyMonthly;
+  console.log({showWarningapprove})
+  console.log({historyMonthly});
+  console.log("accctionnnn", action);
 
   useEffect(() => {
-    props.getPayDepositList(idRoom);
+    props.getPayDepositList(idMotel);
   }, [action]);
 
-  let transformedData = [];
-  if (historyDepositAfterCheckInCost.length !== 0) {
-    transformedData = historyDepositAfterCheckInCost.map((item, index) => ({
+  
+
+  let transformedData= [];
+  if (historyMonthly.length !== 0) {
+    transformedData = historyMonthly.map((item, index) => ({
       key: index + 1, // STT
-      nameUser: `${item.user.lastName} ${item.user.firstName}`, // Người thuê
-      phone: `${item.user.phoneNumber.countryCode}${item.user.phoneNumber.number}`, // Số điện thoại
+      nameUser: (item.userName) ? item.userName : "", // Người thuê
+      phone: (item.userPhone) ? item.userPhone : "", // Số điện thoại
+      roomName: (item.roomName) ? item.roomName : "", // Số điện thoại
       amount: Money(parseInt(item.amount)) + " VNĐ", // Số tiền cọc
       description: item.description,
       keyPayment: item.keyPayment,
-      status:
-        item.status === 'waiting'
-          ? 'Đang chờ duyệt'
-          :
-          item.status === 'faild' ? 'Thất bại' :
-            item.status === 'success' ? 'Thành công' :
-              item.status === 'cancel' ? 'Đã hủy' : 'N/A',
       time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
-      payment_Method: (item.paymentMethod === "cash") ? "Tiền mặt" : "Ngân hàng",
-      // ...item,
+      timePaid: moment(new Date(item.updatedAt)).format("DD-MM-YYYY"),
+      expireTime: moment(new Date(item.expireTime)).format("DD-MM-YYYY"),
+      keyOrder: item.keyOrder,
       _id: item._id,
     }));
   }
@@ -180,6 +160,13 @@ export function HistoryDepositAfterCheckInCost(props) {
 
   const columns = [
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 120 },
+    {
+      field: 'roomName',
+      headerName: 'Phòng',
+      headerAlign: 'center',
+      width: 150,
+      headerClassName: 'header-bold',
+    },
     {
       field: 'nameUser',
       headerName: 'Người thuê',
@@ -203,7 +190,7 @@ export function HistoryDepositAfterCheckInCost(props) {
     },
     {
       field: 'expireTime',
-      headerName: 'Hạn thanh tóa',
+      headerName: 'Thời gian hết hạn',
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
@@ -216,20 +203,6 @@ export function HistoryDepositAfterCheckInCost(props) {
       headerClassName: 'header-bold',
     },
     {
-      field: 'payment_Method',
-      headerName: 'Phương thức thanh toán',
-      headerAlign: 'center',
-      width: 250,
-      headerClassName: 'header-bold',
-    },
-    {
-      field: 'amount',
-      headerName: 'Số tiền cọc',
-      headerAlign: 'center',
-      width: 250,
-      headerClassName: 'header-bold',
-    },
-    {
       field: 'keyOrder',
       headerName: 'Mã hóa đơn',
       headerAlign: 'center',
@@ -237,8 +210,8 @@ export function HistoryDepositAfterCheckInCost(props) {
       headerClassName: 'header-bold',
     },
     {
-      field: 'description',
-      headerName: 'Mô tả',
+      field: 'amount',
+      headerName: 'Số tiền',
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
@@ -270,10 +243,10 @@ export function HistoryDepositAfterCheckInCost(props) {
   return (
     <div className="user-profile-wrapper container">
       <Helmet>
-        <title>History Deposit</title>
-        <meta name="description" content="Description of History Deposit" />
+        <title>Order Monthly</title>
+        <meta name="description" content="Description of History Monthly" />
       </Helmet>
-      <div className="title">Lịch sử đặt cọc phòng {nameRoom}</div>
+      <div className="title">Hóa hàng tháng chờ thanh toán tòa {nameMotel}</div>
       {loading && <div className="loading-overlay" />}
       <div className="job-list-wrapper container-fluid">
         <div style={{ width: '100%' }}>
@@ -306,15 +279,14 @@ export function HistoryDepositAfterCheckInCost(props) {
   );
 }
 
-HistoryDepositAfterCheckInCost.propTypes = {
+OrderMonthlyPendingPayment.propTypes = {
   dispatch: PropTypes.func,
   changeStoreData: PropTypes.func,
   changeStoreData: PropTypes.func,
-  approvePendingPayDeposit: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  historyDepositAfterCheckInCost: makeSelectPayDepositList(),
+  historyMonthly: makeSelectPayDepositList(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -325,9 +297,6 @@ function mapDispatchToProps(dispatch) {
     changeStoreData: (key, value) => {
       dispatch(changeStoreData(key, value));
     },
-    approvePendingPayDeposit: (idTransaction, status) => {
-      dispatch(approvePendingPayDeposit(idTransaction, status));
-    },
   };
 }
 
@@ -336,4 +305,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(HistoryDepositAfterCheckInCost);
+export default compose(withConnect)(OrderMonthlyPendingPayment);

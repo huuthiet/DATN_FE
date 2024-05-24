@@ -63,74 +63,93 @@ export function ManageMonthly(props) {
       headerAlign: 'center',
       width: 300,
       headerClassName: 'header-bold',
-      renderCell: params => (
-        // eslint-disable-next-line no-unused-expressions
-        (
-          <>
-            <a
-              className="btn-detail"
-              onClick={() => {
-                history.push(
-                  `/manage-monthly-order/manage-accept-order/${params.row._id}`,
-                );
-              }}
-            >
-              Xem chi tiết
-            </a>
-          </>
-        )
+      renderCell: params =>
+      // eslint-disable-next-line no-unused-expressions
+      (
+        <>
+          <a
+            className="btn-detail"
+            onClick={() => {
+              history.push(
+                `/manage-monthly-order/manage-accept-order/${params.row._id}`,
+              );
+            }}
+          >
+            Xem chi tiết
+          </a>
+        </>
+      )
       ),
-    },
-    {
-      field: 'action-2',
-      headerName: 'Lịch sử thanh toán',
+},
+{
+  field: 'action-2',
+    headerName: 'Hóa đơn chờ thanh toán',
       headerAlign: 'center',
-      width: 300,
-      headerClassName: 'header-bold',
-      renderCell: params => (
-        // eslint-disable-next-line no-unused-expressions
-        (
-          <>
-            <a
-              className="btn-detail"
-              onClick={() => {
-                history.push(
-                  `/manage-monthly-order/history-monthly/${params.row._id}`,
-                );
-              }}
-            >
-              Xem chi tiết
-            </a>
-          </>
-        )
-      ),
+        width: 300,
+          headerClassName: 'header-bold',
+            renderCell: params => {
+              // eslint-disable-next-line no-unused-expressions
+              return (
+                <>
+                  <a
+                    className='btn-detail'
+                    onClick={() => {
+                      history.push(`/manage-monthly-order/manage-order-pending-payment/${params.row._id}/${params.row.name}`);
+                    }}
+                  >
+                    Xem chi tiết
+                  </a>
+                </>
+              );
+            },
     },
+{
+  field: 'action-3',
+    headerName: 'Lịch sử thanh toán',
+      headerAlign: 'center',
+        width: 300,
+          headerClassName: 'header-bold',
+            renderCell: params =>
+            // eslint-disable-next-line no-unused-expressions
+            (
+              <>
+                <a
+                  className='btn-detail'
+                  onClick={() => {
+                    history.push(`/manage-monthly-order/history-monthly/motel/${params.row._id}/${params.row.name}`);
+                  }}
+                >
+                  Xem chi tiết
+                </a>
+              </>
+            )
+},
   ];
 
-  return (
-    <div className="login-page-wrapper">
-      <Helmet>
-        <title>Manage Monthly Order</title>
-        <meta
-          name="description"
-          content="Description of Manage Monthly Order"
+return (
+  <div className="login-page-wrapper">
+    <Helmet>
+      <title>Manage Monthly Order</title>
+      <meta
+        name="description"
+        content="Description of Manage Monthly Order"
+      />
+    </Helmet>
+    <div className="title">Quản thanh toán hàng tháng</div>
+    <div className="job-list-wrapper container-fluid">
+      <div style={{ width: '100%' }}>
+        <DataGrid
+          getRowId={row => row.key}
+          rows={MotelRoom}
+          columns={columns}
+          pageSize={10}
+          autoHeight
+          isCellEditable={params => params.key}
         />
-      </Helmet>
-      <div className="title">Quản thanh toán hàng tháng</div>
-      <div className="job-list-wrapper container-fluid">
-        <div style={{ width: '100%' }}>
-          <DataGrid
-            getRowId={row => row.key}
-            rows={MotelRoom}
-            columns={columns}
-            pageSize={10}
-            autoHeight
-            isCellEditable={params => params.key}
-          />
-        </div>
       </div>
     </div>
-  );
+  </div>
+);
 }
 
 ManageMonthly.propTypes = {

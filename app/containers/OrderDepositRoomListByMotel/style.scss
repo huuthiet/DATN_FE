@@ -1,0 +1,16 @@
+.login-page-wrapper {
+  .title {
+    color: rgb(0, 183, 255);
+    font-size: 18px;
+    text-align: center;
+    padding: 10px;
+    font-weight: 500;
+  }
+  .btn-detail{
+    text-decoration: none;
+    transition: color 0.3s ease 0s;
+    &:hover{
+      color: #0d32a0;
+    }
+  }
+}

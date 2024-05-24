@@ -123,17 +123,27 @@ export const urlLink = {
     exportBillBuilding: '/v1/homeKey/energy/device/exportBillBuilding/', // + /:idMotel/:startTime/:endTime
     buildingRevenue: '/v1/homeKey/energy/device/buildingRevenue/', // +/:idMotel/:startTime/:endTime
     getPayDepositList: '/v1/homeKey/order/getPayDepositList/',
-    putPayDeposit: '/v1/homeKey/order/payDeposit/', // +id
+    postExportBillRoomPendingPayByOrder: '/v1/homeKey/order/exportBillRoomPendingPayByOrder/',
+    postExportBillPaidByTransaction: '/v1/homeKey/order/exportBillPaidByTransaction/',
+    postExportBillPaidByOrder: '/v1/homeKey/order/exportBillPaidByOrder/',
+    putPayDeposit: '/v1/homeKey/order/payDeposit/', //+id
     getBankingCashTransactionList:
       '/v1/homeKey/order/bankingCashTransactionsList/',
+    getOrderPendingPaymentList:
+      '/v1/homeKey/order/orderPendingPaymentList/', //user
     getBankingCashPendingDepositListByMotel:
       '/v1/homeKey/order/bankingCashPendingDepositListByMotel/', // + idMotel
 
     getBankingCashPendingAfterCheckInCostListByMotel:
-      '/v1/homeKey/order/bankingCashPendingAfterCheckInCostListByMotel/', // + idMotel
+      '/v1/homeKey/order/bankingCashPendingAfterCheckInCostListByMotel/',  // + idMotel
     getDepositAfterCheckInCostHistoryList:
-      '/v1/homeKey/order/getDepositAfterCheckInCostHistoryList/', // + idMotel
-    getMonthlyHistoryList: '/v1/homeKey/order/getMonthlyHistoryList/', // + idMotel
+      '/v1/homeKey/order/getDepositAfterCheckInCostHistoryList/',  // + idRoom
+    getMonthlyHistoryList:
+      '/v1/homeKey/order/getMonthlyHistoryList/',  // + idMotel
+    getOrderMonthlyPendingPaymentListByMotel:
+      '/v1/homeKey/order/orderMonthlyPendingPaymentListByMotel/',  // + idMotel
+    getOrderDepositAfterCheckInCostPendingPaymentListByMotel:
+      '/v1/homeKey/order/orderDepositAfterCheckInCostPendingPaymentListByMotel/',  // + idMotel
     getBankingCashPendingMonthlyByMotel:
       '/v1/homeKey/order/bankingCashPendingMonthlyByMotel/', // + idMotel
     putBankingCashPendingTransactionByMotel:

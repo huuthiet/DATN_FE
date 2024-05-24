@@ -53,10 +53,13 @@ import EnergyRoomsBillUser from 'containers/EnergyRoomsBillUser/Loadable';
 import MonthlyOrderList from 'containers/MonthlyOrderList/Loadable';
 import ManagerPayDepositHost from 'containers/ManagerPayDepositHost/Loadable';
 import HistoryDepositAfterCheckInCost from 'containers/HistoryDepositAfterCheckInCost/Loadable';
+import OrderDepositRoomListByMotel from 'containers/OrderDepositRoomListByMotel/Loadable';
+import OrderMonthlyRoomListByMotel from 'containers/OrderMonthlyRoomListByMotel/Loadable';
 import HistoryMonthly from 'containers/HistoryMonthly/Loadable';
 import ManageDeposit from 'containers/ManageDeposit/Loadable';
 import ManageMonthly from 'containers/ManageMonthly/Loadable';
 import ManagerAcceptMonthlyHost from 'containers/ManagerAcceptMonthlyHost/Loadable';
+import OrderMonthlyPendingPayment from 'containers/OrderMonthlyPendingPayment/Loadable';
 
 // note
 import ManagerEnergyRooms from 'containers/ManagerEnergyRooms/Loadable';
@@ -76,6 +79,7 @@ import ManagerEnergyBuildingSummaryReport from 'containers/ManagerEnergyBuilding
 import ManagerEnergyRoomsUser from 'containers/ManagerEnergyRoomsUser/Loadable';
 import ManagerAcceptDepositHost from 'containers/ManagerAcceptDepositHost/Loadable';
 import ManagerAcceptAfterCheckInCostHost from 'containers/ManagerAcceptAfterCheckInCostHost/Loadable';
+import OrderDepositAfterCheckInCostPendingPayment from 'containers/OrderDepositAfterCheckInCostPendingPayment/Loadable';
 
 import ManagerEnergyHostAdmin from 'containers/ManagerEnergyHostAdmin/Loadable';
 import ManageMotelListAdmin from 'containers/ManageMotelListAdmin/Loadable';
@@ -296,8 +300,12 @@ export function App(props) {
           component={ManagerPayDepositHost}
         />
         <Route
-          path="/manage-deposit/history-deposit-aftercheckincost/:id"
+          path="/manage-deposit/history-deposit-aftercheckincost/motel/:idMotel/:nameMotel/room/:idRoom/:nameRoom"
           component={HistoryDepositAfterCheckInCost}
+        />
+        <Route
+          path="/manage-deposit/history-deposit-aftercheckincost/motel/:idMotel/:nameMotel"
+          component={OrderDepositRoomListByMotel}
         />
         <Route
           path="/manage-deposit/accept-deposit/:id"
@@ -307,14 +315,26 @@ export function App(props) {
           path="/manage-deposit/accept-after-check-in-cost/:id"
           component={ManagerAcceptAfterCheckInCostHost}
         />
-        <Route path="/manage-deposit/" component={ManageDeposit} />
+        <Route
+          path="/manage-deposit/order-deposit-pending-payment/:idMotel/:nameMotel"
+          component={OrderDepositAfterCheckInCostPendingPayment}
+        />
+        <Route path="/manage-deposit/" component={ManageDeposit}/>
+        <Route
+          path="/manage-monthly-order/history-monthly/motel/:idMotel/:nameMotel/room/:idRoom/:nameRoom"
+          component={HistoryMonthly}
+        />
+        <Route
+          path="/manage-monthly-order/history-monthly/motel/:idMotel/:nameMotel"
+          component={OrderMonthlyRoomListByMotel}
+        />
+        <Route
+          path="/manage-monthly-order/manage-order-pending-payment/:idMotel/:nameMotel"
+          component={OrderMonthlyPendingPayment}
+        />
         <Route
           path="/manage-monthly-order/manage-accept-order/:id"
           component={ManagerAcceptMonthlyHost}
-        />
-        <Route
-          path="/manage-monthly-order/history-monthly/:id"
-          component={HistoryMonthly}
         />
         <Route path="/manage-monthly-order/" component={ManageMonthly} />
         <Route path="/withdraw" component={Withdraw} />

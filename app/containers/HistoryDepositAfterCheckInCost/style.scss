@@ -71,4 +71,52 @@
   }
 }
 
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); // Black with 0.5 transparency
+  z-index: 999; // High z-index to overlay other elements
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &::after {
+    content: "";
+    display: flex;
+    justify-content: space-between;
+    width: 50px; // Set width for the dots container
+  }
+
+  &::after::before,
+  &::after::after,
+  &::after span {
+    content: "";
+    width: 10px; // Set dot width
+    height: 10px; // Set dot height
+    background: #fff; // Set dot color
+    border-radius: 50%; // Make the dots round
+    animation: bounce 1.5s infinite; // Animation for the dots
+  }
+
+  &::after::before {
+    animation-delay: 0s;
+  }
+
+  &::after span {
+    animation-delay: 0.3s;
+  }
+
+  &::after::after {
+    animation-delay: 0.6s;
+  }
+
+  @keyframes bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
+  }
+}
+
 

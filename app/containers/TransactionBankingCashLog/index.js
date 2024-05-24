@@ -146,8 +146,10 @@ export function TransactionBankingCashLog(props) {
       },
     };
     const requestUrl =
-      urlLink.api.serverUrl + urlLink.api.postExportBillPaidBTransaction + id;
-    console.log({ requestUrl });
+      urlLink.api.serverUrl
+      + urlLink.api.postExportBillPaidByTransaction 
+      + id;
+      console.log({requestUrl})
     try {
       const response = await axios.post(
         requestUrl,
