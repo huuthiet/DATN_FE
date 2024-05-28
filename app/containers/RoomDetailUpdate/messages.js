@@ -17,6 +17,10 @@ export default defineMessages({
     id: `${scopeCreateModel}.garbagePrice`,
     defaultMessage: 'Phí Dịch Vụ',
   },
+  linkVideo: {
+    id: `${scopeCreateModel}.linkVideo`,
+    defaultMessage: 'Liên kết video',
+  },
   available: {
     id: `${scope}.available`,
     defaultMessage: 'Còn trống',

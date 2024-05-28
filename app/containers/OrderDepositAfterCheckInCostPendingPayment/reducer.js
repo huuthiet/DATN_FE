@@ -30,6 +30,7 @@ const payDepositListReducer = (state = initialState, action) =>
         draft.historyMonthly = action.response;
         break;
       case GET_PAY_DEPOSIT_LIST_FAIL:
+        draft.historyMonthly = [];
         break;
       case CHANGE_STORE_DATA:
         draft[action.key] = action.value;

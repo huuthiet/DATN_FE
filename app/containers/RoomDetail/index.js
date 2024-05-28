@@ -89,7 +89,24 @@ export function RoomDetail(props) {
       owner: '',
       images: [],
     },
+    linkVideo = '',
   } = room;
+
+  function convertYouTubeLinkToEmbed(url) {
+    if (!url) {
+      return 'https://www.youtube.com/embed/';
+    }
+    try {
+      let urlObj = new URL(url);
+      let videoId = urlObj.searchParams.get("v");
+      if (!videoId) {
+        return ''; // Trả về chuỗi rỗng nếu không có tham số 'v'
+      }
+      return `https://www.youtube.com/embed/${videoId}`;
+    } catch (error) {
+      return 'https://www.youtube.com/embed/';
+    }
+  }
 
   const isEdit =
     localStore.get('user') === null
@@ -448,6 +465,20 @@ export function RoomDetail(props) {
               </Row>
             </div>
           </div>
+
+          <div className="video-responsive">
+            <iframe
+              width="560"
+              height="315"
+              // src="https://www.youtube.com/embed/VneFHjHEIjs"
+              src={convertYouTubeLinkToEmbed(linkVideo)}
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen/>
+          </div>
+          <br/>
         </Container>
       </div>
 

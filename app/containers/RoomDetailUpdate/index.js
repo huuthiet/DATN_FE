@@ -344,6 +344,7 @@ export function RoomDetail(props) {
   // New
   const [wifiPrice, setWifiPrice] = useState(room.wifiPrice);
   const [garbagePrice, setGarbagePrice] = useState(room.garbagePrice);
+  const [linkVideo, setLinkVideo] = useState(room.linkVideo||'');
   const [arrayCallImg, setArrayCallImg] = useState([]);
   const [arrayRemoveImg, setArrayRemoveImg] = useState([]);
 
@@ -774,56 +775,6 @@ export function RoomDetail(props) {
             />
           </Col>
         </Row>
-        <hr/>
-        <Row>
-          <Col md={3}>
-            <InputForm
-              type="text"
-              label={<FormattedMessage {...messages.electricMetter} />}
-              // min={0}
-              name="electricMetter"
-              value={numberOfMeter}
-              readOnly
-              // onChange={evt => {
-              //   setIdElectricMetter(evt.target.value);
-              // }}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col md={3}>
-            <Label>Thêm đồng hồ</Label>
-          </Col>
-          <Col md={3}>
-            <InputForm
-              type="text"
-              label={<FormattedMessage {...messages.idMetter} />}
-              name="electricMetter"
-              value={newIdMeter}
-              onChange={evt => {
-                console.log(evt.target.value);
-                setNewIdMeter(evt.target.value);
-              }}
-            />
-          </Col>
-          <Col md={3}>
-            <InputForm
-              type="datetime"
-              label={<FormattedMessage {...messages.timeMeter} />}
-              // min={0}
-              name="electricMetter"
-              value={timeMeter}
-              onChange={evt => {
-                setTimeMeter(evt.target.value);
-              }}
-            />
-          </Col>
-          <Col md={3}>
-            <Button color="primary" onClick={openModalAddMeter}>
-              {<FormattedMessage {...messages.addMeter} />}
-            </Button>
-          </Col>
-        </Row>
         <Row>
           {arrayImg.length > 0 &&
             arrayImg.map((value, index) => (
@@ -857,6 +808,70 @@ export function RoomDetail(props) {
                 </Button>
               </Col>
             ))}
+        </Row>
+        <Row>
+          <Col xs={6} md={3}>
+            <InputForm
+              label={<FormattedMessage {...messages.linkVideo} />}
+              type="text"
+              placeholder=""
+              value={linkVideo}
+              name="linkVideo"
+              autoComplete="description"
+              onChange={evt => {
+                setLinkVideo(evt.target.value);
+              }}
+            />
+          </Col>
+        </Row>
+        <hr/>
+        <Row>
+          <Col md={3}>
+            <InputForm
+              type="text"
+              label={<FormattedMessage {...messages.electricMetter} />}
+              // min={0}
+              name="electricMetter"
+              value={numberOfMeter}
+              readOnly
+              // onChange={evt => {
+              //   setIdElectricMetter(evt.target.value);
+              // }}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col md={3}>
+            <InputForm
+              type="text"
+              label={<FormattedMessage {...messages.idMetter} />}
+              name="electricMetter"
+              value={newIdMeter}
+              onChange={evt => {
+                console.log(evt.target.value);
+                setNewIdMeter(evt.target.value);
+              }}
+            />
+          </Col>
+          <Col md={3}>
+            <InputForm
+              type="datetime"
+              label={<FormattedMessage {...messages.timeMeter} />}
+              // min={0}
+              name="electricMetter"
+              value={timeMeter}
+              onChange={evt => {
+                setTimeMeter(evt.target.value);
+              }}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col md={3}>
+            <Button color="primary" onClick={openModalAddMeter}>
+              {<FormattedMessage {...messages.addMeter} />}
+            </Button>
+          </Col>
         </Row>
         <Row>
           <Col md={12}>
@@ -1196,6 +1211,7 @@ export function RoomDetail(props) {
                     roomPassword,
                     wifiPrice,
                     garbagePrice,
+                    linkVideo,
                     depositPrice,
                     arrayRemoveImg,
                     vihicle,

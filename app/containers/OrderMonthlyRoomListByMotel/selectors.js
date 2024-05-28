@@ -6,7 +6,7 @@ import { initialState } from './reducer';
  */
 
 const selectHistoryFloorsRoomHostDomain = state =>
-  state.historyFloorsRoomHost || initialState;
+  state.orderMonthlyRoomListByMotel || initialState;
 
 /**
  * Other specific selectors

@@ -5,7 +5,7 @@ import { initialState } from './reducer';
  * Direct selector to the profile state domain
  */
 
-const selectManagerBuildingHostDomain = state => state.profile || initialState;
+const selectManagerBuildingHostDomain = state => state.motelListByOwner || initialState;
 
 /**
  * Other specific selectors

@@ -1,7 +1,8 @@
 export const urlLink = {
   // AUTHENTICATE
   api: {
-    serverUrl: 'http://206.189.92.77:8080/api',
+    // serverUrl: 'http://206.189.92.77:8080/api',
+    serverUrl: 'http://localhost:5502/api',
     // serverUrl: 'https://homeland-api.projectenergy.cloud/api',
     // usse dotenv for serverUrl
     // serverUrl: process.env.REACT_APP_BASE_API_URL,
@@ -34,13 +35,15 @@ export const urlLink = {
     AdminReportProblemAdmin: '/v1/homeKey/admin/reportProblem/admin',
     motelListAdmin: '/v1/homeKey/motelRoom/list/admin',
     motelListDetail: '/v1/homeKey/motelRoom',
-    motelDetail: '/v1/homeKey/motelRoom/',
+    motelDetail: '/v1/homeKey/motelRoom/', //include infor all room
+    motelDetailV2: '/v1/homeKey/motelRoom/getMotelByIdV2/', //only infor motel
     roomDetail: '/v1/homeKey/room/',
     createRoom: '/v1/homeKey/room/',
     getListRoom: '/v1/homeKey/room/',
     createMotel: '/v1/homeKey/motelRoom',
     getRoomList: '/v1/user/motelRoom/list',
     getRoomListAdmin: '/v1/user/admin/motelRoom/list',
+    getRoomListAdminByOwner: '/v1/homeKey/motelRoom/getMotelByOwner/',
     getRoomListRoom: '/v1/user/motelRoom/room',
     createFloor: '/v1/homeKey/floor',
     job: '/v1/homeKey/job',

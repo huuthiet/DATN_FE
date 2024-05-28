@@ -43,6 +43,4 @@ const managerBuildingsHostReducer = (state = initialState, action) =>
     }
   });
 
-
-
 export default managerBuildingsHostReducer;

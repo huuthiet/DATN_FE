@@ -110,12 +110,13 @@ export function MapsPage(props) {
                 {room.images ? (
                   <div className="col-12 image-container">
                     <div className="col-2 image">
-                      <img
+                      {/* <img
                         alt="Avatar"
                         src={room.images}
                       >
                         N
-                      </img>
+                      </img> */}
+                      <img className="image" src={room.images} alt="motel" />
                     </div>
                     <div className="col-8 card-content">
                       <div className="card-info">

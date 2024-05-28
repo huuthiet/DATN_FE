@@ -22,10 +22,10 @@ import makeSelectHistoryFloorsRoomHost from './selectors';
 import './style.scss';
 // import localStore from 'local-storage';
 export function OrderMonthlyRoomListByMotel(props) {
-  useInjectReducer({ key: 'historyFloorsRoomHost', reducer });
-  useInjectSaga({ key: 'historyFloorsRoomHost', saga });
+  useInjectReducer({ key: 'orderMonthlyRoomListByMotel', reducer });
+  useInjectSaga({ key: 'orderMonthlyRoomListByMotel', saga });
   const history = useHistory();
-  const { MotelRoom = [], MotelRoomNone } = props.historyFloorsRoomHost;
+  const { MotelRoom = [], MotelRoomNone } = props.orderMonthlyRoomListByMotel;
   const { idMotel = '', nameMotel = '' } = useParams();
   console.log({MotelRoom})
   // const currentUser = localStore.get('user') || {};
@@ -116,7 +116,7 @@ OrderMonthlyRoomListByMotel.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  historyFloorsRoomHost: makeSelectHistoryFloorsRoomHost(),
+  orderMonthlyRoomListByMotel: makeSelectHistoryFloorsRoomHost(),
 });
 
 function mapDispatchToProps(dispatch) {

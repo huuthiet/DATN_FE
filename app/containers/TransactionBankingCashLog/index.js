@@ -98,10 +98,11 @@ export function TransactionBankingCashLog(props) {
       amount_tranform: `${Money(parseInt(item.amount.toFixed(0)))} VNĐ`,
       payment_Method: item.paymentMethod === 'cash' ? 'Tiền mặt' : 'Ngân hàng',
       type_trasaction:
-        item.type === 'deposit'(item.type === 'monthly')
+        (item.type === 'monthly')
           ? 'Thanh toán hàng tháng'
           : item.type === 'afterCheckInCost'
           ? 'Thanh toán khi nhận phòng'
+          : item.type === 'deposit'? "Thanh toán cọc"
           : 'N/A',
       ...item,
     }));

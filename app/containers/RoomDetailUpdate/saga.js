@@ -97,6 +97,7 @@ const apiPostImg = async payload => {
 export function* apiPutRoomDetailUpdate(payload) {
   const requestUrl = urlLink.api.serverUrl + urlLink.api.updateUtilities;
   let data = {};
+  console.log({payload});
   if (payload.payload.arrayUrlImage) {
     data = {
       id: payload.payload.id,
@@ -115,6 +116,7 @@ export function* apiPutRoomDetailUpdate(payload) {
       depositPrice: payload.payload.depositPrice,
       wifiPrice: payload.payload.wifiPrice,
       garbagePrice: payload.payload.garbagePrice,
+      linkVideo: payload.payload.linkVideo,
       vihicle: payload.payload.vihicle,
       person: payload.payload.person,
     };
@@ -137,6 +139,7 @@ export function* apiPutRoomDetailUpdate(payload) {
       arrayRemoveImg: payload.payload.arrayRemoveImg,
       vihicle: payload.payload.vihicle,
       person: payload.payload.person,
+      linkVideo: payload.payload.linkVideo,
     };
   }
 
