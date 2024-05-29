@@ -28,7 +28,7 @@ import {
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import localStore from 'local-storage';
-import { useHistory , useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import moment from 'moment';
 import * as fileDownload from 'js-file-download';
 
@@ -108,7 +108,7 @@ export function HistoryDepositAfterCheckInCost(props) {
 
   const downloadFile = async id => {
     startLoading();
-    console.log({id});
+    console.log({ id });
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
@@ -119,7 +119,7 @@ export function HistoryDepositAfterCheckInCost(props) {
       urlLink.api.serverUrl
       + urlLink.api.postExportBillPaidByOrder
       + id;
-      console.log({requestUrl})
+    console.log({ requestUrl })
     try {
       const response = await axios.post(
         requestUrl,
@@ -162,11 +162,15 @@ export function HistoryDepositAfterCheckInCost(props) {
       amount: Money(parseInt(item.amount)) + " VNĐ", // Số tiền cọc
       description: item.description,
       keyPayment: item.keyPayment,
-      keyOrder: item.keyOrder,
+      status:
+        item.status === 'waiting'
+          ? 'Đang chờ duyệt'
+          :
+          item.status === 'faild' ? 'Thất bại' :
+            item.status === 'success' ? 'Thành công' :
+              item.status === 'cancel' ? 'Đã hủy' : 'N/A',
       time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
-      timePaid: moment(new Date(item.updatedAt)).format("DD-MM-YYYY"),
-      expireTime: moment(new Date(item.expireTime)).format("DD-MM-YYYY"),
-      payment_Method: (item.paymentMethod === "cash")?"Tiền mặt": "Ngân hàng",
+      payment_Method: (item.paymentMethod === "cash") ? "Tiền mặt" : "Ngân hàng",
       // ...item,
       _id: item._id,
     }));
@@ -255,7 +259,7 @@ export function HistoryDepositAfterCheckInCost(props) {
             color="primary"
           >
             Xuất Hóa Đơn
-        </Button>
+          </Button>
         );
       },
     },

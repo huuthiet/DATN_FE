@@ -16,10 +16,10 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import localStore from 'local-storage';
+import { useHistory, useParams } from 'react-router-dom';
 import moment from 'moment';
 import axios from 'axios';
 import localStoreService from 'local-storage';
-import { useParams } from 'react-router-dom';
 import * as fileDownload from 'js-file-download';
 
 import { useInjectReducer } from 'utils/injectReducer';
@@ -79,7 +79,7 @@ export function HistoryMonthly(props) {
   } = currentUser;
 
   const { idRoom = '', nameRoom = '' } = useParams();
-  console.log({idRoom});
+  console.log({ idRoom });
 
   const [loading, setLoading] = useState(false);
   const startLoading = () => {
@@ -92,7 +92,7 @@ export function HistoryMonthly(props) {
 
   const downloadFile = async id => {
     startLoading();
-    console.log({id});
+    console.log({ id });
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
@@ -103,7 +103,7 @@ export function HistoryMonthly(props) {
       urlLink.api.serverUrl
       + urlLink.api.postExportBillPaidByOrder
       + id;
-      console.log({requestUrl})
+    console.log({ requestUrl })
     try {
       const response = await axios.post(
         requestUrl,
@@ -146,10 +146,17 @@ export function HistoryMonthly(props) {
       amount: Money(parseInt(item.amount)) + " VNĐ", // Số tiền cọc
       description: item.description,
       keyPayment: item.keyPayment,
+      status:
+        item.status === 'waiting'
+          ? 'Đang chờ duyệt'
+          :
+          item.status === 'faild' ? 'Thất bại' :
+            item.status === 'success' ? 'Thành công' :
+              item.status === 'cancel' ? 'Đã hủy' : 'N/A',
       time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
       timePaid: moment(new Date(item.updatedAt)).format("DD-MM-YYYY"),
       expireTime: moment(new Date(item.expireTime)).format("DD-MM-YYYY"),
-      payment_Method: (item.paymentMethod === "cash")?"Tiền mặt": "Ngân hàng",
+      payment_Method: (item.paymentMethod === "cash") ? "Tiền mặt" : "Ngân hàng",
       keyOrder: item.keyOrder,
       _id: item._id,
     }));

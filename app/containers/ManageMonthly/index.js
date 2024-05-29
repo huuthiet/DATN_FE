@@ -63,10 +63,10 @@ export function ManageMonthly(props) {
       headerAlign: 'center',
       width: 300,
       headerClassName: 'header-bold',
-      renderCell: params => 
-        // eslint-disable-next-line no-unused-expressions
-        (
-          <>
+      renderCell: params =>
+      // eslint-disable-next-line no-unused-expressions
+      (
+        <>
           <a
             className="btn-detail"
             onClick={() => {
@@ -78,7 +78,7 @@ export function ManageMonthly(props) {
             Xem chi tiết
           </a>
         </>
-      ),
+      )
     },
     {
       field: 'action-2',
@@ -108,20 +108,20 @@ export function ManageMonthly(props) {
       headerAlign: 'center',
       width: 300,
       headerClassName: 'header-bold',
-      renderCell: params => 
-        // eslint-disable-next-line no-unused-expressions
-        (
-          <>
-            <a
-              className='btn-detail'
-              onClick={() => {
-                history.push(`/manage-monthly-order/history-monthly/motel/${params.row._id}/${params.row.name}`);
-              }}
-            >
-              Xem chi tiết
-            </a>
-          </>
-        )
+      renderCell: params =>
+      // eslint-disable-next-line no-unused-expressions
+      (
+        <>
+          <a
+            className='btn-detail'
+            onClick={() => {
+              history.push(`/manage-monthly-order/history-monthly/motel/${params.row._id}/${params.row.name}`);
+            }}
+          >
+            Xem chi tiết
+          </a>
+        </>
+      )
     },
   ];
 

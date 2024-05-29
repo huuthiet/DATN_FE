@@ -9,11 +9,12 @@ import { FormGroup, Label, Input } from 'reactstrap';
 import Autocomplete from 'react-google-autocomplete';
 import ClassNames from 'classnames';
 import './style.scss';
+import _ from 'lodash';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
 function InputLocation(props) {
-  const { onChange = place => {}, onSelect = address => {} } = props;
+  const { onChange = place => { }, onSelect = address => { } } = props;
   return (
     <div className={ClassNames('input-location-wrapper', props.className)}>
       <FormGroup>

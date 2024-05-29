@@ -63,10 +63,10 @@ export function ManageDeposit(props) {
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
-      renderCell: params => 
-        // eslint-disable-next-line no-unused-expressions
-        (
-          <>
+      renderCell: params =>
+      // eslint-disable-next-line no-unused-expressions
+      (
+        <>
           <a
             className="btn-detail"
             onClick={() => {
@@ -76,7 +76,7 @@ export function ManageDeposit(props) {
             Xem chi tiết
           </a>
         </>
-      ),
+      )
     },
     {
       field: 'action-2',
@@ -85,9 +85,9 @@ export function ManageDeposit(props) {
       width: 300,
       headerClassName: 'header-bold',
       renderCell: params =>
-        // eslint-disable-next-line no-unused-expressions
-        (
-          <>
+      // eslint-disable-next-line no-unused-expressions
+      (
+        <>
           <a
             className="btn-detail"
             onClick={() => {
@@ -99,7 +99,7 @@ export function ManageDeposit(props) {
             Xem chi tiết
           </a>
         </>
-      ),
+      )
     },
     {
       field: 'action-3',
@@ -129,10 +129,10 @@ export function ManageDeposit(props) {
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
-      renderCell: params => 
-        // eslint-disable-next-line no-unused-expressions
-        (
-          <>
+      renderCell: params =>
+      // eslint-disable-next-line no-unused-expressions
+      (
+        <>
           <a
             className="btn-detail"
             onClick={() => {
@@ -142,7 +142,7 @@ export function ManageDeposit(props) {
             Xem chi tiết
           </a>
         </>
-      ),
+      )
     },
     {
       field: 'action-5',
@@ -151,20 +151,20 @@ export function ManageDeposit(props) {
       width: 200,
       headerClassName: 'header-bold',
       renderCell: params =>
-        // eslint-disable-next-line no-unused-expressions
-        (
-          <>
-            <a
-              className='btn-detail'
-              onClick={() => {
-                console.log()
-                history.push(`/manage-deposit/history-deposit-aftercheckincost/motel/${params.row._id}/${params.row.name}`);
-              }}
-            >
-              Xem chi tiết
-            </a>
-          </>
-        )
+      // eslint-disable-next-line no-unused-expressions
+      (
+        <>
+          <a
+            className='btn-detail'
+            onClick={() => {
+              console.log()
+              history.push(`/manage-deposit/history-deposit-aftercheckincost/motel/${params.row._id}/${params.row.name}`);
+            }}
+          >
+            Xem chi tiết
+          </a>
+        </>
+      )
     },
   ];
 

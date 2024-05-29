@@ -19,6 +19,7 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import InputForm from '../../components/InputForm';
 import { getListReportProblem, postStatusReportProblem } from './actions';
+import _ from 'lodash';
 import reducer from './reducer';
 import saga from './saga';
 import localStoreService from 'local-storage';
@@ -30,7 +31,7 @@ export function ReportProblemListAdmin(props) {
   const { listReportProblem = [], action2 = 0 } = props.reportProblemListAdmin;
   const [isAdmin, setIsAdmin] = useState(false);
   const history = useHistory();
-  console.log({listReportProblem});
+  console.log({ listReportProblem });
 
   console.log("action222", action2);
   useEffect(() => {
@@ -53,7 +54,7 @@ export function ReportProblemListAdmin(props) {
     };
     props.getListReportProblem(data);
   }, [action2]);
-  
+
   const dateNow = new Date();
   const beforeNow = dateNow.setDate(dateNow.getDate() - 1);
   const [startDate, setStartDate] = useState(new Date(beforeNow));

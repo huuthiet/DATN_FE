@@ -12,6 +12,7 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import _ from 'lodash';
 
 import { Button } from '@material-ui/core';
 import Search from '@material-ui/icons/Search';

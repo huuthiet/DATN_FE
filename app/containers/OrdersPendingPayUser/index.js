@@ -148,9 +148,9 @@ export function OrdersPendingPayUser(props) {
         (item.type === 'monthly')
           ? 'Thanh toán hàng tháng'
           : item.type === 'afterCheckInCost'
-          ? 'Thanh toán khi nhận phòng'
-          :item.type === 'deposit' ? "Thanh toán cọc"
-          : 'N/A',
+            ? 'Thanh toán khi nhận phòng'
+            : item.type === 'deposit' ? "Thanh toán cọc"
+              : 'N/A',
       ...item,
     }));
   }
@@ -273,10 +273,10 @@ export function OrdersPendingPayUser(props) {
       //     />
       //   </div>
       // ),
-      renderCell: params => 
-        // eslint-disable-next-line no-unused-expressions
-        (
-          <Button
+      renderCell: params =>
+      // eslint-disable-next-line no-unused-expressions
+      (
+        <Button
           onClick={() => {
             // eslint-disable-next-line no-underscore-dangle
             downloadFile(params.row._id);
@@ -285,7 +285,7 @@ export function OrdersPendingPayUser(props) {
         >
           Xuất Hóa Đơn
         </Button>
-      ),
+      )
     },
     {
       field: 'action-2',
@@ -294,9 +294,9 @@ export function OrdersPendingPayUser(props) {
       width: 200,
       headerClassName: 'header-bold',
       renderCell: params =>
-        // eslint-disable-next-line no-unused-expressions
-        (
-          <>
+      // eslint-disable-next-line no-unused-expressions
+      (
+        <>
           <a
             className="btn-detail"
             onClick={() => {
@@ -309,7 +309,7 @@ export function OrdersPendingPayUser(props) {
             Xem chi tiết
           </a>
         </>
-      ),
+      )
     },
   ];
 

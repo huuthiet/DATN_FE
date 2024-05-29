@@ -126,7 +126,8 @@ export const urlLink = {
     exportAllBill: '/v1/homeKey/energy/device/exportBillAllRoom/',
     // /v1/homeKey/energy/device/exportBillAllRoom/:idMotel/2024-03-01/2024-03-15
     exportBillBuilding: '/v1/homeKey/energy/device/exportBillBuilding/', // + /:idMotel/:startTime/:endTime
-    buildingRevenue: '/v1/homeKey/energy/device/buildingRevenue/', // +/:idMotel/:startTime/:endTime
+    buildingRevenue: '/v1/homeKey/energy/device/buildingRevenue/', // +/:idMotel/:Month/:Year
+    hostBuildingListForRenenue: '/v1/homeKey/energy/device/hostBuildingList/', // +/:idOwner
     getPayDepositList: '/v1/homeKey/order/getPayDepositList/',
     postExportBillRoomPendingPayByOrder: '/v1/homeKey/order/exportBillRoomPendingPayByOrder/',
     postExportBillPaidByTransaction: '/v1/homeKey/order/exportBillPaidByTransaction/',
@@ -140,15 +141,15 @@ export const urlLink = {
       '/v1/homeKey/order/bankingCashPendingDepositListByMotel/', // + idMotel
 
     getBankingCashPendingAfterCheckInCostListByMotel:
-    '/v1/homeKey/order/bankingCashPendingAfterCheckInCostListByMotel/',  // + idMotel
+      '/v1/homeKey/order/bankingCashPendingAfterCheckInCostListByMotel/',  // + idMotel
     getDepositAfterCheckInCostHistoryList:
-    '/v1/homeKey/order/getDepositAfterCheckInCostHistoryList/',  // + idRoom
+      '/v1/homeKey/order/getDepositAfterCheckInCostHistoryList/',  // + idRoom
     getMonthlyHistoryList:
-    '/v1/homeKey/order/getMonthlyHistoryList/',  // + idMotel
+      '/v1/homeKey/order/getMonthlyHistoryList/',  // + idMotel
     getOrderMonthlyPendingPaymentListByMotel:
-    '/v1/homeKey/order/orderMonthlyPendingPaymentListByMotel/',  // + idMotel
+      '/v1/homeKey/order/orderMonthlyPendingPaymentListByMotel/',  // + idMotel
     getOrderDepositAfterCheckInCostPendingPaymentListByMotel:
-    '/v1/homeKey/order/orderDepositAfterCheckInCostPendingPaymentListByMotel/',  // + idMotel
+      '/v1/homeKey/order/orderDepositAfterCheckInCostPendingPaymentListByMotel/',  // + idMotel
     getBankingCashPendingMonthlyByMotel:
       '/v1/homeKey/order/bankingCashPendingMonthlyByMotel/', // + idMotel
     putBankingCashPendingTransactionByMotel:

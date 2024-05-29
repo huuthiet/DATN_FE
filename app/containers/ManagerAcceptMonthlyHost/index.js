@@ -28,7 +28,7 @@ import {
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import localStore from 'local-storage';
-import { useHistory , useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import moment from 'moment';
 
 import { useInjectReducer } from 'utils/injectReducer';
@@ -158,20 +158,19 @@ export function ManagerAcceptMonthlyHost(props) {
     transformedData = pendingAcceptDepositList.map((item, index) => ({
       key: index + 1, // STT
       nameUser: `${item.user.lastName} ${item.user.firstName}`, // Người thuê
-      phone: `${item.user.phoneNumber.countryCode}${
-        item.user.phoneNumber.number
-      }`, // Số điện thoại
+      phone: `${item.user.phoneNumber.countryCode}${item.user.phoneNumber.number
+        }`, // Số điện thoại
       roomName: item.room.name ? item.room.name : 'N/A', // Phòng
-      amount: `${Money(parseInt(item.amount))  } VNĐ`, // Số tiền cọc
+      amount: `${Money(parseInt(item.amount))} VNĐ`, // Số tiền cọc
       // amount: Money(item.amount), // Số tiền cọc
       description: item.description,
       keyPayment: item.keyPayment,
-      status: item.status === 'waiting' ? 'Đang chờ duyệt':
-          item.status === 'faild' ? 'Thất bại' :
+      status: item.status === 'waiting' ? 'Đang chờ duyệt' :
+        item.status === 'faild' ? 'Thất bại' :
           item.status === 'success' ? 'Thành công' :
-          item.status === 'cancel' ? 'Đã hủy': 'N/A',
+            item.status === 'cancel' ? 'Đã hủy' : 'N/A',
       time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
-      payment_Method: (item.paymentMethod === "cash")?"Tiền mặt": "Ngân hàng",
+      payment_Method: (item.paymentMethod === "cash") ? "Tiền mặt" : "Ngân hàng",
       // ...item,
       file: item.file,
       _id: item._id,
@@ -328,21 +327,21 @@ export function ManagerAcceptMonthlyHost(props) {
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
-      renderCell: params => 
-        // eslint-disable-next-line no-unused-expressions
-         (
-          <>
-            <a
-              className='btn-detail'
-              onClick={() => {
-                console.log("{params.row._id}",params.row._id);
-                history.push(`/manage-deposit/pay-deposit/${id}/${params.row._id}`);
-              }}
-            >
-              Xem chi tiết
-            </a>
-          </>
-        )
+      renderCell: params =>
+      // eslint-disable-next-line no-unused-expressions
+      (
+        <>
+          <a
+            className='btn-detail'
+            onClick={() => {
+              console.log("{params.row._id}", params.row._id);
+              history.push(`/manage-deposit/pay-deposit/${id}/${params.row._id}`);
+            }}
+          >
+            Xem chi tiết
+          </a>
+        </>
+      )
       ,
     },
   ];
