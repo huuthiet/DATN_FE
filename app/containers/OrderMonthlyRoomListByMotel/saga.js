@@ -7,7 +7,8 @@ import { GET_MOTEL_ROOM } from './constants';
 
 export function* apiGetMotelRoom(payload) {
   const { id } = payload;
-  const requestUrl = urlLink.api.serverUrl + urlLink.api.motelDetail + id;
+  // const requestUrl = urlLink.api.serverUrl + urlLink.api.motelDetail + id;
+  const requestUrl = urlLink.api.serverUrl + urlLink.api.roomOfMotel + id;
   yield put(loadRepos());
   try {
     const response = yield axios.get(requestUrl);

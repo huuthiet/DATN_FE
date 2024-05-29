@@ -37,6 +37,7 @@ export const urlLink = {
     motelListDetail: '/v1/homeKey/motelRoom',
     motelDetail: '/v1/homeKey/motelRoom/', //include infor all room
     motelDetailV2: '/v1/homeKey/motelRoom/getMotelByIdV2/', //only infor motel
+    roomOfMotel: '/v1/homeKey/motelRoom/roomsOfMotel/', //visual room data
     motelDetailOneFloor: '/v1/homeKey/motelRoom/getMotelByIdAndFloor/', //only infor one floor
     roomDetail: '/v1/homeKey/room/',
     createRoom: '/v1/homeKey/room/',

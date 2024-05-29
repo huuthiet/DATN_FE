@@ -9,6 +9,9 @@ import {
   GET_MOTEL,
   GET_MOTEL_FAIL,
   GET_MOTEL_SUCCESS,
+  GET_MOTEL_INFOR,
+  GET_MOTEL_INFOR_FAIL,
+  GET_MOTEL_INFOR_SUCCESS,
   POST_FLOOR,
   POST_FLOOR_SUCCESS,
   POST_FLOOR_FAIL,
@@ -38,6 +41,27 @@ export function getMotelSuccess(response) {
 export function getMotelFail(error) {
   return {
     type: GET_MOTEL_FAIL,
+    error,
+  };
+}
+
+export function getMotelInfor(id) {
+  return {
+    type: GET_MOTEL_INFOR,
+    id,
+  };
+}
+
+export function getMotelInforSuccess(response) {
+  return {
+    type: GET_MOTEL_INFOR_SUCCESS,
+    response,
+  };
+}
+
+export function getMotelInforFail(error) {
+  return {
+    type: GET_MOTEL_INFOR_FAIL,
     error,
   };
 }

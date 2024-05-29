@@ -4,7 +4,12 @@
  *
  */
 import produce from 'immer';
-import { GET_MOTEL_FAIL, GET_MOTEL_SUCCESS } from '../Motel/constants';
+import { 
+  GET_MOTEL_FAIL, 
+  GET_MOTEL_SUCCESS, 
+  GET_MOTEL_INFOR_SUCCESS,
+  GET_MOTEL_INFOR_FAIL,
+ } from '../Motel/constants';
 import {
   CHANGE_STORE_DATA,
   POST_IMGL_SUCCESS,
@@ -30,6 +35,12 @@ const updateMotelReducer = (state = initialState, action) =>
         draft.motel = action.response;
         break;
       case GET_MOTEL_FAIL:
+        draft.motel = action.error;
+        break;
+        case GET_MOTEL_INFOR_SUCCESS:
+        draft.motel = action.response;
+        break;
+      case GET_MOTEL_INFOR_FAIL:
         draft.motel = action.error;
         break;
       case PUT_MOTEL_SUCCESS:

@@ -1,0 +1,72 @@
+.motel-detail-wrapper {
+  .status-bar {
+      margin: 20px 0 35px 0;
+      white-space: nowrap;
+
+    .status-item {
+      display: inline-block;
+      width: calc(20% - 6px);
+      text-align: center;
+      color: white;
+      height: 50px;
+      font-size: 14px;
+      position: relative;
+      border-radius: 5px;
+      margin: 0 3px;
+      cursor: pointer;
+      // overflow-wrap: break-word; //
+      word-wrap: break-word;
+      &.total {
+        border-bottom: 2px solid gray;
+        transition: all 0.3s ease-in-out;
+        &:hover{
+          background-color: rgb(243, 243, 243);
+        }
+        &.active {
+          background-color: rgb(243, 243, 243);
+        }
+      }
+      &.rented {
+        border-bottom: 2px solid red;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+          background-color: rgb(255, 199, 199);
+          transition: all 0.3s ease-in-out;
+        }
+        &.active{
+          background-color: rgb(255, 199, 199);
+        }
+      }
+      &.available {
+        border-bottom: 2px solid green;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+          background-color: rgb(191, 255, 191);
+        }
+        &.active{
+          background-color: rgb(191, 255, 191);
+        }
+      }
+      &.deposited {
+        border-bottom: 2px solid orange;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+          background-color: rgb(255, 255, 160);
+        }
+        &.active{
+          background-color: rgb(255, 255, 160);
+        }
+      }
+      &.soonExpireContract {
+        border-bottom: 2px solid purple;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+          background-color: rgb(239, 216, 255);
+        }
+        &.active{
+          background-color: rgb(239, 216, 255);
+        }
+      }
+    }
+  }
+}

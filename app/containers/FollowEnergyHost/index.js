@@ -8,6 +8,7 @@ import html2pdf from 'html2pdf.js';
 import htmlToImage from 'html-to-image';
 import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
+import { toast } from 'react-toastify';
 import {
   Cancel,
   GetApp,

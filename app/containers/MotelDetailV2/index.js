@@ -29,7 +29,7 @@ import reducer from './reducer';
 import saga from './saga';
 import './style.scss';
 
-export function MotelDetail(props) {
+export function motelDetailV2(props) {
   const { id } = useParams();
   const [status, setStatus] = useState('0');
   const [modal, setModal] = useState(false);
@@ -39,6 +39,8 @@ export function MotelDetail(props) {
     props.getMotelDetail(id);
   }, []);
   const { motel = {} } = props.motelDetail;
+
+  const idMotel = motel._id;
 
   console.log('motel', motel);
 
@@ -150,12 +152,15 @@ export function MotelDetail(props) {
           </div>
         </div>
       </div>
-      <FloorDetail {...props} owner={motel.owner} status={status} />
+      { idMotel && (
+        <FloorDetailV2 {...props} idMotel={idMotel} owner={motel.owner} status={status} />
+        )
+      }
     </div>
   );
 }
 
-MotelDetail.propTypes = {
+motelDetailV2.propTypes = {
   dispatch: PropTypes.func,
   getMotelDetail: PropTypes.func,
 };
@@ -177,4 +182,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(MotelDetail);
+export default compose(withConnect)(motelDetailV2);

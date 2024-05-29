@@ -21,7 +21,7 @@ import { useInjectSaga } from 'utils/injectSaga';
 import SuccessPopup from '../../components/SuccessPopup';
 import WarningPopup from '../../components/WarningPopup';
 import Money from '../App/format';
-import { changeStoreData, getMotel, postFloor } from './actions';
+import { changeStoreData, getMotel, getMotelInfor, postFloor } from './actions';
 import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
@@ -37,21 +37,21 @@ export function Motel(props) {
   useInjectReducer({ key: 'motel', reducer });
   useInjectSaga({ key: 'motel', saga });
   useEffect(() => {
-    props.getMotel(id);
+    props.getMotelInfor(id);
   }, []);
   const [formData, setFormData] = useState('');
   const {
-    motel = {},
+    motelInfor = {},
     showSuccessPopup,
     showErrorPopup,
     showWarningPopup,
   } = props.motel;
-  console.log('motel', motel);
+  console.log('motelInfor', motelInfor);
   const isEdit =
     localStore.get('user') === null
       ? false
-      : motel.owner === localStore.get('user')._id;
-  const { images = [] } = motel;
+      : motelInfor.owner === localStore.get('user')._id;
+  const { images = [] } = motelInfor;
   const items = [];
   const {
     _id,
@@ -63,7 +63,7 @@ export function Motel(props) {
     address = {},
     minPrice = '',
     maxPrice = '',
-  } = motel;
+  } = motelInfor;
 
   const homelandFloor = {
     display: 'flex',
@@ -88,7 +88,7 @@ export function Motel(props) {
                 <div className="image-container">
                   <img
                     className="image"
-                    src={images}
+                    src={images[0]}
                     alt="motel"
                   />
                 </div>
@@ -161,7 +161,7 @@ export function Motel(props) {
               <button
                 className="btn-detail"
                 onClick={() => {
-                  history.push(`/motel-detail/${_id}`);
+                  history.push(`/motel-detail-v2/${_id}`);
                 }}
               >
                 <FormattedMessage {...messages.Detail} />
@@ -191,7 +191,7 @@ export function Motel(props) {
 
 Motel.propTypes = {
   dispatch: PropTypes.func,
-  getMotel: PropTypes.func,
+  getMotelInfor: PropTypes.func,
   postFloor: PropTypes.func,
   changeStoreData: PropTypes.func,
 };
@@ -202,8 +202,8 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    getMotel: id => {
-      dispatch(getMotel(id));
+    getMotelInfor: id => {
+      dispatch(getMotelInfor(id));
     },
     postFloor: (id, formData) => {
       dispatch(postFloor(id, formData));
