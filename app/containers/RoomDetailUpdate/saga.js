@@ -98,6 +98,8 @@ export function* apiPutRoomDetailUpdate(payload) {
   const requestUrl = urlLink.api.serverUrl + urlLink.api.updateUtilities;
   let data = {};
   console.log({payload});
+  console.log('img add', payload.payload.arrayUrlImage);
+  console.log('img remove', payload.payload.arrayRemoveImg);
   if (payload.payload.arrayUrlImage) {
     data = {
       id: payload.payload.id,
@@ -147,7 +149,8 @@ export function* apiPutRoomDetailUpdate(payload) {
   try {
     const response = yield axios.put(requestUrl, data);
     yield put(putRoomDetailUpdateSuccess(response.data.data));
-    yield put(push(`/motel-detail/${response.data.data.idMotel}`));
+    // yield put(push(`/motel-detail/${response.data.data.idMotel}`));
+    yield put(push(`/room-detail/${payload.payload.id}`));
   } catch (error) {
     yield put(putRoomDetailUpdateFail(error.response.data));
   } finally {

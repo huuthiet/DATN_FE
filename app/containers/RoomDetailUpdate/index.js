@@ -75,6 +75,8 @@ export function RoomDetail(props) {
 
   const { room = {} } = props.roomDetail;
 
+  console.log({room})
+
   const utils = room.utilities;
   const { status } = room;
 
@@ -350,12 +352,19 @@ export function RoomDetail(props) {
 
   const [arrayImg, setArrayImg] = useState(room.images || []);
 
-  const handleFileInputChangeFile = async e => {
+  const handleFileInputChangeFile = async (e, index) => {
     const dataFile = e.target.files;
+    console.log({dataFile});
     setArrayCallImg([]);
-    const newArr = [];
-    // eslint-disable-next-line no-plusplus
+    // const newArr = []; //NOTE: be đã update được nhiều ảnh cùng lúc: xử lý việc chọn 1 ảnh 1 lần nhưng chọn nhiều lần, trường hợp chọn nhiều ảnh 1 lần thì update oke
+    let newArr = arrayCallImg;
+    let displayImg = arrayImg;
     for (let i = 0; i < dataFile.length; i++) {
+      // setArrayImg(prevImages => {
+      //   const updatedImages = [...prevImages];
+      //   updatedImages.splice(index, 1);
+      //   return updatedImages;
+      // });
       const formData = new FormData();
       formData.append('file', dataFile[i]);
       const data = {
@@ -372,8 +381,12 @@ export function RoomDetail(props) {
       }
       newArr.push(data);
     }
+    console.log("newArrAA", newArr);
 
     setArrayCallImg(newArr);
+
+    console.log("arrayCallImgggg", arrayCallImg);
+    console.log("arrayImg", arrayImg);
   };
 
 
@@ -1217,7 +1230,7 @@ export function RoomDetail(props) {
                     vihicle,
                     person,
                   };
-                  handleCallImages();
+                  handleCallImages();//cập nhật ảnh mới
                   props.putRoomDetailUpdate(data);
                 }
               }}

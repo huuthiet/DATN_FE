@@ -129,14 +129,15 @@ function Room(props) {
             </Button>
             <Button
               color="primary" onClick={() => {
-                if (isHost) {
-                  history.push(`/room-detail/${item._id}`);
-                } else if (!isEdit) {
-                  history.push('/auth/login');
-                } else {
-                  /* eslint no-underscore-dangle: 0 */
-                  history.push(`/room-detail/${item._id}`);
-                }
+                history.push(`/room-detail/${item._id}`);
+                // if (isHost) {
+                //   history.push(`/room-detail/${item._id}`);
+                // } else if (!isEdit) {
+                //   history.push('/auth/login');
+                // } else {
+                //   /* eslint no-underscore-dangle: 0 */
+                //   history.push(`/room-detail/${item._id}`);
+                // }
               }}
             >
               Xem chi tiết

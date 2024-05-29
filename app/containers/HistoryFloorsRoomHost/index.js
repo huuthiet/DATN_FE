@@ -49,10 +49,9 @@ export function HistoryFloorsRoomHost(props) {
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
-      renderCell: params => {
-        // eslint-disable-next-line no-unused-expressions
-        return (
-          <>
+      renderCell: (params) => {
+        return params.value ? (
+          <a href={params.value} target="_blank" rel="noopener noreferrer">
             <Avatar
               style={{
                 width: '250px',
@@ -61,20 +60,50 @@ export function HistoryFloorsRoomHost(props) {
               alt="Avatar"
               src={params.value}
             />
-          </>
+          </a>
+        ) : (
+          <Avatar
+            style={{
+              width: '250px',
+            }}
+            variant="square"
+            alt="Avatar"
+            src={''}
+          />
         );
       },
     },
+    // {
+    //   field: 'image2',
+    //   headerName: 'Ảnh Phòng 2',
+    //   headerAlign: 'center',
+    //   width: 250,
+    //   headerClassName: 'header-bold',
+    //   renderCell: params => {
+    //     // eslint-disable-next-line no-unused-expressions
+    //     return (
+    //       <>
+    //         <Avatar
+    //           style={{
+    //             width: '250px',
+    //           }}
+    //           variant="square"
+    //           alt="Avatar"
+    //           src={params.value}
+    //         />
+    //       </>
+    //     );
+    //   },
+    // },
     {
       field: 'image2',
       headerName: 'Ảnh Phòng 2',
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
-      renderCell: params => {
-        // eslint-disable-next-line no-unused-expressions
-        return (
-          <>
+      renderCell: (params) => {
+        return params.value ? (
+          <a href={params.value} target="_blank" rel="noopener noreferrer">
             <Avatar
               style={{
                 width: '250px',
@@ -83,7 +112,16 @@ export function HistoryFloorsRoomHost(props) {
               alt="Avatar"
               src={params.value}
             />
-          </>
+          </a>
+        ) : (
+          <Avatar
+            style={{
+              width: '250px',
+            }}
+            variant="square"
+            alt="Avatar"
+            src={''}
+          />
         );
       },
     },
@@ -112,7 +150,7 @@ export function HistoryFloorsRoomHost(props) {
                 //   params.row._id
                 //   }`,
                 // );
-                history.push(`/room-detail/${params.row._id}`);
+                history.push(`/room-detail/${params.row._id}`)
               }}
             >
               Chi tiết phòng
