@@ -35,7 +35,7 @@ export function HistoryFloorsRoomHost(props) {
   }, []);
 
   const columns = [
-    { field: 'stt', headerName: 'STT', headerAlign: 'center', width: 150 },
+    { field: 'stt', headerName: 'STT', headerAlign: 'center', width: 120, align: 'center' },
     {
       field: 'roomName',
       headerName: 'Tên Phòng',
@@ -44,45 +44,22 @@ export function HistoryFloorsRoomHost(props) {
       headerClassName: 'header-bold',
     },
     {
-      field: 'image1',
-      headerName: 'Ảnh Phòng 1',
+      field: 'key',
+      headerName: 'Mã phòng',
       headerAlign: 'center',
-      width: 250,
+      width: 150,
+      align: 'center',
       headerClassName: 'header-bold',
-      renderCell: (params) => {
-        return params.value ? (
-          <a href={params.value} target="_blank" rel="noopener noreferrer">
-            <Avatar
-              style={{
-                width: '250px',
-              }}
-              variant="square"
-              alt="Avatar"
-              src={params.value}
-            />
-          </a>
-        ) : (
-          <Avatar
-            style={{
-              width: '250px',
-            }}
-            variant="square"
-            alt="Avatar"
-            src={''}
-          />
-        );
-      },
     },
     // {
-    //   field: 'image2',
-    //   headerName: 'Ảnh Phòng 2',
+    //   field: 'image1',
+    //   headerName: 'Ảnh Phòng 1',
     //   headerAlign: 'center',
     //   width: 250,
     //   headerClassName: 'header-bold',
-    //   renderCell: params => {
-    //     // eslint-disable-next-line no-unused-expressions
-    //     return (
-    //       <>
+    //   renderCell: (params) => {
+    //     return params.value ? (
+    //       <a href={params.value} target="_blank" rel="noopener noreferrer">
     //         <Avatar
     //           style={{
     //             width: '250px',
@@ -91,46 +68,56 @@ export function HistoryFloorsRoomHost(props) {
     //           alt="Avatar"
     //           src={params.value}
     //         />
-    //       </>
+    //       </a>
+    //     ) : (
+    //       <Avatar
+    //         style={{
+    //           width: '250px',
+    //         }}
+    //         variant="square"
+    //         alt="Avatar"
+    //         src={''}
+    //       />
     //     );
     //   },
     // },
-    {
-      field: 'image2',
-      headerName: 'Ảnh Phòng 2',
-      headerAlign: 'center',
-      width: 250,
-      headerClassName: 'header-bold',
-      renderCell: (params) => {
-        return params.value ? (
-          <a href={params.value} target="_blank" rel="noopener noreferrer">
-            <Avatar
-              style={{
-                width: '250px',
-              }}
-              variant="square"
-              alt="Avatar"
-              src={params.value}
-            />
-          </a>
-        ) : (
-          <Avatar
-            style={{
-              width: '250px',
-            }}
-            variant="square"
-            alt="Avatar"
-            src={''}
-          />
-        );
-      },
-    },
+    // {
+    //   field: 'image2',
+    //   headerName: 'Ảnh Phòng 2',
+    //   headerAlign: 'center',
+    //   width: 250,
+    //   headerClassName: 'header-bold',
+    //   renderCell: (params) => {
+    //     return params.value ? (
+    //       <a href={params.value} target="_blank" rel="noopener noreferrer">
+    //         <Avatar
+    //           style={{
+    //             width: '250px',
+    //           }}
+    //           variant="square"
+    //           alt="Avatar"
+    //           src={params.value}
+    //         />
+    //       </a>
+    //     ) : (
+    //       <Avatar
+    //         style={{
+    //           width: '250px',
+    //         }}
+    //         variant="square"
+    //         alt="Avatar"
+    //         src={''}
+    //       />
+    //     );
+    //   },
+    // },
     {
       field: 'status',
       headerName: 'Trạng Thái',
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
+      align: 'center'
     },
     {
       field: 'action',

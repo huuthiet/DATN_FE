@@ -1,10 +1,12 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
-import { GET_MOTEL, POST_FLOOR } from './constants';
+import { GET_MOTEL, GET_MOTEL_INFOR, POST_FLOOR } from './constants';
 import { urlLink } from '../../helper/route';
 import {
   getMotelSuccess,
   getMotelFail,
+  getMotelInforSuccess,
+  getMotelInforFail,
   postFloorSuccess,
   postFloorFail,
   getMotel,
@@ -31,6 +33,26 @@ export function* apiGetMotel(payload) {
   }
 }
 
+export function* apiGetMotelInfor(payload) {
+  const { id } = payload;
+  // const requestUrl = urlLink.api.serverUrl + urlLink.api.motelDetail + id;
+  const requestUrl = urlLink.api.serverUrl + urlLink.api.motelDetailV2 + id;
+  yield put(loadRepos());
+  try {
+    const response = yield axios.get(requestUrl);
+    if (response && response.data && response.data.data) {
+      yield put(getMotelInforSuccess(response.data.data));
+
+    } else {
+      yield put(getMotelInforFail('error'));
+    }
+  } catch (error) {
+    yield put(getMotelInforFail(error.response.data));
+  } finally {
+    yield put(reposLoaded());
+  }
+}
+
 export function* apiPostFloor(payload) {
   const { id, formData } = payload;
   const requestUrl = urlLink.api.serverUrl + urlLink.api.createFloor;
@@ -48,5 +70,6 @@ export function* apiPostFloor(payload) {
 
 export default function* motelSaga() {
   yield takeLatest(GET_MOTEL, apiGetMotel);
+  yield takeLatest(GET_MOTEL_INFOR, apiGetMotelInfor);
   yield takeLatest(POST_FLOOR, apiPostFloor);
 }

@@ -48,10 +48,10 @@ import Button from '@material-ui/core/Button';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import { urlLink } from '../../helper/route';
-import reducer from '../Motel/reducer';
-import saga from '../Motel/saga';
-import makeSelectMotel from '../Motel/selectors';
-import { getMotel } from '../Motel/actions';
+import reducer from './reducer';
+import saga from './saga';
+import makeSelectMotelListRoom from './selectors';
+import { getMotelInfor } from './actions';
 import './style.scss';
 import ModalComponent from './modal';
 import { toast } from 'react-toastify';
@@ -86,8 +86,8 @@ const ManagerEnergyRoomsHost = props => {
   const { id, name } = useParams();
   const history = useHistory();
 
-  useInjectReducer({ key: 'motel', reducer });
-  useInjectSaga({ key: 'motel', saga });
+  useInjectReducer({ key: 'motelListRoom', reducer });
+  useInjectSaga({ key: 'motelListRoom', saga });
 
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
@@ -201,16 +201,17 @@ const ManagerEnergyRoomsHost = props => {
   }
 
   useEffect(() => {
-    props.getMotel(id);
+    props.getMotelInfor(id);
     setStartDate(getFirstDayOfCurrentMonth());
     setEndDate(getCurrentDate());
   }, []);
 
-  const { motel = {} } = props.motel;
+  const { listFloor = [] } = props.motelListRoom;
+  console.log({listFloor})
 
-  const { floors = [] } = motel;
-  console.log('floors', floors);
-  console.log('motel', motel);
+  // const { floors = [] } = motel;
+  // console.log('floors', floors);
+  // console.log('motel', motel);
 
   const cardStyle = {
 
@@ -330,10 +331,9 @@ const ManagerEnergyRoomsHost = props => {
       </Button>
       {currentUser.role.length === 2 && currentUser.role.includes('host') ? (
         <Grid lg={12} container spacing={2}>
-          {floors.map((floor, floorIndex) =>
+          {listFloor.length > 0 && listFloor.map((floor, floorIndex) =>
             floor.rooms.map((room, roomIndex) => (
               <Grid Grid key={`room-${roomIndex}`} item lg={3} md={4} sm={6} xs={12}>
-
                 <ModalComponent
                   modal={modal}
                   toggle={cancelToggle}
@@ -390,7 +390,7 @@ const ManagerEnergyRoomsHost = props => {
                       style={{ display: 'flex', justifyContent: 'flex-end' }}
                     >
                       <Tooltip title="Xem lịch sử số điện" placement='top' arrow>
-                        <Link to={`/energy-billing-manage/${motel._id}/rooms/${room._id}`}>
+                        <Link to={`/energy-billing-manage/${id}/rooms/${room._id}`}>
                           <StyleMoreButton>
                             <MoreHoriz />
                           </StyleMoreButton>
@@ -449,18 +449,18 @@ const ManagerEnergyRoomsHost = props => {
 
 ManagerEnergyRoomsHost.propTypes = {
   dispatch: PropTypes.func,
-  getMotel: PropTypes.func,
+  getMotelInfor: PropTypes.func,
   changeStoreData: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  motel: makeSelectMotel(),
+  motelListRoom: makeSelectMotelListRoom(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    getMotel: id => {
-      dispatch(getMotel(id));
+    getMotelInfor: id => {
+      dispatch(getMotelInfor(id));
     },
   };
 }

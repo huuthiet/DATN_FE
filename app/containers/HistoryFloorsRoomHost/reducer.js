@@ -32,8 +32,10 @@ const historyFloorsRoomHostReducer = (state = initialState, action) =>
         // eslint-disable-next-line no-case-declarations
         const listRoom = [];
         // eslint-disable-next-line no-case-declarations
-        const data = action.response.floors;
-        const motelRoomId = action.response._id;
+        // const data = action.response.floors;
+        const data = action.response;
+        console.log({data});
+        // const motelRoomId = action.response._id;
         // eslint-disable-next-line no-case-declarations
         let i = 1;
         // eslint-disable-next-line no-plusplus
@@ -44,21 +46,22 @@ const historyFloorsRoomHostReducer = (state = initialState, action) =>
             const elementR = element[indexR];
             // eslint-disable-next-line no-plusplus
 
-            elementR.motelRoomId = motelRoomId;
+            // elementR.motelRoomId = motelRoomId;
             elementR.stt = i++;
-            elementR.roomName = elementR.key;
+            elementR.roomName = elementR.name;
+            elementR.key = elementR.key;
             elementR.action = actionStatusRoom(elementR.status);
             elementR.status = typeStatusRoom(elementR.status);
 
-            if (elementR.images.length > 1) {
-              // eslint-disable-next-line prefer-destructuring
-              elementR.image1 = elementR.images[0];
-              // eslint-disable-next-line prefer-destructuring
-              elementR.image2 = elementR.images[1];
-            } else {
-              // eslint-disable-next-line prefer-destructuring
-              elementR.image1 = elementR.images[0];
-            }
+            // if (elementR.images.length > 1) {
+            //   // eslint-disable-next-line prefer-destructuring
+            //   elementR.image1 = elementR.images[0];
+            //   // eslint-disable-next-line prefer-destructuring
+            //   elementR.image2 = elementR.images[1];
+            // } else {
+            //   // eslint-disable-next-line prefer-destructuring
+            //   elementR.image1 = elementR.images[0];
+            // }
 
             listRoom.push(elementR);
           }

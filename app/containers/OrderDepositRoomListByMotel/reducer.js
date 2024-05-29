@@ -32,9 +32,11 @@ const historyFloorsRoomHostReducer = (state = initialState, action) =>
         // eslint-disable-next-line no-case-declarations
         const listRoom = [];
         // eslint-disable-next-line no-case-declarations
-        const data = action.response.floors;
-        const motelRoomId = action.response._id;
-        const motelRoomName = action.response.name;
+        // const data = action.response.floors;
+        const data = action.response;
+        console.log({data})
+        // const motelRoomId = action.response._id;
+        // const motelRoomName = action.response.name;
         // eslint-disable-next-line no-case-declarations
         let i = 1;
         // eslint-disable-next-line no-plusplus
@@ -45,8 +47,8 @@ const historyFloorsRoomHostReducer = (state = initialState, action) =>
             const elementR = element[indexR];
             // eslint-disable-next-line no-plusplus
 
-            elementR.motelRoomId = motelRoomId;
-            elementR.motelRoomName = motelRoomName;
+            // elementR.motelRoomId = motelRoomId;
+            // elementR.motelRoomName = motelRoomName;
             elementR.stt = i++;
             elementR.roomName = elementR.key;
             elementR.action = actionStatusRoom(elementR.status);
