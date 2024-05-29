@@ -17,6 +17,8 @@ import makeSelectManagerBuildingHost from './selectors';
 import './style.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
+// http://localhost:3006/manage-monthly-order
+// http://localhost:3006/manage-deposit
 export function ManagerEnergyHostAdmin(props) {
   const columns = [
     {
@@ -30,7 +32,7 @@ export function ManagerEnergyHostAdmin(props) {
       field: 'name',
       headerName: 'Họ và tên',
       headerAlign: 'center',
-      width: 320,
+      width: 250,
       headerClassName: 'header-bold',
     },
     {
@@ -65,7 +67,7 @@ export function ManagerEnergyHostAdmin(props) {
       field: 'numberBuilding',
       headerName: 'Số tòa',
       headerAlign: 'center',
-      width: 200,
+      width: 120,
       headerClassName: 'header-bold',
       align: 'center',
     },
