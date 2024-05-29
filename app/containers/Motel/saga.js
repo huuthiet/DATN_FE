@@ -13,8 +13,8 @@ import { loadRepos, reposLoaded } from '../App/actions';
 
 export function* apiGetMotel(payload) {
   const { id } = payload;
-  // const requestUrl = urlLink.api.serverUrl + urlLink.api.motelDetail + id;
-  const requestUrl = urlLink.api.serverUrl + urlLink.api.motelDetailV2 + id;
+  const requestUrl = urlLink.api.serverUrl + urlLink.api.motelDetail + id;
+  // const requestUrl = urlLink.api.serverUrl + urlLink.api.motelDetailV2 + id;
   yield put(loadRepos());
   try {
     const response = yield axios.get(requestUrl);

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import { Avatar } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -46,7 +47,77 @@ export function ManagerEnergyBuildingsAdmin(props) {
   const columns = [
     { field: 'index', headerName: 'STT', headerAlign: 'center', width: 150, headerClassName: 'header-bold', align: 'center' },
     { field: 'name', headerName: 'Tên tòa nhà', width: 250, headerAlign: 'center', headerClassName: 'header-bold' },
+    {
+      field: 'file',
+      headerName: 'Ảnh Phòng 1',
+      headerAlign: 'center',
+      width: 250,
+      headerClassName: 'header-bold',
+      renderCell: (params) => {
+        console.log({params})
+        return params.value ? (
+          <a href={params.value} target="_blank" rel="noopener noreferrer">
+            <Avatar
+              style={{
+                width: '250px',
+              }}
+              variant="square"
+              alt="Avatar"
+              src={params.value}
+            />
+          </a>
+        ) : (
+          <Avatar
+            style={{
+              width: '250px',
+            }}
+            variant="square"
+            alt="Avatar"
+            src={''}
+          />
+        );
+      },
+    },
     { field: 'address', headerName: 'Địa chỉ', width: 700, headerAlign: 'center', headerClassName: 'header-bold' },
+    {
+      field: 'totalRoom',
+      headerName: 'Số phòng',
+      headerAlign: 'center',
+      width: 150,
+      headerClassName: 'header-bold',
+      align: 'center',
+    },
+    {
+      field: 'rentedRoom',
+      headerName: 'Đã thuê',
+      headerAlign: 'center',
+      width: 150,
+      headerClassName: 'header-bold',
+      align: 'center',
+    },
+    {
+      field: 'depositedRoom',
+      headerName: 'Đã cọc',
+      headerAlign: 'center',
+      width: 150,
+      headerClassName: 'header-bold',
+      align: 'center',
+    },
+    // {
+    //   field: 'images',
+    //   headerName: 'Hình ảnh',
+    //   headerAlign: 'center',
+    //   width: 150,
+    //   headerClassName: 'header-bold',
+    //   align: 'center',
+    //   renderCell: (params) => (
+    //     params.row.file ? (
+    //       <a href={params.row.file} target="_blank" rel="noopener noreferrer">
+    //         LINK
+    //       </a>
+    //     ) : null
+    //   ),
+    // },
     {
       field: 'listRoom',
       headerAlign: 'center',
@@ -77,11 +148,16 @@ export function ManagerEnergyBuildingsAdmin(props) {
         address: motel.address.address,
         _id: motel._id,
         key: motel._id,
+        file: motel.file,
+        totalRoom: motel.totalRoom,
+        depositedRoom: motel.depositedRoom,
+        availableRoom: motel.availableRoom,
+        rentedRoom: motel.rentedRoom,
       }));
     }
   // }
 
-  console.log({rows});
+  console.log({motelList});
 
   // for (const motelName in revenue) {
   //   console.log('motelName', motelName);
@@ -102,7 +178,9 @@ export function ManagerEnergyBuildingsAdmin(props) {
   //   console.log('rows', rows);
   // }
   const handleButtonClick = useCallback((row) => {
-    history.push(`/hostMotelRoom/${row._id}`);
+    // history.push(`/hostMotelRoom/${row._id}`);
+    // history.push(`/room-detail/${row._id}`);
+    history.push(`/historyRoomHost/room/${row._id}`);
   })
 
   const handleOpenModal = useCallback((id, motelname) => {
@@ -185,7 +263,7 @@ export function ManagerEnergyBuildingsAdmin(props) {
   return (
     <div id='motelList' className="user-profile-wrapper container">
       <Helmet>
-        <title>Profile</title>
+        <title>Manage Motels</title>
         <meta name="description" content="Description of Profile" />
       </Helmet>
       <div className="title-abc">

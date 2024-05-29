@@ -31,6 +31,8 @@ export function HistoryRoomHost(props) {
     props.getGetMotelRoom();
   }, []);
 
+  console.log({MotelRoom});
+
   const columns = [
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 150 },
     {
@@ -46,44 +48,57 @@ export function HistoryRoomHost(props) {
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
-      renderCell: params => {
-        // eslint-disable-next-line no-unused-expressions
-        return (
-          <>
+      renderCell: (params) => {
+        return (params.row.images.length > 0) ? (
+          <a href={params.row.images} target="_blank" rel="noopener noreferrer">
             <Avatar
-              style={{
-                width: '250px',
-              }}
+              style={{ width: '250px' }}
               variant="square"
               alt="Avatar"
-              src={params.value}
+              src={params.row.images}
             />
-          </>
-        );
+          </a>
+        ) : null;
       },
     },
-
     {
       field: 'address',
       headerName: 'Địa chỉ',
       headerAlign: 'center',
-      width: 550,
+      width: 600,
       headerClassName: 'header-bold',
     },
     {
-      field: 'phone',
-      headerName: 'Số điện thoại',
+      field: 'totalRoom',
+      headerName: 'Tổng phòng',
       headerAlign: 'center',
-      width: 250,
+      width: 170,
       headerClassName: 'header-bold',
+      align: 'center',
     },
-
+    {
+      field: 'depositedRoom',
+      headerName: 'Đã cọc',
+      headerAlign: 'center',
+      width: 150,
+      headerClassName: 'header-bold',
+      align: 'center',
+    },
+    {
+      field: 'rentedRoom',
+      headerName: 'Đã thuê',
+      headerAlign: 'center',
+      width: 150,
+      headerClassName: 'header-bold',
+      align: 'center',
+    },
     {
       field: 'action',
       headerName: 'Quản lý phòng',
       headerAlign: 'center',
       width: 400,
       headerClassName: 'header-bold',
+      align: 'center',
       renderCell: params => {
         // eslint-disable-next-line no-unused-expressions
         return (

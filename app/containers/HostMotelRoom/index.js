@@ -27,7 +27,7 @@ export function ManagerEnergyHostAdmin(props) {
       width: 150,
     },
     {
-      field: 'firstName',
+      field: 'name',
       headerName: 'Họ và tên',
       headerAlign: 'center',
       width: 320,
@@ -40,6 +40,34 @@ export function ManagerEnergyHostAdmin(props) {
       align: 'center',
       width: 300,
       headerClassName: 'header-bold',
+    },
+    {
+      field: 'profile',
+      headerName: 'Thông tin cá nhân',
+      headerAlign: 'center',
+      align: 'center',
+
+      width: 300,
+      headerClassName: 'header-bold',
+      align: 'center',
+      renderCell: params => (
+        <a
+          className="btn-detail"
+          onClick={() => {
+            handleButtonClickProfile(params.row);
+          }}
+        >
+          Xem chi tiết
+        </a>
+      ),
+    },
+    {
+      field: 'numberBuilding',
+      headerName: 'Số tòa',
+      headerAlign: 'center',
+      width: 200,
+      headerClassName: 'header-bold',
+      align: 'center',
     },
     {
       field: 'Danh sách các tòa',
@@ -62,22 +90,6 @@ export function ManagerEnergyHostAdmin(props) {
         </a>
       ),
     },
-    {
-      field: 'hostBuildingRevenue',
-      headerName: 'Doanh thu (VND)',
-      headerAlign: 'center',
-      width: 300,
-      headerClassName: 'header-bold',
-      renderCell: params => (
-        <span>
-          {params.row.hostBuildingRevenue &&
-            params.row.hostBuildingRevenue.toLocaleString('vi-VN', {
-              style: 'currency',
-              currency: 'VND',
-            })}
-        </span>
-      ),
-    },
   ];
 
   useInjectReducer({ key: 'motelprofileList', reducer });
@@ -94,23 +106,29 @@ export function ManagerEnergyHostAdmin(props) {
   const { hosts = [] } = props.buildingHost;
   console.log('hosts', hosts);
 
+  let hostData = [];
+  if(hosts){
+    if(hosts.length > 0) {
+      hostData = hosts.map((host, index) => ({
+        index: index + 1,
+        name: host.lastName + host.firstName,
+        ...host,
+      }))
+    }
+  }
+
+  console.log({hostData});
+
   const handleButtonClick = row => {
     history.push(
       `/admin/manage-motel-list/${row._id}/${row.firstName} ${row.lastName}`,
     );
   };
-
-  // Tạo mảng arrData với STT là số đếm thứ tự
-  let arrData = [];
-  if(hosts) {
-    if (hosts.length > 0) {
-      arrData = hosts ? hosts.map((host, index) => ({
-            ...host,
-          index: index + 1,
-          }))
-        : [];
-    }
-  }
+  const handleButtonClickProfile = row => {
+    history.push(
+      `/admin/users/${row._id}`,
+    );
+  };
 
   return (
     <div className="user-profile-wrapper container">
@@ -124,7 +142,7 @@ export function ManagerEnergyHostAdmin(props) {
         {hosts && role.length === 2 && role.includes('master') && (
           <DataGrid
             getRowId={row => row._id}
-            rows={arrData}
+            rows={hostData}
             columns={columns}
             pageSize={5}
             disableSelectionOnClick
