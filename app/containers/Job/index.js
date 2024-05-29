@@ -38,6 +38,7 @@ import makeSelectBankInfo from './selectors';
 import './style.scss';
 import ModalComponent from './modal';
 import { object } from 'prop-types';
+import { toast } from 'react-toastify';
 
 const validateForm = Yup.object().shape({
   checkInTime: Yup.string().required(
@@ -384,11 +385,12 @@ export function Job(props) {
 
     console.log({ requestData });
 
-    if (requestData.rentalPeriod >= minimumMonths) {
+    if (requestData.rentalPeriod >= minimumMonths && banking) {
       setCheckMonth(false);
       props.postJob(requestData);
     } else {
       setCheckMonth(true);
+      toast.error("Vui lòng chọn ngân hàng");
     }
   }
 
@@ -655,7 +657,8 @@ export function Job(props) {
                           </div>
 
                           <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
-                            <span style={{ color: 'brown', fontSize: '14px', margin: '0px 0 6px 3px' }}>Sau khi bấm "Chấp nhận", bạn sẽ được chuyển đến trang giao dịch. Vui lòng tải ảnh hóa đơn để xác nhận thanh toán và chờ chủ trọ phê duyệt!</span>
+                            <span style={{ color: 'brown', fontSize: '14px', margin: '0px 0 6px 3px' }}>Sau khi bấm "Chấp nhận", bạn sẽ được chuyển đến trang giao dịch. Vui lòng tải ảnh hóa đơn để xác nhận thanh toán và chờ chủ trọ phê duyệt.</span>
+                            <span style={{ color: 'brown', fontSize: '14px', margin: '0px 0 6px 3px' }}>Sau 24h, nếu giao dịch không được chấp nhận, vui lòng liên hệ admin để xử lý!</span>
 
                             {/* <input
                               type="file"

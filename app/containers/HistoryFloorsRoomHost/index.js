@@ -107,13 +107,12 @@ export function HistoryFloorsRoomHost(props) {
             <a className="btn-detail"
               color="primary"
               onClick={() => {
-                history.push(
-                  // eslint-disable-next-line no-underscore-dangle
-                  `/historyRoomHost/room/${params.row.motelRoomId}/roomdetail/${
-                  // eslint-disable-next-line no-underscore-dangle
-                  params.row._id
-                  }`,
-                );
+                // history.push(
+                //   `/historyRoomHost/room/${params.row.motelRoomId}/roomdetail/${
+                //   params.row._id
+                //   }`,
+                // );
+                history.push(`/room-detail/${params.row._id}`);
               }}
             >
               Chi tiết phòng
@@ -133,7 +132,7 @@ export function HistoryFloorsRoomHost(props) {
           content="Description of ManageRoom"
         />
       </Helmet>
-      <div className="title">Lịch sử đặt cọc</div>
+      <div className="title">Quản lý phòng</div>
       <div className="job-list-wrapper container-fluid">
         <div style={{ width: '100%' }}>
           <DataGrid

@@ -145,11 +145,12 @@ export function OrdersPendingPayUser(props) {
       time_expire: moment(new Date(item.expireTime)).format('DD-MM-YYYY'),
       amount_tranform: `${Money(parseInt(item.amount.toFixed(0)))} VNĐ`,
       type_trasaction:
-        item.type === 'deposit'(item.type === 'monthly')
+        (item.type === 'monthly')
           ? 'Thanh toán hàng tháng'
           : item.type === 'afterCheckInCost'
             ? 'Thanh toán khi nhận phòng'
-            : 'N/A',
+            : item.type === 'deposit' ? "Thanh toán cọc"
+              : 'N/A',
       ...item,
     }));
   }

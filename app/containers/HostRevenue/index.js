@@ -26,8 +26,8 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-// import * as XLSX from 'xlsx-color';
-import XLSX from 'xlsx-style';
+import * as XLSX from 'xlsx-color';
+// import XLSX from 'xlsx-style';
 import InputForm from '../../components/InputForm';
 import { getListRoom, getHostRevenue } from './actions';
 import reducer from './reducer';
@@ -38,6 +38,7 @@ import { urlLink } from '../../helper/route';
 import './style.scss';
 import { toast } from 'react-toastify';
 import LineChart from '../../components/LineChartRevenue';
+import LineChartElectric from '../../components/LineChartElectric';
 
 
 
@@ -359,10 +360,17 @@ export function HostMotelRoomDetailUser(props) {
           </Col>
         </Row>
         <Row className="dashboard-container">
-          <Col xs={12} className="compare-container">
+          <Col xs={7} className="compare-container">
             <LineChart
               textY="Doanh thu"
               nameChart="Doanh thu"
+              hostRevenue={hostRevenue}
+            />
+          </Col>
+          <Col xs={4} className="compare-container">
+            <LineChartElectric
+              textY="Lượng điện tiêu thụ"
+              nameChart="Lượng điện tiêu thụ"
               hostRevenue={hostRevenue}
             />
           </Col>

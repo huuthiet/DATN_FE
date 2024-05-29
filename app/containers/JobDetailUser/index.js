@@ -16,7 +16,7 @@ import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import PersonIcon from '@material-ui/icons/Person';
 import PhoneIcon from '@material-ui/icons/Phone';
 import TodayIcon from '@material-ui/icons/Today';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import React, { memo, useEffect, useState } from 'react';
 import { CheckCircleOutline } from '@material-ui/icons';
@@ -506,9 +506,13 @@ export function JobDetailUser(props) {
         paymentMethod: 'cash',
       };
 
-      console.log({ formData });
-
-      props.postTransaction(formData);
+      // console.log("banhhhhh", banking);
+      // console.log({ formData });
+      if(banking) {
+        props.postTransaction(formData);
+      } else {
+        toast.error("Vui lòng chọn ngân hàng trước khi Xác nhận");
+      }
     }
   };
 
@@ -519,7 +523,7 @@ export function JobDetailUser(props) {
   const minDate = new Date(checkInTime).setMonth(
     new Date(checkInTime).getMonth() + 1,
   );
-  const dateStay = Math.ceil(Math.abs(lastDay - today) / (24 * 3600 * 1000));
+  const dateStay = Math.ceil(Math.abs(lastDay - today) / (24 * 3600 * 1000)) + 1;
 
   const handleCheckOut = date => {
     if (moment(date).isBefore(moment(checkOutDate))) {
@@ -596,7 +600,14 @@ export function JobDetailUser(props) {
         paymentMethod: 'cash',
       };
       console.log({ formData });
-      props.postTransaction(formData);
+      
+      console.log("banhhhhh", banking);
+      console.log({ formData });
+      if(banking) {
+        props.postTransaction(formData);
+      } else {
+        toast.error("Vui lòng chọn ngân hàng trước khi Xác nhận");
+      }
     }
   }
   // function SubmitModal() {
@@ -1016,6 +1027,7 @@ export function JobDetailUser(props) {
           </ListItem> */}
         </List>
       </div>
+
       {/* MODAL THANH TOÁN "THANH TOÁN KHI NHẬN PHÒNG" */}
       {/* <ModalComponent
         modal={isOpenCheckIn}

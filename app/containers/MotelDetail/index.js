@@ -13,17 +13,20 @@ import { compose } from 'redux';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useParams } from 'react-router';
+import ClassNames from 'classnames';
+
+import { FormattedMessage } from 'react-intl';
+import { Button } from 'reactstrap';
+
+// import { getMotel } from '../Motel/actions';
+import { getMotelDetail } from './actions';
+import FloorDetail from '../../components/FloorDetail';
+import messages from './messages';
+import ModalComponent from './modal';
 import makeSelectMotelDetail from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import './style.scss';
-import ClassNames from 'classnames';
-import { getMotel } from '../Motel/actions';
-import FloorDetail from '../../components/FloorDetail';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
-import ModalComponent from './modal';
-import { Button } from 'reactstrap';
 
 export function MotelDetail(props) {
   const { id } = useParams();
@@ -32,7 +35,7 @@ export function MotelDetail(props) {
   useInjectReducer({ key: 'motelDetail', reducer });
   useInjectSaga({ key: 'motelDetail', saga });
   useEffect(() => {
-    props.getMotel(id);
+    props.getMotelDetail(id);
   }, []);
   const { motel = {} } = props.motelDetail;
 
@@ -153,7 +156,7 @@ export function MotelDetail(props) {
 
 MotelDetail.propTypes = {
   dispatch: PropTypes.func,
-  getMotel: PropTypes.func,
+  getMotelDetail: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -162,8 +165,8 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    getMotel: id => {
-      dispatch(getMotel(id));
+    getMotelDetail: id => {
+      dispatch(getMotelDetail(id));
     },
   };
 }

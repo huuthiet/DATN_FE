@@ -102,13 +102,14 @@ export function ManagerEnergyHostAdmin(props) {
 
   // Tạo mảng arrData với STT là số đếm thứ tự
   let arrData = [];
-  if (hosts.length !== 0) {
-    arrData = hosts
-      ? hosts.map((host, index) => ({
-          ...host,
-        index: index + 1,
-        }))
-      : [];
+  if(hosts) {
+    if (hosts.length > 0) {
+      arrData = hosts ? hosts.map((host, index) => ({
+            ...host,
+          index: index + 1,
+          }))
+        : [];
+    }
   }
 
   return (

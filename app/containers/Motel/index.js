@@ -61,6 +61,8 @@ export function Motel(props) {
     price = '',
     description = '',
     address = {},
+    minPrice = '',
+    maxPrice = '',
   } = motel;
 
   const homelandFloor = {
@@ -86,7 +88,7 @@ export function Motel(props) {
                 <div className="image-container">
                   <img
                     className="image"
-                    src={images[0]}
+                    src={images}
                     alt="motel"
                   />
                 </div>
@@ -119,7 +121,7 @@ export function Motel(props) {
             </div>
             <div className="price detail">
               <FormattedMessage {...messages.PriceFluctuates} />{' '}
-              <span className="red-price">{Money(price)}</span>
+              <span className="red-price">{Money(minPrice)} - {Money(maxPrice)}</span>
             </div>
             <div className="detail description">
               <FormattedMessage {...messages.description} /> {description}
