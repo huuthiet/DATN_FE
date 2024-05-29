@@ -20,7 +20,8 @@ import { useInjectSaga } from 'utils/injectSaga';
 import * as Yup from 'yup';
 import InputForm from '../../components/InputForm';
 import InputLocation from '../../components/InputLocation';
-import { getMotel } from '../Motel/actions';
+// import { getMotel } from '../Motel/actions';
+import { getMotelInfor } from '../Motel/actions';
 import { changeStoreData, postImg, putMotel } from './actions';
 import messages from './messages';
 import reducer from './reducer';
@@ -66,7 +67,8 @@ export function UpdateMotel(props) {
   useInjectReducer({ key: 'editMotel', reducer });
   useInjectSaga({ key: 'editMotel', saga });
   useEffect(() => {
-    props.getMotel(id);
+    // props.getMotel(id);
+    props.getMotelInfor(id);
   }, []);
 
   const TenMegaBytes = 10 * 1024 * 1024;
@@ -94,6 +96,8 @@ export function UpdateMotel(props) {
 
   const { motel = {} } = props.updateMotel;
 
+  console.log("motellllllll", motel);
+
   const {
     name = '',
     contactPhone = '',
@@ -107,6 +111,7 @@ export function UpdateMotel(props) {
     wifiPrice = 0,
     images = [],
   } = motel;
+  console.log("ảnhhhh", images);
 
   return (
     <div className="update-motel-wrapper">
@@ -348,7 +353,6 @@ export function UpdateMotel(props) {
                   values.imagesView.map((value, index) => (
                     <Col xs={6} md={3} className="text-center">
                       <Avatar
-                        // eslint-disable-next-line react/no-array-index-key
                         key={index}
                         style={{
                           width: '100%',
@@ -432,8 +436,8 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    getMotel: id => {
-      dispatch(getMotel(id));
+    getMotelInfor: id => {
+      dispatch(getMotelInfor(id));
     },
     putMotel: (id, data) => {
       dispatch(putMotel(id, data));

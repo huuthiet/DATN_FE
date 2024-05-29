@@ -28,6 +28,8 @@ export function* apiPutMotel(payload) {
   const data = { id, formData };
   const { imageAction } = formData;
 
+  console.log({imageAction});
+
   if (!isEmpty(imageAction)) {
     apiPostImgAction(imageAction);
   }

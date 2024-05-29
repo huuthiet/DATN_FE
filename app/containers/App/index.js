@@ -25,6 +25,7 @@ import Job from 'containers/Job/Loadable';
 import MapsPage from 'containers/MapsPage/Loadable';
 import Motel from 'containers/Motel/Loadable';
 import MotelDetail from 'containers/MotelDetail/Loadable';
+import MotelDetailV2 from 'containers/MotelDetailV2/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import OrderDetail from 'containers/OrderDetail/Loadable';
 import OrderList from 'containers/OrderList/Loadable';
@@ -184,6 +185,7 @@ export function App(props) {
         <Route path="/report-problem-list" component={ReportProblemList} />
         <Route path="/motel/:id" component={Motel} />
         <Route path="/motel-detail/:id" component={MotelDetail} />
+        <Route path="/motel-detail-v2/:id" component={MotelDetailV2} />
         <Route path="/room-detail/:id" component={RoomDetail} />
         <Route
           path="/room-detail-update-admin/:id"

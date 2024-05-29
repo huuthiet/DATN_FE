@@ -88,7 +88,7 @@ export function Motel(props) {
                 <div className="image-container">
                   <img
                     className="image"
-                    src={images}
+                    src={images[0]}
                     alt="motel"
                   />
                 </div>
@@ -161,7 +161,7 @@ export function Motel(props) {
               <button
                 className="btn-detail"
                 onClick={() => {
-                  history.push(`/motel-detail/${_id}`);
+                  history.push(`/motel-detail-v2/${_id}`);
                 }}
               >
                 <FormattedMessage {...messages.Detail} />
