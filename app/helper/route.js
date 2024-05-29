@@ -1,7 +1,8 @@
 export const urlLink = {
   // AUTHENTICATE
   api: {
-    serverUrl: 'http://206.189.92.77:8080/api',
+    // serverUrl: 'http://206.189.92.77:8080/api',
+    serverUrl: 'http://localhost:5502/api',
     // serverUrl: 'https://homeland-api.projectenergy.cloud/api',
     // usse dotenv for serverUrl
     // serverUrl: process.env.REACT_APP_BASE_API_URL,
@@ -121,7 +122,8 @@ export const urlLink = {
     exportAllBill: '/v1/homeKey/energy/device/exportBillAllRoom/',
     // /v1/homeKey/energy/device/exportBillAllRoom/:idMotel/2024-03-01/2024-03-15
     exportBillBuilding: '/v1/homeKey/energy/device/exportBillBuilding/', // + /:idMotel/:startTime/:endTime
-    buildingRevenue: '/v1/homeKey/energy/device/buildingRevenue/', // +/:idMotel/:startTime/:endTime
+    buildingRevenue: '/v1/homeKey/energy/device/buildingRevenue/', // +/:idMotel/:Month/:Year
+    hostBuildingListForRenenue: '/v1/homeKey/energy/device/hostBuildingList/', // +/:idOwner
     getPayDepositList: '/v1/homeKey/order/getPayDepositList/',
     postExportBillRoomPendingPayByOrder: '/v1/homeKey/order/exportBillRoomPendingPayByOrder/',
     postExportBillPaidByTransaction: '/v1/homeKey/order/exportBillPaidByTransaction/',

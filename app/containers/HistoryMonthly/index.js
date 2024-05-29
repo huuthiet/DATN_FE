@@ -20,7 +20,6 @@ import { useHistory, useParams } from 'react-router-dom';
 import moment from 'moment';
 import axios from 'axios';
 import localStoreService from 'local-storage';
-import { useParams } from 'react-router-dom';
 import * as fileDownload from 'js-file-download';
 
 import { useInjectReducer } from 'utils/injectReducer';

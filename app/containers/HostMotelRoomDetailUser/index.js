@@ -129,8 +129,7 @@ export function HostMotelRoomDetailUser(props) {
             onClick={() => {
               // eslint-disable-next-line no-underscore-dangle
               history.push(
-                `/bill/motel/${params.row.motelRoom._id}/room/${
-                  params.row.room._id
+                `/bill/motel/${params.row.motelRoom._id}/room/${params.row.room._id
                 }/user/${params.row.user._id}`,
               );
             }}
@@ -235,7 +234,7 @@ export function HostMotelRoomDetailUser(props) {
           content="Description of HostMotelRoomDetailUser"
         />
       </Helmet>
-      <div className="title">Danh sách chi tiết phòng cho thuê</div>
+      <div className="title"></div>
       <div className="job-list-wrapper container-fluid">
         <Row>
           <Col md={4}>

@@ -234,10 +234,10 @@ export function HostMotelRoomDetail(props) {
   return (
     <div className="login-page-wrapper">
       <Helmet>
-        <title>Danh sách chi tiết phòng cho thuê</title>
+        <title></title>
         <meta name="description" content="Description of HostMotelRoomDetail" />
       </Helmet>
-      <div className="title">Danh sách chi tiết phòng cho thuê</div>
+      <div className="title">Danh sách</div>
       <div className="job-list-wrapper container-fluid">
         <Row>
           <Col md={4}>

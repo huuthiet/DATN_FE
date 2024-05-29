@@ -12,6 +12,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import _ from 'lodash';
 
 import { Line, Doughnut } from 'react-chartjs-2';
 

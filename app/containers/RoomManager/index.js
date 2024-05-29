@@ -10,6 +10,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import _ from 'lodash';
 
 import {
   Avatar,
@@ -225,8 +226,7 @@ export function RoomManage(props) {
           onClick={() => {
             // eslint-disable-next-line no-underscore-dangle
             history.push(
-              `/bill/motel/${params.row.idMotel}/room/${
-                params.row.room._id
+              `/bill/motel/${params.row.idMotel}/room/${params.row.room._id
               }/user/${params.row.ownerAndUser.userId}`,
             );
           }}
@@ -403,9 +403,8 @@ export function RoomManage(props) {
               <List>
                 <ListItem>
                   <ListItemText
-                    secondary={`SĐT: ${profile.phoneNumber.countryCode} ${
-                      profile.phoneNumber.number
-                    }`}
+                    secondary={`SĐT: ${profile.phoneNumber.countryCode} ${profile.phoneNumber.number
+                      }`}
                   />
                 </ListItem>
                 <Divider variant="inset" component="li" />

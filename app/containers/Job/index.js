@@ -10,6 +10,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import _ from 'lodash';
 
 import { Formik } from 'formik';
 import localStore from 'local-storage';
@@ -396,7 +397,7 @@ export function Job(props) {
   let bankOptions = [];
 
 
-  if (bankInfo.length !== 0){
+  if (bankInfo.length !== 0) {
     bankOptions = bankInfo.map(bankItem => ({
       label: bankItem.nameTkLable,
       value: bankItem.id,
@@ -407,7 +408,7 @@ export function Job(props) {
     }))
   }
 
-  console.log({bankOptions});
+  console.log({ bankOptions });
 
   return (
     <div>

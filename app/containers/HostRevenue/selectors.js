@@ -7,6 +7,8 @@ import { initialState } from './reducer';
 
 const selectHostMotelRoomDetailUserDomain = state =>
   state.hostMotelRoomDetailUser || initialState;
+const selectHostRevenue = state =>
+  state.hostRevenue || initialState;
 
 /**
  * Other specific selectors
@@ -20,7 +22,16 @@ const makeSelectHostMotelRoomDetailUser = () =>
   createSelector(
     selectHostMotelRoomDetailUserDomain,
     substate => substate,
+
   );
 
+const makeSelectHostRevenue = () =>
+  createSelector(
+    selectHostRevenue,
+    substate => substate,
+  );
+
+
+
 export default makeSelectHostMotelRoomDetailUser;
-export { selectHostMotelRoomDetailUserDomain };
+export { makeSelectHostRevenue, selectHostMotelRoomDetailUserDomain };

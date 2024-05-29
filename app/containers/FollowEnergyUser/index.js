@@ -3,6 +3,7 @@ import { Grid, Tabs, Tab, Box } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
 import { toast } from 'react-toastify';
+import _ from 'lodash';
 import {
   Cancel,
   GetApp,
@@ -634,7 +635,7 @@ const FollowEnergyUser = props => {
 
   useEffect(() => {
     getCurrentDayData();
-    
+
     const intervalId = setInterval(() => {
       getCurrentDayData();
     }, 1000 * 15);

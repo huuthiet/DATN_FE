@@ -11,3 +11,8 @@ export const GET_LIST_ROOM_SUCCESS =
   'app/HostMotelRoomDetailUser/GET_LIST_ROOM_SUCCESS';
 export const GET_LIST_ROOM_FAIL =
   'app/HostMotelRoomDetailUser/GET_LIST_ROOM_FAIL';
+export const GET_HOST_REVENUE = 'app/HostMotelRoomDetailUser/GET_HOST_REVENUE';
+export const GET_HOST_REVENUE_SUCCESS =
+  'app/HostMotelRoomDetailUser/GET_HOST_REVENUE_SUCCESS';
+export const GET_HOST_REVENUE_FAIL =
+  'app/HostMotelRoomDetailUser/GET_HOST_REVENUE_FAIL';

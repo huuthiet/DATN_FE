@@ -272,20 +272,19 @@ export function OrdersPendingPayUser(props) {
       //     />
       //   </div>
       // ),
-      renderCell: params => 
-        // eslint-disable-next-line no-unused-expressions
-        (
-          <Button
-            onClick={() => {
-              // eslint-disable-next-line no-underscore-dangle
-              downloadFile(params.row._id);
-            }}
-            color="primary"
-          >
-            Xuất Hóa Đơn
-          </Button>
-        )
-      ),
+      renderCell: params =>
+      // eslint-disable-next-line no-unused-expressions
+      (
+        <Button
+          onClick={() => {
+            // eslint-disable-next-line no-underscore-dangle
+            downloadFile(params.row._id);
+          }}
+          color="primary"
+        >
+          Xuất Hóa Đơn
+        </Button>
+      )
     },
     {
       field: 'action-2',
@@ -294,23 +293,22 @@ export function OrdersPendingPayUser(props) {
       width: 200,
       headerClassName: 'header-bold',
       renderCell: params =>
-        // eslint-disable-next-line no-unused-expressions
-        (
-          <>
-            <a
-              className="btn-detail"
-              onClick={() => {
-                console.log();
-                history.push(
-                  `/job-detail/${params.row.job._id}/${params.row.job.room._id}`,
-                );
-              }}
-            >
-              Xem chi tiết
-            </a>
-          </>
-        )
-      ),
+      // eslint-disable-next-line no-unused-expressions
+      (
+        <>
+          <a
+            className="btn-detail"
+            onClick={() => {
+              console.log();
+              history.push(
+                `/job-detail/${params.row.job._id}/${params.row.job.room._id}`,
+              );
+            }}
+          >
+            Xem chi tiết
+          </a>
+        </>
+      )
     },
   ];
 
