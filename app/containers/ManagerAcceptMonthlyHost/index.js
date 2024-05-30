@@ -346,7 +346,12 @@ export function ManagerAcceptMonthlyHost(props) {
     },
   ];
 
-  // const [id, setId] = useState('');
+  const filteredColumns = columns.filter(column => {
+    if ((role.length === 1 || role.includes('host')) && (column.field === 'error' || column.field === 'success')) {
+      return false;
+    }
+    return true;
+  });
 
   return (
     <div className="user-profile-wrapper container">
@@ -363,7 +368,7 @@ export function ManagerAcceptMonthlyHost(props) {
           <DataGrid
             getRowId={row => row.key}
             rows={transformedData}
-            columns={columns}
+            columns={filteredColumns}
             pageSize={10}
             autoHeight
             isCellEditable={params => params.key}

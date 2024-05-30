@@ -23,6 +23,7 @@ import _ from 'lodash';
 import reducer from './reducer';
 import saga from './saga';
 import localStoreService from 'local-storage';
+import localStore from 'local-storage';
 import makeSelectReportProblemListAdmin from './selectors';
 import './style.scss';
 export function ReportProblemListAdmin(props) {
@@ -33,27 +34,63 @@ export function ReportProblemListAdmin(props) {
   const history = useHistory();
   console.log({ listReportProblem });
 
+  const currentUser = localStore.get('user') || {};
+
   console.log("action222", action2);
   useEffect(() => {
+    console.log("usrrr", localStoreService.get('user').role);
+    console.log("usrrr", localStoreService.get('user').role.includes('master'));
+    let data = {};
     if (_.isArray(localStoreService.get('user').role)) {
-      for (
-        let index = 0;
-        index < localStoreService.get('user').role.length;
-        index++
-      ) {
-        const element = localStoreService.get('user').role[index];
-        if (element === 'master') {
-          setIsAdmin(true);
-        }
+      // for (
+      //   let index = 0;
+      //   index < localStoreService.get('user').role.length;
+      //   index++
+      // ) {
+      //   const element = localStoreService.get('user').role[index];
+      //   if (element === 'master') {
+      //     setIsAdmin(true);
+      //   }
+      // }
+      
+      if (localStoreService.get('user').role.includes('master')) {
+        setIsAdmin(true);
+        data = {
+          startDate,
+          endDate,
+          isAdmin: true,
+        };
+      } else {
+        setIsAdmin(false);
+        data = {
+          startDate,
+          endDate,
+          isAdmin: false,
+        };
       }
     }
-    const data = {
-      startDate,
-      endDate,
-      isAdmin,
-    };
+    // const data = {
+    //   startDate,
+    //   endDate,
+    //   isAdmin,
+    // };
+
+    console.log({data})
+    console.log("gọiiiii", isAdmin);
     props.getListReportProblem(data);
   }, [action2]);
+
+  // useEffect(() => {
+  //   const data = {
+  //     startDate,
+  //     endDate,
+  //     isAdmin,
+  //   };
+
+  //   console.log({ data });
+  //   console.log("gọiiiii", isAdmin);
+  //   props.getListReportProblem(data);
+  // }, [isAdmin, startDate, endDate, action2]);
 
   const dateNow = new Date();
   const beforeNow = dateNow.setDate(dateNow.getDate() - 1);
@@ -194,6 +231,13 @@ export function ReportProblemListAdmin(props) {
     },
   ];
 
+  const filteredColumns = columns.filter(column => {
+    if ((currentUser.role.length === 1 || currentUser.role.includes('master')) && (column.field === 'processing' || column.field === 'success')) {
+      return false;
+    }
+    return true;
+  });
+
   return (
     <div className="login-page-wrapper">
       <Helmet>
@@ -255,7 +299,7 @@ export function ReportProblemListAdmin(props) {
           <DataGrid
             getRowId={row => row.key}
             rows={listReportProblem}
-            columns={columns}
+            columns={filteredColumns}
             pageSize={10}
             autoHeight
             isCellEditable={params => params.key}

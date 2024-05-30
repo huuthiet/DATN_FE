@@ -129,6 +129,7 @@ export const urlLink = {
     buildingRevenue: '/v1/homeKey/energy/device/buildingRevenue/', // +/:idMotel/:Month/:Year
     hostBuildingListForRenenue: '/v1/homeKey/energy/device/hostBuildingList/', // +/:idOwner
     getPayDepositList: '/v1/homeKey/order/getPayDepositList/',
+    getListOrderNoPayOfPayDeposit: '/v1/homeKey/order/listOrderNoPayOfPayDeposit/',
     postExportBillRoomPendingPayByOrder: '/v1/homeKey/order/exportBillRoomPendingPayByOrder/',
     postExportBillPaidByTransaction: '/v1/homeKey/order/exportBillPaidByTransaction/',
     postExportBillPaidByOrder: '/v1/homeKey/order/exportBillPaidByOrder/',

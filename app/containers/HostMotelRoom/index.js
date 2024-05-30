@@ -17,6 +17,8 @@ import makeSelectManagerBuildingHost from './selectors';
 import './style.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
+// http://localhost:3006/manage-monthly-order
+// http://localhost:3006/manage-deposit
 export function ManagerEnergyHostAdmin(props) {
   const columns = [
     {
@@ -30,7 +32,7 @@ export function ManagerEnergyHostAdmin(props) {
       field: 'name',
       headerName: 'Họ và tên',
       headerAlign: 'center',
-      width: 320,
+      width: 250,
       headerClassName: 'header-bold',
     },
     {
@@ -38,7 +40,7 @@ export function ManagerEnergyHostAdmin(props) {
       headerName: 'Số điện thoại',
       headerAlign: 'center',
       align: 'center',
-      width: 300,
+      width: 200,
       headerClassName: 'header-bold',
     },
     {
@@ -65,7 +67,7 @@ export function ManagerEnergyHostAdmin(props) {
       field: 'numberBuilding',
       headerName: 'Số tòa',
       headerAlign: 'center',
-      width: 200,
+      width: 120,
       headerClassName: 'header-bold',
       align: 'center',
     },
@@ -84,6 +86,48 @@ export function ManagerEnergyHostAdmin(props) {
           className="btn-detail"
           onClick={() => {
             handleButtonClick(params.row);
+          }}
+        >
+          Xem chi tiết
+        </a>
+      ),
+    },
+    {
+      field: 'deposit',
+      headerName: 'Thanh toán cọc',
+      headerAlign: 'center',
+      align: 'center',
+
+      width: 300,
+      headerClassName: 'header-bold',
+      align: 'center',
+
+      renderCell: params => (
+        <a
+          className="btn-detail"
+          onClick={() => {
+            handleButtonClickDeposit(params.row);
+          }}
+        >
+          Xem chi tiết
+        </a>
+      ),
+    },
+    {
+      field: 'monthly',
+      headerName: 'Thanh toán hàng tháng',
+      headerAlign: 'center',
+      align: 'center',
+
+      width: 300,
+      headerClassName: 'header-bold',
+      align: 'center',
+
+      renderCell: params => (
+        <a
+          className="btn-detail"
+          onClick={() => {
+            handleButtonClickMonthly(params.row);
           }}
         >
           Xem chi tiết
@@ -122,6 +166,16 @@ export function ManagerEnergyHostAdmin(props) {
   const handleButtonClick = row => {
     history.push(
       `/admin/manage-motel-list/${row._id}/${row.firstName} ${row.lastName}`,
+    );
+  };
+  const handleButtonClickDeposit = row => {
+    history.push(
+      `/admin/manage-deposit/${row._id}/${row.firstName} ${row.lastName}`,
+    );
+  };
+  const handleButtonClickMonthly = row => {
+    history.push(
+      `/admin/manage-monthly/${row._id}/${row.firstName} ${row.lastName}`,
     );
   };
   const handleButtonClickProfile = row => {

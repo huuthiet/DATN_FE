@@ -53,6 +53,7 @@ import RoomBillingManage from 'containers/EnergyBillingManage/RoomBillingManage/
 import EnergyRoomsBillUser from 'containers/EnergyRoomsBillUser/Loadable';
 import MonthlyOrderList from 'containers/MonthlyOrderList/Loadable';
 import ManagerPayDepositHost from 'containers/ManagerPayDepositHost/Loadable';
+import ListOrderNoPayOfPayDeposit from 'containers/ListOrderNoPayOfPayDeposit/Loadable';
 import HistoryDepositAfterCheckInCost from 'containers/HistoryDepositAfterCheckInCost/Loadable';
 import OrderDepositRoomListByMotel from 'containers/OrderDepositRoomListByMotel/Loadable';
 import OrderMonthlyRoomListByMotel from 'containers/OrderMonthlyRoomListByMotel/Loadable';
@@ -84,6 +85,8 @@ import OrderDepositAfterCheckInCostPendingPayment from 'containers/OrderDepositA
 
 import ManagerEnergyHostAdmin from 'containers/ManagerEnergyHostAdmin/Loadable';
 import ManageMotelListAdmin from 'containers/ManageMotelListAdmin/Loadable';
+import ManageDepositAdmin from 'containers/ManageDepositAdmin/Loadable';
+import ManageMonthlyAdmin from 'containers/ManageMonthlyAdmin/Loadable';
 import ManagerEnergyBuildingsAdmin from 'containers/ManagerEnergyBuildingsAdmin/Loadable';
 import ManagerEnergyRoomsAdmin from 'containers/ManagerEnergyRoomsAdmin/Loadable';
 import TransactionBankingCashLog from 'containers/TransactionBankingCashLog/Loadable';
@@ -298,6 +301,10 @@ export function App(props) {
           component={FollowEnergyUser}
         />
         <Route
+          path="/manage-deposit/pay-deposit/:id/list-order-no-pay/:idPayDeposit"
+          component={ListOrderNoPayOfPayDeposit}
+        />
+        <Route
           path="/manage-deposit/pay-deposit/:id"
           component={ManagerPayDepositHost}
         />
@@ -378,6 +385,14 @@ export function App(props) {
         <Route
           path="/admin/manage-motel-list/:id/:name"
           component={ManageMotelListAdmin}
+        />
+        <Route
+          path="/admin/manage-deposit/:id/:name"
+          component={ManageDepositAdmin}
+        />
+        <Route
+          path="/admin/manage-monthly/:id/:name"
+          component={ManageMonthlyAdmin}
         />
 
         <Route

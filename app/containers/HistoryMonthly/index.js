@@ -142,7 +142,9 @@ export function HistoryMonthly(props) {
     transformedData = historyMonthly.map((item, index) => ({
       key: index + 1, // STT
       nameUser: `${item.user.lastName} ${item.user.firstName}`, // Người thuê
-      phone: `${item.user.phoneNumber.countryCode}${item.user.phoneNumber.number}`, // Số điện thoại
+      phone: (item.user && item.user.phoneNumber) 
+                   ? `${item.user.phoneNumber.countryCode}${item.user.phoneNumber.number}`
+                   : "N/A", // Số điện thoại
       amount: Money(parseInt(item.amount)) + " VNĐ", // Số tiền cọc
       description: item.description,
       keyPayment: item.keyPayment,

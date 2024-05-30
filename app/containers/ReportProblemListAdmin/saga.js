@@ -16,14 +16,16 @@ import {
 
 export function* apiGetListReportProblem(payload) {
   const { data } = payload;
-  console.log({data});
+  console.log("gọi sagaaaa", data);
   let requestUrl = '';
   console.log(data.isAdmin);
   if (data.isAdmin) {
+    console.log("adminnnnnnnnn")
     requestUrl = `${urlLink.api.serverUrl}${
       urlLink.api.AdminReportProblemAdmin
     }`;
   } else {
+    console.log("Hosssssssstttt")
     requestUrl = `${urlLink.api.serverUrl}${
       urlLink.api.AdminReportProblemHost
     }`;
@@ -34,6 +36,7 @@ export function* apiGetListReportProblem(payload) {
     const response = yield axios.get(requestUrl, {
       params: data,
     });
+    console.log({response});
     yield put(getListReportProblemSuccess(response.data.data.data));
   } catch (error) {
     yield put(getListReportProblemFail(error.response.data));

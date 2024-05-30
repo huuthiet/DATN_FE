@@ -20,7 +20,7 @@ import { loadRepos, reposLoaded } from '../App/actions';
 export function* apiGetPayDepositList(payload) {
   const requestUrl =
   urlLink.api.serverUrl 
-  + urlLink.api.getBankingCashPendingAfterCheckInCostListByMotel 
+  + urlLink.api.getBankingCashPendingAfterCheckInCostListByMotel
   + payload.payload;
   yield put(loadRepos());
   try {
@@ -56,8 +56,11 @@ export function* apiPutPendingPayDepositApprove(payload) {
   yield put(loadRepos());
   try {
     const response = yield axios.put(requestUrl, payload);
-
-    console.log({response});
+    // const response = yield axios.put(requestUrl, payload, {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // });
     yield put(approvePendingPayDepositSuccess(response.data));
 
     // if(response.data.data) {
