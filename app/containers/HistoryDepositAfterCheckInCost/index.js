@@ -170,9 +170,12 @@ export function HistoryDepositAfterCheckInCost(props) {
             item.status === 'success' ? 'Thành công' :
               item.status === 'cancel' ? 'Đã hủy' : 'N/A',
       time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
+      timePaid: moment(new Date(item.updatedAt)).format("DD-MM-YYYY"),
+      expireTime: moment(new Date(item.expireTime)).format("DD-MM-YYYY"),
       payment_Method: (item.paymentMethod === "cash") ? "Tiền mặt" : "Ngân hàng",
       // ...item,
       _id: item._id,
+      keyOrder: item.keyOrder,
     }));
   }
 
@@ -265,7 +268,6 @@ export function HistoryDepositAfterCheckInCost(props) {
     },
   ];
 
-  // const [id, setId] = useState('');
 
   return (
     <div className="user-profile-wrapper container">

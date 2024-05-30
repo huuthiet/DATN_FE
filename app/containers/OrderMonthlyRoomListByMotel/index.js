@@ -73,7 +73,7 @@ export function OrderMonthlyRoomListByMotel(props) {
                 history.push(
                   // eslint-disable-next-line no-underscore-dangle
                   // `/historyRoomHost/room/${params.row.motelRoomId}/roomdetail/${params.row._id}`,
-                  `/manage-monthly-order/history-monthly/motel/${params.row.motelRoomId}/${params.row.motelRoomName}/room/${params.row._id}/${params.row.name}`
+                  `/manage-monthly-order/history-monthly/motel/${idMotel}/${nameMotel}/room/${params.row._id}/${params.row.name}`
                 );
               }}
             >

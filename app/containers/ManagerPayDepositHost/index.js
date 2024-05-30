@@ -56,6 +56,7 @@ import localStoreService from 'local-storage';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { set } from 'lodash';
 import { useParams } from 'react-router-dom';
+import moment from 'moment';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -158,7 +159,7 @@ export function ManagerPayDepositHost(props) {
   const transformedData = payDepositList.map((item, index) => ({
     key: index + 1, // STT
     user: `${item.user.lastName} ${item.user.firstName}`, // Người thuê
-    phone: item.user.phoneNumberFull, // Số điện thoại
+    phone: item.user.phoneNumber.countryCode + item.user.phoneNumber.number, // Số điện thoại
     room: item.room.name, // Phòng
     amount: Money(item.amount) + " VNĐ", // Số tiền cọc
     type: item.type === 'noPayDeposit' ? 'Không trả cọc' : 'Trả cọc', // Loại (Trả cọc/ Không trả cọc)
@@ -170,7 +171,8 @@ export function ManagerPayDepositHost(props) {
                           item.reasonNoPay === 'unknown' ? 'N/A' : 'N/A',
     status: (item.status === 'pendingPay' && item.type === 'payDeposit') ? 'Đang chờ thanh toán' : 
                 (item.status === 'paid' && item.type === 'payDeposit') ? 'Đã thanh toán' : 'N/A', // Trạng thái
-    _id: item._id // ID của đối tượng
+    _id: item._id, // ID của đối tượng
+    time: moment(new Date(item.createdAt)).format("DD/MM/YYYY"),
   }));
 
   const columns = [
@@ -194,6 +196,13 @@ export function ManagerPayDepositHost(props) {
       headerName: 'Phòng',
       headerAlign: 'center',
       width: 150,
+      headerClassName: 'header-bold',
+    },
+    {
+      field: 'time',
+      headerName: 'Thời gian',
+      headerAlign: 'center',
+      width: 200,
       headerClassName: 'header-bold',
     },
     {
@@ -283,6 +292,13 @@ export function ManagerPayDepositHost(props) {
     },
   ];
 
+  const filteredColumns = columns.filter(column => {
+    if ((role.length === 1 || role.includes('host')) && (column.field === 'success')) {
+      return false;
+    }
+    return true;
+  });
+
   // const [id, setId] = useState('');
 
   return (
@@ -297,7 +313,7 @@ export function ManagerPayDepositHost(props) {
           <DataGrid
             getRowId={row => row.key}
             rows={transformedData}
-            columns={columns}
+            columns={filteredColumns}
             pageSize={10}
             autoHeight
             isCellEditable={params => params.key}
