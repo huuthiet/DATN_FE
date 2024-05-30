@@ -18,6 +18,7 @@ import HostMotelRoom from 'containers/HostMotelRoom/Loadable';
 import HostMotelRoomDetail from 'containers/HostMotelRoomDetail/Loadable';
 import HostMotelRoomDetailUser from 'containers/HostMotelRoomDetailUser/Loadable';
 import HostRevenue from 'containers/HostRevenue/Loadable';
+import HistoryEnergyUser from 'containers/HistoryEnergyUser/Loadable';
 // import HostMotelRoomUser from 'containers/HostMotelRoomUser/Loadable';
 import BillList from 'containers/BillList/Loadable';
 import BillListAdmin from 'containers/BillListAdmin/Loadable';
@@ -261,6 +262,7 @@ export function App(props) {
         <Route path="/hostMotelRoom/:id" component={HostMotelRoomDetail} />
         <Route path="/user/hostMotelRoom" component={HostMotelRoomDetailUser} />
         <Route path="/user/hostRevenue/:id" component={HostRevenue} />
+        <Route path="/user/history-energy/:id" component={HistoryEnergyUser} />
         <Route
           path="/historyRoomHost/room/:id/roomdetail/:idroom"
           component={HistoryRoomHostDetail}
