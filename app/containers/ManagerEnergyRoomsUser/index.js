@@ -206,7 +206,7 @@ export function ManagerEnergyRoomsUser(props) {
                     <th>Tòa nhà</th>
                     <th>Số đồng hồ đã sử dụng</th>
                     <th>Số điện tháng hiện tại (kWh)</th>
-                    <th>Hóa đơn</th>
+                    <th>Lịch sử sử dụng</th>
                     <th>Chi tiết</th>
                   </tr>
                 </thead>
@@ -219,7 +219,7 @@ export function ManagerEnergyRoomsUser(props) {
                       <td>{job.room.name || 'Chưa có dữ liệu'}</td>
                       <td>{job.motelName || 'Chưa có dữ liệu'}</td>
                       <td>{(job.room.listIdElectricMetter) ? job.room.listIdElectricMetter.length : 0}</td>
-                      <td>
+                      {/* <td>
                         {dataEnergyPerMonth[index]
                           ? `${dataEnergyPerMonth[index]}`
                           : 'Chưa có dữ liệu'}
@@ -234,6 +234,23 @@ export function ManagerEnergyRoomsUser(props) {
                           }}
                         >
                           Xem hóa đơn
+                        </a>
+                      </td> */}
+                      <td>
+                        {dataEnergyPerMonth[index]
+                          ? `${dataEnergyPerMonth[index]}`
+                          : 'Chưa có dữ liệu'}
+                      </td>
+                      <td>
+                        <a
+                          className='energy-room-detail-button'
+                          onClick={() => {
+                            history.push(
+                              `/user/history-energy/${job._id}`,
+                            );
+                          }}
+                        >
+                          Xem chi tiết
                         </a>
                       </td>
                       <td>
