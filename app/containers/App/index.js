@@ -53,6 +53,7 @@ import RoomBillingManage from 'containers/EnergyBillingManage/RoomBillingManage/
 import EnergyRoomsBillUser from 'containers/EnergyRoomsBillUser/Loadable';
 import MonthlyOrderList from 'containers/MonthlyOrderList/Loadable';
 import ManagerPayDepositHost from 'containers/ManagerPayDepositHost/Loadable';
+import ListOrderNoPayOfPayDeposit from 'containers/ListOrderNoPayOfPayDeposit/Loadable';
 import HistoryDepositAfterCheckInCost from 'containers/HistoryDepositAfterCheckInCost/Loadable';
 import OrderDepositRoomListByMotel from 'containers/OrderDepositRoomListByMotel/Loadable';
 import OrderMonthlyRoomListByMotel from 'containers/OrderMonthlyRoomListByMotel/Loadable';
@@ -298,6 +299,10 @@ export function App(props) {
         <Route
           path="/follow-energy/:roomId/:name"
           component={FollowEnergyUser}
+        />
+        <Route
+          path="/manage-deposit/pay-deposit/:id/list-order-no-pay/:idPayDeposit"
+          component={ListOrderNoPayOfPayDeposit}
         />
         <Route
           path="/manage-deposit/pay-deposit/:id"

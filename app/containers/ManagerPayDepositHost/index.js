@@ -82,6 +82,8 @@ export function ManagerPayDepositHost(props) {
   // const [urlImgCloud, setUrlImgCloud] = useState('');
   const currentUser = localStore.get('user') || {};
 
+  const history = useHistory();
+
   const [idTransaction, setIdTransaction] = useState('');
   const [status, setStatus] = useState('');
   // let idTransaction = '';
@@ -282,6 +284,7 @@ export function ManagerPayDepositHost(props) {
               onClick={() => {
                 console.log("{params.row._id}",params.row._id);
                 history.push(`/manage-deposit/pay-deposit/${id}/${params.row._id}`);
+                history.push(`/manage-deposit/pay-deposit/${id}/list-order-no-pay/${params.row._id}`);
               }}
             >
               Xem chi tiết
