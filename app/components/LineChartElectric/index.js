@@ -79,7 +79,7 @@ const PieChartElectric = ({ nameChart, hostRevenue }) => {
             ref={chartRef}
             style={{
                 width: '100%',
-                height: '350px',
+                height: '400px',
             }}
         />
     );

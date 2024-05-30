@@ -33,7 +33,10 @@ import { urlLink } from '../../helper/route';
 import PaperWrapper from '../../components/PaperWrapper';
 import Speedometer from '../../components/Speedmetter';
 import LineChart from '../../components/LineChart';
+import LineChartVoltageDashboard from '../../components/LineChartVoltageDashboard';
+import LineChartCurrentDashboard from '../../components/LineChartCurrentDashboard';
 import LineChartHover from '../../components/LineChartHover';
+import { Row, Col } from 'reactstrap';
 
 const labelsInDay = [
   '1h',
@@ -86,7 +89,6 @@ const FollowEnergyAdmin = () => {
   const [currentDay, setCurrentDay] = useState(new Date());
   // get Device Id
   const { id, roomId, idMetter, name } = useParams();
-  console.log('id, roomId, idMetter, name', { id, roomId, idMetter, name });
 
   // note
   const [info, setInfo] = useState({});
@@ -537,6 +539,8 @@ const FollowEnergyAdmin = () => {
         const formattedTotalkWh = parseFloat(
           responseDay.data.data.totalkWhTime,
         ).toFixed(2);
+        console.log('formattedTotalkWh', formattedTotalkWh.voltageData);
+
         setTotalkWh(formattedTotalkWh);
 
         setLabelLineChart(labelsInDay);
@@ -547,7 +551,7 @@ const FollowEnergyAdmin = () => {
       } else if (value === 1) {
         const responseMon = await axios.get(apiUrlMon);
         const formattedTotalkWh = parseFloat(
-        responseMon.data.data.totalkWhTime,
+          responseMon.data.data.totalkWhTime,
         ).toFixed(2);
         setTotalkWh(formattedTotalkWh);
         setCurrentKwh(responseMon.data.data.kWhData);
@@ -558,6 +562,9 @@ const FollowEnergyAdmin = () => {
 
         const responseDay = await axios.get(apiUrlDay);
         setCurrentVoltage(responseDay.data.data.voltageData);
+        console.log('responseDay.data.data.voltageData', responseDay.data.data.voltageData);
+        console.log('responseDay.data.data.currentData', responseDay.data.data.currentData);
+
         setCurrentCurrent(responseDay.data.data.currentData);
       } else if (value === 2) {
         // Đang thực hiện filter từ ngày tới ngày
@@ -614,7 +621,7 @@ const FollowEnergyAdmin = () => {
 
   // Hàm tính toán totalPrice
   const calculateTotalPrice = (electricUsage, waterUsage) => {
-    console.log('electricUsage', electricUsage, 'waterUsage', waterUsage);
+    // console.log('electricUsage', electricUsage, 'waterUsage', waterUsage);
     const electricUnitPrice = 3900; // Giá tiền cho mỗi đơn vị electricUsage
     const waterUnitPrice = 4400; // Giá tiền cho mỗi đơn vị waterUsage
     const totalPrice =
@@ -711,98 +718,49 @@ const FollowEnergyAdmin = () => {
       </div>
 
       {/* CHART */}
-      <div id="chart-container">
-        <Grid container justify="center">
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={6}
-            style={{
-              height: '350px',
-              margin: '8px',
-              padding: '12px',
-              borderRadius: '6px',
-              boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
-            }}
-          >
+      <div id="chart-container" >
+        <Row className='current-voltage-dashboard'>
+          <Col xs={12} sm={10} style={{
+            height: '400px',
+            padding: '12px',
+            borderRadius: '6px',
+            boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
+          }}>
             <LineChartHover
               textY="(kWh)"
-              // nameChart={`${titleKwhChart}: ${totalkWh}`}
               nameChart={`${titleKwhChart}: ${totalkWh}`}
               dataEnergy={currentKwh}
               labelsEnergy={labelLineChart}
               roomId={roomId}
             />
-          </Grid>
-
-          <Grid
-            item
-            xs={12}
-            sm={5}
-            md={5}
-            style={{
-              height: '350px',
-              margin: '8px',
-              padding: '12px',
-              borderRadius: '6px',
-              boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
-            }}
-          >
-            <LineChart
+          </Col>
+          <Col xs={12} sm={5} md={5} style={{
+            height: '400px',
+            padding: '12px',
+            borderRadius: '6px',
+            boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
+          }}>
+            <LineChartVoltageDashboard
               textY="(V)"
               nameChart="Voltage"
               dataEnergy={currentVoltage}
               labelsEnergy={labelsInDay}
             />
-          </Grid>
-
-          <Grid
-            item
-            xs={12}
-            sm={7}
-            md={7}
-            style={{
-              height: '350px',
-              margin: '8px',
-              padding: '12px',
-              borderRadius: '6px',
-              boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
-            }}
-          >
-            <LineChart
+          </Col>
+          <Col xs={12} sm={5} md={5} style={{
+            height: '400px',
+            padding: '12px',
+            borderRadius: '6px',
+            boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
+          }}>
+            <LineChartCurrentDashboard
               textY="(A)"
               nameChart="Current"
               dataEnergy={currentCurrent}
               labelsEnergy={labelsInDay}
             />
-          </Grid>
-
-          <Grid
-            item
-            xs={12}
-            sm={4}
-            md={4}
-            style={{
-              height: '350px',
-              margin: '8px',
-              padding: '12px',
-              borderRadius: '6px',
-              boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
-              justifyContent: 'center',
-              alignItems: 'center',
-              textAlign: 'center',
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column',
-            }}
-          >
-            <Calendar
-              value={currentDay}
-              onChange={d => setValue(d)}
-            />
-          </Grid>
-        </Grid>
+          </Col>
+        </Row>
       </div>
 
       <div hidden id="pdf-export-container" className="total-info-container">

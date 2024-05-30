@@ -253,45 +253,6 @@ export function HostMotelRoomDetailUser(props) {
         <Row className="action-container">
           <Col md={10}>
             <Row>
-              {/* <Col md={6}>
-                <DatePicker
-                  dateFormat="dd/MM/yyyy"
-                  showMonthDropdown
-                  showYearDropdown
-                  selected={startDate}
-                  onChange={date => {
-                    setStartDate(date);
-                  }}
-                  customInput={<InputForm label="Từ" icon="fa fa-calendar" />}
-                />
-              </Col>
-              <Col md={6}>
-                <DatePicker
-                  dateFormat="dd/MM/yyyy"
-                  showMonthDropdown
-                  showYearDropdown
-                  selected={endDate}
-                  onChange={date => {
-                    setEndDate(date);
-                  }}
-                  customInput={<InputForm label="Đến" icon="fa fa-calendar" />}
-                />
-              </Col> */}
-              {/* <Col md={2}>
-                <Dropdown isOpen={isOpenMonth} toggle={() => setIsOpenMonth(!isOpenMonth)} className="mt-4 room-dropdown-container">
-                  <DropdownToggle caret color="none" className="room-dropdown custom-dropdown-toggle">
-                    {selectedMonth}
-                  </DropdownToggle>
-                  <DropdownMenu className="dropdown-menu">
-                    {months.map((month, index) => (
-                      <DropdownItem key={index} onClick={() => handleSelect(month, index)} className='dropdown-item'>
-                        <span className='dropdown-key'>{month}</span>
-                      </DropdownItem>
-                    ))}
-                  </DropdownMenu>
-
-                </Dropdown>
-              </Col> */}
               <Col md={2}>
                 <Dropdown isOpen={yearDropdownOpen} toggle={() => setYearDropdownOpen(!yearDropdownOpen)} className="mt-4 room-dropdown-container">
                   <DropdownToggle caret color="none" className="room-dropdown custom-dropdown-toggle">
@@ -360,27 +321,19 @@ export function HostMotelRoomDetailUser(props) {
           </Col>
         </Row>
         <Row className="dashboard-container">
-          <Col xs={7} className="compare-container">
+          <Col xs={12} sm={7} className="compare-container">
             <LineChart
               textY="Doanh thu"
               nameChart="Doanh thu"
               hostRevenue={hostRevenue}
             />
           </Col>
-          <Col xs={4} className="compare-container">
+          <Col xs={12} sm={4} className="compare-container">
             <LineChartElectric
               textY="Lượng điện tiêu thụ"
               nameChart="Lượng điện tiêu thụ"
               hostRevenue={hostRevenue}
             />
-          </Col>
-        </Row>
-        <Row className="dashboard-container">
-          <Col xs={12} sm={5} className="monthly-chart">
-            Monthly chart
-          </Col>
-          <Col xs={12} sm={6} className="target-actual-chart">
-            Target vs Actual Chart
           </Col>
         </Row>
       </div>

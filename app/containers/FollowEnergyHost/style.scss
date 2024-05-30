@@ -129,6 +129,14 @@
   }
 }
 
+.current-voltage-dashboard{
+  display: flex;
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
 .total-info-container{
   display: flex;
   flex-direction: column;
