@@ -7,7 +7,12 @@
     font-weight: 500;
   }
   .job-list-wrapper{
-    max-width:  100%;
+    max-width:  90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
     .action-container{
       width: 100%;
       display: flex;

@@ -65,7 +65,7 @@
     .dashboard-container{
       min-height: 400px;
       width: 100%;
-      margin: 30px 0 10px 0;
+      margin: 0px 0 30px 0;
       gap: 10px;
       display: flex;
       flex-direction: row;
@@ -93,6 +93,53 @@
         box-shadow: 2px 2px 20px 6px rgba($color: #000000, $alpha: 0.05);
       }
 
+    }
+
+    .revenueData-container{
+      min-height: 100px;
+      width: 100%;
+      margin: 30px 0 10px 0;
+      gap: 10px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      .totalRevenue-container{
+        display: flex;
+        // justify-content: center;
+        align-items: center;
+        min-height: 150px;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 2px 2px 20px 6px rgba($color: #000000, $alpha: 0.05);
+        .totalRevenue{
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+          align-items: center;
+          .icon-container{
+            height: 44px;
+            width: 44px;
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgb(122, 122, 122);
+            background-color: rgb(225, 225, 225);
+          }
+          .totalRevenue-text{
+            font-size: 18px;
+            font-weight: 500;
+            color: rgb(175, 175, 175);
+          
+          }
+        }
+      }
+      .currentRevenue-container{
+        min-height: 150px;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 2px 2px 20px 6px rgba($color: #000000, $alpha: 0.05);
+      }
     }
   }
 }
