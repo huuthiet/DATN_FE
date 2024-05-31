@@ -9,8 +9,14 @@ const LineChart = ({ textY, nameChart, hostRevenue }) => {
         const chartInstance = echarts.init(chartRef.current);
 
         // Trích xuất dữ liệu từ hostRevenueData
-        const times = hostRevenue.map(item => item.time);
-        const revenues = hostRevenue.map(item => item.revenue);
+        let revenues = [];
+        let times = [];
+        if (hostRevenue !== undefined) {
+            hostRevenue.forEach((item) => {
+                revenues.push(item.revenue);
+                times.push(item.time);
+            });
+        }
 
         // Cấu hình biểu đồ
         const option = {
@@ -66,7 +72,7 @@ const LineChart = ({ textY, nameChart, hostRevenue }) => {
                     type: 'bar',
                     data: revenues,
                     itemStyle: {
-                        color: 'rgb(75, 192, 192)',
+                        color: '#91cc75',
                     },
                     barWidth: 20,
                 },

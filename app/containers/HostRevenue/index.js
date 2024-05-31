@@ -32,7 +32,7 @@ import './style.scss';
 import { toast } from 'react-toastify';
 import LineChart from '../../components/LineChartRevenue';
 import LineChartElectric from '../../components/LineChartElectric';
-import { MonetizationOn } from '@material-ui/icons';
+import { MonetizationOn, Payment, Power } from '@material-ui/icons';
 
 
 
@@ -43,6 +43,21 @@ export function HostMotelRoomDetailUser(props) {
   console.log('check props: ', props);
   const { hostRevenue } = props.hostMotelRoomDetailUser;
   console.log('hostRevenueData', hostRevenue);
+  let totalRevenue = 0;
+  let totalElectricPrice = 0;
+
+  if (hostRevenue) {
+    totalRevenue = hostRevenue.totalRevenue;
+    totalElectricPrice = hostRevenue.totalElectricPrice;
+  }
+
+  // Define the formatter
+  const vndFormatter = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  });
   const { id = '' } = useParams();
   useEffect(() => {
     const data = {
@@ -61,10 +76,7 @@ export function HostMotelRoomDetailUser(props) {
   const [selectedBuilding, setSelectedBuilding] = useState('Chọn tòa nhà');
   const [motelId, setMotelId] = useState('');
 
-  const months = [
-    'All Time', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
-  ];
-  const years = ["All Years"];
+  const years = ["Chọn năm"];
   for (let i = 2000; i <= new Date().getFullYear(); i++) {
     years.push(i);
   }
@@ -96,6 +108,30 @@ export function HostMotelRoomDetailUser(props) {
     setSelectedMonth('Chọn tháng');
     setMonthKey(0);
   };
+
+  const getCurrentMonthData = (monthlyRevenue) => {
+    const currentMonth = new Date().getMonth() + 1; // Lấy tháng hiện tại
+    const currentMonthData = monthlyRevenue.find(item => {
+      const [month, year] = item.time.split('/'); // Tách tháng và năm từ chuỗi 'time'
+      return parseInt(month) === currentMonth; // So sánh với tháng hiện tại
+    });
+    return currentMonthData || {}; // Trả về dữ liệu của tháng hiện tại hoặc một đối tượng rỗng nếu không có dữ liệu
+  };
+
+  // Lấy dữ liệu cho tháng hiện tại
+  const currentMonthData = getCurrentMonthData(hostRevenue.monthlyRevenue || []);
+
+  // Lấy giá trị doanh thu, electricNumber và electricPrice của tháng hiện tại
+  const currentMonthRevenue = currentMonthData.revenue || 0;
+  const currentMonthElectricNumber = currentMonthData.electricNumber || 0;
+  const currentMonthElectricPrice = currentMonthData.electricPrice || 0;
+
+  console.log('currentMonthRevenue', currentMonthRevenue);
+  console.log('currentMonthElectricNumber', currentMonthElectricNumber);
+  console.log('currentMonthElectricPrice', currentMonthElectricPrice);
+
+
+
 
 
 
@@ -247,20 +283,45 @@ export function HostMotelRoomDetailUser(props) {
           </Col>
         </Row>
         <Row className="revenueData-container">
-          <Col xs={12} sm={3} className="totalRevenue-container">
+          <Col xs={12} sm={4} className="totalRevenue-container">
             <div className="totalRevenue">
               <div className='icon-container'>
                 <MonetizationOn />
               </div>
-              <span className="totalRevenue-text">Tổng doanh thu</span>
-              <span className="totalRevenue-number">{hostRevenue.totalRevenue}</span>
+              <div className='revenueText-container'>
+                <span className="totalRevenue-text">Tổng doanh thu</span>
+                <span className="totalRevenue-number">
+                  {totalRevenue ? vndFormatter.format(totalRevenue) : 'Không có dữ liệu'}</span>
+              </div>
+
             </div>
           </Col>
-          <Col xs={12} sm={3} className="currentRevenue-container">
+          <Col xs={12} sm={4} className="totalRevenue-container">
+            <div className="totalRevenue">
+              <div className='icon-container'>
+                <Payment />
+              </div>
+              <div className='revenueText-container'>
+                <span className="totalRevenue-text">Doanh thu tháng này</span>
+                <span className="totalRevenue-number">
+                  {currentMonthRevenue ? vndFormatter.format(currentMonthRevenue) : 'Không có dữ liệu'}</span>
+              </div>
 
+            </div>
           </Col>
-          <Col xs={12} sm={5} className="currentRevenue-container">
+          <Col xs={12} sm={3} className="totalRevenue-container">
+            <div className="totalRevenue">
+              <div className='icon-container'>
+                <Power />
+              </div>
+              <div className='revenueText-container'>
+                <span className="totalRevenue-text">Tiền điện tháng này</span>
+                <span className="totalRevenue-number">
+                  {currentMonthElectricPrice ? vndFormatter.format(currentMonthElectricPrice) : 'Không có dữ liệu'}
+                </span>
+              </div>
 
+            </div>
           </Col>
         </Row>
         <Row className="dashboard-container">
@@ -268,14 +329,14 @@ export function HostMotelRoomDetailUser(props) {
             <LineChart
               textY="Doanh thu"
               nameChart="Doanh thu"
-              hostRevenue={hostRevenue}
+              hostRevenue={hostRevenue ? hostRevenue.monthlyRevenue : []}
             />
           </Col>
           <Col xs={12} sm={4} className="compare-container">
             <LineChartElectric
               textY="Lượng điện tiêu thụ"
               nameChart="Lượng điện tiêu thụ"
-              hostRevenue={hostRevenue}
+              hostRevenue={hostRevenue ? hostRevenue.monthlyRevenue : []}
             />
           </Col>
         </Row>

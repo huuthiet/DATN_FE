@@ -28,12 +28,15 @@ export function* apiGetHostRevenue(payload) {
   const revenueRequest = `${urlLink.api.serverUrl}${urlLink.api.buildingRevenue
     }${idMotel}/${year}`;
   console.log('revenueRequest', revenueRequest);
+  yield put(loadRepos());
   try {
     const revenueResponse = yield axios.get(revenueRequest);
     console.log('revenueResponse', revenueResponse.data.data);
     yield put(getHostRevenueSuccess(revenueResponse.data.data));
   } catch (error) {
     yield put(getHostRevenueFail(error.response.data));
+  } finally {
+    yield put(reposLoaded());
   }
 }
 // Individual exports for testing

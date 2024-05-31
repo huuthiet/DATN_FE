@@ -67,7 +67,7 @@ export function ManagerEnergyHostAdmin(props) {
       field: 'numberBuilding',
       headerName: 'Số tòa',
       headerAlign: 'center',
-      width: 120,
+      width: 200,
       headerClassName: 'header-bold',
       align: 'center',
     },
@@ -134,6 +134,27 @@ export function ManagerEnergyHostAdmin(props) {
         </a>
       ),
     },
+    {
+      field: 'monthly',
+      headerName: 'Doanh thu',
+      headerAlign: 'center',
+      align: 'center',
+
+      width: 300,
+      headerClassName: 'header-bold',
+      align: 'center',
+
+      renderCell: params => (
+        <a
+          className="btn-detail"
+          onClick={() => {
+            handleButtonClickRevenue(params.row);
+          }}
+        >
+          Xem chi tiết
+        </a>
+      ),
+    },
   ];
 
   useInjectReducer({ key: 'motelprofileList', reducer });
@@ -151,8 +172,8 @@ export function ManagerEnergyHostAdmin(props) {
   console.log('hosts', hosts);
 
   let hostData = [];
-  if(hosts){
-    if(hosts.length > 0) {
+  if (hosts) {
+    if (hosts.length > 0) {
       hostData = hosts.map((host, index) => ({
         index: index + 1,
         name: host.lastName + host.firstName,
@@ -161,7 +182,7 @@ export function ManagerEnergyHostAdmin(props) {
     }
   }
 
-  console.log({hostData});
+  console.log({ hostData });
 
   const handleButtonClick = row => {
     history.push(
@@ -176,6 +197,12 @@ export function ManagerEnergyHostAdmin(props) {
   const handleButtonClickMonthly = row => {
     history.push(
       `/admin/manage-monthly/${row._id}/${row.firstName} ${row.lastName}`,
+    );
+  };
+
+  const handleButtonClickRevenue = row => {
+    history.push(
+      `/admin/hostRevenue/${row._id}`,
     );
   };
   const handleButtonClickProfile = row => {
