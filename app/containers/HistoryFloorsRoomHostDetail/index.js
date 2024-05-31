@@ -30,7 +30,7 @@ export function HistoryFloorsRoomHostDetail(props) {
 
   const dateNow = new Date();
   // const beforeNow = dateNow.setDate(dateNow.getDate() - 1);
-  const beforeNow = new Date(dateNow.getFullYear(), dateNow.getMonth(), 1);
+  const beforeNow = new Date(dateNow.getFullYear(), dateNow.getMonth(), 1); // đầu tháng hiện tại
 
   const [startDate, setStartDate] = useState(new Date(beforeNow));
   const [endDate, setEndDate] = useState(new Date());
@@ -51,6 +51,8 @@ export function HistoryFloorsRoomHostDetail(props) {
     props.getGetMotelRoom(payload);
   }, []);
 
+  console.log({MotelRoom});
+
   const exportFile = async () => {
     const data = MotelRoom;
     const arrData = data.map((obj, index) => {
@@ -59,11 +61,11 @@ export function HistoryFloorsRoomHostDetail(props) {
         'Người Thuê': obj.userName,
         'Ngày Thuê': obj.checkInTime,
         'Ngày Hết Hợp Đồng': obj.checkOutTime,
-        'Ngày Thanh Toán': obj.lastDay,
+        'Hạn Thanh Toán': obj.lastDay,
         'Giá Phòng': obj.priceMoney,
         'Giá Chưa Thanh Toán': obj.currentPrice,
         'Nội Dung Chưa Thanh Toán': obj.description,
-        'Tổng Thanh Toán': obj.sumOrder,
+        'Tổng Đã Thanh Toán': obj.sumOrder,
       };
     });
     const wscols = [
@@ -71,7 +73,7 @@ export function HistoryFloorsRoomHostDetail(props) {
       { wch: 20 },
       { wch: 30 },
       { wch: 20 },
-      { wch: 10 },
+      { wch: 20 },
       { wch: 20 },
       { wch: 25 },
       { wch: 20 },
@@ -108,11 +110,11 @@ export function HistoryFloorsRoomHostDetail(props) {
     'Người Thuê',
     'Ngày Thuê',
     'Ngày Hết Hợp Đồng',
-    'Ngày Thanh Toán',
+    'Hạn Thanh Toán',
     'Giá Phòng',
     'Giá Chưa Thanh Toán',
     'Nội Dung Chưa Thanh Toán',
-    'Tổng Thanh Toán',
+    'Tổng Đã Thanh Toán',
   ];
   const listRowExcel = [
     'A',
@@ -184,7 +186,7 @@ export function HistoryFloorsRoomHostDetail(props) {
     },
     {
       field: 'lastDay',
-      headerName: 'Ngày Thanh Toán',
+      headerName: 'Hạn Thanh Toán',
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
@@ -212,7 +214,7 @@ export function HistoryFloorsRoomHostDetail(props) {
     },
     {
       field: 'sumOrder',
-      headerName: 'Tổng Thanh Toán',
+      headerName: 'Tổng Đã Thanh Toán',
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',

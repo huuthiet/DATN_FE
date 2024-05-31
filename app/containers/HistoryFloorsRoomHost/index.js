@@ -120,8 +120,8 @@ export function HistoryFloorsRoomHost(props) {
       align: 'center'
     },
     {
-      field: 'action',
-      headerName: 'Chi Tiết',
+      field: 'action-1',
+      headerName: 'Chi Tiết Phòng',
       headerAlign: 'center',
       width: 400,
       align: 'center',
@@ -138,6 +138,33 @@ export function HistoryFloorsRoomHost(props) {
                 //   }`,
                 // );
                 history.push(`/room-detail/${params.row._id}`)
+              }}
+            >
+              Chi tiết phòng
+            </a>
+          </>
+        );
+      },
+    },
+    {
+      field: 'action-2',
+      headerName: 'Lịch sử đặt phòng',
+      headerAlign: 'center',
+      width: 400,
+      align: 'center',
+      headerClassName: 'header-bold',
+      renderCell: params => {
+        return (
+          <>
+            <a className="btn-detail"
+              color="primary"
+              onClick={() => {
+                history.push(
+                  `/historyRoomHost/room/${id}/roomdetail/${
+                  params.row._id
+                  }`,
+                );
+                // history.push(`/room-detail/${params.row._id}`)
               }}
             >
               Chi tiết phòng
