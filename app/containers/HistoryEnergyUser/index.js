@@ -53,7 +53,7 @@ export function HistoryEnergyUser(props) {
 
   const { historyEnergy = {} } = props.historyEnergy;
 
-  console.log({historyEnergy});
+  console.log({ historyEnergy });
 
 
   const handleFilter = () => {
@@ -153,10 +153,10 @@ export function HistoryEnergyUser(props) {
           content="Description of History Energy"
         />
       </Helmet>
-      <div className="title">Lịch sử dụng điện</div>
+      <div className="title">Lịch sử tiêu thụ điện</div>
       <div className="job-list-wrapper container-fluid">
         <Row className="action-container">
-          <Col md={10}>
+          <Col xs={12}>
             <Row>
               <Col md={5}>
                 <Row>
@@ -184,16 +184,16 @@ export function HistoryEnergyUser(props) {
           </Col>
         </Row>
         <Row className="dashboard-container">
-          <Col xs={10} className="compare-container">
+          <Col xs={12} className="compare-container">
             <LineChartHistoryEnergy
-              textY="Doanh thu"
+              textY="Số điện (KWh)"
               nameChart="Lịch sử sử dụng điện"
               hostRevenue={historyEnergy}
             />
           </Col>
         </Row>
         <Row className="user-room-container">
-          <Col xs={10} className="compare-container">
+          <Col xs={12} className="compare-container">
             <div className="table-responsive">
               <table striped className="user-room-table">
                 <thead>
@@ -204,7 +204,7 @@ export function HistoryEnergyUser(props) {
                   </tr>
                 </thead>
 
-                <tbody>
+                {/* <tbody>
                   {historyEnergy.historyLabel.map((item, index) => (
                     <tr>
                       <td>{item || 'Chưa có dữ liệu'}</td>
@@ -212,7 +212,7 @@ export function HistoryEnergyUser(props) {
                       <td>{historyEnergy.historyPrice[index] || 'Chưa có dữ liệu'}</td>
                     </tr>
                   ))}
-                </tbody>
+                </tbody> */}
               </table>
             </div>
           </Col>

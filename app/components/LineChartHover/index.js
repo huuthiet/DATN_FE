@@ -13,7 +13,7 @@ import {
   Legend,
 } from 'chart.js';
 
-import { Line } from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
 import moment from 'moment';
 
 ChartJS.register(
@@ -49,7 +49,7 @@ const LineChartHover = ({ textY, nameChart, dataEnergy, labelsEnergy, roomId }) 
         // data: [65, 59, 80 - null, null, null, 55, 40],
         data: dataLine,
         fill: true,
-        backgroundColor: 'rgba(75, 192, 192, 0.25)',
+        backgroundColor: 'rgba(75, 192, 192, 1)',
         smooth: true,
         borderColor: 'rgb(75, 192, 192)',
         tension: 0.01,
@@ -60,7 +60,7 @@ const LineChartHover = ({ textY, nameChart, dataEnergy, labelsEnergy, roomId }) 
     ],
   };
   const config = {
-    type: 'line',
+    type: 'bar',
     data,
     options: {
       responsive: true,
@@ -218,7 +218,7 @@ const LineChartHover = ({ textY, nameChart, dataEnergy, labelsEnergy, roomId }) 
         data: popupData,
         // label: nameChart,
         fill: true,
-        backgroundColor: 'rgba(75, 192, 192, 0.25)',
+        backgroundColor: 'rgba(75, 192, 192, 1)',
         smooth: true,
         borderColor: 'rgb(75, 192, 192)',
         tension: 0.01,
@@ -271,7 +271,7 @@ const LineChartHover = ({ textY, nameChart, dataEnergy, labelsEnergy, roomId }) 
 
   return (
     <>
-      <Line  {...config} />
+      <Bar  {...config} />
       {popupData && (
         <div className="popup-overlay" style={{
           position: 'fixed',
@@ -298,7 +298,7 @@ const LineChartHover = ({ textY, nameChart, dataEnergy, labelsEnergy, roomId }) 
               <span className="close" onClick={closePopup}>
                 &times;
               </span>
-              <Line  {...configPopup} />
+              <Bar  {...configPopup} />
             </div>
           </div>
         </div>

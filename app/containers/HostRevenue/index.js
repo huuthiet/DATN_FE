@@ -3,17 +3,13 @@
  * HostMotelRoom
  *
  */
-import { useHistory } from 'react-router-dom';
-import { DataGrid } from '@mui/x-data-grid';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
-  Container,
   Row,
   Col,
   Button,
@@ -27,18 +23,16 @@ import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import * as XLSX from 'xlsx-color';
-// import XLSX from 'xlsx-style';
-import InputForm from '../../components/InputForm';
 import { getListRoom, getHostRevenue } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import makeSelectHostMotelRoomDetailUser, { makeSelectHostRevenue } from './selectors';
 
-import { urlLink } from '../../helper/route';
 import './style.scss';
 import { toast } from 'react-toastify';
 import LineChart from '../../components/LineChartRevenue';
 import LineChartElectric from '../../components/LineChartElectric';
+import { MonetizationOn } from '@material-ui/icons';
 
 
 
@@ -74,15 +68,6 @@ export function HostMotelRoomDetailUser(props) {
   for (let i = 2000; i <= new Date().getFullYear(); i++) {
     years.push(i);
   }
-
-  const handleSelect = (month, index) => {
-    console.log('month', month);
-    setSelectedMonth(month);
-    setMonthKey(index); // Update monthKey with the corresponding number
-    console.log('monthKey', monthKey);
-    setIsOpen(false);
-  };
-
 
   const handleSelectBuilding = (value, key) => {
     setMotelId(value);
@@ -180,65 +165,6 @@ export function HostMotelRoomDetailUser(props) {
     }
   };
 
-
-
-
-
-
-  // const exportFile = async () => {
-  //   const data = listRoom;
-  //   const arrData = data.map((obj, index) => ({
-  //     STT: index + 1,
-  //     'Tên Khu Trọ': obj.keyName,
-  //     'Tên Phòng': obj.nameRoom,
-  //     'Người Thuê Hiện Tại': obj.userName,
-  //     'Ngày Thuê': obj.checkInTime,
-  //     'Ngày Hết Hợp Đồng': obj.checkOutTime,
-  //     'Ngày Thanh Toán': obj.lastDay,
-  //     'Giá Phòng': obj.priceMoney,
-  //     'Giá Thanh Toán': obj.currentPrice,
-  //     'Nội Dung Thanh Toán': obj.description,
-  //     'Tổng Thanh Toán': obj.sumOrder,
-  //   }));
-  //   const wscols = [
-  //     { wch: 10 },
-  //     { wch: 20 },
-  //     { wch: 30 },
-  //     { wch: 20 },
-  //     { wch: 10 },
-  //     { wch: 20 },
-  //     { wch: 25 },
-  //     { wch: 20 },
-  //     { wch: 25 },
-  //     { wch: 25 },
-  //     { wch: 25 },
-  //   ];
-  //   const worksheet = XLSX.utils.json_to_sheet(arrData);
-  //   worksheet['!cols'] = wscols;
-  //   if (arrData.length > 0) {
-  //     // eslint-disable-next-line no-plusplus
-  //     for (let i = 0; i < listRowExcel.length; i++) {
-  //       const element1 = listNameExcel[i];
-  //       const element2 = listRowExcel[i];
-  //       worksheet[`${element2}1`] = {
-  //         v: element1,
-  //         s: {
-  //           font: {
-  //             sz: 12,
-  //             color: { rgb: '#FF000000' },
-  //             bold: 'true',
-  //           },
-  //         },
-  //         t: 's',
-  //       };
-  //     }
-  //   }
-  //   const workbook = XLSX.utils.book_new();
-  //   XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-  //   if (arrData.length > 0) {
-  //     XLSX.writeFile(workbook, 'Report.xlsx');
-  //   }
-  // };
   return (
     <div className="login-page-wrapper">
       <Helmet>
@@ -253,45 +179,6 @@ export function HostMotelRoomDetailUser(props) {
         <Row className="action-container">
           <Col md={10}>
             <Row>
-              {/* <Col md={6}>
-                <DatePicker
-                  dateFormat="dd/MM/yyyy"
-                  showMonthDropdown
-                  showYearDropdown
-                  selected={startDate}
-                  onChange={date => {
-                    setStartDate(date);
-                  }}
-                  customInput={<InputForm label="Từ" icon="fa fa-calendar" />}
-                />
-              </Col>
-              <Col md={6}>
-                <DatePicker
-                  dateFormat="dd/MM/yyyy"
-                  showMonthDropdown
-                  showYearDropdown
-                  selected={endDate}
-                  onChange={date => {
-                    setEndDate(date);
-                  }}
-                  customInput={<InputForm label="Đến" icon="fa fa-calendar" />}
-                />
-              </Col> */}
-              {/* <Col md={2}>
-                <Dropdown isOpen={isOpenMonth} toggle={() => setIsOpenMonth(!isOpenMonth)} className="mt-4 room-dropdown-container">
-                  <DropdownToggle caret color="none" className="room-dropdown custom-dropdown-toggle">
-                    {selectedMonth}
-                  </DropdownToggle>
-                  <DropdownMenu className="dropdown-menu">
-                    {months.map((month, index) => (
-                      <DropdownItem key={index} onClick={() => handleSelect(month, index)} className='dropdown-item'>
-                        <span className='dropdown-key'>{month}</span>
-                      </DropdownItem>
-                    ))}
-                  </DropdownMenu>
-
-                </Dropdown>
-              </Col> */}
               <Col md={2}>
                 <Dropdown isOpen={yearDropdownOpen} toggle={() => setYearDropdownOpen(!yearDropdownOpen)} className="mt-4 room-dropdown-container">
                   <DropdownToggle caret color="none" className="room-dropdown custom-dropdown-toggle">
@@ -359,28 +246,37 @@ export function HostMotelRoomDetailUser(props) {
             </Row>
           </Col>
         </Row>
+        <Row className="revenueData-container">
+          <Col xs={12} sm={3} className="totalRevenue-container">
+            <div className="totalRevenue">
+              <div className='icon-container'>
+                <MonetizationOn />
+              </div>
+              <span className="totalRevenue-text">Tổng doanh thu</span>
+              <span className="totalRevenue-number">{hostRevenue.totalRevenue}</span>
+            </div>
+          </Col>
+          <Col xs={12} sm={3} className="currentRevenue-container">
+
+          </Col>
+          <Col xs={12} sm={5} className="currentRevenue-container">
+
+          </Col>
+        </Row>
         <Row className="dashboard-container">
-          <Col xs={7} className="compare-container">
+          <Col xs={12} sm={7} className="compare-container">
             <LineChart
               textY="Doanh thu"
               nameChart="Doanh thu"
               hostRevenue={hostRevenue}
             />
           </Col>
-          <Col xs={4} className="compare-container">
+          <Col xs={12} sm={4} className="compare-container">
             <LineChartElectric
               textY="Lượng điện tiêu thụ"
               nameChart="Lượng điện tiêu thụ"
               hostRevenue={hostRevenue}
             />
-          </Col>
-        </Row>
-        <Row className="dashboard-container">
-          <Col xs={12} sm={5} className="monthly-chart">
-            Monthly chart
-          </Col>
-          <Col xs={12} sm={6} className="target-actual-chart">
-            Target vs Actual Chart
           </Col>
         </Row>
       </div>

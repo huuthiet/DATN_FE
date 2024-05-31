@@ -1,85 +1,79 @@
-import React from 'react';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-
-import { Line } from 'react-chartjs-2';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-);
+import React, { useEffect, useRef } from 'react';
+import * as echarts from 'echarts';
 
 const LineChart = ({ textY, nameChart, dataEnergy, labelsEnergy }) => {
-  const labels = labelsEnergy;
+  const chartRef = useRef(null);
 
-  let dataLine = [];
-  if (dataEnergy !== undefined) {
-    dataLine = dataEnergy;
-  }
+  useEffect(() => {
+    // Initialize ECharts
+    const chartInstance = echarts.init(chartRef.current);
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: nameChart,
-        data: dataLine,
-        fill: true,
-        backgroundColor: 'rgba(75, 192, 192, 0.25)',
-        smooth: false,
-        borderColor: 'rgb(75, 192, 192)',
-        // tension: 0.01,
-        borderWidth: 1, // Set border width
-        pointRadius: 3,
-        // cubicInterpolationMode: 'monotone',
+    // Extract data from dataEnergy and labelsEnergy
+    const times = labelsEnergy;
+    const values = dataEnergy;
+
+    // Chart configuration
+    const option = {
+      title: {
+        text: nameChart,
+        left: 'center',
       },
-    ],
-  };
-  const config = {
-    type: 'line',
-    data,
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        x: {
-          type: 'category',
-          beginAtZero: true,
-          title: {
-            display: true,
-            text: 'Time', // Tiêu đề cho trục x
-          }
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'line',
         },
-        y: {
-          beginAtZero: true,
-          title: {
-            display: true,
-            text: textY, // Tiêu đề cho trục y
+      },
+      legend: {
+        data: [nameChart],
+        left: 'right',
+      },
+      xAxis: {
+        type: 'category',
+        data: times,
+        axisLabel: {
+          formatter: function (value) {
+            return value;
           },
         },
+        name: 'Time',
       },
-      plugins: {
-        legend: {
-          display: true,
-          position: 'top',
+      yAxis: {
+        type: 'value',
+        axisLabel: {
+          formatter: function (value) {
+            return value.toFixed(2);
+          },
         },
+        name: textY,
       },
-    },
-  };
+      series: [
+        {
+          name: nameChart,
+          type: 'line',
+          data: values,
+          fill: 'rgba(75, 192, 192, 0.25)',
+          lineStyle: {
+            color: 'rgb(75, 192, 192)',
+            width: 1,
+          },
+          smooth: false,
+          symbol: 'circle',
+          symbolSize: 3,
+        },
+      ],
+    };
 
-  return <Line {...config} />;
+    // Apply the configuration and data to display the chart
+    chartInstance.setOption(option);
+
+    // Cleanup function when the component is unmounted
+    return () => {
+      chartInstance.dispose();
+    };
+  }, [dataEnergy, nameChart, textY, labelsEnergy]);
+
+  return <div ref={chartRef} style={{ width: '100%', height: '400px' }} />;
 };
 
 export default LineChart;
