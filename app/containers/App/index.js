@@ -263,6 +263,7 @@ export function App(props) {
         <Route path="/hostMotelRoom/:id" component={HostMotelRoomDetail} />
         <Route path="/user/hostMotelRoom" component={HostMotelRoomDetailUser} />
         <Route path="/user/hostRevenue/:id" component={HostRevenue} />
+        <Route path="/admin/hostRevenue/:id" component={HostRevenue} />
         <Route path="/user/history-energy/:id" component={HistoryEnergyUser} />
         <Route path="/history-energy/:id/:name" component={HistoryEnergyHost} />
         <Route
@@ -332,7 +333,7 @@ export function App(props) {
           path="/manage-deposit/order-deposit-pending-payment/:idMotel/:nameMotel"
           component={OrderDepositAfterCheckInCostPendingPayment}
         />
-        <Route path="/manage-deposit/" component={ManageDeposit}/>
+        <Route path="/manage-deposit/" component={ManageDeposit} />
         <Route
           path="/manage-monthly-order/history-monthly/motel/:idMotel/:nameMotel/room/:idRoom/:nameRoom"
           component={HistoryMonthly}

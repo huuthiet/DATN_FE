@@ -126,12 +126,32 @@
             color: rgb(122, 122, 122);
             background-color: rgb(225, 225, 225);
           }
+        .revenueText-container{
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
           .totalRevenue-text{
             font-size: 18px;
             font-weight: 500;
             color: rgb(175, 175, 175);
-          
           }
+          .totalRevenue-number{
+            display: flex;
+            flex-direction: row;
+            gap: 3px;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            font-weight: 700;
+            color: rgb(97, 97, 97);
+            font-family: 'Roboto', sans-serif;
+            .icon{
+              font-size: 20px;
+              color: rgb(97, 97, 97);
+            }
+          }
+        }
         }
       }
       .currentRevenue-container{

@@ -9,9 +9,16 @@ const PieChartElectric = ({ nameChart, hostRevenue }) => {
         const chartInstance = echarts.init(chartRef.current);
 
         // Tính tổng doanh thu và tổng tiền điện
-        const totalRevenue = hostRevenue.reduce((acc, item) => acc + item.revenue, 0).toFixed(0);
-        const totalElectricPrice = hostRevenue.reduce((acc, item) => acc + item.electricPrice, 0).toFixed(0);
+        if (hostRevenue === undefined) {
+            return;
+        }
+        let totalRevenue = 0;
+        let totalElectricPrice = 0;
 
+        hostRevenue.forEach((item) => {
+            totalRevenue += item.revenue;
+            totalElectricPrice += item.electricPrice;
+        });
         // định dạng tiền
         const formatter = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
