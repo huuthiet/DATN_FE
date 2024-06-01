@@ -11,7 +11,7 @@ import { GET_HISTORY_ENERGY_PER_MONTH } from './constants';
 export function* apiGetHistoryEnergyPerMonth(payload) {
   const { data } = payload;
   console.log({payload})
-  const url = `${urlLink.api.serverUrl}${urlLink.api.getHistoryEnergyByJob}${data.id}/${data.selectedYear}`;
+  const url = `${urlLink.api.serverUrl}${urlLink.api.getHistoryEnergyByRoomV2}${data.id}/${data.selectedYear}`;
   console.log({url})
   yield put(loadRepos());
   try {

@@ -41,10 +41,12 @@ import { toast } from 'react-toastify';
 import LineChartHistoryEnergy from '../../components/LineChartHistoryEnergy';
 
 
-export function HistoryEnergyUser(props) {
+export function HistoryEnergyHost(props) {
   useInjectReducer({ key: 'historyEnergy', reducer });
   useInjectSaga({ key: 'historyEnergy', saga });
-  const { id = '' } = useParams();
+  const { id = '', name = '' } = useParams();
+
+  console.log({id})
 
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [yearDropdownOpen, setYearDropdownOpen] = useState(false);
@@ -162,7 +164,7 @@ export function HistoryEnergyUser(props) {
           content="Description of History Energy"
         />
       </Helmet>
-      <div className="title">Lịch sử tiêu thụ điện</div>
+      <div className="title">Lịch sử tiêu thụ điện phòng {name}</div>
       <div className="job-list-wrapper container-fluid">
         <Row className="action-container">
           <Col xs={12}>
@@ -246,7 +248,7 @@ export function HistoryEnergyUser(props) {
   );
 }
 
-HistoryEnergyUser.propTypes = {
+HistoryEnergyHost.propTypes = {
   getHistoryEnergyPerMonth: PropTypes.func,
 };
 
@@ -268,4 +270,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(HistoryEnergyUser);
+export default compose(withConnect)(HistoryEnergyHost);

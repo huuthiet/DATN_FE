@@ -107,6 +107,8 @@ export const urlLink = {
       '/v1/homeKey/energy/device/getTotalKWhPerDayForDayToDayV2/', // :idRoom/:start/:end
       getHistoryEnergyByJob:
       '/v1/homeKey/energy/device/historyEnergyByJob/', // :idJob/:year
+      getHistoryEnergyByRoomV2:
+      '/v1/homeKey/energy/device/historyEnergyByRoomV2/', // :idRoom/:year
     getListIdMetterElectric:
       '/v1/homeKey/energy/device/getListIdMetterElectricByRoom/', // +idRoom
     addIdMetterElectric:

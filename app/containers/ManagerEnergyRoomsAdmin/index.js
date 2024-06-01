@@ -31,11 +31,16 @@ import { compose } from 'redux';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 
-import reducer from '../Motel/reducer';
-import saga from '../Motel/saga';
-import makeSelectMotel from '../Motel/selectors';
+// import reducer from '../Motel/reducer';
+// import saga from '../Motel/saga';
+// import makeSelectMotel from '../Motel/selectors';
 
-import { getMotel } from '../Motel/actions';
+// import { getMotel } from '../Motel/actions';
+
+import { getMotelInfor } from '../ManagerEnergyRoomsHost/actions';
+import reducer from '../ManagerEnergyRoomsHost/reducer';
+import saga from '../ManagerEnergyRoomsHost/saga';
+import makeSelectMotelListRoom from '../ManagerEnergyRoomsHost/selectors';
 
 const electricMetterStyled = room => ({
   color:
@@ -128,19 +133,22 @@ const ManagerEnergyRoomsAdmin = props => {
 
   const { id, name } = useParams();
 
-  useInjectReducer({ key: 'motel', reducer });
-  useInjectSaga({ key: 'motel', saga });
+  useInjectReducer({ key: 'motelListRoom', reducer });
+  useInjectSaga({ key: 'motelListRoom', saga });
 
   useEffect(() => {
-    props.getMotel(id);
+    props.getMotelInfor(id);
   }, []);
 
-  const { motel = {} } = props.motel;
-  console.log('motel haha', motel);
+  const { listFloor = [] } = props.motelListRoom;
+  console.log({listFloor})
+
+  // const { motel = {} } = props.motel;
+  // console.log('motel haha', motel);
 
 
-  const { floors = [] } = motel;
-  console.log('floors haha', floors);
+  // const { floors = [] } = motel;
+  // console.log('floors haha', floors);
 
   const cardStyle = {
     border: 'none',
@@ -160,7 +168,8 @@ const ManagerEnergyRoomsAdmin = props => {
       <div className="title-abc">Quản lý năng lượng các phòng tòa {name}</div>
       {currentUser.role.length === 2 && currentUser.role.includes('master') ? (
         <Grid lg={12} container spacing={2}>
-          {floors.map((floor, floorIndex) =>
+          {/* {floors.map((floor, floorIndex) => */}
+          {listFloor.length > 0 && listFloor.map((floor, floorIndex) =>
             floor.rooms.map((room, roomIndex) => (
               <Grid key={roomIndex} item lg={3} md={4} sm={6} xs={12}>
                 <div div style={cardIcon}>
@@ -172,7 +181,7 @@ const ManagerEnergyRoomsAdmin = props => {
                       style={{ display: 'flex', justifyContent: 'flex-end' }}
                     >
                       <Tooltip title="Xem lịch sử số điện" placement='top' arrow>
-                        <Link to={`/energy-billing-manage/${motel._id}/rooms/${room._id}`}>
+                        <Link to={`/history-energy/${room._id}/${room.name}`}>
                           <StyleMoreButton>
                             <MoreHoriz />
                           </StyleMoreButton>
@@ -205,7 +214,7 @@ const ManagerEnergyRoomsAdmin = props => {
                   </CardContent>
                   <CardActions style={{ justifyContent: 'center', height: '50px', margin: '10px 0' }}>
                     <Link
-                      to={`/admin/follow-energy/${motel._id}/${room._id}/${room.name
+                      to={`/admin/follow-energy/${id}/${room._id}/${room.name
                         }`}
                       style={{ textDecoration: 'none' }}
                     >
@@ -226,18 +235,23 @@ const ManagerEnergyRoomsAdmin = props => {
 
 ManagerEnergyRoomsAdmin.propTypes = {
   dispatch: PropTypes.func,
-  getMotel: PropTypes.func,
+  // getMotel: PropTypes.func,
+  getMotelInfor: PropTypes.func,
   changeStoreData: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  motel: makeSelectMotel(),
+  // motel: makeSelectMotel(),
+  motelListRoom: makeSelectMotelListRoom(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    getMotel: id => {
-      dispatch(getMotel(id));
+    // getMotel: id => {
+    //   dispatch(getMotel(id));
+    // },
+    getMotelInfor: id => {
+      dispatch(getMotelInfor(id));
     },
   };
 }
