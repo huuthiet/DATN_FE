@@ -19,6 +19,7 @@ import HostMotelRoomDetail from 'containers/HostMotelRoomDetail/Loadable';
 import HostMotelRoomDetailUser from 'containers/HostMotelRoomDetailUser/Loadable';
 import HostRevenue from 'containers/HostRevenue/Loadable';
 import HistoryEnergyUser from 'containers/HistoryEnergyUser/Loadable';
+import HistoryEnergyHost from 'containers/HistoryEnergyHost/Loadable';
 // import HostMotelRoomUser from 'containers/HostMotelRoomUser/Loadable';
 import BillList from 'containers/BillList/Loadable';
 import BillListAdmin from 'containers/BillListAdmin/Loadable';
@@ -264,6 +265,7 @@ export function App(props) {
         <Route path="/user/hostRevenue/:id" component={HostRevenue} />
         <Route path="/admin/hostRevenue/:id" component={HostRevenue} />
         <Route path="/user/history-energy/:id" component={HistoryEnergyUser} />
+        <Route path="/history-energy/:id/:name" component={HistoryEnergyHost} />
         <Route
           path="/historyRoomHost/room/:id/roomdetail/:idroom"
           component={HistoryRoomHostDetail}

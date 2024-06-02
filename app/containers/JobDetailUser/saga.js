@@ -89,7 +89,8 @@ export function* apiGetJob(payload) {
     yield put(reposLoaded());
   }
 
-  const requestBank = urlLink.api.serverUrl + urlLink.api.getBankOwnerRoom + idRoom;
+  // const requestBank = urlLink.api.serverUrl + urlLink.api.getBankOwnerRoom + idRoom;
+  const requestBank = urlLink.api.serverUrl + urlLink.api.getBankMasterList;
   try {
     const response = yield axios.get(requestBank);
     console.log("responseXXX", response);

@@ -12,10 +12,16 @@ const LineChartHistoryEnergy = ({ textY, nameChart, hostRevenue }) => {
         const times = hostRevenue.historyLabel;
         const revenues = hostRevenue.historyValue;
 
+        let totalAll = 0;
+
+        totalAll = hostRevenue.historyValue.reduce((accumulator, currentValue) => {
+            return accumulator + currentValue;
+        }, 0);
+
         // Cấu hình biểu đồ
         const option = {
             title: {
-                text: nameChart,
+                text: nameChart + ": " + totalAll + " (kWh)" ,
                 left: 'center',
             },
             tooltip: {

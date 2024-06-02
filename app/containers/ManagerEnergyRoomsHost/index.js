@@ -390,7 +390,7 @@ const ManagerEnergyRoomsHost = props => {
                       style={{ display: 'flex', justifyContent: 'flex-end' }}
                     >
                       <Tooltip title="Xem lịch sử số điện" placement='top' arrow>
-                        <Link to={`/energy-billing-manage/${id}/rooms/${room._id}`}>
+                        <Link to={`/history-energy/${room._id}/${room.name}`}>
                           <StyleMoreButton>
                             <MoreHoriz />
                           </StyleMoreButton>

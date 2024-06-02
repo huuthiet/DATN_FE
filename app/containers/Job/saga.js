@@ -96,7 +96,8 @@ export function* apiPostPaymentUser(payload) {
 
 export function* apiBankInfo(payload) {
   console.log("payyyy", payload);
-  const requestUrl = urlLink.api.serverUrl + urlLink.api.getBankOwnerRoom + payload.id;
+  // const requestUrl = urlLink.api.serverUrl + urlLink.api.getBankOwnerRoom + payload.id;
+  const requestUrl = urlLink.api.serverUrl + urlLink.api.getBankMasterList;
   try {
     const response = yield axios.get(requestUrl);
     if (response && response.data) {

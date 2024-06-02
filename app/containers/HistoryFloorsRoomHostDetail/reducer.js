@@ -49,22 +49,27 @@ const historyFloorsRoomHostDetailReducer = (state = initialState, action) =>
                 Number(element.rentalPeriod),
             ),
           ).format('DD/MM/YYYY');
-          element.lastDay = moment(
-            new Date(today.getFullYear(), today.getMonth() + 1, 0),
-          ).format('DD/MM/YYYY');
-          element.priceMoney = Money(element.price);
-          element.currentPrice = Money(element.currentOrder.amount);
-          element.description = element.currentOrder.description;
+          // element.lastDay = moment(
+          //   new Date(today.getFullYear(), today.getMonth() + 1, 0),
+          // ).format('DD/MM/YYYY');
+
+          if(element.currentOrder.isCompleted === false) {
+            element.lastDay = moment(new Date(element.currentOrder.expireTime)).format('DD/MM/YYYY');
+            element.currentPrice = Money(parseInt(element.currentOrder.amount.toFixed(0))) + " VNĐ";
+            element.description = element.currentOrder.description;
+          }
+          element.priceMoney = Money(element.price) + " VNĐ";
           const orderDataArrData = element.orders;
           // eslint-disable-next-line no-unused-vars
           let sumOrder = 0;
           for (let indexI = 0; indexI < orderDataArrData.length; indexI++) {
             const elementOrderData = orderDataArrData[indexI];
             if (elementOrderData.isCompleted) {
-              sumOrder += elementOrderData.amount;
+              sumOrder += parseFloat(elementOrderData.amount);
             }
           }
-          element.sumOrder = Money(sumOrder);
+          element.sumOrder = Money(parseInt(sumOrder.toFixed(0))) + " VNĐ";
+          // element.sumOrder = parseFloat(sumOrder.toFixed(2));
         }
         draft.MotelRoom = action.response;
         break;
