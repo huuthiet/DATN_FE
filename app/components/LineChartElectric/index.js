@@ -9,23 +9,32 @@ const PieChartElectric = ({ nameChart, hostRevenue }) => {
         const chartInstance = echarts.init(chartRef.current);
 
         // Tính tổng doanh thu và tổng tiền điện
-        if (hostRevenue === undefined) {
+        if (!hostRevenue) {
             return;
         }
         let totalRevenue = 0;
         let totalElectricPrice = 0;
 
         hostRevenue.forEach((item) => {
-            totalRevenue += item.revenue;
-            totalElectricPrice += item.electricPrice;
+            totalRevenue += parseFloat(item.revenue);
+            totalElectricPrice += parseFloat(item.electricPrice);
         });
-        // định dạng tiền
+
+        // Làm tròn tổng doanh thu và tổng tiền điện
+        totalRevenue = Math.round(totalRevenue);
+        totalElectricPrice = Math.round(totalElectricPrice);
+
+        // Định dạng tiền
         const formatter = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
             currency: 'VND',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
         });
-        const totalRevenueFormat = formatter.format(totalRevenue);
-        const totalElectricPriceFormat = formatter.format(totalElectricPrice);
+
+        // Định dạng tổng doanh thu và tổng tiền điện
+        const formattedTotalRevenue = formatter.format(totalRevenue);
+        const formattedTotalElectricPrice = formatter.format(totalElectricPrice);
 
         // Cấu hình biểu đồ
         const option = {
@@ -49,8 +58,8 @@ const PieChartElectric = ({ nameChart, hostRevenue }) => {
                     radius: '55%',
                     center: ['50%', '60%'],
                     data: [
-                        { value: totalElectricPrice, name: 'Tiền điện' },
-                        { value: totalRevenue - totalElectricPrice, name: 'Doanh thu' },
+                        { value: totalElectricPrice, name: `Tiền điện:` },
+                        { value: totalRevenue - totalElectricPrice, name: `Doanh thu:` },
                     ],
                     emphasis: {
                         itemStyle: {
