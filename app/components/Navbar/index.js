@@ -615,7 +615,7 @@ const Navbar = props => {
                           <LibraryBooksOutlined className="icon" />
                           <FormattedMessage {...messages.host} />
                         </DropdownItem>
-                        <DropdownItem
+                        {/* <DropdownItem
                           className={
                             pathname.includes('/admin/historyRoomHost')
                               ? 'active'
@@ -625,7 +625,7 @@ const Navbar = props => {
                         >
                           <RestoreOutlined className="icon" />
                           <FormattedMessage {...messages.hostRoomHist} />
-                        </DropdownItem>
+                        </DropdownItem> */}
                         {/* <DropdownItem
                           className={
                             pathname.includes('/admin/bill-list')

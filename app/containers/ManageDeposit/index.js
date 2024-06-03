@@ -124,27 +124,6 @@ export function ManageDeposit(props) {
       },
     },
     {
-      field: 'action-4',
-      headerName: 'Quản lý trả cọc',
-      headerAlign: 'center',
-      width: 200,
-      headerClassName: 'header-bold',
-      renderCell: params =>
-      // eslint-disable-next-line no-unused-expressions
-      (
-        <>
-          <a
-            className="btn-detail"
-            onClick={() => {
-              history.push(`/manage-deposit/pay-deposit/${params.row._id}`);
-            }}
-          >
-            Xem chi tiết
-          </a>
-        </>
-      )
-    },
-    {
       field: 'action-5',
       headerName: 'Lịch sử đặt cọc',
       headerAlign: 'center',
@@ -159,6 +138,27 @@ export function ManageDeposit(props) {
             onClick={() => {
               console.log()
               history.push(`/manage-deposit/history-deposit-aftercheckincost/motel/${params.row._id}/${params.row.name}`);
+            }}
+          >
+            Xem chi tiết
+          </a>
+        </>
+      )
+    },
+    {
+      field: 'action-4',
+      headerName: 'Quản lý trả cọc',
+      headerAlign: 'center',
+      width: 200,
+      headerClassName: 'header-bold',
+      renderCell: params =>
+      // eslint-disable-next-line no-unused-expressions
+      (
+        <>
+          <a
+            className="btn-detail"
+            onClick={() => {
+              history.push(`/manage-deposit/pay-deposit/${params.row._id}`);
             }}
           >
             Xem chi tiết
