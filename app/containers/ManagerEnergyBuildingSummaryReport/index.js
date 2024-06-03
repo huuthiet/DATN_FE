@@ -36,7 +36,9 @@ export function ManagerEnergyBuildingsHost(props) {
   useInjectReducer({ key: 'profile', reducer });
   useInjectSaga({ key: 'motelprofileList', saga });
 
-  const { name } = useParams();
+  const { id, name } = useParams();
+  console.log('name', name);
+  console.log('id', id);
 
   const currentUser = localStore.get('user') || {};
   const { role = [] } = currentUser;
@@ -120,7 +122,7 @@ export function ManagerEnergyBuildingsHost(props) {
       console.log('lastYear', lastYear);
 
       const apiLink = `${urlLink.api.serverUrl +
-        urlLink.api.getAllData}/${selectedYear}/${selectedMonth}`;
+        urlLink.api.getAllData}${selectedYear}/${selectedMonth}/${id}`;
       console.log('apiLink', apiLink);
       const apiLastMonth = `${urlLink.api.serverUrl +
         urlLink.api.getLastRecordsOfPreviousMonth}/${lastYear}/${lastMonth}`;

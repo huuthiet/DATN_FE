@@ -86,7 +86,7 @@ export const urlLink = {
     getDataEnergyPerDay: '/v1/homeKey/energy/device/currentMonDataPerDay/',
     getDataEnergyPerDayV2: '/v1/homeKey/energy/device/currentMonDataPerDayV2/',
     getNameRoomByIdDevice: '/v1/homeKey/energy/device/getNameRoomById/',
-    getAllData: '/v1/homeKey/energy/device/getAllDataByYearMonth',
+    getAllData: '/v1/homeKey/energy/device/getAllDataByYearMonth/', //+ :/motelId
     getLastRecordsOfPreviousMonth:
       '/v1/homeKey/energy/device/getLastRecordsOfPreviousMonth',
     clearData: '/v1/homeKey/energy/devices/clearData', // + /:startTime/:endTime
@@ -105,9 +105,9 @@ export const urlLink = {
 
     getTotalKWhPerDayForDayToDayV2:
       '/v1/homeKey/energy/device/getTotalKWhPerDayForDayToDayV2/', // :idRoom/:start/:end
-      getHistoryEnergyByJob:
+    getHistoryEnergyByJob:
       '/v1/homeKey/energy/device/historyEnergyByJob/', // :idJob/:year
-      getHistoryEnergyByRoomV2:
+    getHistoryEnergyByRoomV2:
       '/v1/homeKey/energy/device/historyEnergyByRoomV2/', // :idRoom/:year
     getListIdMetterElectric:
       '/v1/homeKey/energy/device/getListIdMetterElectricByRoom/', // +idRoom

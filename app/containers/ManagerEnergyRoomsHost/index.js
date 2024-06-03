@@ -63,7 +63,7 @@ import { Clock } from '@material-ui/pickers';
 
 const electricMetterStyled = room => ({
   color:
-  (room.listIdElectricMetter && room.listIdElectricMetter.length === 0) ? 'red' : 'green',
+    (room.listIdElectricMetter && room.listIdElectricMetter.length === 0) ? 'red' : 'green',
   fontWeight: (room.listIdElectricMetter && room.listIdElectricMetter.length === 0) || 'bold',
   border:
     (room.listIdElectricMetter && room.listIdElectricMetter.length === 0) || !room.listIdElectricMetter
@@ -207,7 +207,7 @@ const ManagerEnergyRoomsHost = props => {
   }, []);
 
   const { listFloor = [] } = props.motelListRoom;
-  console.log({listFloor})
+  console.log({ listFloor })
 
   // const { floors = [] } = motel;
   // console.log('floors', floors);
@@ -323,7 +323,7 @@ const ManagerEnergyRoomsHost = props => {
       <Button
         className="summary-btn"
         onClick={() => {
-          history.push(`/manager-energy-building-summary-report/${name}`);
+          history.push(`/manager-energy-building-summary-report/${id}/${name}`);
         }}
       >
         <InsertDriveFile className="summary-icon" />
