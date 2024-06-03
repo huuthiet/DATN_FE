@@ -281,7 +281,7 @@ export function JobDetailUser(props) {
   useInjectSaga({ key: 'jobDetailUser', saga });
   const classes = useStyles();
   const { id = '', idRoom = '' } = useParams();
-  console.log({ idRoom });
+  console.log("Check idRoom: ", { idRoom });
 
   const history = useHistory();
   const today = new Date();
@@ -289,8 +289,6 @@ export function JobDetailUser(props) {
 
   useEffect(() => {
     if (id && idRoom) {
-      console.log('id in index: ', id);
-      console.log('idRoom in index: ', idRoom);
       // getBankInfo(idRoom);
       props.getJob(id, idRoom);
       props.getProfile();
@@ -508,7 +506,7 @@ export function JobDetailUser(props) {
 
       // console.log("banhhhhh", banking);
       // console.log({ formData });
-      if(banking) {
+      if (banking) {
         props.postTransaction(formData);
       } else {
         toast.error("Vui lòng chọn ngân hàng trước khi Xác nhận");
@@ -600,10 +598,10 @@ export function JobDetailUser(props) {
         paymentMethod: 'cash',
       };
       console.log({ formData });
-      
+
       console.log("banhhhhh", banking);
       console.log({ formData });
-      if(banking) {
+      if (banking) {
         props.postTransaction(formData);
       } else {
         toast.error("Vui lòng chọn ngân hàng trước khi Xác nhận");
@@ -852,9 +850,9 @@ export function JobDetailUser(props) {
               }}
             >
               {!isActived ||
-              (currentOrder.type === 'afterCheckInCost' &&
-                currentOrder.isCompleted === true) ||
-              currentOrder.type !== 'afterCheckInCost' ? (
+                (currentOrder.type === 'afterCheckInCost' &&
+                  currentOrder.isCompleted === true) ||
+                currentOrder.type !== 'afterCheckInCost' ? (
                 <div
                   style={{
                     display: 'flex',
@@ -901,12 +899,12 @@ export function JobDetailUser(props) {
               minDate={minDate}
               onChange={handleCheckOut}
               customInput={<ExampleCustomInput />}
-              // customInput={
-              // 	<InputForm
-              // 		// icon="fa fa-calendar"
-              // 		style={{width:'10px'}}
-              // 	/>
-              // }
+            // customInput={
+            // 	<InputForm
+            // 		// icon="fa fa-calendar"
+            // 		style={{width:'10px'}}
+            // 	/>
+            // }
             />
             {/* <ListItemText
 								primary="Ngày trả phòng"
@@ -995,8 +993,8 @@ export function JobDetailUser(props) {
               }}
             >
               {!isActived ||
-              currentOrder.type !== 'monthly' ||
-              (currentOrder.type === 'monthly' && currentOrder.isCompleted) ? (
+                currentOrder.type !== 'monthly' ||
+                (currentOrder.type === 'monthly' && currentOrder.isCompleted) ? (
                 <div
                   style={{
                     display: 'flex',

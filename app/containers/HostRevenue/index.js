@@ -334,8 +334,8 @@ export function HostMotelRoomDetailUser(props) {
           </Col>
           <Col xs={12} sm={4} className="compare-container">
             <LineChartElectric
-              textY="Lượng điện tiêu thụ"
-              nameChart="Lượng điện tiêu thụ"
+              textY="Tỉ lệ doanh thu và tiền điện"
+              nameChart="Tỉ lệ doanh thu và tiền điện"
               hostRevenue={hostRevenue ? hostRevenue.monthlyRevenue : []}
             />
           </Col>

@@ -373,7 +373,7 @@ export function App(props) {
         />
 
         <Route
-          path="/manager-energy-building-summary-report/:name"
+          path="/manager-energy-building-summary-report/:id/:name"
           component={ManagerEnergyBuildingSummaryReport}
         />
 
