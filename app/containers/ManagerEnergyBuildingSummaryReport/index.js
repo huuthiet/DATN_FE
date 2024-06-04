@@ -123,6 +123,7 @@ export function ManagerEnergyBuildingsHost(props) {
         'Electricity Price (VND)',
         'Electricity Cost (VND)',
         'Water Cost (VND)',
+        'Note',
       ],
     ];
 
@@ -136,7 +137,8 @@ export function ManagerEnergyBuildingsHost(props) {
     latestData.forEach((latestData, index) => {
       const lastData = latestData.latestDataBeforeMonth;
       const electricityDifference = latestData
-        ? (latestData.latestDataCurrentMonth - latestData.latestDataBeforeMonth)
+        // ? (latestData.latestDataCurrentMonth - latestData.latestDataBeforeMonth)
+        ? (latestData.totalKwhCurrentMonth)
         : 0;
       const electricityDifferenceFormat = electricityDifference.toFixed(2);
       const electricityCost = electricityDifferenceFormat * 3900;
@@ -154,6 +156,7 @@ export function ManagerEnergyBuildingsHost(props) {
         '3,900 VND',
         electricityCostFormat,
         'No data',
+        (latestData.numberOfMeter) > 1 ? `Changed ${latestData.numberOfMeter} meters` : '',
       ]);
     });
 
@@ -203,14 +206,15 @@ export function ManagerEnergyBuildingsHost(props) {
       },
       columnStyles: {
         0: { cellWidth: 30 },
-        1: { cellWidth: 30 },
-        2: { cellWidth: 30 },
-        3: { cellWidth: 30 },
-        4: { cellWidth: 30 },
-        5: { cellWidth: 30 },
+        1: { cellWidth: 25 },
+        2: { cellWidth: 25 },
+        3: { cellWidth: 25 },
+        4: { cellWidth: 25 },
+        5: { cellWidth: 25 },
         6: { cellWidth: 30 },
         7: { cellWidth: 30 },
         8: { cellWidth: 30 },
+        9: { cellWidth: 25 },
       },
     });
 
@@ -290,29 +294,35 @@ export function ManagerEnergyBuildingsHost(props) {
                   <th>Giá điện (VND)</th>
                   <th>Tiền điện (VND)</th>
                   <th>Tiền nước (VND)</th>
+                  <th>Ghi chú</th>
                 </tr>
               </thead>
               <tbody>
                 {latestData.map((latestData, index) => {
-                  console.log('latestData', latestData.latestDataBeforeMonth);
-                  const electricityCost = (latestData.latestDataCurrentMonth - latestData.latestDataBeforeMonth) * 3900;
+                  {/* console.log('latestData', latestData.latestDataBeforeMonth); */}
+                  {/* const electricityCost = (latestData.latestDataCurrentMonth - latestData.latestDataBeforeMonth) * 3900; */}
+                  const electricityCost = (latestData.totalKwhCurrentMonth) * 3900;
+
                   return (
                     <tr key={index}>
                       <td>{latestData.name}</td>
                       <td>{latestData.latestDataBeforeMonth ? latestData.latestDataBeforeMonth : 'Data not available'}</td>
                       <td>{latestData.latestDataCurrentMonth}</td>
-                      <td>{latestData.latestDataCurrentMonth - latestData.latestDataBeforeMonth}</td>
+                      {/* <td>{latestData.latestDataCurrentMonth - latestData.latestDataBeforeMonth}</td> */}
+                      <td>{latestData.totalKwhCurrentMonth}</td>
                       <td>No data</td>
                       <td>No data</td>
                       <td>3.900 (VND)</td>
                       <td>{electricityCost.toLocaleString('vi-VN')} (VND)</td>
                       <td>No data</td>
+                      <td>{latestData.numberOfMeter > 1 ? `Đã thay ${latestData.numberOfMeter} đồng hồ` : ''}</td>
                     </tr>
                   );
                 })}
                 <tr className="total-container">
                   <td colSpan="7">Tổng cộng</td>
-                  <td>{_.sumBy(latestData, data => (data.latestDataCurrentMonth - data.latestDataBeforeMonth) * 3900).toLocaleString('vi-VN')} (VND)</td>
+                  {/* <td>{_.sumBy(latestData, data => (data.latestDataCurrentMonth - data.latestDataBeforeMonth) * 3900).toLocaleString('vi-VN')} (VND)</td> */}
+                  <td>{_.sumBy(latestData, data => (data.totalKwhCurrentMonth) * 3900).toLocaleString('vi-VN')} (VND)</td>
                   <td>No data</td>
                 </tr>
               </tbody>
