@@ -1,9 +1,3 @@
-/**
- *
- * ManagerEnergyBuildingsHost
- *
- */
-
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
@@ -28,24 +22,19 @@ import saga from './saga';
 import makeSelectManagerBuildingHost from './selectors';
 import './style.scss';
 import { urlLink } from '../../helper/route';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { useParams } from 'react-router';
-import { set } from 'lodash';
 
 export function ManagerEnergyBuildingsHost(props) {
   useInjectReducer({ key: 'profile', reducer });
   useInjectSaga({ key: 'motelprofileList', saga });
 
   const { id, name } = useParams();
-  console.log('name', name);
-  console.log('id', id);
-
   const currentUser = localStore.get('user') || {};
   const { role = [] } = currentUser;
   const history = useHistory();
   const [selectedMonth, setSelectedMonth] = useState('');
-  const [selectedYear, setSelectedYear] =
-    useState('') || new Date().getFullYear();
+  const [selectedYear, setSelectedYear] = useState('') || new Date().getFullYear();
   const [latestData, setLatestData] = useState([]);
   const [lastMonthData, setLastMonthData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -57,43 +46,26 @@ export function ManagerEnergyBuildingsHost(props) {
   useEffect(() => {
     props.getMotelList();
   }, []);
-  const { motelList } = props.profile;
-  console.log('motelList', motelList);
-
-  const date = '';
-  let totalElectricCost = 0; // Biến để tích lũy tổng electricCost
 
   const handleMonthChange = event => {
     const selectedMonth = event.target.value;
     setSelectedMonth(selectedMonth);
     setEnableFilter(true);
-    console.log('selectedMonth', selectedMonth);
-    // Add additional logic here, such as updating state or making API requests
   };
 
   const handleYearChange = event => {
     const selectedYear = event.target.value;
     setSelectedYear(selectedYear);
-    console.log('selectedYear', selectedYear);
-    // Add additional logic here, such as updating state or making API requests
   };
 
   const handleCallApiGetAllData = async () => {
-    // Loading spin
     setLoading(true);
     setEnableExport(true);
-
-    const square = num => num * num;
-
-    const result = square(5);
-    console.log('Bình phương của 5 là:', result);
 
     try {
       const current = new Date();
       const currentYear = current.getFullYear();
       const currentMon = current.getMonth();
-      console.log('currentYear', currentYear);
-      console.log('currentMon', currentMon);
 
       let lastMonth;
       let lastYear;
@@ -107,38 +79,26 @@ export function ManagerEnergyBuildingsHost(props) {
       }
 
       if (selectedMonth === '1') {
-        lastMonth = '12'; // Nếu tháng hiện tại là tháng 1, tháng trước đó là tháng 12
+        lastMonth = '12';
         setLastMonth('12');
-        lastYear = (selectedYear - 1).toString(); // Năm trước đó là năm đã chọn - 1
+        lastYear = (selectedYear - 1).toString();
         setLastYear((selectedYear - 1).toString());
       } else {
-        lastMonth = (parseInt(selectedMonth) - 1).toString(); // Ngược lại, tháng trước đó là tháng đã chọn - 1
+        lastMonth = (parseInt(selectedMonth) - 1).toString();
         setLastMonth((parseInt(selectedMonth) - 1).toString());
-        lastYear = selectedYear; // Năm trước đó giữ nguyên là năm đã chọn
+        lastYear = selectedYear;
         setLastYear(selectedYear);
       }
 
-      console.log('lastMonth', lastMonth);
-      console.log('lastYear', lastYear);
+      const apiLink = `${urlLink.api.serverUrl}${urlLink.api.getAllData}${selectedYear}/${selectedMonth}/${id}`;
 
-      const apiLink = `${urlLink.api.serverUrl +
-        urlLink.api.getAllData}${selectedYear}/${selectedMonth}/${id}`;
-      console.log('apiLink', apiLink);
-      const apiLastMonth = `${urlLink.api.serverUrl +
-        urlLink.api.getLastRecordsOfPreviousMonth}/${lastYear}/${lastMonth}`;
-      console.log('apiLastMonth', apiLastMonth);
       const response = await axios.get(apiLink);
-      const responseLastMonth = await axios.get(apiLastMonth);
-      const latestData = response.data.dataInMonth;
-      const lastMonthData = responseLastMonth.data.dataInPreviousMonth;
+      console.log('response', response.data.data)
+      const latestData = response.data.data;
       setLatestData(latestData);
-      setLastMonthData(lastMonthData);
       setLoading(false);
-      console.log('latestData', latestData);
-      console.log('lastMonthData', lastMonthData);
     } catch (error) {
       console.error('Error fetching data:', error);
-      // Handle errors as needed
     }
   };
 
@@ -152,7 +112,6 @@ export function ManagerEnergyBuildingsHost(props) {
     pdfDoc.setFontSize(12);
     pdfDoc.setFont('times', 'normal');
 
-    // Define table column headers
     const headers = [
       [
         'Room Name',
@@ -167,44 +126,39 @@ export function ManagerEnergyBuildingsHost(props) {
       ],
     ];
 
-    // Set font for headers
     pdfDoc.setFontSize(13);
-    pdfDoc.setFont('times', 'normal'); // Set font to bold for headers
-    pdfDoc.setTextColor(0, 0, 0); // Set text color for headers
+    pdfDoc.setFont('times', 'normal');
+    pdfDoc.setTextColor(0, 0, 0);
 
-    // Tạo mảng data ban đầu
     const data = [];
+    let totalElectricityCost = 0;
 
-    // Tạo mảng data từ latestData và lastMonthData
     latestData.forEach((latestData, index) => {
-      const lastData = lastMonthData[index];
-      const electricityDifference = lastData
-        ? latestData.Total_kWh - lastData.Total_kWh
+      const lastData = latestData.latestDataBeforeMonth;
+      const electricityDifference = latestData
+        ? (latestData.latestDataCurrentMonth - latestData.latestDataBeforeMonth)
         : 0;
-      const formattedElectricityDifference = electricityDifference.toFixed(0);
-      const electricityCost = electricityDifference * 3900;
-      const formattedElectricityCost = new Intl.NumberFormat('vi-VN', {
-        style: 'decimal',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2,
-      }).format(electricityCost);
+      const electricityDifferenceFormat = electricityDifference.toFixed(2);
+      const electricityCost = electricityDifferenceFormat * 3900;
+      const electricityCostFormat = electricityCost.toLocaleString('vi-VN') + ' VND';
 
-      totalElectricCost += electricityCost;
+      totalElectricityCost += electricityCost;
 
       data.push([
-        latestData.NameRoom,
-        lastData ? lastData.Total_kWh : 'Data not available',
-        latestData.Total_kWh,
-        formattedElectricityDifference,
+        latestData.name,
+        latestData ? latestData.latestDataBeforeMonth : 'Data not available',
+        latestData.latestDataCurrentMonth,
+        electricityDifferenceFormat,
         'No data',
         'No data',
-        '3.900',
-        formattedElectricityCost,
+        '3,900 VND',
+        electricityCostFormat,
         'No data',
       ]);
     });
 
-    // Tính tổng cộng
+    const totalElectricityCostFormat = totalElectricityCost.toLocaleString('vi-VN') + ' VND';
+
     data.push([
       'Total',
       '',
@@ -213,26 +167,20 @@ export function ManagerEnergyBuildingsHost(props) {
       '',
       '',
       '',
-      `${new Intl.NumberFormat('vi-VN', {
-        style: 'decimal',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2,
-      }).format(totalElectricCost)} VND`,
+      totalElectricityCostFormat,
       'No data',
     ]);
 
-    // Thêm tiêu đề và thông tin khác vào file PDF
     const title = 'HOMELAND INVOICE';
-    pdfDoc.setFontSize(14); // Kích thước font
+    pdfDoc.setFontSize(14);
 
     pdfDoc.text(`Building: ${name}`, 20, 35);
     pdfDoc.text(`Monthly Report: ${selectedMonth}/${selectedYear}`, 20, 45);
 
-    pdfDoc.setFont('times'); // Font chữ cho tiêu đề
-    pdfDoc.setLineWidth(0.3); // Độ đậm của đường kẻ
-    pdfDoc.line(10, 25, 290, 25); // Kẻ đường kẻ dưới tiêu đề
+    pdfDoc.setFont('times');
+    pdfDoc.setLineWidth(0.3);
+    pdfDoc.line(10, 25, 290, 25);
 
-    // Tính toán vị trí để căn giữa
     const { pageSize } = pdfDoc.internal;
     const pageWidth = pageSize.width ? pageSize.width : pageSize.getWidth();
     const textWidth =
@@ -240,11 +188,9 @@ export function ManagerEnergyBuildingsHost(props) {
       pdfDoc.internal.scaleFactor;
     const textOffset = (pageWidth - textWidth) / 2;
 
-    // Thêm tiêu đề vào file PDF
-    pdfDoc.setFontSize(16); // Kích thước font cho tiêu đề
+    pdfDoc.setFontSize(16);
     pdfDoc.text(title, textOffset, 20);
 
-    // Tạo bảng
     pdfDoc.autoTable({
       head: headers,
       body: data,
@@ -268,14 +214,14 @@ export function ManagerEnergyBuildingsHost(props) {
       },
     });
 
-    // Xuất file PDF
     pdfDoc.save(`Summary_Report_${name}_${selectedMonth}_${selectedYear}.pdf`);
   };
+
 
   return (
     <div className="user-profile-wrapper container">
       <Helmet>
-        <title>Trang quản lý tiền tòa nhà: </title>
+        <title>Trang quản lý tiền tòa nhà: {name}</title>
         <meta name="description" content="Description of Profile" />
       </Helmet>
       <div className="title-abc">Quản lý tiền tòa nhà {name}</div>
@@ -292,18 +238,11 @@ export function ManagerEnergyBuildingsHost(props) {
               <option value="" disabled>
                 Select month
               </option>
-              <option value="1">Tháng 1</option>
-              <option value="2">Tháng 2</option>
-              <option value="3">Tháng 3</option>
-              <option value="4">Tháng 4</option>
-              <option value="5">Tháng 5</option>
-              <option value="6">Tháng 6</option>
-              <option value="7">Tháng 7</option>
-              <option value="8">Tháng 8</option>
-              <option value="9">Tháng 9</option>
-              <option value="10">Tháng 10</option>
-              <option value="11">Tháng 11</option>
-              <option value="12">Tháng 12</option>
+              {Array.from({ length: 12 }, (_, i) => i + 1).map(month => (
+                <option key={month} value={month}>
+                  Tháng {month}
+                </option>
+              ))}
             </select>
             <select
               className="select-year"
@@ -313,9 +252,11 @@ export function ManagerEnergyBuildingsHost(props) {
               <option value="" disabled>
                 Select year
               </option>
-              <option value="2023">2023</option>
-              <option value="2024">2024</option>
-              <option value="2025">2025</option>
+              {Array.from({ length: 3 }, (_, i) => new Date().getFullYear() + i).map(year => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
             </select>
             <Button
               className="filter-btn"
@@ -338,80 +279,41 @@ export function ManagerEnergyBuildingsHost(props) {
                 <tr>
                   <th>Phòng</th>
                   <th>
-                    Chỉ số điện mới nhất ({selectedMonth}/{selectedYear})
-                  </th>
-                  <th>
                     Chỉ số điện tháng trước ({lastMonth}/{lastYear})
                   </th>
+                  <th>
+                    Chỉ số điện mới nhất ({selectedMonth}/{selectedYear})
+                  </th>
                   <th>Tổng số điện đã dùng (kWh)</th>
-                  <th>Chỉ số nước mới nhất</th>
                   <th>Chỉ số nước tháng trước</th>
-                  <th>Giá điện</th>
+                  <th>Chỉ số nước mới nhất</th>
+                  <th>Giá điện (VND)</th>
                   <th>Tiền điện (VND)</th>
-                  <th>Tiền nước</th>
+                  <th>Tiền nước (VND)</th>
                 </tr>
               </thead>
               <tbody>
                 {latestData.map((latestData, index) => {
-                  const lastData = lastMonthData[index];
-                  console.log('lastData', lastData);
-
-                  // Calculate the difference in Total_kWh
-                  const electricityDifference = lastData
-                    ? latestData.Total_kWh - lastData.Total_kWh
-                    : 0;
-                  const formattedElectricityDifference = electricityDifference.toFixed(
-                    0,
-                  );
-
-                  // You can add logic for calculating cost based on the difference, assuming you have a cost per kWh
-                  const electricityCost = electricityDifference * 3900;
-                  const formattedElectricityCost = new Intl.NumberFormat(
-                    'vi-VN',
-                    {
-                      style: 'decimal',
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 2,
-                    },
-                  ).format(electricityCost);
-
-                  // Cộng giá điện vào tổng
-                  totalElectricCost += electricityCost;
-
-                  // total all
-
+                  console.log('latestData', latestData.latestDataBeforeMonth);
+                  const electricityCost = (latestData.latestDataCurrentMonth - latestData.latestDataBeforeMonth) * 3900;
                   return (
                     <tr key={index}>
-                      <td>{latestData.NameRoom}</td>
-                      <td>{latestData.Total_kWh}</td>
-                      <td>
-                        {lastData ? lastData.Total_kWh : 'Data not available'}
-                      </td>
-                      <td>{formattedElectricityDifference}</td>
-
-                      <td>chưa có</td>
-                      <td>chưa có</td>
+                      <td>{latestData.name}</td>
+                      <td>{latestData.latestDataBeforeMonth ? latestData.latestDataBeforeMonth : 'Data not available'}</td>
+                      <td>{latestData.latestDataCurrentMonth}</td>
+                      <td>{latestData.latestDataCurrentMonth - latestData.latestDataBeforeMonth}</td>
+                      <td>No data</td>
+                      <td>No data</td>
                       <td>3.900 (VND)</td>
-
-                      <td>{formattedElectricityCost} (VND)</td>
-                      <td>chưa có</td>
-
-                      {/* You can add similar logic for water values */}
+                      <td>{electricityCost.toLocaleString('vi-VN')} (VND)</td>
+                      <td>No data</td>
                     </tr>
                   );
                 })}
-
                 <tr className="total-container">
                   <td colSpan="7">Tổng cộng</td>
-                  <td>
-                    {new Intl.NumberFormat('vi-VN', {
-                      style: 'decimal',
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 2,
-                    }).format(totalElectricCost)}{' '}
-                    (VND)
-                  </td>
-                  <td>chưa có</td>
+                  <td>{_.sumBy(latestData, data => (data.latestDataCurrentMonth - data.latestDataBeforeMonth) * 3900).toLocaleString('vi-VN')} (VND)</td>
+                  <td>No data</td>
                 </tr>
               </tbody>
             </table>
@@ -421,6 +323,8 @@ export function ManagerEnergyBuildingsHost(props) {
         ''
       )}
     </div>
+
+
   );
 }
 

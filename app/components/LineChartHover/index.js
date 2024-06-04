@@ -260,7 +260,7 @@ const LineChartHover = ({ textY, nameChart, dataEnergy, labelsEnergy, roomId }) 
     },
   };
 
-  console.log("popupData", popupData);
+  // console.log("popupData", popupData);
 
   const chartStyle = {
     width: '100%',

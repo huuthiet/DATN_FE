@@ -75,23 +75,23 @@ function FloorDetailV2(props) {
     // Update the URL without triggering a page reload
     window.history.pushState({ path: currentURL.href }, '', currentURL.href);
     setIdMotel(props.motelDetail.motel._id);
-    if(idMotel) {
+    if (idMotel) {
       getData();
     }
   }, [index]); // Run this effect whenever 'index' changes
 
-  const getData = async() => {
+  const getData = async () => {
     try {
       startLoading();
       const url = urlLink.api.serverUrl + urlLink.api.motelDetailOneFloor + idMotel + '/' + index;
       const response = await axios.get(url);
       console.log("uuuuu", response);
       setListRoom(response.data.data);
-      console.log({listRoom});
+      console.log({ listRoom });
       stopLoading();
     } catch (error) {
       stopLoading();
-      console.log({error});
+      console.log({ error });
     }
   }
 
@@ -122,7 +122,7 @@ function FloorDetailV2(props) {
               onClick={() => {
                 // console.log(floors[index]._id,
 
-                history.push(`/createroom/${floors[index]._id}`);
+                history.push(`/createroom/${floors[index]}`);
               }}
             >
               <Add className='add-icon' />
@@ -145,7 +145,7 @@ function FloorDetailV2(props) {
                   status={props.status}
                 />
               ))} */}
-              {listRoom &&
+            {listRoom &&
               listRoom.length > 0 &&
               listRoom.map((item, key) => (
                 <Room
