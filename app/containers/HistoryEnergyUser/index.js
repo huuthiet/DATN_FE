@@ -208,11 +208,18 @@ export function HistoryEnergyUser(props) {
         </Row>
         <Row className="dashboard-container">
           <Col xs={12} className="compare-container">
-            <LineChartHistoryEnergy
+            {/* <LineChartHistoryEnergy
               textY="Số điện (KWh)"
               nameChart="Lịch sử tiêu dụng điện"
-              hostRevenue={historyEnergy}
-            />
+              hostRevenue={historyEnergy}x
+            /> */}
+            {Object.keys(historyEnergy).length !== 0 && (
+              <LineChartHistoryEnergy
+                textY="Số điện (KWh)"
+                nameChart="Lịch sử tiêu dụng điện"
+                hostRevenue={historyEnergy}
+              />
+            )}
           </Col>
         </Row>
         <Row className="user-room-container">
