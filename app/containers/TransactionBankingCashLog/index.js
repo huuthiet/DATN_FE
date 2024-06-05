@@ -6,7 +6,7 @@
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -45,6 +45,7 @@ export function TransactionBankingCashLog(props) {
 
   const [orderArr, setOrderArr] = useState([]);
   const [urlImgCloud, setUrlImgCloud] = useState('');
+  const fileRefs = useRef({});
 
   // const getDataTransactons = async () => {
   //   const requestUrl = urlLink.api.serverUrl + urlLink.api.getBankingCashTransactionList;
@@ -172,6 +173,7 @@ export function TransactionBankingCashLog(props) {
 
   const apiPostImg = async payload => {
     const { id, formData } = payload;
+    console.log("iddddd", id);
     console.log('formData', formData);
     // eslint-disable-next-line no-useless-concat
     const requestUrl =
@@ -288,7 +290,8 @@ export function TransactionBankingCashLog(props) {
         >
           <input
             type="file"
-            ref={fileInputRef}
+            // ref={fileInputRef}
+            ref={el => (fileRefs.current[params.row._id] = el)}
             style={{ display: 'none' }} // Ẩn thẻ input
             onChange={evt => {
               console.log({ params });
@@ -297,7 +300,8 @@ export function TransactionBankingCashLog(props) {
           />
           <CloudUpload
             style={{ fontSize: 40, cursor: 'pointer' }} // Kích thước của icon và con trỏ chuột
-            onClick={handleIconClick}
+            // onClick={handleIconClick}
+            onClick={() => fileRefs.current[params.row._id].click()}
           />
         </div>
       ),

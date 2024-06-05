@@ -105,6 +105,10 @@ export default defineMessages({
     id: `${scope}.CheckinDate`,
     defaultMessage: 'Ngày nhận phòng',
   },
+  ExpireActivate: {
+    id: `${scope}.ExpireActivate`,
+    defaultMessage: 'Hạn kích hoạt',
+  },
   PeopleRomSet: {
     id: `${scope}.PeopleRomSet`,
     defaultMessage: 'Người đặt phòng',
@@ -128,6 +132,10 @@ export default defineMessages({
   RentalContract: {
     id: `${scope}.RentalContract`,
     defaultMessage: 'Hợp đồng cho thuê',
+  },
+  ExpireRenew: {
+    id: `${scope}.ExpireRenew`,
+    defaultMessage: 'Hạn gia hạn',
   },
   BondMoney: {
     id: `${scope}.BondMoney`,
@@ -230,6 +238,10 @@ export default defineMessages({
   PaymentDate: {
     id: `${scope}.PaymentDate`,
     defaultMessage: 'Ngày thanh toán',
+  },
+  ExpireDate: {
+    id: `${scope}.ExpireDate`,
+    defaultMessage: 'Ngày hết hạn',
   },
   BalanceInWallet: {
     id: `${scope}.BalanceInWallet`,

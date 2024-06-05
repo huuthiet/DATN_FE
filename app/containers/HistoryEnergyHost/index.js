@@ -210,11 +210,13 @@ export function HistoryEnergyHost(props) {
         </Row>
         <Row className="dashboard-container">
           <Col xs={12} className="compare-container">
-            <LineChartHistoryEnergy
-              textY="Số điện (KWh)"
-              nameChart="Lịch sử tiêu dụng điện"
-              hostRevenue={historyEnergy}
-            />
+            {Object.keys(historyEnergy).length !== 0 && (
+              <LineChartHistoryEnergy
+                textY="Số điện (KWh)"
+                nameChart="Lịch sử tiêu dụng điện"
+                hostRevenue={historyEnergy}
+              />
+            )}
           </Col>
         </Row>
         <Row className="user-room-container">

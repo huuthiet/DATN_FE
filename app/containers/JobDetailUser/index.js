@@ -339,6 +339,8 @@ export function JobDetailUser(props) {
     room = {},
   } = job;
 
+  const expireRenewContract = moment(checkInTime).add(rentalPeriod, 'months').subtract(15, 'days');
+
   console.log('job in index: ', job);
 
   // let roundedTotalkWhTime = 0;// số điện
@@ -764,6 +766,12 @@ export function JobDetailUser(props) {
               primary={<FormattedMessage {...messages.CheckinDate} />}
               secondary={moment(checkInTime).format('DD/MM/YYYY')}
             />
+            {!isActived && (
+              <ListItemText
+                primary={<FormattedMessage {...messages.ExpireActivate} />}
+                secondary={moment(checkInTime).add(7, "days").format('DD/MM/YYYY')}
+              />
+            )}
             <Button
               className={classes.button}
               size="small"
@@ -831,6 +839,14 @@ export function JobDetailUser(props) {
               primary={<FormattedMessage {...messages.PaymentUponCheckIn} />}
               secondary={Money(afterCheckInCost)}
             />
+            {currentOrder.type === 'afterCheckInCost' && (
+              <ListItemText
+                primary={<FormattedMessage {...messages.ExpireDate} />}
+                secondary={
+                  currentOrder.type === 'afterCheckInCost' ? moment(currentOrder.expireTime).format("DD/MM/YYYY"): ""
+                }
+              />
+            )}
             <Button
               variant="outlined"
               color="primary"
@@ -943,6 +959,13 @@ export function JobDetailUser(props) {
               primary={<FormattedMessage {...messages.RentalContract} />}
               secondary={`${rentalPeriod} tháng`}
             />
+            {/* <ListItemText
+              primary={<FormattedMessage {...messages.ExpireRenew} />}
+              secondary={expireRenewContract}
+            /> */}
+            {/* {moment(checkInTime).add(rentalPeriod, "months").diff(moment(), "days") > 15 ?
+
+            } */}
             <Button
               className={classes.button}
               size="small"
@@ -977,8 +1000,21 @@ export function JobDetailUser(props) {
             </ListItemAvatar>
             <ListItemText
               primary={<FormattedMessage {...messages.PaymentDate} />}
-              secondary={moment(lastDay).format('DD/MM/YYYY')}
+              // secondary={moment(lastDay).format('DD/MM/YYYY')}
+              secondary={
+                currentOrder.type === 'monthly' ? moment(currentOrder.expireTime).startOf("month").format("DD/MM/YYYY")
+                : moment().add(1, "months").startOf("month").format("DD/MM/YYYY")
+              }
             />
+            {currentOrder.type === 'monthly' && (
+              <ListItemText
+                primary={<FormattedMessage {...messages.ExpireDate} />}
+                // secondary={moment(lastDay).format('DD/MM/YYYY')}
+                secondary={
+                  currentOrder.type === 'monthly' ? moment(currentOrder.expireTime).format("DD/MM/YYYY") : ''
+                }
+              />
+            )}
             <Button
               className={classes.button}
               size="small"
