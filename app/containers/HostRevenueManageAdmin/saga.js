@@ -14,9 +14,10 @@ import { GET_HOST_REVENUE, GET_LIST_ROOM, POST_WITHDRAW } from './constants';
 
 export function* apiGetListRoom(payload) {
   const { data } = payload;
+  console.log('data', data);
   const revenueRequest = `${urlLink.api.serverUrl}${urlLink.api.hostBuildingListForRevenue
     }${data.id}`;
-  console.log('revenueRequest', revenueRequest);
+  console.log('revenueRequesttt', revenueRequest);
   try {
     const revenueResponse = yield axios.get(revenueRequest);
     console.log('revenueResponse', revenueResponse.data.data);

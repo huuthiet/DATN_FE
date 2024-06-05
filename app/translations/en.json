@@ -640,5 +640,9 @@
   "ReportProblem.containers.user": "User Name",
   "ReportProblem.containers.status": "Status",
   "ReportProblem.containers.description": "Description",
-  "ReportProblem.containers.image": "Image"
+  "ReportProblem.containers.image": "Image",
+  "HostRevenue.containers.Header": "Host Revenue Management",
+  "HostRevenue.containers.Search": "Search",
+  "HostRevenue.containers.Export": "Export",
+  "HostRevenue.containers.ProcessWithdrawRequest": "Process Withdraw Request"
 }

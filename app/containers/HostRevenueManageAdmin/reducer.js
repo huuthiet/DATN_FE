@@ -10,7 +10,7 @@ import {
 } from './constants';
 
 export const initialState = {
-  listRoom: [],
+  listRoom: {},
   hostRevenue: [],
   action1: 0,
   withdraw: [],
@@ -21,6 +21,7 @@ const hostMotelRoomDetailUserReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case GET_LIST_ROOM_SUCCESS:
+        console.log('action.response', action.response);
         draft.listRoom = action.response;
 
         break;

@@ -648,5 +648,13 @@
   "ReportProblem.containers.user": "Tên khách",
   "ReportProblem.containers.status": "Trạng thái",
   "ReportProblem.containers.description": "Nội dung",
-  "ReportProblem.containers.image": "Ảnh sự cố"
+  "ReportProblem.containers.image": "Ảnh sự cố",
+  "HostRevenue.containers.Header": "Quản lý doanh thu",
+  "HostRevenue.containers.Search": "Tìm kiếm",
+  "HostRevenue.containers.Export": "Xuất file",
+  "HostRevenue.containers.ProcessWithdrawRequest": "Gửi yêu cầu rút tiền",
+  "HostRevenueManageAdmin.containers.Header": "Quản lý doanh thu",
+  "HostRevenueManageAdmin.containers.Search": "Tìm kiếm",
+  "HostRevenueManageAdmin.containers.Export": "Xuất file",
+  "HostRevenueManageAdmin.containers.ProcessWithdrawRequest": "Xử lý yêu cầu rút tiền"
 }

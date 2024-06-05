@@ -155,6 +155,27 @@ export function ManagerEnergyHostAdmin(props) {
         </a>
       ),
     },
+    {
+      field: 'monthly',
+      headerName: 'Quản lý rút tiền doanh thu',
+      headerAlign: 'center',
+      align: 'center',
+
+      width: 300,
+      headerClassName: 'header-bold',
+      align: 'center',
+
+      renderCell: params => (
+        <a
+          className="btn-detail"
+          onClick={() => {
+            handleButtonClickWithdraw(params.row);
+          }}
+        >
+          Xem chi tiết
+        </a>
+      ),
+    },
   ];
 
   useInjectReducer({ key: 'motelprofileList', reducer });
@@ -203,6 +224,11 @@ export function ManagerEnergyHostAdmin(props) {
   const handleButtonClickRevenue = row => {
     history.push(
       `/admin/hostRevenue/${row._id}`,
+    );
+  };
+  const handleButtonClickWithdraw = row => {
+    history.push(
+      `/admin/withdrawRequest/${row._id}`,
     );
   };
   const handleButtonClickProfile = row => {

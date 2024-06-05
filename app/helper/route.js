@@ -28,6 +28,8 @@ export const urlLink = {
     motelPdf: '/v1/homeKey/motelRoom/pdf',
     reportProblem: '/v1/homeKey/reportProblem/',
     transactionsHost: '/v1/homeKey/host/transactions/host',
+    postRequestWithdrawHost: '/v1/homeKey/host/transactions/requestWithdraws', //for Host
+    getWithdrawListAdmin: '/v1/admin/withdrawRequest/list', //for admin
     bill: '/v1/homeKey/bill',
     Adminbill: '/v1/homeKey/admin/bill',
     AdminReportProblem: '/v1/homeKey/admin/reportProblem',
@@ -131,7 +133,7 @@ export const urlLink = {
     // /v1/homeKey/energy/device/exportBillAllRoom/:idMotel/2024-03-01/2024-03-15
     exportBillBuilding: '/v1/homeKey/energy/device/exportBillBuilding/', // + /:idMotel/:startTime/:endTime
     buildingRevenue: '/v1/homeKey/energy/device/buildingRevenue/', // +/:idMotel/:Month/:Year
-    hostBuildingListForRenenue: '/v1/homeKey/energy/device/hostBuildingList/', // +/:idOwner
+    hostBuildingListForRevenue: '/v1/homeKey/energy/device/hostBuildingList/', // +/:idOwner
     getPayDepositList: '/v1/homeKey/order/getPayDepositList/',
     getListOrderNoPayOfPayDeposit: '/v1/homeKey/order/listOrderNoPayOfPayDeposit/',
     postExportBillRoomPendingPayByOrder: '/v1/homeKey/order/exportBillRoomPendingPayByOrder/',

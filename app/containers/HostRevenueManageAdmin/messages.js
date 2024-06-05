@@ -5,7 +5,7 @@
  */
 import { defineMessages } from 'react-intl';
 
-export const scope = 'HostRevenue.containers';
+export const scope = 'HostRevenueManageAdmin.containers';
 
 export default defineMessages({
     Header: {
@@ -20,8 +20,8 @@ export default defineMessages({
         id: `${scope}.Export`,
         defaultMessage: 'Xuất',
     },
-    Withdraw: {
-        id: `${scope}.Withdraw`,
-        defaultMessage: 'Gửi yêu cầu rút tiền',
+    ProcessWithdrawRequest: {
+        id: `${scope}.ProcessWithdrawRequest`,
+        defaultMessage: 'Xử lý yêu cầu rút tiền',
     },
 });

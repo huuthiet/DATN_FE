@@ -51,6 +51,8 @@ import axios from 'axios';
 import { set } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+
 
 
 
@@ -61,7 +63,6 @@ export function HostMotelRoomDetailUser(props) {
   console.log('check props: ', props);
   const { hostRevenue } = props.hostMotelRoomDetailUser;
   console.log('hostRevenueData', hostRevenue);
-  //get user data
   let totalRevenue = 0;
   let totalElectricPrice = 0;
 
@@ -84,6 +85,8 @@ export function HostMotelRoomDetailUser(props) {
     };
     props.getListRoom(data);
   }, []);
+  const history = useHistory();
+
   const roomEntries = Object.entries(listRoom);
   console.log('roomEntries', roomEntries);
 
@@ -125,6 +128,9 @@ export function HostMotelRoomDetailUser(props) {
     };
 
     props.getHostRevenue(data);
+
+    // Reset the selections
+    setSelectedBuilding('Chọn tòa nhà');
   };
 
   const getCurrentMonthData = (monthlyRevenue) => {
@@ -219,104 +225,8 @@ export function HostMotelRoomDetailUser(props) {
     }
   };
 
-  const handleWithdrawRequest = () => {
-    setModal(true);
-    const userBankRequest = urlLink.api.serverUrl + urlLink.api.getBankUser;
-    console.log('userBankRequest', userBankRequest);
-    const data = { id };
-
-    axios.get(userBankRequest, { params: data })
-      .then((response) => {
-        console.log('response', response.data.data.data);
-        const fetchedData = response.data.data.data;
-        if (Array.isArray(fetchedData)) {
-          setBankData(fetchedData); // Ensure data is an array
-          if (fetchedData.length > 0) {
-            setSelectedBank(fetchedData[0]._id); // Set the first bank as the default selected
-          }
-        } else {
-          setBankData([]); // Set as empty array if data is not an array
-        }
-      })
-      .catch((error) => {
-        console.log('error', error);
-        setBankData([]); // Set as empty array on error
-      });
-  };
-
-  const handleBankChange = (event) => {
-    setSelectedBank(event.target.value);
-  };
-
-  const getSelectedBankAccountNumber = () => {
-    if (Array.isArray(bankData)) {
-      const selectedBankData = bankData.find(bank => bank._id === selectedBank);
-      return selectedBankData ? selectedBankData.stk : '';
-    }
-    return '';
-  };
-
-
-
-  const handleSendWithdrawRequest = () => {
-    const bankId = selectedBank;
-    const accountNumber = getSelectedBankAccountNumber();
-    const withdrawAmount = document.getElementById('withdrawAmount').value;
-    const withdrawReason = document.getElementById('withdrawReason').value;
-
-    //create getRandomHex function
-    function getRandomHex() {
-      // Generate a random 32-bit integer
-      const randomInt = Math.floor(Math.random() * 0xFFFFFFFF);
-      // Convert the integer to a hexadecimal string and ensure it is 8 characters long
-      const hexString = randomInt.toString(16).toUpperCase().padStart(8, '0');
-      return hexString;
-    }
-    const keyPayment = getRandomHex();
-    console.log('keyPayment', keyPayment);
-
-    if (!withdrawAmount) {
-      toast.error('Vui lòng nhập số tiền cần rút');
-      return;
-    }
-
-    if (!withdrawReason) {
-      toast.error('Vui lòng nhập lý do rút tiền');
-      return;
-    }
-
-    if (withdrawAmount > hostRevenue.totalRevenue) {
-      toast.error('Số tiền rút phải nhỏ hơn tổng doanh thu');
-      return;
-    }
-
-    const withdrawRequest = urlLink.api.serverUrl + urlLink.api.withdrawRequest;
-    //create current date format "yyyy-mm"
-    const date = new Date();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const requestDate = `${year}-${month}`;
-
-
-    const data = {
-      id,
-      keyPayment,
-      requestDate,
-      //motel name
-      motelName: selectedBuilding,
-      bankId,
-      accountNumber,
-      withdrawAmount,
-      withdrawReason,
-      type: 'cash',
-    };
-    console.log('data', data);
-    setModal(false);
-    //reset form
-    document.getElementById('withdrawAmount').value = '';
-    document.getElementById('withdrawReason').value = '';
-    props.postWithdraw(data);
-
+  const handleProcessWithdrawRequest = () => {
+    history.push(`/admin/withdrawRequest/${listRoom.owner}`);
   }
 
   return (
@@ -331,73 +241,6 @@ export function HostMotelRoomDetailUser(props) {
       <div className="title">Quản lý doanh thu</div>
       <div className="job-list-wrapper container-fluid">
         <Row className="action-container">
-          <ModalComponent
-            modal={modal}
-            toggle={() => setModal(!modal)}
-            className="modal-lg"
-            modalTitle="Xác nhận yêu cầu rút tiền"
-            footer={
-              <>
-                <Button color="primary" onClick={() => setModal(!modal)}>Đóng</Button>
-                <Button color="success" onClick={handleSendWithdrawRequest}>Gửi yêu cầu</Button>
-              </>
-            }
-          >
-            <Row>
-              <Col md={12}>
-                <Form>
-                  <FormGroup>
-                    <Label for="bankName">Ngân hàng</Label>
-                    <Input
-                      type="select"
-                      name="bankName"
-                      id="bankName"
-                      value={selectedBank}
-                      onChange={handleBankChange}
-                    >
-                      {bankData.length > 0 ? (
-                        bankData.map(bank => (
-                          <option key={bank._id} value={bank._id}>
-                            {bank.nameTkLable}
-                          </option>
-                        ))
-                      ) : (
-                        <option>Không có dữ liệu</option>
-                      )}
-                    </Input>
-                  </FormGroup>
-                  <FormGroup>
-                    <Label for="accountNumber">Số tài khoản</Label>
-                    <Input
-                      type="text"
-                      name="accountNumber"
-                      id="accountNumber"
-                      value={getSelectedBankAccountNumber()}
-                      readOnly
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label for="withdrawAmount">Số tiền cần rút</Label>
-                    <Input
-                      type="text"
-                      name="withdrawAmount"
-                      id="withdrawAmount"
-                      placeholder="Nhập số tiền cần rút"
-                    />
-                  </FormGroup>
-
-                  <FormGroup>
-                    <Label for="withdrawReason">Lý do rút tiền</Label>
-                    <Input
-                      type="textarea"
-                      name="withdrawReason"
-                      id="withdrawReason"
-                    />
-                  </FormGroup>
-                </Form>
-              </Col>
-            </Row>
-          </ModalComponent>
           <Row>
           </Row>
           <Col xs={12} sm={2}>
@@ -467,12 +310,11 @@ export function HostMotelRoomDetailUser(props) {
               </Col>
               <Col md={5}>
                 <Button
-                  onClick={handleWithdrawRequest}
                   color="primary"
                   className="btn-block mt-4"
+                  onClick={handleProcessWithdrawRequest}
                 >
-                  {<FormattedMessage {...messages.Withdraw} />}
-                </Button>
+                  {<FormattedMessage {...messages.ProcessWithdrawRequest} />}                    </Button>
               </Col>
             </Row>
           </Col>
