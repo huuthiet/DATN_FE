@@ -126,9 +126,8 @@ export function WithdrawRequestListHost(props) {
       description: item.description,
       keyPayment: item.keyPayment,
       status: item.status === 'waiting' ? 'Đang chờ duyệt' :
-        item.status === 'faild' ? 'Thất bại' :
-          item.status === 'approved' ? 'Đã được duyệt' :
-            item.status === 'cancel' ? 'Đã hủy' : 'N/A',
+        item.status === 'approved' ? 'Đã được duyệt' :
+          item.status === 'cancel' ? 'Đã hủy' : 'N/A',
       time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
       payment_Method: (item.paymentMethod === "cash") ? "Tiền mặt" : "Ngân hàng",
       // ...item,
@@ -143,21 +142,14 @@ export function WithdrawRequestListHost(props) {
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 120 },
     {
       field: 'nameUser',
-      headerName: 'Người thuê',
+      headerName: 'Người yêu cầu',
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
     },
     {
-      field: 'phone',
-      headerName: 'Số điện thoại',
-      headerAlign: 'center',
-      width: 200,
-      headerClassName: 'header-bold',
-    },
-    {
-      field: 'roomName',
-      headerName: 'Phòng',
+      field: 'motelName',
+      headerName: 'Tòa nhà',
       headerAlign: 'center',
       width: 150,
       headerClassName: 'header-bold',
@@ -173,19 +165,19 @@ export function WithdrawRequestListHost(props) {
       field: 'payment_Method',
       headerName: 'Phương thức thanh toán',
       headerAlign: 'center',
-      width: 250,
+      width: 300,
       headerClassName: 'header-bold',
     },
     {
       field: 'amount',
-      headerName: 'Số tiền cọc',
+      headerName: 'Số tiền cần rút',
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
     },
     {
       field: 'keyPayment',
-      headerName: 'Nội dung thanh toán',
+      headerName: 'Mã giao dịch',
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
@@ -194,7 +186,7 @@ export function WithdrawRequestListHost(props) {
       field: 'description',
       headerName: 'Mô tả',
       headerAlign: 'center',
-      width: 250,
+      width: 400,
       headerClassName: 'header-bold',
     },
     {
@@ -281,29 +273,29 @@ export function WithdrawRequestListHost(props) {
         return '';
       },
     },
-    {
-      field: 'action',
-      headerName: 'Chi tiết',
-      headerAlign: 'center',
-      width: 200,
-      headerClassName: 'header-bold',
-      renderCell: params => {
-        // eslint-disable-next-line no-unused-expressions
-        return (
-          <>
-            <a
-              className='btn-detail'
-              onClick={() => {
-                console.log("{params.row._id}", params.row._id);
-                history.push(`/manage-deposit/pay-deposit/${id}/${params.row._id}`);
-              }}
-            >
-              Xem chi tiết
-            </a>
-          </>
-        );
-      },
-    },
+    // {
+    //   field: 'action',
+    //   headerName: 'Chi tiết',
+    //   headerAlign: 'center',
+    //   width: 200,
+    //   headerClassName: 'header-bold',
+    //   renderCell: params => {
+    //     // eslint-disable-next-line no-unused-expressions
+    //     return (
+    //       <>
+    //         <a
+    //           className='btn-detail'
+    //           onClick={() => {
+    //             console.log("{params.row._id}", params.row._id);
+    //             history.push(`/manage-deposit/pay-deposit/${id}/${params.row._id}`);
+    //           }}
+    //         >
+    //           Xem chi tiết
+    //         </a>
+    //       </>
+    //     );
+    //   },
+    // },
   ];
 
   const filteredColumns = columns.filter(column => {

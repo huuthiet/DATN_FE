@@ -222,6 +222,10 @@ export function HostMotelRoomDetailUser(props) {
   };
 
   const handleWithdrawRequest = () => {
+    if (selectedBuilding === 'Chọn tòa nhà') {
+      toast.error('Vui lòng chọn tòa nhà');
+      return;
+    }
     setModal(true);
     const userBankRequest = urlLink.api.serverUrl + urlLink.api.getBankUser;
     console.log('userBankRequest', userBankRequest);
@@ -318,6 +322,12 @@ export function HostMotelRoomDetailUser(props) {
     document.getElementById('withdrawAmount').value = '';
     document.getElementById('withdrawReason').value = '';
     props.postWithdraw(data);
+    if (data) {
+      toast.success('Gửi yêu cầu rút tiền thành công');
+    } else {
+      toast.error('Gửi yêu cầu rút tiền thất bại');
+
+    }
 
   }
 
@@ -342,10 +352,10 @@ export function HostMotelRoomDetailUser(props) {
             modalTitle="Xác nhận yêu cầu rút tiền"
             footer={
               <>
-                <Button color="primary" onClick={() => setModal(!modal)}>
+                <Button color="secondary" onClick={() => setModal(!modal)}>
                   <FormattedMessage {...messages.Cancel} />
                 </Button>
-                <Button color="success" onClick={handleSendWithdrawRequest}>
+                <Button color="primary" onClick={handleSendWithdrawRequest}>
                   <FormattedMessage {...messages.Send} />
                 </Button>
               </>

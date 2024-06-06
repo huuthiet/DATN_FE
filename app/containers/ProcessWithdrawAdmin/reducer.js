@@ -15,6 +15,7 @@ export const initialState = {
   error: {},
   pendingAcceptBankCashList: [],
   showWarningapprove: false,
+  showWarningreject: false,
   showSuccessapprove: false,
   showErrorsapprove: false,
 };

@@ -39,28 +39,35 @@ export function* apiGetPendingAcceptBankingCashList() {
 }
 
 export function* apiApproveWithdrawRequest(payload) {
-  console.log("payload", payload);
-  const requestUrl = urlLink.api.serverUrl + urlLink.api.putApproveWithdrawRequestAdmin.replace(':id', payload.idTransaction);
-  console.log("requestUrl", requestUrl);
-  yield put(loadRepos());
-  try {
-    const response = yield axios.put(requestUrl);
-    console.log("response", response);
-    yield put(getPendingAcceptBankingCashList(response.data.data));
-  } catch (error) {
-    yield put(getPendingAcceptBankingCashListFail(error.response.data));
-    toast.error(
-      error.response.data.errors[0].errorMessage,
-      {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 3000,
-        hideProgressBar: false,
-        pauseOnHover: true,
-        draggable: true,
-      },
-    );
-  } finally {
-    yield put(reposLoaded());
+  if (payload.status === "approve") {
+    console.log("payload", payload);
+    const requestUrl = urlLink.api.serverUrl + urlLink.api.putApproveWithdrawRequestAdmin.replace(':id', payload.idTransaction);
+    console.log("requestUrl", requestUrl);
+    yield put(loadRepos());
+    try {
+      const response = yield axios.put(requestUrl);
+      console.log("response", response);
+      yield put(getPendingAcceptBankingCashList(response.data.data));
+    } catch (error) {
+      yield put(getPendingAcceptBankingCashListFail(error.response.data));
+    } finally {
+      yield put(reposLoaded());
+    }
+  }
+  if (payload.status === "reject") {
+    console.log("payload", payload);
+    const requestUrl = urlLink.api.serverUrl + urlLink.api.putRejectWithdrawRequestAdmin.replace(':id', payload.idTransaction);
+    console.log("requestUrl", requestUrl);
+    yield put(loadRepos());
+    try {
+      const response = yield axios.put(requestUrl);
+      console.log("response", response);
+      yield put(getPendingAcceptBankingCashList(response.data.data));
+    } catch (error) {
+      yield put(getPendingAcceptBankingCashListFail(error.response.data));
+    } finally {
+      yield put(reposLoaded());
+    }
   }
 }
 

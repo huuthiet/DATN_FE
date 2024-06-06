@@ -667,5 +667,8 @@
   "HostRevenueManageAdmin.containers.Header": "Quản lý doanh thu",
   "HostRevenueManageAdmin.containers.Search": "Tìm kiếm",
   "HostRevenueManageAdmin.containers.Export": "Xuất file",
-  "HostRevenueManageAdmin.containers.ProcessWithdrawRequest": "Xử lý yêu cầu rút tiền"
+  "HostRevenueManageAdmin.containers.ProcessWithdrawRequest": "Xử lý yêu cầu rút tiền",
+  "WithdrawalRequest.containers.Header": "Quản lý yêu cầu rút tiền",
+  "WithdrawalRequest.containers.Accept": "Chấp nhận",
+  "WithdrawalRequest.containers.Reject": "Từ chối"
 }

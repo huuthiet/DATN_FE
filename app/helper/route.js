@@ -33,6 +33,7 @@ export const urlLink = {
     postRequestWithdrawHost: '/v1/homeKey/host/transactions/requestWithdraws', //for Host
     getWithdrawalListAdmin: '/v1/admin/withdrawRequest/list', //for admin
     putApproveWithdrawRequestAdmin: '/v1/admin/approveWithdrawRequest/:id', //for admin, id is transactionId
+    putRejectWithdrawRequestAdmin: '/v1/admin/rejectWithdrawRequest/:id', //for admin, id is transactionId
     getWithdrawalListHost: '/v1/homeKey/host/transactions/requestWithdraws/list', //for Host
     bill: '/v1/homeKey/bill',
     Adminbill: '/v1/homeKey/admin/bill',

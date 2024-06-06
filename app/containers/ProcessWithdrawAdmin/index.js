@@ -27,6 +27,7 @@ import Money from '../App/format';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 export function TransactionBankingCashLog(props) {
   useInjectReducer({ key: 'pendingAcceptBankCashList', reducer });
@@ -64,6 +65,7 @@ export function TransactionBankingCashLog(props) {
   const {
     pendingAcceptBankCashList = [],
     showWarningapprove,
+    showWarningreject,
     showSuccessapprove,
     action = 0,
   } = props.pendingAcceptBankCashList;
@@ -291,12 +293,38 @@ export function TransactionBankingCashLog(props) {
               color="success"
               onClick={() => {
                 setIdTransaction(params.row._id);
-                setStatus('success');
+                setStatus('approve');
                 props.changeStoreData('showWarningapprove', true);
               }}
             >
               <i className="fa fa-check" aria-hidden="true">
-                Chấp Nhận
+                <FormattedMessage {...messages.Accept} />
+              </i>
+            </Button>
+          );
+        }
+        return '';
+      },
+    },
+    {
+      field: 'reject',
+      headerName: 'Từ chối',
+      headerAlign: 'center',
+      width: 200,
+      headerClassName: 'header-bold',
+      renderCell: params => {
+        if (params.row.status === "waiting") {
+          return (
+            <Button
+              color="danger"
+              onClick={() => {
+                setIdTransaction(params.row._id);
+                setStatus('reject');
+                props.changeStoreData('showWarningapprove', true);
+              }}
+            >
+              <i className="fa fa-check" aria-hidden="true">
+                <FormattedMessage {...messages.Reject} />
               </i>
             </Button>
           );
@@ -309,13 +337,15 @@ export function TransactionBankingCashLog(props) {
   return (
     <div className="login-page-wrapper">
       <Helmet>
-        <title>TransactionBankingCashLog</title>
+        <title>WithdrawalRequestProcess</title>
         <meta
           name="description"
           content="Description of TransactionBankingCashLog"
         />
       </Helmet>
-      <div className="title">Nhật ký giao dịch</div>
+      <div className="title">
+        <FormattedMessage {...messages.Header} />
+      </div>
       {loading && <div className="loading-overlay" />}
       <div className="job-list-wrapper container-fluid">
         <div style={{ width: '100%' }}>
@@ -340,6 +370,22 @@ export function TransactionBankingCashLog(props) {
           props.changeStoreData('showWarningapprove', false);
         }}
       />
+
+      <WarningPopup
+        visible={showWarningreject}
+        content="Xác nhận từ chối?"
+        callBack={() => {
+          props.approveWithdrawRequest(idTransaction, status);
+          console.log({ idTransaction, status });
+          toast.success('Từ chối yêu cầu thành công!');
+        }}
+        toggle={() => {
+
+          props.changeStoreData('showWarningreject', false);
+        }}
+      />
+
+
       <SuccessPopup
         visible={showSuccessapprove}
         content="Thành công!"

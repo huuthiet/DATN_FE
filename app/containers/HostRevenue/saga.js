@@ -11,6 +11,7 @@ import {
   postWithdrawFail,
 } from './actions';
 import { GET_HOST_REVENUE, GET_LIST_ROOM, POST_WITHDRAW } from './constants';
+import { toast } from 'react-toastify';
 
 export function* apiGetListRoom(payload) {
   const { data } = payload;
@@ -55,8 +56,13 @@ export function* apiPostWithdrawRequest(payload) {
   console.log("Check withdraw requestUrl: ", requestUrl);
   try {
     const response = yield axios.post(requestUrl, data);
-    console.log('Check withdraw response: ', response);
-    yield put(postWithdrawSuccess(response.data));
+    if (response.data.status === 200) {
+      // toast.success(response.data.message);
+      yield put(postWithdrawSuccess(response.data));
+    } else {
+      // toast.error(response.data.message);
+      yield put(postWithdrawFail(response.data));
+    }
   } catch (error) {
     yield put(postWithdrawFail(error.response.data));
   }

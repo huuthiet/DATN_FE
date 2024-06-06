@@ -656,5 +656,8 @@
   "HostRevenue.containers.TotalRoomPrice": "Total Room Price",
   "HostRevenue.containers.CurrentMonth": "Current Month Revenue",
   "HostRevenue.containers.Cancel": "Cancel",
-  "HostRevenue.containers.Send": "Send Request"
+  "HostRevenue.containers.Send": "Send Request",
+  "WithdrawalRequest.containers.Header": "Withdrawal Request Management",
+  "WithdrawalRequest.containers.Accept": "Accept",
+  "WithdrawalRequest.containers.Reject": "Reject"
 }
