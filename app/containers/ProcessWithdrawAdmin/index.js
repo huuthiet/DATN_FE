@@ -1,12 +1,4 @@
-/**
- *
- * CTransantionLog
- *
- */
-import axios from 'axios';
-import { DataGrid } from '@mui/x-data-grid';
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -27,13 +19,14 @@ import saga from './saga';
 import makeSelectPendingAcceptBankCashList from './selectors';
 import SuccessPopup from '../../components/SuccessPopup';
 import WarningPopup from '../../components/WarningPopup';
-
-// import localStore  from 'local-storage';
 import localStoreService from 'local-storage';
 import * as localStore from 'local-storage';
 import { CloudUpload } from '@material-ui/icons';
 import moment from 'moment';
 import Money from '../App/format';
+import { DataGrid } from '@mui/x-data-grid';
+import axios from 'axios';
+import PropTypes from 'prop-types';
 
 export function TransactionBankingCashLog(props) {
   useInjectReducer({ key: 'pendingAcceptBankCashList', reducer });
@@ -50,21 +43,24 @@ export function TransactionBankingCashLog(props) {
   const [idTransaction, setIdTransaction] = useState('');
   const [status, setStatus] = useState('');
 
-
-
-  // const getDataTransactons = async () => {
-  //   const requestUrl = urlLink.api.serverUrl + urlLink.api.getBankingCashTransactionList;
-
-  const fileInputRef = React.useRef(null);
+  const fileInputRef = useRef(null);
+  const fileRefs = useRef({});
 
   const handleIconClick = () => {
     fileInputRef.current.click();
   };
+
   useEffect(() => {
     props.getPendingAcceptBankingCashList();
-  }, [urlImgCloud]);
+  }, [urlImgCloud, status]);
 
-  // const pendingAcceptBankCashList= [];
+  useEffect(() => {
+    if (status === 'success') {
+      props.getPendingAcceptBankingCashList();
+      setStatus('');
+    }
+  }, [status]);
+
   const {
     pendingAcceptBankCashList = [],
     showWarningapprove,
@@ -76,18 +72,19 @@ export function TransactionBankingCashLog(props) {
 
   if (pendingAcceptBankCashList.length !== 0) {
     transformedData = pendingAcceptBankCashList.map((item, index) => ({
-      key: index + 1, // STT
+      key: index + 1,
       nameMotelRoom: item.motel && item.motel.name ? item.motel.name : 'N/A',
       nameRoom: item.room && item.room.name ? item.room.name : 'N/A',
       time: moment(new Date(item.createdAt)).format('DD-MM-YYYY'),
       amount_tranform: `${Money(parseInt(item.amount.toFixed(0)))} VNĐ`,
       payment_Method: item.paymentMethod === 'cash' ? 'Tiền mặt' : 'Ngân hàng',
       type_trasaction:
-        (item.type === 'monthly')
+        item.type === 'monthly'
           ? 'Thanh toán hàng tháng'
           : item.type === 'afterCheckInCost'
             ? 'Thanh toán khi nhận phòng'
-            : item.type === 'deposit' ? "Thanh toán cọc"
+            : item.type === 'deposit'
+              ? 'Thanh toán cọc'
               : 'N/A',
       ...item,
     }));
@@ -103,7 +100,6 @@ export function TransactionBankingCashLog(props) {
 
     try {
       const data = {
-        // eslint-disable-next-line no-underscore-dangle
         id: key,
         formData,
       };
@@ -132,10 +128,8 @@ export function TransactionBankingCashLog(props) {
       },
     };
     const requestUrl =
-      urlLink.api.serverUrl
-      + urlLink.api.postExportBillPaidByTransaction
-      + id;
-    console.log({ requestUrl })
+      urlLink.api.serverUrl + urlLink.api.postExportBillPaidByTransaction + id;
+    console.log({ requestUrl });
     try {
       const response = await axios.post(
         requestUrl,
@@ -158,10 +152,7 @@ export function TransactionBankingCashLog(props) {
   const apiPostImg = async payload => {
     const { id, formData } = payload;
     console.log('formData', formData);
-    // eslint-disable-next-line no-useless-concat
-    const requestUrl =
-      // eslint-disable-next-line no-useless-concat
-      `${urlLink.api.serverUrl}/v1/uploading` + `/img/${id}/transaction`;
+    const requestUrl = `${urlLink.api.serverUrl}/v1/uploading/img/${id}/transaction`;
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
@@ -273,16 +264,16 @@ export function TransactionBankingCashLog(props) {
         >
           <input
             type="file"
-            ref={fileInputRef}
-            style={{ display: 'none' }} // Ẩn thẻ input
+            ref={el => (fileRefs.current[params.row._id] = el)}
+            style={{ display: 'none' }}
             onChange={evt => {
               console.log({ params });
               handleFileChange(evt, params.row._id);
             }}
           />
           <CloudUpload
-            style={{ fontSize: 40, cursor: 'pointer' }} // Kích thước của icon và con trỏ chuột
-            onClick={handleIconClick}
+            style={{ fontSize: 40, cursor: 'pointer' }}
+            onClick={() => fileRefs.current[params.row._id].click()}
           />
         </div>
       ),
@@ -293,21 +284,14 @@ export function TransactionBankingCashLog(props) {
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
-      // eslint-disable-next-line consistent-return
       renderCell: params => {
-        // eslint-disable-next-line no-unused-expressions
         if (params.row.status === "waiting") {
           return (
             <Button
               color="success"
               onClick={() => {
-                /* eslint no-underscore-dangle: 0 */
-                // eslint-disable-next-line no-undef
-                console.log({ params })
                 setIdTransaction(params.row._id);
-                // eslint-disable-next-line no-undef
                 setStatus('success');
-                // eslint-disable-next-line no-undef
                 props.changeStoreData('showWarningapprove', true);
               }}
             >
@@ -349,7 +333,7 @@ export function TransactionBankingCashLog(props) {
         visible={showWarningapprove}
         content="Xác nhận thực hiện?"
         callBack={() => {
-          props.approveWithdrawRequest(idTransaction, status)
+          props.approveWithdrawRequest(idTransaction, status);
           console.log({ idTransaction, status });
         }}
         toggle={() => {
@@ -397,4 +381,3 @@ const withConnect = connect(
 );
 
 export default compose(withConnect)(TransactionBankingCashLog);
-// export default TransactionBankingCashLog;

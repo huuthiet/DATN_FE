@@ -140,6 +140,7 @@ import saga from './saga';
 import makeSelectApp from './selectors';
 import './style.scss';
 import { WarningOutlined } from '@material-ui/icons';
+import WithdrawRequestListHost from 'containers/WithdrawRequestListHost/Loadable';
 
 axios.defaults.headers.common.Authorization = `Bearer ${localStore.get(
   'token',
@@ -327,6 +328,10 @@ export function App(props) {
         <Route
           path="/manage-deposit/accept-deposit/:id"
           component={ManagerAcceptDepositHost}
+        />
+        <Route
+          path="/withdraw-request/list/:userId/:motelName"
+          component={WithdrawRequestListHost}
         />
         <Route
           path="/manage-deposit/accept-after-check-in-cost/:id"

@@ -10,10 +10,14 @@ const LineChart = ({ textY, nameChart, hostRevenue }) => {
 
         // Trích xuất dữ liệu từ hostRevenueData
         let revenues = [];
+        let electricNumbers = [];
+        let waters = [];
         let times = [];
         if (hostRevenue !== undefined) {
             hostRevenue.forEach((item) => {
                 revenues.push(item.revenue);
+                electricNumbers.push(item.electricPrice);
+                waters.push(item.waterPrice);
                 times.push(item.time);
             });
         }
@@ -38,7 +42,7 @@ const LineChart = ({ textY, nameChart, hostRevenue }) => {
                 },
             },
             legend: {
-                data: [nameChart],
+                data: [nameChart, 'Tiền điện', 'Tiền nước'],
                 left: 'right',
             },
             xAxis: {
@@ -73,6 +77,24 @@ const LineChart = ({ textY, nameChart, hostRevenue }) => {
                     data: revenues,
                     itemStyle: {
                         color: '#91cc75',
+                    },
+                    barWidth: 20,
+                },
+                {
+                    name: 'Tiền điện',
+                    type: 'bar',
+                    data: electricNumbers,
+                    itemStyle: {
+                        color: '#FFD700',
+                    },
+                    barWidth: 20,
+                },
+                {
+                    name: 'Tiền nước',
+                    type: 'bar',
+                    data: waters,
+                    itemStyle: {
+                        color: '#7798BF',
                     },
                     barWidth: 20,
                 },

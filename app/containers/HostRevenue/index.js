@@ -63,11 +63,13 @@ export function HostMotelRoomDetailUser(props) {
   console.log('hostRevenueData', hostRevenue);
   //get user data
   let totalRevenue = 0;
+  let totalRoomPrice = 0;
   let totalElectricPrice = 0;
 
   if (hostRevenue) {
-    totalRevenue = hostRevenue.totalRevenue;
+    totalRevenue = hostRevenue.total; //Tổng tất cả tiền
     totalElectricPrice = hostRevenue.totalElectricPrice;
+    totalRoomPrice = hostRevenue.totalRevenue; //Tiền phòng (tương đương doanh thu)
   }
 
   // Define the formatter
@@ -328,7 +330,9 @@ export function HostMotelRoomDetailUser(props) {
           content="Description of HostRevenue"
         />
       </Helmet>
-      <div className="title">Quản lý doanh thu</div>
+      <div className="title">
+        <FormattedMessage {...messages.Header} />
+      </div>
       <div className="job-list-wrapper container-fluid">
         <Row className="action-container">
           <ModalComponent
@@ -338,8 +342,12 @@ export function HostMotelRoomDetailUser(props) {
             modalTitle="Xác nhận yêu cầu rút tiền"
             footer={
               <>
-                <Button color="primary" onClick={() => setModal(!modal)}>Đóng</Button>
-                <Button color="success" onClick={handleSendWithdrawRequest}>Gửi yêu cầu</Button>
+                <Button color="primary" onClick={() => setModal(!modal)}>
+                  <FormattedMessage {...messages.Cancel} />
+                </Button>
+                <Button color="success" onClick={handleSendWithdrawRequest}>
+                  <FormattedMessage {...messages.Send} />
+                </Button>
               </>
             }
           >
@@ -347,7 +355,9 @@ export function HostMotelRoomDetailUser(props) {
               <Col md={12}>
                 <Form>
                   <FormGroup>
-                    <Label for="bankName">Ngân hàng</Label>
+                    <Label for="bankName">
+                      <FormattedMessage {...messages.Bank} />
+                    </Label>
                     <Input
                       type="select"
                       name="bankName"
@@ -362,12 +372,16 @@ export function HostMotelRoomDetailUser(props) {
                           </option>
                         ))
                       ) : (
-                        <option>Không có dữ liệu</option>
+                        <option>
+                          <FormattedMessage {...messages.NoData} />
+                        </option>
                       )}
                     </Input>
                   </FormGroup>
                   <FormGroup>
-                    <Label for="accountNumber">Số tài khoản</Label>
+                    <Label for="accountNumber">
+                      <FormattedMessage {...messages.BankAccount} />
+                    </Label>
                     <Input
                       type="text"
                       name="accountNumber"
@@ -377,7 +391,9 @@ export function HostMotelRoomDetailUser(props) {
                     />
                   </FormGroup>
                   <FormGroup>
-                    <Label for="withdrawAmount">Số tiền cần rút</Label>
+                    <Label for="withdrawAmount">
+                      <FormattedMessage {...messages.AmountToWithdraw} />
+                    </Label>
                     <Input
                       type="text"
                       name="withdrawAmount"
@@ -387,7 +403,9 @@ export function HostMotelRoomDetailUser(props) {
                   </FormGroup>
 
                   <FormGroup>
-                    <Label for="withdrawReason">Lý do rút tiền</Label>
+                    <Label for="withdrawReason">
+                      <FormattedMessage {...messages.Note} />
+                    </Label>
                     <Input
                       type="textarea"
                       name="withdrawReason"
@@ -440,7 +458,9 @@ export function HostMotelRoomDetailUser(props) {
                     </DropdownItem>
                   ))
                 ) : (
-                  <DropdownItem>Không có dữ liệu</DropdownItem>
+                  <DropdownItem>
+                    <FormattedMessage {...messages.NoData} />
+                  </DropdownItem>
                 )}
               </DropdownMenu>
             </Dropdown>
@@ -478,15 +498,31 @@ export function HostMotelRoomDetailUser(props) {
           </Col>
         </Row>
         <Row className="revenueData-container">
+          <Col xs={12} sm={3} className="totalRevenue-container">
+            <div className="totalRevenue">
+              <div className='icon-container'>
+                <MonetizationOn />
+              </div>
+              <div className='revenueText-container'>
+                <span className="totalRevenue-text">
+                  <FormattedMessage {...messages.Total} />
+                </span>
+                <span className="totalRevenue-number">
+                  {totalRevenue ? vndFormatter.format(totalRevenue) : 'Không có dữ liệu'}</span>
+              </div>
+            </div>
+          </Col>
           <Col xs={12} sm={4} className="totalRevenue-container">
             <div className="totalRevenue">
               <div className='icon-container'>
                 <MonetizationOn />
               </div>
               <div className='revenueText-container'>
-                <span className="totalRevenue-text">Tổng doanh thu</span>
+                <span className="totalRevenue-text">
+                  <FormattedMessage {...messages.TotalRoomPrice} />
+                </span>
                 <span className="totalRevenue-number">
-                  {totalRevenue ? vndFormatter.format(totalRevenue) : 'Không có dữ liệu'}</span>
+                  {totalRoomPrice ? vndFormatter.format(totalRoomPrice) : 'Không có dữ liệu'}</span>
               </div>
 
             </div>
@@ -497,27 +533,29 @@ export function HostMotelRoomDetailUser(props) {
                 <Payment />
               </div>
               <div className='revenueText-container'>
-                <span className="totalRevenue-text">Doanh thu tháng này</span>
+                <span className="totalRevenue-text">
+                  <FormattedMessage {...messages.CurrentMonth} />
+                </span>
                 <span className="totalRevenue-number">
                   {currentMonthRevenue ? vndFormatter.format(currentMonthRevenue) : 'Không có dữ liệu'}</span>
               </div>
-
             </div>
           </Col>
-          <Col xs={12} sm={3} className="totalRevenue-container">
+          {/* <Col xs={12} sm={3} className="totalRevenue-container">
             <div className="totalRevenue">
               <div className='icon-container'>
                 <Power />
               </div>
               <div className='revenueText-container'>
-                <span className="totalRevenue-text">Tiền điện tháng này</span>
+                <span className="totalRevenue-text">
+                  <FormattedMessage {...messages.Electric} />
+                </span>
                 <span className="totalRevenue-number">
                   {currentMonthElectricPrice ? vndFormatter.format(currentMonthElectricPrice) : 'Không có dữ liệu'}
                 </span>
               </div>
-
             </div>
-          </Col>
+          </Col> */}
         </Row>
         <Row className="dashboard-container">
           <Col xs={12} sm={7} className="compare-container">

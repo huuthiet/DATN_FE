@@ -1,3 +1,5 @@
+import { put } from "redux-saga/effects";
+
 export const urlLink = {
   // AUTHENTICATE
   api: {
@@ -29,7 +31,9 @@ export const urlLink = {
     reportProblem: '/v1/homeKey/reportProblem/',
     transactionsHost: '/v1/homeKey/host/transactions/host',
     postRequestWithdrawHost: '/v1/homeKey/host/transactions/requestWithdraws', //for Host
-    getWithdrawListAdmin: '/v1/admin/withdrawRequest/list', //for admin
+    getWithdrawalListAdmin: '/v1/admin/withdrawRequest/list', //for admin
+    putApproveWithdrawRequestAdmin: '/v1/admin/approveWithdrawRequest/:id', //for admin, id is transactionId
+    getWithdrawalListHost: '/v1/homeKey/host/transactions/requestWithdraws/list', //for Host
     bill: '/v1/homeKey/bill',
     Adminbill: '/v1/homeKey/admin/bill',
     AdminReportProblem: '/v1/homeKey/admin/reportProblem',

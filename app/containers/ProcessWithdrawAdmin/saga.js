@@ -16,7 +16,7 @@ import { loadRepos, reposLoaded } from '../App/actions';
 
 
 export function* apiGetPendingAcceptBankingCashList() {
-  const requestUrl = urlLink.api.serverUrl + urlLink.api.getWithdrawListAdmin;
+  const requestUrl = urlLink.api.serverUrl + urlLink.api.getWithdrawalListAdmin;
   yield put(loadRepos());
   try {
     const response = yield axios.get(requestUrl);
@@ -40,11 +40,13 @@ export function* apiGetPendingAcceptBankingCashList() {
 
 export function* apiApproveWithdrawRequest(payload) {
   console.log("payload", payload);
-  // const requestUrl = urlLink.api.serverUrl + urlLink.api.approveWithdrawRequest;
+  const requestUrl = urlLink.api.serverUrl + urlLink.api.putApproveWithdrawRequestAdmin.replace(':id', payload.idTransaction);
+  console.log("requestUrl", requestUrl);
   yield put(loadRepos());
   try {
-    // const response = yield axios.put(requestUrl, payload);
-    // yield put(getPendingAcceptBankingCashList());
+    const response = yield axios.put(requestUrl);
+    console.log("response", response);
+    yield put(getPendingAcceptBankingCashList(response.data.data));
   } catch (error) {
     yield put(getPendingAcceptBankingCashListFail(error.response.data));
     toast.error(
