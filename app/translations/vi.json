@@ -655,6 +655,7 @@
   "HostRevenue.containers.Export": "Xuất file",
   "HostRevenue.containers.Total": "Tổng",
   "HostRevenue.containers.TotalRoomPrice": "Tổng tiền phòng",
+  "HostRevenue.containers.RemainingRevenue": "Doanh thu còn lại",
   "HostRevenue.containers.CurrentMonth": "Tổng tiền tháng hiện tại",
   "HostRevenue.containers.ProcessWithdrawRequest": "Gửi yêu cầu rút tiền",
   "HostRevenue.containers.Cancel": "Hủy",

@@ -128,6 +128,7 @@ export function WithdrawRequestListHost(props) {
       status: item.status === 'waiting' ? 'Đang chờ duyệt' :
         item.status === 'approved' ? 'Đã được duyệt' :
           item.status === 'cancel' ? 'Đã hủy' : 'N/A',
+      note: item.note,
       time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
       payment_Method: (item.paymentMethod === "cash") ? "Tiền mặt" : "Ngân hàng",
       // ...item,
@@ -145,6 +146,13 @@ export function WithdrawRequestListHost(props) {
       headerName: 'Người yêu cầu',
       headerAlign: 'center',
       width: 250,
+      headerClassName: 'header-bold',
+    },
+    {
+      field: 'keyPayment',
+      headerName: 'Mã giao dịch',
+      headerAlign: 'center',
+      width: 200,
       headerClassName: 'header-bold',
     },
     {
@@ -176,15 +184,15 @@ export function WithdrawRequestListHost(props) {
       headerClassName: 'header-bold',
     },
     {
-      field: 'keyPayment',
-      headerName: 'Mã giao dịch',
+      field: 'description',
+      headerName: 'Mô tả',
       headerAlign: 'center',
-      width: 200,
+      width: 400,
       headerClassName: 'header-bold',
     },
     {
-      field: 'description',
-      headerName: 'Mô tả',
+      field: 'note',
+      headerName: 'Ghi chú từ người dùng',
       headerAlign: 'center',
       width: 400,
       headerClassName: 'header-bold',

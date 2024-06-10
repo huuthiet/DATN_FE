@@ -11,6 +11,8 @@ const LineChart = ({ textY, nameChart, dataEnergy, labelsEnergy }) => {
     // Extract data from dataEnergy and labelsEnergy
     const times = labelsEnergy;
     const values = dataEnergy;
+    console.log('values', values);
+    console.log('times', times);
 
     // Chart configuration
     const option = {

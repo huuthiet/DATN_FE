@@ -21,7 +21,7 @@ import SuccessPopup from '../../components/SuccessPopup';
 import WarningPopup from '../../components/WarningPopup';
 import localStoreService from 'local-storage';
 import * as localStore from 'local-storage';
-import { CloudUpload } from '@material-ui/icons';
+import { CheckCircleOutline, CloudUpload, HighlightOffOutlined } from '@material-ui/icons';
 import moment from 'moment';
 import Money from '../App/format';
 import { DataGrid } from '@mui/x-data-grid';
@@ -176,7 +176,7 @@ export function TransactionBankingCashLog(props) {
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 150 },
     {
       field: 'keyPayment',
-      headerName: 'Nội dung thanh toán',
+      headerName: 'Mã giao dịch',
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
@@ -199,33 +199,26 @@ export function TransactionBankingCashLog(props) {
       field: 'payment_Method',
       headerName: 'Phương thức thanh toán',
       headerAlign: 'center',
-      width: 200,
+      width: 300,
       headerClassName: 'header-bold',
     },
     {
-      field: 'nameMotelRoom',
+      field: 'motelName',
       headerName: 'Tên khu trọ',
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
     },
     {
-      field: 'nameRoom',
-      headerName: 'Phòng',
-      headerAlign: 'center',
-      width: 150,
-      headerClassName: 'header-bold',
-    },
-    {
-      field: 'type_trasaction',
-      headerName: 'Loại thanh toán',
-      headerAlign: 'center',
-      width: 250,
-      headerClassName: 'header-bold',
-    },
-    {
       field: 'description',
-      headerName: 'Ghi chú',
+      headerName: 'Mô tả',
+      headerAlign: 'center',
+      width: 400,
+      headerClassName: 'header-bold',
+    },
+    {
+      field: 'note',
+      headerName: 'Ghi chú từ người dùng',
       headerAlign: 'center',
       width: 400,
       headerClassName: 'header-bold',
@@ -234,14 +227,40 @@ export function TransactionBankingCashLog(props) {
       field: 'status',
       headerName: 'Trạng thái',
       headerAlign: 'center',
-      width: 150,
+      width: 200,
       headerClassName: 'header-bold',
+      renderCell: (params) => {
+        let color;
+        let statusText;
+        switch (params.value) {
+          case 'waiting':
+            color = 'orange';
+            statusText = 'Chờ xác nhận';
+            break;
+          case 'rejected':
+            color = 'red';
+            statusText = 'Đã bị từ chối';
+            break;
+          case 'approved':
+            color = 'green';
+            statusText = 'Đã được duyệt';
+            break;
+          default:
+            color = 'black';
+            statusText = 'N/A';
+        }
+        return (
+          <span style={{ color }}>
+            {statusText}
+          </span>
+        );
+      },
     },
     {
       field: 'iamgeLink',
       headerName: 'Minh chứng đã tải',
       headerAlign: 'center',
-      width: 200,
+      width: 250,
       headerClassName: 'header-bold',
       renderCell: params => (
         <a href={params.row.file} target="bank">
@@ -253,15 +272,17 @@ export function TransactionBankingCashLog(props) {
       field: 'action',
       headerName: 'Tải minh chứng',
       headerAlign: 'center',
+      align: 'center',
       width: 200,
       headerClassName: 'header-bold',
       renderCell: params => (
         <div
           style={{
             display: 'flex',
-            flexDirection: 'column',
+            // flexDirection: 'column',
             paddingBottom: '5px',
             alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           <input
@@ -274,7 +295,7 @@ export function TransactionBankingCashLog(props) {
             }}
           />
           <CloudUpload
-            style={{ fontSize: 40, cursor: 'pointer' }}
+            style={{ fontSize: 28, color: 'gray', cursor: 'pointer' }}
             onClick={() => fileRefs.current[params.row._id].click()}
           />
         </div>
@@ -291,15 +312,17 @@ export function TransactionBankingCashLog(props) {
           return (
             <Button
               color="success"
+              style={{ display: 'flex', alignItems: 'center', gap: '5px', minHeight: '40px' }}
               onClick={() => {
                 setIdTransaction(params.row._id);
                 setStatus('approve');
                 props.changeStoreData('showWarningapprove', true);
               }}
             >
-              <i className="fa fa-check" aria-hidden="true">
-                <FormattedMessage {...messages.Accept} />
-              </i>
+              {/* <i className="fa fa-check" aria-hidden="true">
+              </i> */}
+              <CheckCircleOutline />
+              <FormattedMessage {...messages.Accept} />
             </Button>
           );
         }
@@ -317,15 +340,18 @@ export function TransactionBankingCashLog(props) {
           return (
             <Button
               color="danger"
+              tyle={{ display: 'flex', alignItems: 'center', gap: '5px', minHeight: '40px' }}
               onClick={() => {
                 setIdTransaction(params.row._id);
                 setStatus('reject');
                 props.changeStoreData('showWarningapprove', true);
               }}
             >
-              <i className="fa fa-check" aria-hidden="true">
-                <FormattedMessage {...messages.Reject} />
-              </i>
+              {/* <i className="fa fa-check" aria-hidden="true">
+
+              </i> */}
+              <HighlightOffOutlined />
+              <FormattedMessage {...messages.Reject} />
             </Button>
           );
         }

@@ -654,6 +654,7 @@
   "HostRevenue.containers.ProcessWithdrawRequest": "Process Withdrawal Request",
   "HostRevenue.containers.Total": "Total",
   "HostRevenue.containers.TotalRoomPrice": "Total Room Price",
+  "HostRevenue.containers.RemainingRevenue": "Remaining Revenue",
   "HostRevenue.containers.CurrentMonth": "Current Month Revenue",
   "HostRevenue.containers.Cancel": "Cancel",
   "HostRevenue.containers.Send": "Send Request",
