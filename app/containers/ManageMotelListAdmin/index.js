@@ -5,15 +5,24 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import { Button } from 'reactstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import localStore from 'local-storage';
 import { useHistory, useParams } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-import { getMotelList } from './actions';
+import {
+  getMotelList,
+  changeStoreData,
+  deleteMotel,
+} from './actions';
 import reducer from './reducer';
 import saga from './saga';
+import messages from './messages';
 import makeSelectManagerBuildingHost from './selectors';
+import SuccessPopup from '../../components/SuccessPopup';
+import WarningPopup from '../../components/WarningPopup';
 
 import './style.scss';
 
@@ -29,10 +38,6 @@ export function ManagerEnergyBuildingsAdmin(props) {
   const currentUser = useMemo(() => localStore.get('user') || {}, []);
   const { role = [] } = currentUser;
   const history = useHistory();
-  // const [motelList, setMotelList] = useState([]);
-
-  // const [revenue, setRevenue] = useState(props.profile.buildingRevenue || 0);
-
 
   useEffect(() => {
     props.getMotelList(id);
@@ -40,7 +45,13 @@ export function ManagerEnergyBuildingsAdmin(props) {
     // setLoading(false);
   }, [id]);
 
-  const { motelList = [] } = props.motelListByOwner;
+  const {
+    motelList = [],
+    showSuccessPopup,
+    showErrorPopup,
+    showWarningPopup,
+  } = props.motelListByOwner;
+
   console.log("motelListuuuu", motelList);
 
   // console.log('check props: ', motelList);
@@ -54,7 +65,6 @@ export function ManagerEnergyBuildingsAdmin(props) {
       width: 250,
       headerClassName: 'header-bold',
       renderCell: (params) => {
-        console.log({params})
         return params.value ? (
           <a href={params.value} target="_blank" rel="noopener noreferrer">
             <Avatar
@@ -103,21 +113,6 @@ export function ManagerEnergyBuildingsAdmin(props) {
       headerClassName: 'header-bold',
       align: 'center',
     },
-    // {
-    //   field: 'images',
-    //   headerName: 'Hình ảnh',
-    //   headerAlign: 'center',
-    //   width: 150,
-    //   headerClassName: 'header-bold',
-    //   align: 'center',
-    //   renderCell: (params) => (
-    //     params.row.file ? (
-    //       <a href={params.row.file} target="_blank" rel="noopener noreferrer">
-    //         LINK
-    //       </a>
-    //     ) : null
-    //   ),
-    // },
     {
       field: 'listRoom',
       headerAlign: 'center',
@@ -136,9 +131,26 @@ export function ManagerEnergyBuildingsAdmin(props) {
       headerClassName: 'header-bold',
       align: 'center',
     },
+    {
+      field: 'delete',
+      headerAlign: 'center',
+      headerName: 'Xóa tòa nhà',
+      width: 200,
+      renderCell: params => (
+        <Button
+          onClick={() => {
+            handleDeleteMotel(params.row._id);
+          }}
+          color="primary"
+        >
+          Xóa
+        </Button>
+      ),
+      headerClassName: 'header-bold',
+      align: 'center',
+    },
   ];
 
-  // Xây dựng cấu trúc dữ liệu cho DataGrid từ buildingRevenue
   let rows = [];
   // if(motelList) {
     if(motelList.length > 0) {
@@ -153,112 +165,31 @@ export function ManagerEnergyBuildingsAdmin(props) {
         depositedRoom: motel.depositedRoom,
         availableRoom: motel.availableRoom,
         rentedRoom: motel.rentedRoom,
+        _id: motel._id,
       }));
     }
   // }
 
-  console.log({motelList});
+  console.log({rows});
 
-  // for (const motelName in revenue) {
-  //   console.log('motelName', motelName);
-  //   const motelData = revenue[motelName].jsonMotel;
-  //   console.log('motelData', motelData);
-  //   if (!motelData) continue;
-
-  //   rows.push({
-  //     id: motelData.idMotel, // Sử dụng idMotel làm id duy nhất cho DataGrid
-  //     _id: motelData.idMotel,
-  //     index: rows.length + 1,
-  //     name: motelData.name,
-  //     phoneUser: motelData.phone,
-  //     addressUser: motelData.address,
-  //     totalAll: revenue[motelName].totalRevenue
-  //   });
-
-  //   console.log('rows', rows);
-  // }
   const handleButtonClick = useCallback((row) => {
     // history.push(`/hostMotelRoom/${row._id}`);
     // history.push(`/room-detail/${row._id}`);
     history.push(`/historyRoomHost/room/${row._id}`);
   })
 
+  const [idMotel, setIdMotel] = useState('');
+
+  const handleDeleteMotel = (idMotel) => {
+    props.changeStoreData('showWarningPopup', true);
+    setIdMotel(idMotel);
+  }
+
   const handleOpenModal = useCallback((id, motelname) => {
     setMotelName(motelname);
     setMotelId(id);
     setModal(true);
   }, []);
-
-  // const cancelToggle = useCallback(() => {
-  //   setModal(!modal);
-  // }, [modal]);
-
-  // const getStartDay = useCallback((event) => {
-  //   setStartDate(event.target.value);
-  // }, []);
-
-  // const getEndDay = useCallback((event) => {
-  //   setEndDate(event.target.value);
-  // }, []);
-
-  // const handleExport = useCallback(async () => {
-  //   if (!startDate || !endDate) {
-  //     toast.error('Vui lòng chọn ngày bắt đầu và ngày kết thúc!');
-  //     setModal(false);
-  //   } else {
-  //     if (startDate > endDate) {
-  //       toast.error('Ngày bắt đầu phải nhỏ hơn ngày kết thúc!');
-  //       setModal(false);
-  //     } else {
-  //       try {
-  //         // Đóng modal và reset date
-  //         setModal(!modal);
-  //         setLoading(true);
-  //         const exportApi = urlLink.api.serverUrl + urlLink.api.exportBillBuilding + motelId + '/' + startDate + '/' + endDate;
-  //         const response = await axios.get(exportApi);
-  //         if (response) {
-  //           setLoading(false);
-  //           const status = response.data.data;
-  //           const toastConfig = {
-  //             position: toast.POSITION.TOP_RIGHT,
-  //             autoClose: 3000,
-  //             hideProgressBar: false,
-  //             pauseOnHover: true,
-  //             draggable: true,
-  //           };
-
-  //           const showToast = (message, isError = true) => {
-  //             toast[isError ? 'error' : 'success'](message, toastConfig);
-  //             setModal(isError);
-  //           };
-
-  //           if (status === "Motel has no rented rooms") {
-  //             showToast('Không có phòng nào được thuê trong thời gian này!');
-  //           } else if (status === "Motel has no rooms with idMetter") {
-  //             showToast('Không có phòng nào có idMetter!');
-  //           } else if (status === "Motel has no floors") {
-  //             showToast('Không có tầng nào trong tòa nhà!');
-  //           } else if (status === "exportBillAllRoomSuccess") {
-  //             showToast('Xuất hóa đơn thành công!', false);
-  //             setLoading(false);
-  //             setStartDate('');
-  //             setEndDate('');
-  //           } else {
-  //             showToast('Có lỗi xảy ra, vui lòng thử lại!', true);
-  //           }
-  //         }
-
-  //       } catch (error) {
-  //         // Xử lý lỗi nếu có
-  //         console.error('Error:', error);
-  //       }
-  //     }
-  //   }
-
-  // }, [endDate, modal, startDate, motelId]);
-
-  // console.log({rows});
-
 
   return (
     <div id='motelList' className="user-profile-wrapper container">
@@ -288,6 +219,28 @@ export function ManagerEnergyBuildingsAdmin(props) {
           )} */}
         </div>
       )}
+      <SuccessPopup
+        visible={showSuccessPopup}
+        content={<FormattedMessage {...messages.detelesuccess} />}
+        toggle={() => {
+          props.changeStoreData('showSuccessPopup', !showSuccessPopup);
+        }}
+      />
+      <SuccessPopup
+        visible={showErrorPopup}
+        content={<FormattedMessage {...messages.errorMessage} />}
+        toggle={() => {
+          props.changeStoreData('showErrorPopup', !showErrorPopup);
+        }}
+      />
+      <WarningPopup
+        visible={showWarningPopup}
+        content={<FormattedMessage {...messages.reallyMessage} />}
+        callBack={() => props.deleteMotel(idMotel, id)}
+        toggle={() => {
+          props.changeStoreData('showWarningPopup', false);
+        }}
+      />
     </div>
   );
 }
@@ -296,6 +249,7 @@ ManagerEnergyBuildingsAdmin.propTypes = {
   getMotelList: PropTypes.func.isRequired,
   // getBuildingRevenue: PropTypes.func.isRequired,
   // motelListByOwner: PropTypes.object.isRequired,
+  changeStoreData: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -308,6 +262,12 @@ function mapDispatchToProps(dispatch) {
   return {
     getMotelList: id => dispatch(getMotelList(id)),
     // getBuildingRevenue: id => dispatch(getBuildingRevenue(id)),
+    changeStoreData: (key, value) => {
+      dispatch(changeStoreData(key, value));
+    },
+    deleteMotel: (id, idHost) => {
+      dispatch(deleteMotel(id, idHost));
+    },
   };
 }
 

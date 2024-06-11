@@ -13,6 +13,9 @@ import {
     GET_BUILDING_REVENUE_SUCCESS,
     GET_BUILDING_REVENUE_FAIL,
     CHANGE_STORE_DATA,
+    DELETE_MOTEL,
+    DELETE_MOTEL_SUCCESS,
+    DELETE_MOTEL_FAIL,
 } from './constants';
 
 
@@ -67,5 +70,27 @@ export function changeStoreData(key, value) {
         type: CHANGE_STORE_DATA,
         key,
         value,
+    };
+}
+
+export function deleteMotel(id, idHost) {
+    console.log("id motel", id);
+    console.log("id host", idHost);
+    return {
+      type: DELETE_MOTEL,
+      id,
+      idHost,
+    };
+}
+export function deleteMotelSuccess(response) {
+    return {
+        type: DELETE_MOTEL_SUCCESS,
+        response,
+    };
+}
+export function deleteMotelFail(error) {
+    return {
+        type: DELETE_MOTEL_FAIL,
+        error,
     };
 }

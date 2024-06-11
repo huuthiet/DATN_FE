@@ -4,10 +4,10 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import './style.scss';
-import { withScriptjs, withGoogleMap, GoogleMap } from 'react-google-maps';
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 import MarkerPrice from '../MarkerPrice';
 
 const onClick = map => {
@@ -20,13 +20,22 @@ const GoogleMaps = compose(
   withScriptjs,
   withGoogleMap,
 )(props => {
-  const { listRoom = [], setRoom = () => {} } = props;
+  const {
+    position = { lat: 10.856866, lng: 106.763324 },
+    listRoom = [],
+    setRoom = () => {}
+  } = props;
+
+
   return (
     <GoogleMap
       defaultZoom={14}
       defaultCenter={{ lat: 10.856866, lng: 106.763324 }}
+      // defaultCenter={position}
+      center={position}
       onClick={onClick}
     >
+      <Marker position={position} />
       {listRoom.map((item, key) => (
         <MarkerPrice setRoom={setRoom} item={item} key={key} />
       ))}

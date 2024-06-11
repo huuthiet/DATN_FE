@@ -108,6 +108,7 @@ export function Profile(props) {
     showAlert = false,
     alert = {},
   } = props.profile;
+  console.log({profile})
 
   const TenMegaBytes = 10 * 1024 * 1024;
   const handleFileInputChange = e => {

@@ -11,14 +11,14 @@ export const initialState = {
   error: [],
 };
 const typeStatusRoom = e => {
-  if (e === 'rented' || e === 'deposited') {
+  if (e === 'rented' || e === 'deposited' || e === 'soonExpireContract') {
     return 'Đã Thuê';
   }
   return 'Chưa Thuê';
 };
 
 const actionStatusRoom = e => {
-  if (e === 'rented' || e === 'deposited') {
+  if (e === 'rented' || e === 'deposited' || e === 'soonExpireContract') {
     return 'action';
   }
   return '';

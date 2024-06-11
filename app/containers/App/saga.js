@@ -46,6 +46,7 @@ export function* apiSearchRoom(payload) {
     yield put(loadRepos());
     try {
       const response = yield axios.get(requestUrl);
+      console.log("posstionnnn", response);
       yield put(Search_AddressesSuccess(response.data.data));
     } catch (error) {
       yield put(Search_AddressesFail(error.response.data));

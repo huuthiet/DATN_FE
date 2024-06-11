@@ -135,7 +135,7 @@ export function ManagerEnergyHostAdmin(props) {
       ),
     },
     {
-      field: 'monthly',
+      field: 'revenue',
       headerName: 'Doanh thu',
       headerAlign: 'center',
       align: 'center',
