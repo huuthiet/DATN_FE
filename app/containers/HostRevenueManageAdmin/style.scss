@@ -1,0 +1,165 @@
+.login-page-wrapper {
+  .title {
+    color: rgb(0, 183, 255);
+    font-size: 18px;
+    text-align: center;
+    padding: 10px;
+    font-weight: 500;
+  }
+  .job-list-wrapper{
+    max-width:  100%;
+    .action-container{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin: 10px 0;
+      .room-dropdown-container {
+        border: 2px solid #ffffff; /* Customize the border color and thickness */
+        border-radius: 8px; /* Optional: add border radius */
+
+      }
+      .room-dropdown{
+        width: 100%;
+        box-shadow: 2px 2px 20px 6px rgba($color: #000000, $alpha: 0.05);
+        transition: all 0.3s;
+
+        &:hover{
+          border: 1px solid #1455c6;
+        
+        }
+        &:focus{
+          border: 1px solid #1455c6;
+        }
+      }
+      .dropdown-menu{
+        padding: 10px;
+        margin-top: 10px;
+        border: none;
+        box-shadow: 2px 2px 20px 6px rgba($color: #000000, $alpha: 0.05);
+        max-height: 300px; // You can adjust the height as needed
+        overflow-y: hidden;
+        &:hover{
+          overflow-y: auto;
+        }
+        .dropdown-item{
+          white-space: nowrap; // Prevents text from wrapping
+          overflow: hidden;
+          text-overflow: ellipsis;
+          border-radius: 8px;
+          transition: all 0.3s;
+          &:hover{
+            background-color: #f1f1f1;
+          }
+          .dropdown-key{
+            font-weight: 400;
+            color: #6c6c6c;
+            transition: all 0.3s;
+            &:hover{
+              background-color: #f1f1f1;
+            }
+          }
+        }
+      }
+
+    }
+    .dashboard-container{
+      min-height: 400px;
+      width: 100%;
+      margin: 0px 0 30px 0;
+      gap: 10px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      .revenue-container{
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 2px 2px 20px 6px rgba($color: #000000, $alpha: 0.05);
+      }
+      .compare-container{
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 2px 2px 20px 6px rgba($color: #000000, $alpha: 0.05);
+      }
+      .monthly-chart{
+        padding: 10px;
+
+        border-radius: 8px;
+        box-shadow: 2px 2px 20px 6px rgba($color: #000000, $alpha: 0.05);
+      }
+      .target-actual-chart{
+        padding: 10px;
+
+        border-radius: 8px;
+        box-shadow: 2px 2px 20px 6px rgba($color: #000000, $alpha: 0.05);
+      }
+
+    }
+
+    .revenueData-container{
+      min-height: 100px;
+      width: 100%;
+      margin: 30px 0 10px 0;
+      gap: 10px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      .totalRevenue-container{
+        display: flex;
+        // justify-content: center;
+        align-items: center;
+        min-height: 150px;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 2px 2px 20px 6px rgba($color: #000000, $alpha: 0.05);
+        .totalRevenue{
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+          align-items: center;
+          .icon-container{
+            height: 44px;
+            width: 44px;
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgb(122, 122, 122);
+            background-color: rgb(225, 225, 225);
+          }
+        .revenueText-container{
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          .totalRevenue-text{
+            font-size: 18px;
+            font-weight: 500;
+            color: rgb(175, 175, 175);
+          }
+          .totalRevenue-number{
+            display: flex;
+            flex-direction: row;
+            gap: 3px;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            font-weight: 700;
+            color: rgb(97, 97, 97);
+            font-family: 'Roboto', sans-serif;
+            .icon{
+              font-size: 20px;
+              color: rgb(97, 97, 97);
+            }
+          }
+        }
+        }
+      }
+      .currentRevenue-container{
+        min-height: 150px;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 2px 2px 20px 6px rgba($color: #000000, $alpha: 0.05);
+      }
+    }
+  }
+}

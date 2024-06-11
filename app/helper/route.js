@@ -1,8 +1,10 @@
+import { put } from "redux-saga/effects";
+
 export const urlLink = {
   // AUTHENTICATE
   api: {
-    // serverUrl: 'http://206.189.92.77:8080/api',
-    serverUrl: 'http://localhost:5502/api',
+    serverUrl: 'http://206.189.92.77:8080/api',
+    // serverUrl: 'http://localhost:5502/api',
     // serverUrl: 'https://homeland-api.projectenergy.cloud/api',
     // usse dotenv for serverUrl
     // serverUrl: process.env.REACT_APP_BASE_API_URL,
@@ -29,6 +31,11 @@ export const urlLink = {
     motelCreateOrderAndPdf: '/v1/homeKey/motelRoom/createOrder/pdf',
     reportProblem: '/v1/homeKey/reportProblem/',
     transactionsHost: '/v1/homeKey/host/transactions/host',
+    postRequestWithdrawHost: '/v1/homeKey/host/transactions/requestWithdraws', //for Host
+    getWithdrawalListAdmin: '/v1/admin/withdrawRequest/list', //for admin
+    putApproveWithdrawRequestAdmin: '/v1/admin/approveWithdrawRequest/:id', //for admin, id is transactionId
+    putRejectWithdrawRequestAdmin: '/v1/admin/rejectWithdrawRequest/:id', //for admin, id is transactionId
+    getWithdrawalListHost: '/v1/homeKey/host/transactions/requestWithdraws/list', //for Host
     bill: '/v1/homeKey/bill',
     Adminbill: '/v1/homeKey/admin/bill',
     AdminReportProblem: '/v1/homeKey/admin/reportProblem',
@@ -134,7 +141,7 @@ export const urlLink = {
     // /v1/homeKey/energy/device/exportBillAllRoom/:idMotel/2024-03-01/2024-03-15
     exportBillBuilding: '/v1/homeKey/energy/device/exportBillBuilding/', // + /:idMotel/:startTime/:endTime
     buildingRevenue: '/v1/homeKey/energy/device/buildingRevenue/', // +/:idMotel/:Month/:Year
-    hostBuildingListForRenenue: '/v1/homeKey/energy/device/hostBuildingList/', // +/:idOwner
+    hostBuildingListForRevenue: '/v1/homeKey/energy/device/hostBuildingList/', // +/:idOwner
     getPayDepositList: '/v1/homeKey/order/getPayDepositList/',
     getPayDepositListUser: '/v1/homeKey/order/getPayDepositListUser/',
     getListOrderNoPayOfPayDeposit: '/v1/homeKey/order/listOrderNoPayOfPayDeposit/',

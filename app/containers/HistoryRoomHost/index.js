@@ -31,7 +31,7 @@ export function HistoryRoomHost(props) {
     props.getGetMotelRoom();
   }, []);
 
-  console.log({MotelRoom});
+  console.log({ MotelRoom });
 
   const columns = [
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 150 },
@@ -107,6 +107,29 @@ export function HistoryRoomHost(props) {
               className='btn-detail'
               onClick={() => {
                 history.push(`/historyRoomHost/room/${params.row._id}`);
+              }}
+            >
+              Xem chi tiết
+            </a>
+          </>
+        );
+      },
+    },
+    {
+      field: 'withdraw list',
+      headerName: 'Quản lý danh sách yêu cầu rút tiền',
+      headerAlign: 'center',
+      width: 400,
+      headerClassName: 'header-bold',
+      align: 'center',
+      renderCell: params => {
+        // eslint-disable-next-line no-unused-expressions
+        return (
+          <>
+            <a
+              className='btn-detail'
+              onClick={() => {
+                history.push(`/withdraw-request/list/${params.row.owner._id}/${params.row.name}`);
               }}
             >
               Xem chi tiết

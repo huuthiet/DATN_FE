@@ -22,13 +22,15 @@ WORKDIR /app
 COPY package*.json ./
 
 # Cài đặt các gói npm
-RUN npm ci
+RUN npm install
 
 # Sao chép tất cả các file trong thư mục hiện tại vào thư mục làm việc
 COPY . .
 
 # Kiểm tra optipng-bin
 RUN ls -la /app/node_modules/optipng-bin/vendor/ && /app/node_modules/optipng-bin/vendor/optipng --version
+
+ENV NODE_OPTIONS=--max_old_space_size=8192
 
 # Build ứng dụng
 RUN npm run build

@@ -18,6 +18,8 @@ import HostMotelRoom from 'containers/HostMotelRoom/Loadable';
 import HostMotelRoomDetail from 'containers/HostMotelRoomDetail/Loadable';
 import HostMotelRoomDetailUser from 'containers/HostMotelRoomDetailUser/Loadable';
 import HostRevenue from 'containers/HostRevenue/Loadable';
+import HostRevenueManageAdmin from 'containers/HostRevenueManageAdmin/Loadable';
+import ProcessWithdrawAdmin from 'containers/ProcessWithdrawAdmin/Loadable';
 import HistoryEnergyUser from 'containers/HistoryEnergyUser/Loadable';
 import HistoryEnergyHost from 'containers/HistoryEnergyHost/Loadable';
 // import HostMotelRoomUser from 'containers/HostMotelRoomUser/Loadable';
@@ -140,6 +142,7 @@ import saga from './saga';
 import makeSelectApp from './selectors';
 import './style.scss';
 import { WarningOutlined } from '@material-ui/icons';
+import WithdrawRequestListHost from 'containers/WithdrawRequestListHost/Loadable';
 
 axios.defaults.headers.common.Authorization = `Bearer ${localStore.get(
   'token',
@@ -275,7 +278,8 @@ export function App(props) {
         <Route path="/hostMotelRoom/:id" component={HostMotelRoomDetail} />
         <Route path="/user/hostMotelRoom" component={HostMotelRoomDetailUser} />
         <Route path="/user/hostRevenue/:id" component={HostRevenue} />
-        <Route path="/admin/hostRevenue/:id" component={HostRevenue} />
+        <Route path="/admin/hostRevenue/:id" component={HostRevenueManageAdmin} />
+        <Route path="/admin/withdrawRequest/:userId" component={ProcessWithdrawAdmin} />
         <Route path="/user/history-energy/:id" component={HistoryEnergyUser} />
         <Route path="/history-energy/:id/:name" component={HistoryEnergyHost} />
         <Route
@@ -337,6 +341,10 @@ export function App(props) {
         <Route
           path="/manage-deposit/accept-deposit/:id"
           component={ManagerAcceptDepositHost}
+        />
+        <Route
+          path="/withdraw-request/list/:userId/:motelName"
+          component={WithdrawRequestListHost}
         />
         <Route
           path="/manage-deposit/accept-after-check-in-cost/:id"
