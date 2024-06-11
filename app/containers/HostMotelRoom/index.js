@@ -156,7 +156,7 @@ export function ManagerEnergyHostAdmin(props) {
       ),
     },
     {
-      field: 'monthly',
+      field: 'withdrawRevenue',
       headerName: 'Quản lý rút tiền doanh thu',
       headerAlign: 'center',
       align: 'center',

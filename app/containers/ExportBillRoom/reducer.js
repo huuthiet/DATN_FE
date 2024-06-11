@@ -122,12 +122,15 @@ const roomBillReducer = (state = initialState, action) =>
 
           dataJson.expenseElectricity = 'Chi Phí Điện';
           // dataJson.typeElectricity = 1;
-          dataJson.typeElectricity = element.numberOfElectric;
+          dataJson.typeElectricity = element.electricNumber ? element.electricNumber : 0;
+          // dataJson.typeElectricity = element.numberOfElectric ? element.numberOfElectric : 0;
           dataJson.unitPriceElectricity = element.room.electricityPrice;
           dataJson.totalElectricity =
             element.room.electricityPrice * dataJson.typeElectricity;
           dataJson.dayStart = element.dayStart;
           dataJson.dayEnd = element.dayEnd;
+          dataJson.kWhData = element.kWhData;
+          dataJson.labelTime = element.labelTime;
 
           dataJson.expenseWater = 'Chi Phí Nước';
           dataJson.typeWater = element.room.person ? element.room.person : 0;

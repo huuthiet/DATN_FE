@@ -110,6 +110,9 @@ export function ExportBillRoom(props) {
     typeElectricity = 0,
     unitPriceElectricity = 0,
     totalElectricity = 0,
+    kWhData = [],
+    labelTime = [],
+
 
     expenseWater = '',
     typeWater = 0,
@@ -267,7 +270,9 @@ export function ExportBillRoom(props) {
       fileDownload(response.data, 'export.pdf');
       notificationController.success('Xuất Hóa Đơn Thành Công');
     } catch (err) {
-      notificationController.error('Chưa Có Tài Khoản Nhận Tiền Liên Hệ Admin');
+      console.log({err})
+      // notificationController.error(err.response.data.errors[0].errorMessage);
+      notificationController.error("Lỗi tạo hóa đơn mới, vui lòng kiểm tra lại hóa đơn trước đó đã được thanh toán hay chưa");
       // setFlag(!flag);
     }
   };
@@ -423,6 +428,8 @@ export function ExportBillRoom(props) {
                   typeElectricity,
                   unitPriceElectricity,
                   totalElectricity,
+                  labelTime,
+                  kWhData,
 
                   expenseWater,
                   typeWater,
