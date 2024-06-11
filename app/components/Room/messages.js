@@ -16,7 +16,7 @@ export default defineMessages({
   },
   garbagePrice: {
     id: `${scopeCreateModel}.garbagePrice`,
-    defaultMessage: 'Phí Dịch Vụ',
+    defaultMessage: 'Phí dịch vụ',
   },
   available: {
     id: `${scope}.available`,
@@ -24,7 +24,7 @@ export default defineMessages({
   },
   rented: {
     id: `${scope}.rented`,
-    defaultMessage: 'Đã Thuê',
+    defaultMessage: 'Đã thuê',
   },
   unknown: {
     id: `${scope}.unknown`,
@@ -58,17 +58,21 @@ export default defineMessages({
     id: `${scope}.waterPrice`,
     defaultMessage: 'Giá nước',
   },
+  wifiPrice: {
+    id: `${scope}.wifiPrice`,
+    defaultMessage: 'Giá wifi',
+  },
   MultipleImage: {
     id: `${scope}.MultipleImage`,
     defaultMessage: '',
   },
   ImageUpload: {
     id: `${scope}.ImageUpload`,
-    defaultMessage: 'Upload Hình',
+    defaultMessage: 'Upload hình',
   },
   MinMonthRented: {
     id: `${scope}.MinMonthRented`,
-    defaultMessage: 'Số Tháng Tối Thiểu Thuê',
+    defaultMessage: 'Số tháng thuê tối thiểu',
   },
   CheckInDate: {
     id: `${scope}.CheckInDate`,
@@ -76,7 +80,7 @@ export default defineMessages({
   },
   ErrTotalSizeImage: {
     id: `${scope}.ErrTotalSizeImage`,
-    defaultMessage: 'Tổng kích thước các ảnh dưới 4mb',
+    defaultMessage: 'Tổng kích thước các ảnh dưới 4MB',
   },
   ListRoomAcc: {
     id: `${scope}.ListRoomAcc`,
@@ -188,6 +192,22 @@ export default defineMessages({
   },
   ErrPopup: {
     id: `${scope}.ErrPopup`,
-    defaultMessage: 'Bạn Muốn Xóa Phòng Này',
+    defaultMessage: 'Bạn muốn xóa phòng này?',
+  },
+  Detail: {
+    id: `${scope}.Detail`,
+    defaultMessage: 'Chi tiết',
+  },
+  Cancel: {
+    id: `${scope}.Cancel`,
+    defaultMessage: 'Hủy',
+  },
+  Room: {
+    id: `${scope}.Room`,
+    defaultMessage: 'Phòng',
+  },
+  Acreage: {
+    id: `${scope}.Acreage`,
+    defaultMessage: 'Diện tích',
   },
 });

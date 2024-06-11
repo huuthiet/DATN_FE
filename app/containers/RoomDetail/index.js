@@ -222,7 +222,7 @@ export function RoomDetail(props) {
                     <div className="item">
                       <div className="electric-title">
                         <EmojiObjects className="electric-icon" />
-                        <FormattedMessage {...messages.ElectricPrice} />
+                        <FormattedMessage {...messages.electricityPrice} />
                       </div>
                       {Money(electricityPrice)} đ
                     </div>
@@ -231,7 +231,7 @@ export function RoomDetail(props) {
                     <div className="item">
                       <div className="water-title">
                         <Waves className="water-icon" />
-                        <FormattedMessage {...messages.WaterPrice} />
+                        <FormattedMessage {...messages.waterPrice} />
                       </div>
                       {Money(wifiPrice)} đ
                     </div>
@@ -240,7 +240,7 @@ export function RoomDetail(props) {
                     <div className="item">
                       <div className="wifi-title">
                         <Wifi className="wifi-icon" />
-                        <FormattedMessage {...messages.WifiPrice} />
+                        <FormattedMessage {...messages.wifiPrice} />
                       </div>
                       {Money(waterPrice)} đ
                     </div>
@@ -476,9 +476,9 @@ export function RoomDetail(props) {
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen/>
+              allowfullscreen />
           </div>
-          <br/>
+          <br />
         </Container>
       </div>
 

@@ -9,6 +9,9 @@ import html2pdf from 'html2pdf.js';
 import htmlToImage from 'html-to-image';
 import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
+import { Row, Col } from 'reactstrap';
+import LineChartVoltageDashboard from '../../components/LineChartVoltageDashboard';
+import LineChartCurrentDashboard from '../../components/LineChartCurrentDashboard';
 import {
   Cancel,
   GetApp,
@@ -35,6 +38,8 @@ import Speedometer from '../../components/Speedmetter';
 import LineChart from '../../components/LineChart';
 import LineChartHover from '../../components/LineChartHover';
 import { scale } from 'pdf-lib';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const labelsInDay = [
   '1h',
@@ -161,8 +166,6 @@ const FollowEnergyAdmin = () => {
         const response = await axios.get(apiGetDay);
 
         const result = response.data.data;
-        console.log('resultttttttttttttttttttttttttttt', result);
-
         setInfo(result);
 
         // parseFloat(responseMon.data.data.totalkWhMon).toFixed(2);
@@ -544,8 +547,8 @@ const FollowEnergyAdmin = () => {
     const apiUrlMon = urlLink.api.serverUrl + urlLink.api.getTotalKWhPerDayInOneMonthV2
       + roomId + "/" + moment().format("YYYY-MM");
     try {
-      
-      
+
+
 
       if (value === 0) {
         const responseDay = await axios.get(apiUrlDay);
@@ -642,14 +645,16 @@ const FollowEnergyAdmin = () => {
   return (
     <div>
       <Helmet>
-        <title>Energy</title>
+        <title>EnergyMonitoring</title>
         <meta name="description" content="Description of Energy" />
       </Helmet>
-      <div className="title-abc">Theo dõi năng lượng: {name}</div>
+      <div className="title-abc">
+        <FormattedMessage {...messages.Header} /> {name}
+      </div>
 
       {showAlert && (
         <Alert severity="error">
-          Vui lòng nhập ngày kết thúc lớn hơn ngày bắt đầu!
+          <FormattedMessage {...messages.DateAlert} />
         </Alert>
       )}
       <br />
@@ -685,7 +690,7 @@ const FollowEnergyAdmin = () => {
           onClick={handleExportPreview}
         >
           <GetApp className="export-icon" />
-          Export
+          <FormattedMessage {...messages.Export} />
         </Button>
         <Button
           hidden
@@ -695,7 +700,7 @@ const FollowEnergyAdmin = () => {
           onClick={handleCancel}
         >
           <Cancel className="cancel-icon" />
-          Cancel
+          <FormattedMessage {...messages.Cancel} />
         </Button>
 
         <Button
@@ -705,7 +710,7 @@ const FollowEnergyAdmin = () => {
           onClick={handleExportPdf}
         >
           <GetApp className="export-icon" />
-          Download
+          <FormattedMessage {...messages.Download} />
         </Button>
       </div>
 
@@ -725,17 +730,59 @@ const FollowEnergyAdmin = () => {
       </div>
 
       {/* CHART */}
-      <div id="chart-container" className='chart-container'>
-        <Grid container justify="center">
-          <Grid
-            item
+      <div id="chart-container" >
+        <Row className='current-voltage-dashboard'>
+          <Col xs={12} sm={10} style={{
+            height: '400px',
+            padding: '12px',
+            borderRadius: '6px',
+            boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
+          }}>
+            <LineChartHover
+              textY="(kWh)"
+              nameChart={`${titleKwhChart}: ${totalkWh}`}
+              dataEnergy={currentKwh}
+              labelsEnergy={labelLineChart}
+              roomId={roomId}
+            />
+          </Col>
+          <Col xs={12} sm={5} md={5} style={{
+            height: '400px',
+            padding: '12px',
+            borderRadius: '6px',
+            boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
+          }}>
+            <LineChartVoltageDashboard
+              textY="(V)"
+              nameChart="Voltage"
+              dataEnergy={currentVoltage}
+              labelsEnergy={labelsInDay}
+            />
+          </Col>
+          <Col xs={12} sm={5} md={5} style={{
+            height: '400px',
+            padding: '12px',
+            borderRadius: '6px',
+            boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
+          }}>
+            <LineChartCurrentDashboard
+              textY="(A)"
+              nameChart="Current"
+              dataEnergy={currentCurrent}
+              labelsEnergy={labelsInDay}
+            />
+          </Col>
+        </Row>
+      </div>
+
+      <div hidden id="pdf-export-container" >
+        <Row className="total-info-container">
+          <Col
             xs={12}
             sm={6}
-            md={6}
             style={{
-              height: '350px',
+              height: '400px',
               margin: '8px',
-              padding: '12px',
               borderRadius: '6px',
               boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
             }}
@@ -747,194 +794,102 @@ const FollowEnergyAdmin = () => {
               labelsEnergy={labelLineChart}
               roomId={roomId}
             />
-          </Grid>
-
-          <Grid
-            item
-            xs={12}
-            sm={5}
-            md={5}
-            style={{
-              height: '350px',
-              margin: '8px',
-              padding: '12px',
-              borderRadius: '6px',
-              boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
-            }}
-          >
-            <LineChart
-              textY="(kW)"
-              nameChart="Voltage"
-              dataEnergy={currentVoltage}
-              labelsEnergy={labelsInDay}
-            />
-          </Grid>
-
-          <Grid
-            item
-            xs={12}
-            sm={7}
-            md={7}
-            style={{
-              height: '350px',
-              margin: '8px',
-              padding: '12px',
-              borderRadius: '6px',
-              boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
-            }}
-          >
-            <LineChart
-              textY="(A)"
-              nameChart="Current"
-              dataEnergy={currentCurrent}
-              labelsEnergy={labelsInDay}
-            />
-          </Grid>
-
-          <Grid
-            item
-            xs={12}
-            sm={4}
-            md={4}
-            style={{
-              height: '350px',
-              margin: '8px',
-              padding: '12px',
-              borderRadius: '6px',
-              boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
-              justifyContent: 'center',
-              alignItems: 'center',
-              textAlign: 'center',
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column',
-            }}
-          >
-            <Calendar
-              value={currentDay}
-              onChange={d => setValue(d)}
-            />
-          </Grid>
-        </Grid>
-      </div>
-
-      <div hidden id="pdf-export-container" className="total-info-container">
-        <div className="bill-1">
-          <div className="bill-1-component1">
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={12}
-              style={{
-                height: '350px',
-                margin: '8px',
-                padding: '12px',
-                borderRadius: '6px',
-                boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
-              }}
-            >
-              <LineChart
-                textY="(kWh)"
-                nameChart={`${titleKwhChart}`}
-                dataEnergy={currentKwh}
-                labelsEnergy={labelLineChart}
-              />
-            </Grid>
-          </div>
-
-          <div className="bill-1-component2">
-            <Grid
-              className="total-info-content"
-              item
-              xs={12}
-              sm={4}
-              md={12}
-              style={{
-                height: '350px',
-                margin: '8px',
-                padding: '12px',
-                borderRadius: '6px',
-                boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
-              }}
-            >
-              <span className="title" id="total-kwh-title">
-                Tổng số điện
-              </span>
-              {info && info.labelTime && info.kWhData && (
-                <div className="detail-container">
-                  <span className="title">{`Tổng số điện từ ${formattedStartDate} đến ${formattedEndDate}`}</span>
-                  <span className="content">
-                    <Speed className="icon" />
-                    Tổng kWh:{' '}
-                    {info.kWhData && info.kWhData.length > 0
-                      ? info.kWhData
-                        .filter(value => value !== null)
-                        .reduce((tổng, giáTrị) => tổng + parseFloat(giáTrị), 0)
-                        .toFixed(2)
-                      : '0.00'}{' '}
-                    (kWh)
-                  </span>
-
-                  <span className="content">
-                    {/* calculate total kWh */}
-                    <br />
-                    <Speed className="icon" />
-                    Total water:{' '}
-                    {info.waterData
-                      ? info.waterData
-                        .reduce(
-                          (total, value) => total + parseFloat(value),
-                          0,
-                        )
-                        .toFixed(2)(m3)
-                      : 'Không có dữ liệu'}
-                  </span>
-                  <span className="content">
-                    <AttachMoney className="icon" />
-                    Total Cost:{' '}
-                    {info.kWhData && info.kWhData.length > 0
-                      ? (
-                        info.kWhData
-                          .filter(value => value !== null)
-                          .reduce((total, value) => total + parseFloat(value), 0) * 3900
-                      ).toLocaleString('vi-VN', {
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 0,
-                      })
-                      : '0'}{' '}
-                    (VND)
-                  </span>
-                </div>
-              )}
-            </Grid>
-          </div>
-        </div>
-
-        <div className="bill-2">
-          <Grid
+          </Col>
+          <Col
             className="total-info-content"
             item
             xs={12}
             sm={4}
-            md={12}
             style={{
               height: '400px',
               margin: '8px',
-              padding: '12px',
               borderRadius: '6px',
               boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
             }}
           >
-            <span id="detail-kwh-title">Chi tiết số điện sử dụng</span>
+            <span className="title" id="total-kwh-title">
+
+            </span>
+            {info && info.labelTime && info.kWhData && (
+              <div className="detail-container">
+                <span className="title">{<FormattedMessage {...messages.TotalElectric} />}</span>
+                <span className="content">
+                  <Speed className="icon" />
+                  <FormattedMessage {...messages.TotalElectricUsage} />{' '}
+                  {info.kWhData && info.kWhData.length > 0
+                    ? info.kWhData
+                      .filter(value => value !== null)
+                      .reduce((tổng, giáTrị) => tổng + parseFloat(giáTrị), 0)
+                      .toFixed(2)
+                    : '0.00'}{' '}
+                  (kWh)
+                </span>
+
+                <span className="content">
+                  {/* calculate total kWh */}
+                  <br />
+                  <Speed className="icon" />
+                  <FormattedMessage {...messages.TotalWater} />{' '}
+                  {info.waterData
+                    ? info.waterData
+                      .reduce(
+                        (total, value) => total + parseFloat(value),
+                        0,
+                      )
+                      .toFixed(2)(m3)
+                    : <FormattedMessage {...messages.NoData} />}
+                </span>
+                <span className="content">
+                  <AttachMoney className="icon" />
+                  <FormattedMessage {...messages.Total} />{' '}
+                  {info.kWhData && info.kWhData.length > 0
+                    ? (
+                      info.kWhData
+                        .filter(value => value !== null)
+                        .reduce((total, value) => total + parseFloat(value), 0) * 3900
+                    ).toLocaleString('vi-VN', {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                    })
+                    : '0'}{' '}
+                  (VND)
+                </span>
+              </div>
+            )}
+          </Col>
+        </Row>
+        <Row className="total-info-container">
+          <Col
+            className="total-info-content"
+            item
+            xs={12}
+            md={10}
+            style={{
+              height: '400px',
+              margin: '8px',
+              borderRadius: '6px',
+              boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
+            }}
+          >
+            <span id="detail-kwh-title">
+              <FormattedMessage {...messages.ElectricUsageDetail} />
+            </span>
             {info && info.labelTime && info.kWhData && (
               <table>
                 <thead>
                   <tr>
-                    <th>Thời gian</th>
-                    <th>Số điện (kWh)</th>
-                    <th>Số nước (mét khối)</th>
-                    <th>Thành tiền</th>
+                    <th>
+                      <FormattedMessage {...messages.Time} />
+                    </th>
+                    <th>
+                      <FormattedMessage {...messages.ElectricUsage} />
+                    </th>
+                    <th>
+                      <FormattedMessage {...messages.WaterUsage} />
+                    </th>
+                    <th>
+                      <FormattedMessage {...messages.TotalCost} />
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -997,8 +952,8 @@ const FollowEnergyAdmin = () => {
                 </tbody>
               </table>
             )}
-          </Grid>
-        </div>
+          </Col>
+        </Row>
       </div>
     </div>
   );

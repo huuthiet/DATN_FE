@@ -46,6 +46,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Popover, Divider, List } from '@material-ui/core';
 import { MoreHoriz } from '@material-ui/icons';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -481,13 +483,14 @@ export function ManagerEnergyHostAdmin(props) {
         <title>Quản lý năng lượng các chủ trọ</title>
         <meta name="description" content="Description of Manager Energy Host" />
       </Helmet>
-      <div className="title-abc">Quản lý năng lượng các chủ trọ</div>
+      <div className="title-abc">
+        <FormattedMessage {...messages.Header} />
+      </div>
       {loading && <div className="loading-overlay" />}
 
       <div className="user-profile">
         {hosts.data && role.length === 2 && role.includes('master') ? (
           <>
-
             <ModalComponent
               modal={modal}
               toggle={toggle}
@@ -644,10 +647,14 @@ export function ManagerEnergyHostAdmin(props) {
               <ul>
                 <Row className='list-title'>
                   <Col xs={5} className="motel-name">
-                    <b>Tên chủ trọ</b>
+                    <b>
+                      <FormattedMessage {...messages.HostName} />
+                    </b>
                   </Col>
                   <Col xs={5} className="motel-phonenumber">
-                    <b>Số điện thoại</b>
+                    <b>
+                      <FormattedMessage {...messages.PhoneNumber} />
+                    </b>
                   </Col>
                   <Col xs={2} className={classes.moreStyle}>
                     <div>
@@ -707,7 +714,7 @@ export function ManagerEnergyHostAdmin(props) {
                               );
                             }}
                           >
-                            Xem chi tiết
+                            <FormattedMessage {...messages.Detail} />
                           </button>
                         </Col>
                       </Row>

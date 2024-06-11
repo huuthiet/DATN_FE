@@ -25,6 +25,8 @@ import './style.scss';
 import makeSelectProfile from '../Profile/selectors';
 import { getProfile } from '../Profile/actions';
 import { LocationOn, Phone } from '@material-ui/icons';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 // import profileReducer from '../Profile/reducer';
 // import profileSaga from '../Profile/saga';
@@ -138,7 +140,7 @@ export function MapsPage(props) {
                             setRoom({});
                           }}
                         >
-                          Hủy
+                          <FormattedMessage {...messages.Cancel} />
                         </button>
                         <button
                           className="detail-button"
@@ -147,7 +149,7 @@ export function MapsPage(props) {
                             history.push(`/motel/${room._id}`);
                           }}
                         >
-                          Xem chi tiết
+                          <FormattedMessage {...messages.Detail} />
                         </button>
                       </div>
                     </div>
@@ -180,7 +182,7 @@ export function MapsPage(props) {
                             setRoom({});
                           }}
                         >
-                          Hủy
+                          <FormattedMessage {...messages.Cancel} />
                         </button>
                         <button
                           className="detail-button"
@@ -189,7 +191,7 @@ export function MapsPage(props) {
                             history.push(`/motel/${room._id}`);
                           }}
                         >
-                          Xem chi tiết
+                          <FormattedMessage {...messages.Detail} />
                         </button>
                       </div>
                     </div>

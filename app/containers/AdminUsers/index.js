@@ -33,6 +33,8 @@ import saga from './saga';
 import makeSelectAdminUsers from './selectors';
 import './styles.scss';
 import ModalComponent from './modal';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const customStyles = {
   content: {
@@ -79,28 +81,28 @@ export function AdminUsers(props) {
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 150 },
     {
       field: 'fullName',
-      headerName: 'Họ và tên',
+      headerName: <FormattedMessage {...messages.FullName} />,
       headerAlign: 'center',
       width: 300,
       headerClassName: 'header-bold',
     },
     {
       field: 'phoneNumber',
-      headerName: 'Số điện thoại',
+      headerName: <FormattedMessage {...messages.PhoneNumber} />,
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
     },
     {
       field: 'email',
-      headerName: 'Email',
+      headerName: <FormattedMessage {...messages.Email} />,
       headerAlign: 'center',
       width: 350,
       headerClassName: 'header-bold',
     },
     {
       field: 'role',
-      headerName: 'Quyền',
+      headerName: <FormattedMessage {...messages.Permission} />,
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
@@ -120,7 +122,7 @@ export function AdminUsers(props) {
     // },
     {
       field: 'edit',
-      headerName: 'Sự kiện',
+      headerName: <FormattedMessage {...messages.Action} />,
       headerAlign: 'center',
       width: 280,
       align: 'center',
@@ -143,7 +145,7 @@ export function AdminUsers(props) {
                 Update
               </i>
             </Button> */}
-            <Tooltip title="Cập nhật hồ sơ" placement="top">
+            <Tooltip title={<FormattedMessage {...messages.UpdateProfile} />} placement="top">
               <Button
                 onClick={() => {
                   /* eslint no-underscore-dangle: 0 */
@@ -154,7 +156,7 @@ export function AdminUsers(props) {
                 </i>
               </Button>
             </Tooltip>
-            <Tooltip title="Xem chi tiết các phòng" placement="top">
+            <Tooltip title={<FormattedMessage {...messages.RoomDetail} />} placement="top">
               <Button
                 style={{ margin: '0 10px' }}
                 onClick={() => {
@@ -166,7 +168,7 @@ export function AdminUsers(props) {
               </Button>
             </Tooltip>
 
-            <Tooltip title="Xóa hồ sơ" placement="top">
+            <Tooltip title={<FormattedMessage {...messages.DeleteProfile} />} placement="top">
               <Button
                 color='danger'
                 style={{ marginRight: '10px' }}
@@ -180,7 +182,7 @@ export function AdminUsers(props) {
                 <i className="fa fa-trash-o" aria-hidden="true" />
               </Button>
             </Tooltip>
-            <Tooltip title="Đặt lại mật khẩu" placement="top">
+            <Tooltip title={<FormattedMessage {...messages.ResetPassword} />} placement="top">
               <Button
                 onClick={() => {
                   /* eslint no-underscore-dangle: 0 */
@@ -206,7 +208,9 @@ export function AdminUsers(props) {
         <title>Quản lý người dùng</title>
         <meta name="description" content="Description of AdminUsers" />
       </Helmet>
-      <div className="title">Quản lý người dùng</div>
+      <div className="title">
+        <FormattedMessage {...messages.Header} />
+      </div>
       <div
         className="admin-users-wrapper container-fulid"
         style={{ margin: '15px' }}
@@ -257,7 +261,7 @@ export function AdminUsers(props) {
       </div>
       <SuccessPopup
         visible={showSuccessPopup}
-        content="Xóa thành công"
+        content={<FormattedMessage {...messages.DeleteSuccess} />}
         toggle={() => {
           props.changeStoreData('showSuccessPopup', !showSuccessPopup);
         }}
@@ -273,7 +277,7 @@ export function AdminUsers(props) {
 
       <SuccessPopup
         visible={showSuccessPopupWall}
-        content="Cập nhật thành công"
+        content={<FormattedMessage {...messages.UpdateSuccess} />}
         toggle={() => {
           props.changeStoreData('showSuccessPopupWall', !showSuccessPopupWall);
         }}
@@ -281,7 +285,7 @@ export function AdminUsers(props) {
 
       <WarningPopup
         visible={showWarningPopup}
-        content="Bạn thực sự muốn xóa?"
+        content={<FormattedMessage {...messages.ConfirmDelete} />}
         callBack={() => props.deleteAdminUser(id, '')}
         toggle={() => {
           props.changeStoreData('showWarningPopup', false);
@@ -290,7 +294,7 @@ export function AdminUsers(props) {
 
       <WarningPopup
         visible={showWarningResetPW}
-        content="Bạn thực sự muốn đặt lại mật khẩu?"
+        content={<FormattedMessage {...messages.ConfirmResetPassword} />}
         callBack={() => props.resetPWAdminUser(id, '')}
         toggle={() => {
           props.changeStoreData('showWarningResetPW', false);

@@ -1,220 +1,253 @@
+
+// .loading-overlay {
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     background: rgba(0, 0, 0, 0.5); // Màu đen với độ trong suốt 0.5
+//     z-index: 999; // Đặt z-index cao hơn để nó nằm trên mọi thành phần khác
+//   }
+  
+// /* SCSS để tạo hiệu ứng overlay semi-transparent và vòng quay loading */
+// @media print {
+//   body {
+//     margin: 0;
+//   }
+//   .total-info-container {
+//     page-break-before: auto; /* Tạo trang mới trước khi in div này */
+//     page-break-inside: avoid; /* Không chia cắt div khi in */
+//     page-break-after: auto; /* Tạo trang mới sau khi in div này */
+//   }
+//   .bill-1, .bill-2 {
+//     page-break-inside: avoid; /* Không chia cắt các thành phần trong bill-1 và bill-2 */
+//   }
+//   .bill-1-component1, .bill-1-component2 {
+//     display: inline-block; /* Hiển thị các thành phần của bill-1 cùng một hàng */
+//     width: 49%; /* Chia đều chiều rộng giữa các thành phần */
+//     vertical-align: top; /* Dọc theo đỉnh của các thành phần */
+//   }
+// }
+
 .loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); // Màu đen với độ trong suốt 0.5
-    z-index: 999; // Đặt z-index cao hơn để nó nằm trên mọi thành phần khác
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); // Màu đen với độ trong suốt 0.5
+  z-index: 999; // Đặt z-index cao hơn để nó nằm trên mọi thành phần khác
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
 
-  
-    &::after {
-      content: "";
-      width: 50px; /* Đặt kích thước vòng quay */
-      height: 50px; /* Đặt kích thước vòng quay */
-      border: 4px solid #fff; /* Đặt màu và độ rộng của vòng quay */
-      border-top: 4px solid transparent; /* Để tạo vòng tròn trong suốt */
-      border-radius: 50%; /* Chuyển thành hình tròn */
-      animation: spin 1s linear infinite; /* Sử dụng animation với tên spin, thời gian 1s, tuyến tính và vô hạn lặp */
-    }
-  
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+
+  &::after {
+    content: "";
+    width: 50px; /* Đặt kích thước vòng quay */
+    height: 50px; /* Đặt kích thước vòng quay */
+    border: 4px solid #fff; /* Đặt màu và độ rộng của vòng quay */
+    border-top: 4px solid transparent; /* Để tạo vòng tròn trong suốt */
+    border-radius: 50%; /* Chuyển thành hình tròn */
+    animation: spin 1s linear infinite; /* Sử dụng animation với tên spin, thời gian 1s, tuyến tính và vô hạn lặp */
   }
 
-  .title-abc {
-    color: rgb(24, 143, 190);
-    font-size: 26px;
-    text-align: center;
-    padding: 10px;
-    font-weight: 500;
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
-  .manage-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    @media screen and (max-width: 768px) {
-      flex-direction: column;
-    }
-    label{
-      margin: 0;
-    }
-    input{
-      padding: 4px 12px;
-      border: 1px solid #b0b0b0;
-      border-radius: 6px;
-      transition: .3s linear;
-      &:hover{
-        border: 1px solid #3b3b3b;
-      }
-    }
-    .btn-export {
-      margin: 10px 0;
-      border: 1px solid #0de018;
-      color: #1e9e25;
-      font-weight: 600;
-      background-color: #e6f7e6;
-      .export-icon{
-        font-size: 22px;
-        margin-right: 5px;
-      }
-      &:hover {
-        background-color: #138e19;
-        color: white;
-      }
-    }
-    .btn-cancel{
-      border: 1px solid #e01818;
-      color: #9e1e1e;
-      font-weight: 600;
-      background-color: #f7e6e6;
-      .cancel-icon{
-        font-size: 22px;
-        margin-right: 5px;
-      }
-      &:hover {
-        background-color: #8e1919;
-        color: white;
-      }
-    }
-    .btn-filter{
-      border: none;
-      background-color: #0e2dd8;
-      color: white;
-      font-weight: 600;
-      .filter-icon{
-        font-size: 29px;
-      }
-      &:hover {
-        background-color: #13279b;
-      }
-    }
-  }
+}
 
-  .total-info-container{
-    display: flex;
+.title-abc {
+  color: rgb(24, 143, 190);
+  font-size: 26px;
+  text-align: center;
+  padding: 10px;
+  font-weight: 500;
+}
+.manage-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  @media screen and (max-width: 768px) {
     flex-direction: column;
+  }
+  label{
+    margin: 0;
+  }
+  input{
+    padding: 4px 12px;
+    border: 1px solid #b0b0b0;
+    border-radius: 6px;
+    transition: .3s linear;
+    &:hover{
+      border: 1px solid #3b3b3b;
+    }
+  }
+  .btn-export {
+    margin: 10px 0;
+    border: 1px solid #0de018;
+    color: #1e9e25;
+    font-weight: 600;
+    background-color: #e6f7e6;
+    .export-icon{
+      font-size: 22px;
+      margin-right: 5px;
+    }
+    &:hover {
+      background-color: #138e19;
+      color: white;
+    }
+  }
+  .btn-cancel{
+    border: 1px solid #e01818;
+    color: #9e1e1e;
+    font-weight: 600;
+    background-color: #f7e6e6;
+    .cancel-icon{
+      font-size: 22px;
+      margin-right: 5px;
+    }
+    &:hover {
+      background-color: #8e1919;
+      color: white;
+    }
+  }
+  .btn-filter{
+    border: none;
+    background-color: #0e2dd8;
+    color: white;
+    font-weight: 600;
+    .filter-icon{
+      font-size: 29px;
+    }
+    &:hover {
+      background-color: #13279b;
+    }
+  }
+}
+
+.current-voltage-dashboard{
+  display: flex;
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.total-info-container{
+  display: flex;
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  // gap: 10px;
+  // align-items: center;
+  margin: auto auto;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    
+  }
+  .bill-1{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
     @media screen and (max-width: 768px) {
       flex-direction: column;
-      .bill-1{
+    }
+    .bill-1-component1{
+      width: 60%;
+      @media screen and (max-width: 768px) {
         width: 100%;
       }
-      .bill-2{
+
+    }
+    .bill-1-component2{
+      width: 40%;
+      @media screen and (max-width: 768px) {
         width: 100%;
       }
-      
     }
-    .bill-1{
-      display: flex;
-      flex-direction: row;
-      width: 100%;
+  }
+  
+  .bill-2{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+    }
+
+  }
+  .total-info-content{
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    padding: 15px;
+    &:hover{
+      overflow-y: auto;
+      transition: all 0.5s ease;
+    }
+
+    .detail-container{
+      border: 1px solid #c8c8c8;
+      border-radius: 6px;
+      padding: 6px 56px;
       @media screen and (max-width: 768px) {
-        flex-direction: column;
-      }
-      .bill-1-component1{
-        width: 60%;
-        @media screen and (max-width: 768px) {
-          width: 100%;
-        }
-
-      }
-      .bill-1-component2{
-        width: 40%;
-        @media screen and (max-width: 768px) {
-          width: 100%;
-        }
-      }
-    }
-    
-    .bill-2{
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      @media screen and (max-width: 768px) {
-        flex-direction: column;
-      }
-
-    }
-    .total-info-content{
-      display: flex;
-      justify-content: center;
-      overflow: hidden;
-      padding: 15px;
-      &:hover{
-        overflow-y: auto;
-        transition: all 0.5s ease;
-      }
-
-      .detail-container{
-        border: 1px solid #c8c8c8;
-        border-radius: 6px;
-        padding: 6px 56px;
-        @media screen and (max-width: 768px) {
-          padding: 6px 0;
-          text-align: center;
-          
-        }
-        .title{
-          font-size: 20px;
-          font-weight: 700;
-          color: #1f2f8d;
-        }
-        .content{
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          margin: 10px 0;
-
-          font-size: 20px;
-          font-weight: 600;
-          @media screen and (max-width: 768px){
-            margin-left: 20px;
-          }
-          .icon{
-            font-size: 30px;
-            padding: 2px;
-            margin-right: 10px;
-            border: 1px solid #6b6b6b;
-            border-radius: 6px;
-          }
-        }
-      }
-      table{
-        display: flex;
-        flex-direction: column;
+        padding: 6px 0;
         text-align: center;
-        font-size: 16px;
-        thead{
-          background-color: #f0f0f0;
-          th{
+        
+      }
+      .title{
+        font-size: 20px;
+        font-weight: 700;
+        color: #1f2f8d;
+      }
+      .content{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 10px 0;
+
+        font-size: 20px;
+        font-weight: 600;
+        @media screen and (max-width: 768px){
+          margin-left: 20px;
+        }
+        .icon{
+          font-size: 30px;
+          padding: 2px;
+          margin-right: 10px;
+          border: 1px solid #6b6b6b;
+          border-radius: 6px;
+        }
+      }
+    }
+    table{
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      font-size: 16px;
+      thead{
+        background-color: #f0f0f0;
+        th{
+          min-width: 196px;
+          padding: 10px;
+        }
+      }
+      tbody{
+        tr{
+          td{
             min-width: 196px;
             padding: 10px;
+            margin-left: 2px;
+            border-bottom: 1px solid #c8c8c8;
           }
         }
-        tbody{
-          tr{
-            td{
-              min-width: 196px;
-              padding: 10px;
-              margin-left: 2px;
-              border-bottom: 1px solid #c8c8c8;
-            }
-          }
-        }
-    }
-    }
+      }
   }
-
-  .chart-container{
-    margin: 20px 0;
   }
+}
 
 
-  

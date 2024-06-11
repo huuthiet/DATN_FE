@@ -10,7 +10,7 @@ export const scope = 'MoneyInformationDetail.containers';
 export default defineMessages({
   updateBank: {
     id: `${scope}.updateBank`,
-    defaultMessage: 'Cập Nhật Thông Tin',
+    defaultMessage: 'Cập nhật thông tin',
   },
   addBank: {
     id: `${scope}.addBank`,
@@ -18,23 +18,23 @@ export default defineMessages({
   },
   stk: {
     id: `${scope}.stk`,
-    defaultMessage: 'Vui lòng nhập Số Tài Khoản',
+    defaultMessage: 'Vui lòng nhập số tài khoản',
   },
   nameTk: {
     id: `${scope}.nameTk`,
-    defaultMessage: 'Vui lòng nhập Tên Tài Khoản',
+    defaultMessage: 'Vui lòng nhập tên tài khoản',
   },
   bank: {
     id: `${scope}.bank`,
-    defaultMessage: 'Vui lòng chọn Ngân Hàng',
+    defaultMessage: 'Vui lòng chọn ngân hàng',
   },
   branch: {
     id: `${scope}.branch`,
-    defaultMessage: 'Vui lòng chọn Chi Nhánh',
+    defaultMessage: 'Vui lòng chọn chi nhánh',
   },
   imgBank: {
     id: `${scope}.imgBank`,
-    defaultMessage: 'Hình ảnh Chuyển Khoản',
+    defaultMessage: 'Hình ảnh chuyển khoản',
   },
   SizeImage: {
     id: `UpdateMotel.containers.SizeImage`,
