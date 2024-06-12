@@ -69,11 +69,11 @@ export default defineMessages({
     defaultMessage: 'Thời gian',
   },
   ElectricUsage: {
-    id: `${scope}.TotalUsage`,
+    id: `${scope}.ElectricUsage`,
     defaultMessage: 'Số điện (kWh)',
   },
   WaterUsage: {
-    id: `${scope}.TotalWaterUsage`,
+    id: `${scope}.WaterUsage`,
     defaultMessage: 'Số nước (m3)',
   },
   TotalCost: {

@@ -19,6 +19,8 @@ import './style.scss';
 
 import { DataGrid } from '@mui/x-data-grid'; // Import DataGrid từ Material-UI
 import { head, set } from 'lodash';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 export function ManageDepositAdmin(props) {
   useInjectReducer({ key: 'motelListByOwner', reducer });
@@ -36,23 +38,37 @@ export function ManageDepositAdmin(props) {
 
   useEffect(() => {
     props.getMotelList(id);
-    // setMotelList(props.profile.buildingRevenue || []);
-    // setLoading(false);
   }, [id]);
 
   const { motelList = [] } = props.motelListByOwner;
-  console.log("motelListuuuu", motelList);
-
-  // console.log('check props: ', motelList);
   const columns = [
-    { field: 'index', headerName: 'STT', headerAlign: 'center', width: 150, headerClassName: 'header-bold', align: 'center' },
-    { field: 'name', headerName: 'Tên tòa nhà', width: 250, headerAlign: 'center', headerClassName: 'header-bold' },
-    { field: 'address', headerName: 'Địa chỉ', width: 700, headerAlign: 'center', headerClassName: 'header-bold' },
+    {
+      field: 'index',
+      headerName: <FormattedMessage {...messages.STT} />,
+      headerAlign: 'center',
+      width: 150,
+      headerClassName: 'header-bold',
+      align: 'center'
+    },
+    {
+      field: 'name',
+      headerName: <FormattedMessage {...messages.BuildingName} />,
+      width: 250,
+      headerAlign: 'center',
+      headerClassName: 'header-bold'
+    },
+    {
+      field: 'address',
+      headerName: <FormattedMessage {...messages.Address} />,
+      width: 700,
+      headerAlign: 'center',
+      headerClassName: 'header-bold'
+    },
     {
       field: 'action-1',
-      headerName: 'Quản lý duyệt cọc',
+      headerName: <FormattedMessage {...messages.ManageDeposit} />,
       headerAlign: 'center',
-      width: 200,
+      width: 250,
       headerClassName: 'header-bold',
       renderCell: params =>
       // eslint-disable-next-line no-unused-expressions
@@ -64,16 +80,16 @@ export function ManageDepositAdmin(props) {
               history.push(`/manage-deposit/accept-deposit/${params.row._id}`);
             }}
           >
-            Xem chi tiết
+            <FormattedMessage {...messages.Detail} />
           </a>
         </>
       )
     },
     {
       field: 'action-2',
-      headerName: 'Duyệt thanh toán khi nhận phòng',
+      headerName: <FormattedMessage {...messages.ManageCheckInCost} />,
       headerAlign: 'center',
-      width: 300,
+      width: 350,
       headerClassName: 'header-bold',
       renderCell: params =>
       // eslint-disable-next-line no-unused-expressions
@@ -87,14 +103,14 @@ export function ManageDepositAdmin(props) {
               );
             }}
           >
-            Xem chi tiết
+            <FormattedMessage {...messages.Detail} />
           </a>
         </>
       )
     },
     {
       field: 'action-3',
-      headerName: 'Hóa đơn chờ thanh toán',
+      headerName: <FormattedMessage {...messages.ManageBill} />,
       headerAlign: 'center',
       width: 300,
       headerClassName: 'header-bold',
@@ -108,7 +124,7 @@ export function ManageDepositAdmin(props) {
                 history.push(`/manage-deposit/order-deposit-pending-payment/${params.row._id}/${params.row.name}`);
               }}
             >
-              Xem chi tiết
+              <FormattedMessage {...messages.Detail} />
             </a>
           </>
         );
@@ -116,9 +132,9 @@ export function ManageDepositAdmin(props) {
     },
     {
       field: 'action-4',
-      headerName: 'Quản lý trả cọc',
+      headerName: <FormattedMessage {...messages.RefundDeposit} />,
       headerAlign: 'center',
-      width: 200,
+      width: 250,
       headerClassName: 'header-bold',
       renderCell: params =>
       // eslint-disable-next-line no-unused-expressions
@@ -130,14 +146,14 @@ export function ManageDepositAdmin(props) {
               history.push(`/manage-deposit/pay-deposit/${params.row._id}`);
             }}
           >
-            Xem chi tiết
+            <FormattedMessage {...messages.Detail} />
           </a>
         </>
       )
     },
     {
       field: 'action-5',
-      headerName: 'Lịch sử đặt cọc',
+      headerName: <FormattedMessage {...messages.DepositHistory} />,
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
@@ -152,7 +168,7 @@ export function ManageDepositAdmin(props) {
               history.push(`/manage-deposit/history-deposit-aftercheckincost/motel/${params.row._id}/${params.row.name}`);
             }}
           >
-            Xem chi tiết
+            <FormattedMessage {...messages.Detail} />
           </a>
         </>
       )
@@ -162,20 +178,20 @@ export function ManageDepositAdmin(props) {
   // Xây dựng cấu trúc dữ liệu cho DataGrid từ buildingRevenue
   let rows = [];
   // if(motelList) {
-    if(motelList.length > 0) {
-      rows = motelList.map((motel, index) => ({
-        index: index + 1,
-        name: motel.name,
-        address: motel.address.address,
-        _id: motel._id,
-        key: motel._id,
-        file: motel.file,
-        totalRoom: motel.totalRoom,
-        depositedRoom: motel.depositedRoom,
-        availableRoom: motel.availableRoom,
-        rentedRoom: motel.rentedRoom,
-      }));
-    }
+  if (motelList.length > 0) {
+    rows = motelList.map((motel, index) => ({
+      index: index + 1,
+      name: motel.name,
+      address: motel.address.address,
+      _id: motel._id,
+      key: motel._id,
+      file: motel.file,
+      totalRoom: motel.totalRoom,
+      depositedRoom: motel.depositedRoom,
+      availableRoom: motel.availableRoom,
+      rentedRoom: motel.rentedRoom,
+    }));
+  }
   const handleButtonClick = useCallback((row) => {
     // history.push(`/hostMotelRoom/${row._id}`);
     // history.push(`/room-detail/${row._id}`);
@@ -196,7 +212,9 @@ export function ManageDepositAdmin(props) {
         <meta name="description" content="Description of Manage Deposit" />
       </Helmet>
       <div className="title-abc">
-        <span>Quản lý cọc</span>
+        <span>
+          <FormattedMessage {...messages.Header} />
+        </span>
         {/* <span>Người quản lý: <strong>{name}</strong></span> */}
       </div>
 

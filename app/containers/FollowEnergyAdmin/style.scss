@@ -61,10 +61,12 @@
 
 .title-abc {
   color: rgb(24, 143, 190);
-  font-size: 26px;
+  font-size: 24px;
   text-align: center;
   padding: 10px;
   font-weight: 500;
+  display: flex;
+  flex-direction: column;
 }
 .manage-container{
   display: flex;
@@ -88,16 +90,16 @@
   }
   .btn-export {
     margin: 10px 0;
-    border: 1px solid #0de018;
-    color: #1e9e25;
+    border: 1px solid #4abe10;
+    color: #4abe10;
     font-weight: 600;
-    background-color: #e6f7e6;
+    background-color: #f6fff2;
     .export-icon{
       font-size: 22px;
       margin-right: 5px;
     }
     &:hover {
-      background-color: #138e19;
+      background-color: #4dbe15;
       color: white;
     }
   }
@@ -193,7 +195,8 @@
     .detail-container{
       border: 1px solid #c8c8c8;
       border-radius: 6px;
-      padding: 6px 56px;
+      width: 100%;
+      padding: 6px 10px;
       @media screen and (max-width: 768px) {
         padding: 6px 0;
         text-align: center;
@@ -203,24 +206,26 @@
         font-size: 20px;
         font-weight: 700;
         color: #1f2f8d;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       .content{
         display: flex;
         flex-direction: row;
         align-items: center;
         margin: 10px 0;
-
         font-size: 20px;
         font-weight: 600;
         @media screen and (max-width: 768px){
           margin-left: 20px;
         }
         .icon{
-          font-size: 30px;
-          padding: 2px;
+          font-size: 32px;
+          padding: 3px;
           margin-right: 10px;
-          border: 1px solid #6b6b6b;
-          border-radius: 6px;
+          border: 1px solid #9b9b9b;
+          border-radius: 12px;
         }
       }
     }

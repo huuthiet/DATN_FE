@@ -1,89 +1,70 @@
 /*
- * NotFoundPage Messages
+ * export const scope = 'ManageMotelListAdmin.containers';
+ Messages
  *
- * This contains all the text for the NotFoundPage container.
+ * This contains all the text for the export const scope = 'ManageMotelListAdmin.containers';
+ container.
  */
+import { Delete } from '@material-ui/icons';
 import { defineMessages } from 'react-intl';
 
-export const scope = 'profile.containers';
+export const scope = 'ManageMotelListAdmin.containers';
 
 export default defineMessages({
-  cancellation: {
-    id: `${scope}.cancellation`,
-    defaultMessage: 'Hủy đặt cọc',
+  Header: {
+    id: `${scope}.Header`,
+    defaultMessage: 'Quản lý các tòa nhà',
   },
-  cancellationtext: {
-    id: `${scope}.cancellationtext`,
-    defaultMessage:
-      'Bạn sẽ mất tiền đặt cọc khi hủy! Bạn có thực sự muốn hủy không?',
+  STT: {
+    id: `${scope}.STT`,
+    defaultMessage: 'STT',
   },
-  profile: {
-    id: `${scope}.profile`,
-    defaultMessage: 'Thông tin cá nhân',
+  HostName: {
+    id: `${scope}.HostName`,
+    defaultMessage: 'Tên chủ nhà: ',
   },
-  name: {
-    id: `${scope}.name`,
-    defaultMessage: 'Tên',
+  BuildingName: {
+    id: `${scope}.BuildingName`,
+    defaultMessage: 'Tên tòa nhà',
   },
-  aboutmap: {
-    id: `${scope}.aboutmap`,
-    defaultMessage: 'Về bản đồ',
+  BuildingImage: {
+    id: `${scope}.BuildingImage`,
+    defaultMessage: 'Hình ảnh',
   },
-  uploadAvata: {
-    id: `${scope}.uploadAvata`,
-    defaultMessage: 'Tải Ảnh',
+  Address: {
+    id: `${scope}.Address`,
+    defaultMessage: 'Địa chỉ',
   },
-
-  sdt: {
-    id: `${scope}.sdt`,
-    defaultMessage: 'Số điện thoại',
+  RoomQuantity: {
+    id: `${scope}.RoomQuantity`,
+    defaultMessage: 'Số phòng',
   },
-  wallet: {
-    id: `${scope}.wallet`,
-    defaultMessage: 'Số dư trong ví',
+  Rented: {
+    id: `${scope}.Rented`,
+    defaultMessage: 'Đã thuê',
   },
-  addnew: {
-    id: `${scope}.addnew`,
-    defaultMessage: 'Thêm mới',
+  Deposited: {
+    id: `${scope}.Deposited`,
+    defaultMessage: 'Đã cọc',
   },
-  edit: {
-    id: `${scope}.edit`,
-    defaultMessage: 'Chỉnh sửa',
+  RoomList: {
+    id: `${scope}.RoomList`,
+    defaultMessage: 'Danh sách các phòng',
   },
-  delete: {
-    id: `${scope}.delete`,
+  DeleteBuilding: {
+    id: `${scope}.DeleteBuilding`,
+    defaultMessage: 'Xóa tòa nhà',
+  },
+  Delete: {
+    id: `${scope}.Delete`,
     defaultMessage: 'Xóa',
   },
-  detelesuccess: {
-    id: `${scope}.detelesuccess`,
-    defaultMessage: 'Đã xoá thành công',
+  Detail: {
+    id: `${scope}.Detail`,
+    defaultMessage: 'Xem chi tiết',
   },
-  errorMessage: {
-    id: `${scope}.errorMessage`,
-    defaultMessage: 'Phòng đang cho thuê, không thể xóa!',
-  },
-  reallyMessage: {
-    id: `${scope}.reallyMessage`,
-    defaultMessage: 'Bạn có thực sự muốn xóa?',
-  },
-  NumberofFloors: {
-    id: `${scope}.NumberofFloors`,
-    defaultMessage: 'Số tầng:',
-  },
-  All: {
-    id: `${scope}.All`,
-    defaultMessage: 'Tất cả:',
-  },
-  PriceFluctuates: {
-    id: `${scope}.PriceFluctuates`,
-    defaultMessage: 'Giá dao động:',
-  },
-  description: {
-    id: `${scope}.description`,
-    defaultMessage: 'Mô tả:',
-  },
-  address: {
-    id: `${scope}.address`,
-    defaultMessage: 'Địa chỉ:',
+  ConfirmDeleteBuilding: {
+    id: `${scope}.ConfirmDeleteBuilding`,
+    defaultMessage: 'Bạn có chắc chắn muốn xóa tòa nhà này không?',
   },
 });

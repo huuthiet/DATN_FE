@@ -16,6 +16,8 @@ import saga from './saga';
 import makeSelectManagerBuildingHost from './selectors';
 import './style.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 // http://localhost:3006/manage-monthly-order
 // http://localhost:3006/manage-deposit
@@ -23,21 +25,21 @@ export function ManagerEnergyHostAdmin(props) {
   const columns = [
     {
       field: 'index',
-      headerName: 'STT',
+      headerName: <FormattedMessage {...messages.STT} />,
       headerAlign: 'center',
       align: 'center',
       width: 150,
     },
     {
       field: 'name',
-      headerName: 'Họ và tên',
+      headerName: <FormattedMessage {...messages.FullName} />,
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
     },
     {
       field: 'phoneNumberFull',
-      headerName: 'Số điện thoại',
+      headerName: <FormattedMessage {...messages.PhoneNumber} />,
       headerAlign: 'center',
       align: 'center',
       width: 200,
@@ -45,7 +47,7 @@ export function ManagerEnergyHostAdmin(props) {
     },
     {
       field: 'profile',
-      headerName: 'Thông tin cá nhân',
+      headerName: <FormattedMessage {...messages.PersonalInformation} />,
       headerAlign: 'center',
       align: 'center',
 
@@ -59,13 +61,13 @@ export function ManagerEnergyHostAdmin(props) {
             handleButtonClickProfile(params.row);
           }}
         >
-          Xem chi tiết
+          <FormattedMessage {...messages.Detail} />
         </a>
       ),
     },
     {
       field: 'numberBuilding',
-      headerName: 'Số tòa',
+      headerName: <FormattedMessage {...messages.BuildingNumber} />,
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
@@ -73,7 +75,7 @@ export function ManagerEnergyHostAdmin(props) {
     },
     {
       field: 'Danh sách các tòa',
-      headerName: 'Danh sách các tòa nhà',
+      headerName: <FormattedMessage {...messages.ListBuilding} />,
       headerAlign: 'center',
       align: 'center',
 
@@ -88,13 +90,13 @@ export function ManagerEnergyHostAdmin(props) {
             handleButtonClick(params.row);
           }}
         >
-          Xem chi tiết
+          <FormattedMessage {...messages.Detail} />
         </a>
       ),
     },
     {
       field: 'deposit',
-      headerName: 'Thanh toán cọc',
+      headerName: <FormattedMessage {...messages.Deposit} />,
       headerAlign: 'center',
       align: 'center',
 
@@ -109,7 +111,7 @@ export function ManagerEnergyHostAdmin(props) {
             handleButtonClickDeposit(params.row);
           }}
         >
-          Xem chi tiết
+          <FormattedMessage {...messages.Detail} />
         </a>
       ),
     },
@@ -130,13 +132,13 @@ export function ManagerEnergyHostAdmin(props) {
             handleButtonClickMonthly(params.row);
           }}
         >
-          Xem chi tiết
+          <FormattedMessage {...messages.Detail} />
         </a>
       ),
     },
     {
       field: 'revenue',
-      headerName: 'Doanh thu',
+      headerName: <FormattedMessage {...messages.Revenue} />,
       headerAlign: 'center',
       align: 'center',
 
@@ -151,13 +153,13 @@ export function ManagerEnergyHostAdmin(props) {
             handleButtonClickRevenue(params.row);
           }}
         >
-          Xem chi tiết
+          <FormattedMessage {...messages.Detail} />
         </a>
       ),
     },
     {
       field: 'monthly',
-      headerName: 'Quản lý rút tiền doanh thu',
+      headerName: <FormattedMessage {...messages.WithdrawalsRequest} />,
       headerAlign: 'center',
       align: 'center',
 
@@ -172,7 +174,7 @@ export function ManagerEnergyHostAdmin(props) {
             handleButtonClickWithdraw(params.row);
           }}
         >
-          Xem chi tiết
+          <FormattedMessage {...messages.Detail} />
         </a>
       ),
     },
@@ -240,10 +242,12 @@ export function ManagerEnergyHostAdmin(props) {
   return (
     <div className="user-profile-wrapper container">
       <Helmet>
-        <title>Danh sách các chủ trọ</title>
+        <title>HostManagement</title>
         <meta name="description" content="Description of Manager Energy Host" />
       </Helmet>
-      <div className="title-abc">Danh sách các chủ trọ</div>
+      <div className="title-abc">
+        <FormattedMessage {...messages.Header} />
+      </div>
 
       <div className="user-profile">
         {hosts && role.length === 2 && role.includes('master') && (
