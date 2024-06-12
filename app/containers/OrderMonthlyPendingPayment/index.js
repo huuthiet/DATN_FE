@@ -18,6 +18,12 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import localStore from 'local-storage';
 import moment from 'moment';
 import axios from 'axios';
+import {
+  FormGroup,
+  Label,
+  Input,
+  FormFeedback,
+} from 'reactstrap';
 import localStoreService from 'local-storage';
 import { useParams } from 'react-router-dom';
 import * as fileDownload from 'js-file-download';
@@ -40,6 +46,7 @@ import makeSelectPayDepositList from './selectors';
 import './style.scss';
 import { urlLink } from '../../helper/route';
 import { notificationController } from '../../controller/notificationController';
+import ModalComponent from './modal';
 
 
 const useStyles = makeStyles(theme => ({
@@ -68,6 +75,7 @@ export function OrderMonthlyPendingPayment(props) {
 
   const [idTransaction, setIdTransaction] = useState('');
   const [status, setStatus] = useState('');
+  const [modal, setModal] = useState(false);
 
   const {
     _id = '',
@@ -78,7 +86,6 @@ export function OrderMonthlyPendingPayment(props) {
   } = currentUser;
 
   const { idMotel = '', nameMotel = '' } = useParams();
-  console.log({idMotel});
 
   const [loading, setLoading] = useState(false);
   const startLoading = () => {
@@ -122,15 +129,72 @@ export function OrderMonthlyPendingPayment(props) {
     }
   };
 
+  const [email, setEmail] = useState('');
+  const [isValid, setIsValid] = useState(false);
+  const [listIdOrder, setListOrder] = useState([]);
+
+  const validateEmail = (value) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value);
+  };
+
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setEmail(value);
+    setIsValid(validateEmail(value));
+  };
+
+  const downloadAllFile = async() => {
+    console.log("hihi");
+    
+    let listIdOrderTemp = [];
+    if(transformedData.length > 0) {
+      listIdOrderTemp = transformedData.map((item) => item._id);
+    }
+
+    console.log({listIdOrderTemp});
+    if(listIdOrderTemp.length > 0) {
+      setModal(!modal);
+      setListOrder(listIdOrderTemp);
+    } else {
+      notificationController.error("Hiện Không Có Hóa Đơn Nào!");
+    }
+  }
+
+  const cancelToggle = () => {
+    setModal(!modal);
+  };
+
+  const handleSendMail = async () => {
+    const requestUrl =
+      urlLink.api.serverUrl
+      + urlLink.api.postExportAllBillRoomPendingPayByOrderToMail;
+    if(isValid) {
+      setModal(!modal);
+      console.log("Đã gửi", listIdOrder);
+
+      const data = {
+        email: email,
+        listIdOrder: listIdOrder
+      }
+
+      try {
+        const response = await axios.post(requestUrl, data);
+        console.log("file", response.data);
+        notificationController.success('Xuất Hóa Đơn Thành Công, Vui Lòng Chờ Trong Giây Lát Và Kiểm Tra Email!');
+      } catch (err) {
+        stopLoading();
+        notificationController.error(err.response.data.errors[0].errorMessage);
+      }
+    }
+  }
+
   const {
     historyMonthly = [],
     showWarningapprove,
     showSuccessapprove,
     action = 0,
   } = props.historyMonthly;
-  console.log({showWarningapprove})
-  console.log({historyMonthly});
-  console.log("accctionnnn", action);
 
   useEffect(() => {
     props.getPayDepositList(idMotel);
@@ -149,7 +213,7 @@ export function OrderMonthlyPendingPayment(props) {
       description: item.description,
       keyPayment: item.keyPayment,
       time: moment(new Date(item.createdAt)).format("DD-MM-YYYY"),
-      timePaid: moment(new Date(item.updatedAt)).format("DD-MM-YYYY"),
+      // timePaid: moment(new Date(item.updatedAt)).format("DD-MM-YYYY"),
       expireTime: moment(new Date(item.expireTime)).format("DD-MM-YYYY"),
       keyOrder: item.keyOrder,
       _id: item._id,
@@ -190,18 +254,18 @@ export function OrderMonthlyPendingPayment(props) {
     },
     {
       field: 'expireTime',
-      headerName: 'Thời gian hết hạn',
+      headerName: 'Hạn thanh toán',
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
     },
-    {
-      field: 'timePaid',
-      headerName: 'Thời gian thanh toán',
-      headerAlign: 'center',
-      width: 200,
-      headerClassName: 'header-bold',
-    },
+    // {
+    //   field: 'timePaid',
+    //   headerName: 'Thời gian thanh toán',
+    //   headerAlign: 'center',
+    //   width: 200,
+    //   headerClassName: 'header-bold',
+    // },
     {
       field: 'keyOrder',
       headerName: 'Mã hóa đơn',
@@ -247,6 +311,58 @@ export function OrderMonthlyPendingPayment(props) {
         <meta name="description" content="Description of History Monthly" />
       </Helmet>
       <div className="title">Hóa hàng tháng chờ thanh toán tòa {nameMotel}</div>
+      <Button
+        style={{
+          marginLeft: '10px',
+        }}
+        onClick={() => {
+          downloadAllFile();
+        }}
+        color="primary"
+      >
+        Xuất Toàn Bộ Hóa Đơn
+      </Button>
+      <ModalComponent
+        modal={modal}
+        toggle={cancelToggle}
+        modalTitle="Xuất toàn bộ hóa đơn"
+        footer={
+          <div>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={cancelToggle}
+            >
+              Hủy
+            </Button>{' '}
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => handleSendMail()}
+            >
+              Xác nhận
+            </Button>
+          </div>
+        }
+      >
+        <FormGroup>
+          <Label for="email">Vui lòng nhập email nhận hóa đơn</Label>
+          <Input
+            id="email"
+            name="email"
+            placeholder="email"
+            type="email"
+            value={email}
+            onChange={handleChange}
+            invalid={!isValid && email !== ''}
+          />
+          <FormFeedback>Vui lòng nhập lại email!</FormFeedback>
+        </FormGroup>
+        <div>
+          Tất cả hóa đơn chờ thanh toán sẽ được gửi vào email bạn cung cấp, vui lòng cung cấp chính xác email.
+          Xác nhận xuất hóa đơn!
+        </div>
+      </ModalComponent>
       {loading && <div className="loading-overlay" />}
       <div className="job-list-wrapper container-fluid">
         <div style={{ width: '100%' }}>

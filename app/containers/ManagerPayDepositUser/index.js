@@ -41,7 +41,6 @@ import WarningPopup from '../../components/WarningPopup';
 import {
   changeStoreData,
   getPayDepositList,
-  approvePendingPayDeposit,
 } from './actions';
 import messages from './messages';
 import reducer from './reducer';
@@ -78,7 +77,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export function ManagerPayDepositHost(props) {
+export function ManagerPayDepositUser(props) {
   useInjectReducer({ key: 'payDepositList', reducer });
   useInjectSaga({ key: 'payDepositList', saga });
   // const [urlImgCloud, setUrlImgCloud] = useState('');
@@ -89,8 +88,6 @@ export function ManagerPayDepositHost(props) {
 
   const [idTransaction, setIdTransaction] = useState('');
   const [status, setStatus] = useState('');
-  const [urlImgCloud, setUrlImgCloud] = useState('');
-  // let idTransaction = '';
 
   const {
     _id = '',
@@ -99,9 +96,6 @@ export function ManagerPayDepositHost(props) {
     role = [],
     phoneNumber = {},
   } = currentUser;
-
-  const { id } = useParams();
-  console.log({id});
 
 
   const {
@@ -115,8 +109,8 @@ export function ManagerPayDepositHost(props) {
 
   console.log("acction", action);
   useEffect(() => {
-    props.getPayDepositList(id);
-  }, [action, urlImgCloud]);
+    props.getPayDepositList();
+  }, []);
 
   
 
@@ -138,22 +132,17 @@ export function ManagerPayDepositHost(props) {
     _id: item._id, // ID của đối tượng
     time: moment(new Date(item.createdAt)).format("DD/MM/YYYY"),
     file: item.file ? item.file : null,
+    motelName: item.motel ? item.motel.name : "N/A",
+    idMotel: item.motel ? item.motel._id : null,
   }));
 
   const columns = [
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 120 },
     {
-      field: 'user',
-      headerName: 'Người thuê',
+      field: 'motelName',
+      headerName: 'Tòa nhà',
       headerAlign: 'center',
       width: 250,
-      headerClassName: 'header-bold',
-    },
-    {
-      field: 'phone',
-      headerName: 'Số điện thoại',
-      headerAlign: 'center',
-      width: 200,
       headerClassName: 'header-bold',
     },
     {
@@ -161,13 +150,6 @@ export function ManagerPayDepositHost(props) {
       headerName: 'Phòng',
       headerAlign: 'center',
       width: 150,
-      headerClassName: 'header-bold',
-    },
-    {
-      field: 'time',
-      headerName: 'Thời gian',
-      headerAlign: 'center',
-      width: 200,
       headerClassName: 'header-bold',
     },
     {
@@ -199,73 +181,6 @@ export function ManagerPayDepositHost(props) {
       headerClassName: 'header-bold',
     },
     {
-      field: 'success',
-      headerName: 'Chấp nhận',
-      headerAlign: 'center',
-      width: 200,
-      headerClassName: 'header-bold',
-      // eslint-disable-next-line consistent-return
-      renderCell: params => {
-        // eslint-disable-next-line no-unused-expressions
-        if (params.row.type === "Trả cọc" && params.row.status === "Đang chờ thanh toán") {
-          return (
-            <Button
-              color="success"
-              onClick={() => {
-                /* eslint no-underscore-dangle: 0 */
-                // eslint-disable-next-line no-undef
-                setIdTransaction(params.row._id);
-                // idTransaction = params.row._id;
-                console.log("ddddd", params.row._id);
-                // eslint-disable-next-line no-undef
-                setStatus('paid');
-                // eslint-disable-next-line no-undef
-                props.changeStoreData('showWarningapprove', true);
-              }}
-            >
-              <i className="fa fa-check" aria-hidden="true">
-                Chấp Nhận
-              </i>
-            </Button>
-          );
-        }
-        return '';
-      },
-    },
-    {
-      field: 'action-1',
-      headerName: 'Tải minh chứng',
-      headerAlign: 'center',
-      width: 200,
-      headerClassName: 'header-bold',
-      renderCell: params => (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            paddingBottom: '5px',
-            alignItems: 'center',
-          }}
-        >
-          <input
-            type="file"
-            // ref={fileInputRef}
-            ref={el => (fileRefs.current[params.row._id] = el)}
-            style={{ display: 'none' }} // Ẩn thẻ input
-            onChange={evt => {
-              console.log({ params });
-              handleFileChange(evt, params.row._id);
-            }}
-          />
-          <CloudUpload
-            style={{ fontSize: 40, cursor: 'pointer' }} // Kích thước của icon và con trỏ chuột
-            // onClick={handleIconClick}
-            onClick={() => fileRefs.current[params.row._id].click()}
-          />
-        </div>
-      ),
-    },
-    {
       field: 'iamgeLink',
       headerName: 'Minh chứng đã tải',
       headerAlign: 'center',
@@ -292,7 +207,7 @@ export function ManagerPayDepositHost(props) {
               onClick={() => {
                 console.log("{params.row._id}",params.row._id);
                 // history.push(`/manage-deposit/pay-deposit/${id}/${params.row._id}`);
-                history.push(`/manage-deposit/pay-deposit/${id}/list-order-no-pay/${params.row._id}`);
+                history.push(`/manage-deposit/pay-deposit/${params.row.idMotel}/list-order-no-pay/${params.row._id}`);
               }}
             >
               Xem chi tiết
@@ -302,58 +217,6 @@ export function ManagerPayDepositHost(props) {
       },
     },
   ];
-
-  const filteredColumns = columns.filter(column => {
-    if (((role.length === 1 || role.includes('host')) && (column.field === 'success'))
-    || ((role.length === 1 || role.includes('host')) && (column.field === 'action-1'))) {
-      return false;
-    }
-    return true;
-  });
-
-  
-  const handleFileChange = async (e, key) => {
-    console.log({ key });
-    const abcfile = e.target.files[0];
-    const formData = new FormData();
-    formData.append('file', abcfile);
-
-    try {
-      const data = {
-        // eslint-disable-next-line no-underscore-dangle
-        id: key,
-        formData,
-      };
-      apiPostImg(data);
-    } catch (error) {
-      console.log({ error });
-    }
-  };
-
-  const apiPostImg = async payload => {
-    const { id, formData } = payload;
-    console.log("iddddd", id);
-    console.log('formData', formData);
-    // eslint-disable-next-line no-useless-concat
-    const requestUrl =
-      // eslint-disable-next-line no-useless-concat
-      `${urlLink.api.serverUrl}/v1/uploading` + `/img/${id}/payDeposit`;
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data',
-        Authorization: `Bearer ${localStoreService.get('user').token}`,
-      },
-    };
-    try {
-      const response = await axios.post(requestUrl, formData, config);
-      console.log('responsexx', response);
-      if (response.data.data.images) {
-        setUrlImgCloud(response.data.data.images.imageUrl);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   return (
     <div className="user-profile-wrapper container">
@@ -367,33 +230,18 @@ export function ManagerPayDepositHost(props) {
           <DataGrid
             getRowId={row => row.key}
             rows={transformedData}
-            columns={filteredColumns}
+            columns={columns}
             pageSize={10}
             autoHeight
             isCellEditable={params => params.key}
           />
         </div>
       </div>
-      <WarningPopup
-        visible={showWarningapprove}
-        content="Xác nhận bạn đã trả cọc cho khách hàng?"
-        callBack={() => props.approvePendingPayDeposit(idTransaction, status)}
-        toggle={() => {
-          props.changeStoreData('showWarningapprove', false);
-        }}
-      />
-      <SuccessPopup
-        visible={showSuccessapprove}
-        content="Chấp nhận thành công"
-        toggle={() => {
-          props.changeStoreData('showSuccessapprove', !showSuccessapprove);
-        }}
-      />
     </div>
   );
 }
 
-ManagerPayDepositHost.propTypes = {
+ManagerPayDepositUser.propTypes = {
   dispatch: PropTypes.func,
   changeStoreData: PropTypes.func,
   approvePendingPayDeposit: PropTypes.func,
@@ -405,14 +253,11 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPayDepositList: id => {
-      dispatch(getPayDepositList(id));
+    getPayDepositList: () => {
+      dispatch(getPayDepositList());
     },
     changeStoreData: (key, value) => {
       dispatch(changeStoreData(key, value));
-    },
-    approvePendingPayDeposit: (idTransaction, status) => {
-      dispatch(approvePendingPayDeposit(idTransaction, status));
     },
   };
 }
@@ -422,4 +267,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(ManagerPayDepositHost);
+export default compose(withConnect)(ManagerPayDepositUser);

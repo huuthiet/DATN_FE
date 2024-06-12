@@ -64,6 +64,7 @@
   "navbar.containers.energyRoomsUser": "Manage Energy",
   "navbar.containers.TransactionBankingCashLog": "Transactions History",
   "navbar.containers.orderPendingPayList": "Invoices Pending Payment",
+  "navbar.containers.payDeposits": "Pay Deposit List",
   "navbar.containers.manageMonthly": "Manage monthly payments",
   "navbar.containers.energyManagerHost": "Energy Management",
   "navbar.containers.energyRoomsBillUser": "Energy Room Bill User",

@@ -28,6 +28,7 @@ export const urlLink = {
     about: '/v1/about/signUpAbout',
     motelList: '/v1/homeKey/motelRoom/list',
     motelPdf: '/v1/homeKey/motelRoom/pdf',
+    motelCreateOrderAndPdf: '/v1/homeKey/motelRoom/createOrder/pdf',
     reportProblem: '/v1/homeKey/reportProblem/',
     transactionsHost: '/v1/homeKey/host/transactions/host',
     postRequestWithdrawHost: '/v1/homeKey/host/transactions/requestWithdraws', //for Host
@@ -43,6 +44,8 @@ export const urlLink = {
     motelListAdmin: '/v1/homeKey/motelRoom/list/admin',
     motelListDetail: '/v1/homeKey/motelRoom',
     motelDetail: '/v1/homeKey/motelRoom/', //include infor all room
+    deleteMotelByAdmin: '/v1/homeKey/motelRoom/deleteMotelByAdmin/', //include infor all room
+    getAllDataForBill: '/v1/homeKey/motelRoom/getAllDataForBill/', //include infor all room
     motelDetailV2: '/v1/homeKey/motelRoom/getMotelByIdV2/', //only infor motel
     roomOfMotel: '/v1/homeKey/motelRoom/roomsOfMotel/', //visual room data
     motelDetailOneFloor: '/v1/homeKey/motelRoom/getMotelByIdAndFloor/', //only infor one floor
@@ -140,8 +143,10 @@ export const urlLink = {
     buildingRevenue: '/v1/homeKey/energy/device/buildingRevenue/', // +/:idMotel/:Month/:Year
     hostBuildingListForRevenue: '/v1/homeKey/energy/device/hostBuildingList/', // +/:idOwner
     getPayDepositList: '/v1/homeKey/order/getPayDepositList/',
+    getPayDepositListUser: '/v1/homeKey/order/getPayDepositListUser/',
     getListOrderNoPayOfPayDeposit: '/v1/homeKey/order/listOrderNoPayOfPayDeposit/',
     postExportBillRoomPendingPayByOrder: '/v1/homeKey/order/exportBillRoomPendingPayByOrder/',
+    postExportAllBillRoomPendingPayByOrderToMail: '/v1/homeKey/order/exportAllBillRoomPendingPayByOrderToMail/',
     postExportBillPaidByTransaction: '/v1/homeKey/order/exportBillPaidByTransaction/',
     postExportBillPaidByOrder: '/v1/homeKey/order/exportBillPaidByOrder/',
     putPayDeposit: '/v1/homeKey/order/payDeposit/', //+id

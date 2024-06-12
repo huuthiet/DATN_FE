@@ -25,6 +25,8 @@ import {
   ListItemText,
   colors,
 } from '@material-ui/core';
+import Modal from 'react-modal';
+import { Col, Row } from 'reactstrap';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import localStore from 'local-storage';
@@ -174,10 +176,74 @@ export function ManagerAcceptAfterCheckInCostHost(props) {
       // ...item,
       file: item.file,
       _id: item._id,
+      backId: item.user.backId ? item.user.backId : '',
+      frontId: item.user.frontId ? item.user.frontId : '',
+      avatar: item.user.avatar ? item.user.avatar : '',
+      gender: item.user.gender ? item.user.gender : '',
+      nationalId: item.user.nationalId ? item.user.nationalId : '',
+      address: item.user.address ? item.user.address : '',
+      email: item.user.email ? item.user.email : '',
+      dob: item.user.dob ? item.user.dob : '',
     }));
   }
 
-  // console.log({transformedData});s
+  const profileTemp = {
+    phoneNumber: '',
+    nationalId: '',
+    address: '',
+    dob: '',
+    email: '',
+    gender: '',
+    fullName: '',
+    frontIdUser: '',
+    backIdUser: '',
+    avataIdUser: '',
+  };
+  const [profile, setProfile] = useState(profileTemp);
+  const [isOpen, setIsOpen] = useState(false);
+
+  function handleProfile(row) {
+    
+    console.log({row})
+    // eslint-disable-next-line no-param-reassign
+    profile.fullName = row.nameUser;
+    profile.nationalId = row.nationalId;
+    profile.address = row.address;
+    profile.email = row.email;
+    profile.dob = row.dob;
+    profile.phoneNumber = row.phone;
+    // eslint-disable-next-line no-param-reassign
+    // profile.frontIdUser = row.user.frontIdUser;
+    // eslint-disable-next-line no-param-reassign
+    // profile.backIdUser = row.user.backIdUser;
+    // eslint-disable-next-line no-param-reassign
+    // profile.avataIdUser = row.user.avatar;
+    profile.gender = row.gender ? row.gender : "Khác";
+    profile.avataIdUser = row.avatar;
+    profile.backIdUser = row.backId;
+    profile.frontIdUser = row.frontId;
+    setProfile(profile);
+
+    toggleModal();
+  }
+
+  function toggleModal() {
+    setIsOpen(!isOpen);
+    console.log({profile})
+  }
+
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      width: '100%',
+      height: '100%',
+    },
+  };
 
   const columns = [
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 120 },
@@ -322,28 +388,45 @@ export function ManagerAcceptAfterCheckInCostHost(props) {
       },
     },
     {
-      field: 'action',
-      headerName: 'Chi tiết',
+      field: 'user',
+      headerName: 'Thông tin khách hàng',
       headerAlign: 'center',
-      width: 200,
+      width: 250,
       headerClassName: 'header-bold',
-      renderCell: params => {
-        // eslint-disable-next-line no-unused-expressions
-        return (
-          <>
-            <a
-              className='btn-detail'
-              onClick={() => {
-                console.log("{params.row._id}",params.row._id);
-                history.push(`/manage-deposit/pay-deposit/${id}/${params.row._id}`);
-              }}
-            >
-              Xem chi tiết
-            </a>
-          </>
-        );
-      },
+      renderCell: params => (
+        <Button
+          onClick={() => {
+            handleProfile(params.row);
+          }}
+          color="primary"
+        >
+          Chi tiết
+        </Button>
+      ),
     },
+    // {
+    //   field: 'action',
+    //   headerName: 'Chi tiết',
+    //   headerAlign: 'center',
+    //   width: 200,
+    //   headerClassName: 'header-bold',
+    //   renderCell: params => {
+    //     // eslint-disable-next-line no-unused-expressions
+    //     return (
+    //       <>
+    //         <a
+    //           className='btn-detail'
+    //           onClick={() => {
+    //             console.log("{params.row._id}",params.row._id);
+    //             history.push(`/manage-deposit/pay-deposit/${id}/${params.row._id}`);
+    //           }}
+    //         >
+    //           Xem chi tiết
+    //         </a>
+    //       </>
+    //     );
+    //   },
+    // },
   ];
 
   const filteredColumns = columns.filter(column => {
@@ -359,6 +442,166 @@ export function ManagerAcceptAfterCheckInCostHost(props) {
         <title>Accept AfterCheckInCost</title>
         <meta name="description" content="Description of Accept AfterCheckInCost " />
       </Helmet>
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={toggleModal}
+        contentLabel="My dialog"
+        style={customStyles}
+        ariaHideApp={false}
+      >
+        <div className="deposit">
+          <Row
+            className="infor"
+            style={{
+              paddingTop: '20px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <h4>Thông Tin Cá Nhân</h4>
+          </Row>
+          <Row
+            className="infor"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Col md={6}>
+              <List>
+                <ListItem>
+                  <ListItemText
+                    secondary={`SĐT: ${profile.phoneNumber}`}
+                  />
+                </ListItem>
+                <Divider variant="inset" component="li" />
+                <ListItem>
+                  <ListItemText secondary={`CMND: ${profile.nationalId}`} />
+                </ListItem>
+                <Divider variant="inset" component="li" />
+                <ListItem>
+                  <ListItemText secondary={`Tên: ${profile.fullName}`} />
+                </ListItem>
+                <Divider variant="inset" component="li" />
+                <ListItem>
+                  <ListItemText secondary={`Địa chỉ: ${profile.address}`} />
+                </ListItem>
+                <Divider variant="inset" component="li" />
+                <ListItem>
+                  <ListItemText secondary={`Email: ${profile.email}`} />
+                </ListItem>
+                <Divider variant="inset" component="li" />
+                <ListItem>
+                  <ListItemText secondary={`Giới Tính: ${profile.gender}`} />
+                </ListItem>
+                <Divider variant="inset" component="li" />
+                <ListItem>
+                  <ListItemText
+                    secondary={`Ngày Sinh: ${moment(profile.dob).format(
+                      'DD/MM/YYYY',
+                    )}`}
+                  />
+                </ListItem>
+                <Divider variant="inset" component="li" />
+              </List>
+            </Col>
+            <Col md={6}>
+              <h5>Ảnh chân dung </h5>
+              {profile.avataIdUser ? (
+                <Avatar
+                  style={{
+                    width: '100%',
+                    height: '200px',
+                    margin: '10px auto',
+                  }}
+                  variant="square"
+                  alt="Avatar"
+                  src={profile.avataIdUser}
+                />
+              ) : (
+                <Avatar
+                  style={{
+                    width: '100%',
+                    height: '200px',
+                    margin: '10px auto',
+                  }}
+                  variant="square"
+                  alt="Avatar"
+                >
+                  N
+                </Avatar>
+              )}
+            </Col>
+          </Row>
+          <Row className="infor">
+            {/* Image */}
+
+            <Col md={6}>
+              {profile.frontIdUser ? (
+                <Avatar
+                  style={{
+                    width: '100%',
+                    height: '200px',
+                    margin: '10px auto',
+                  }}
+                  variant="square"
+                  alt="Avatar"
+                  src={profile.frontIdUser}
+                />
+              ) : (
+                <Avatar
+                  style={{
+                    width: '100%',
+                    height: '200px',
+                    margin: '10px auto',
+                  }}
+                  variant="square"
+                  alt="Avatar"
+                >
+                  N
+                </Avatar>
+              )}
+            </Col>
+            <Col md={6}>
+              {profile.backIdUser ? (
+                <Avatar
+                  style={{
+                    width: '100%',
+                    height: '200px',
+                    margin: '10px auto',
+                  }}
+                  variant="square"
+                  alt="Avatar"
+                  src={profile.backIdUser}
+                />
+              ) : (
+                <Avatar
+                  style={{
+                    width: '100%',
+                    height: '200px',
+                    margin: '10px auto',
+                  }}
+                  variant="square"
+                  alt="Avatar"
+                >
+                  N
+                </Avatar>
+              )}
+            </Col>
+          </Row>
+        </div>
+        <div style={{ textAlign: 'right' }}>
+          <Button
+            className="btn btn-secondary"
+            onClick={toggleModal}
+            color="primary"
+          >
+            Đóng
+          </Button>
+        </div>
+      </Modal>
       <div className="title">Danh sách phê duyệt Thanh toán khi nhận phòng</div>
       <div className="job-list-wrapper container-fluid">
         <div style={{ width: '100%' }}>

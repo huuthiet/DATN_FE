@@ -40,7 +40,7 @@ export function HistoryFloorsRoomHost(props) {
       field: 'roomName',
       headerName: 'Tên Phòng',
       headerAlign: 'center',
-      width: 250,
+      width: 200,
       headerClassName: 'header-bold',
     },
     {
@@ -115,7 +115,7 @@ export function HistoryFloorsRoomHost(props) {
       field: 'status',
       headerName: 'Trạng Thái',
       headerAlign: 'center',
-      width: 250,
+      width: 200,
       headerClassName: 'header-bold',
       align: 'center'
     },
@@ -123,7 +123,7 @@ export function HistoryFloorsRoomHost(props) {
       field: 'action-1',
       headerName: 'Chi Tiết Phòng',
       headerAlign: 'center',
-      width: 400,
+      width: 250,
       align: 'center',
       headerClassName: 'header-bold',
       renderCell: params => {
@@ -148,9 +148,9 @@ export function HistoryFloorsRoomHost(props) {
     },
     {
       field: 'action-2',
-      headerName: 'Lịch sử đặt phòng',
+      headerName: 'Lịch Sử Đặt Phòng',
       headerAlign: 'center',
-      width: 400,
+      width: 250,
       align: 'center',
       headerClassName: 'header-bold',
       renderCell: params => {
@@ -171,6 +171,32 @@ export function HistoryFloorsRoomHost(props) {
             </a>
           </>
         );
+      },
+    },
+    {
+      field: 'action-3',
+      headerName: 'Tạo Hóa Đơn',
+      headerAlign: 'center',
+      width: 200,
+      align: 'center',
+      headerClassName: 'header-bold',
+      renderCell: params => {
+        if(params.row.rentedBy){
+          return (
+            <>
+              <a className="btn-detail"
+                color="primary"
+                onClick={() => {
+                  history.push(
+                    `/exportBillRoom/motel/${id}/room/${params.row._id}/user/${params.row.rentedBy}`,
+                  );
+                }}
+              >
+                Tạo
+              </a>
+            </>
+          );
+        }
       },
     },
   ];

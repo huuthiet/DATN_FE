@@ -14,4 +14,8 @@ export const GET_MOTEL_LIST = 'app/ManageMotelListAdmin/GET_MOTEL_LIST';
 export const GET_MOTEL_LIST_SUCCESS = 'app/ManageMotelListAdmin/GET_MOTEL_LIST_SUCCESS';
 export const GET_MOTEL_LIST_FAIL = 'app/ManageMotelListAdmin/GET_MOTEL_LIST_FAIL';
 
+export const DELETE_MOTEL = 'app/ManageMotelListAdmin/DELETE_MOTEL';
+export const DELETE_MOTEL_SUCCESS = 'app/ManageMotelListAdmin/DELETE_MOTEL_SUCCESS';
+export const DELETE_MOTEL_FAIL = 'app/ManageMotelListAdmin/DELETE_MOTEL_FAIL';
+
 export const CHANGE_STORE_DATA = 'app/ManageMotelListAdmin/CHANGE_STORE_DATA';

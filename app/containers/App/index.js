@@ -57,6 +57,7 @@ import RoomBillingManage from 'containers/EnergyBillingManage/RoomBillingManage/
 import EnergyRoomsBillUser from 'containers/EnergyRoomsBillUser/Loadable';
 import MonthlyOrderList from 'containers/MonthlyOrderList/Loadable';
 import ManagerPayDepositHost from 'containers/ManagerPayDepositHost/Loadable';
+import ManagerPayDepositUser from 'containers/ManagerPayDepositUser/Loadable';
 import ListOrderNoPayOfPayDeposit from 'containers/ListOrderNoPayOfPayDeposit/Loadable';
 import HistoryDepositAfterCheckInCost from 'containers/HistoryDepositAfterCheckInCost/Loadable';
 import OrderDepositRoomListByMotel from 'containers/OrderDepositRoomListByMotel/Loadable';
@@ -98,7 +99,7 @@ import OrdersPendingPayUser from 'containers/OrdersPendingPayUser/Loadable';
 
 //----------------------------
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { compose } from 'redux';
@@ -116,6 +117,7 @@ import JobVerify from 'containers/JobVerify/Loadable';
 import MoneyInformation from 'containers/MoneyInformation/Loadable';
 import MoneyInformationDetail from 'containers/MoneyInformationDetail/Loadable';
 import RoomBill from 'containers/RoomBill/Loadable';
+import ExportBillRoom from 'containers/ExportBillRoom/Loadable';
 import RoomManage from 'containers/RoomManager/Loadable';
 import Terms from 'containers/Terms/Loadable';
 import localStore from 'local-storage';
@@ -159,6 +161,10 @@ export function App(props) {
   useEffect(() => {
     props.saveCurrentUser(localStore.get('user') || {});
   }, []);
+
+  // const [inputValue, setInputValue] = useState({ lat: 10.856866, lng: 106.763324 });
+  const [inputValue, setInputValue] = useState('');
+
   return (
     <div className="app-wrapper">
       <ToastContainer
@@ -179,9 +185,11 @@ export function App(props) {
         changeLocale={props.changeLocale}
         Search_Addresses={props.Search_Addresses}
         listroom={listroom}
+        onInputChange={setInputValue}
       />
       <Switch>
-        <Route exact path="/" component={MapsPage} />
+        {/* <Route exact path="/" component={MapsPage} /> */}
+        <Route exact path="/" render={() => <MapsPage inputValue={inputValue} />} />
         <Route path="/auth" component={Auth} />
         <Route path="/bill-list" component={BillList} />
         <Route path="/report-problem/:id" component={ReportProblem} />
@@ -251,6 +259,10 @@ export function App(props) {
           path="/bill/motel/:id/room/:idroom/user/:idUser"
           component={RoomBill}
         />
+        <Route
+          path="/exportBillRoom/motel/:id/room/:idroom/user/:idUser"
+          component={ExportBillRoom}
+        />
         <Route path="/createroom/:id" component={CreateRoom} />
         <Route path="/transactionLog" component={TransactionLog} />
         <Route
@@ -317,6 +329,7 @@ export function App(props) {
           path="/manage-deposit/pay-deposit/:id"
           component={ManagerPayDepositHost}
         />
+        <Route path="/pay-deposit-user/" component={ManagerPayDepositUser} />
         <Route
           path="/manage-deposit/history-deposit-aftercheckincost/motel/:idMotel/:nameMotel/room/:idRoom/:nameRoom"
           component={HistoryDepositAfterCheckInCost}

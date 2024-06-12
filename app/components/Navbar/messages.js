@@ -94,6 +94,10 @@ export default defineMessages({
     id: `${scope}.orderPendingPayList`,
     defaultMessage: 'Hóa đơn chờ thanh toán',
   },
+  payDeposits: {
+    id: `${scope}.payDeposits`,
+    defaultMessage: 'Danh sách trả cọc',
+  },
   transactionPayment: {
     id: `${scope}.transactionPayment`,
     defaultMessage: 'Quản lý giao dịch',

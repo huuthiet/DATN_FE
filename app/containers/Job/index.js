@@ -700,6 +700,10 @@ export function Job(props) {
                       values.availableDate,
                       'DD/MM/YYYY',
                     ).toDate()}
+                    maxDate={moment(
+                      values.availableDate,
+                      'DD/MM/YYYY',
+                    ).add(4, 'days').toDate()}
                     customInput={
                       <InputForm
                         label={<FormattedMessage {...messages.CheckinDate} />}

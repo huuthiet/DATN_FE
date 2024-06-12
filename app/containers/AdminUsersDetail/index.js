@@ -76,6 +76,8 @@ export function AdminUsersDetail(props) {
     props.getAdminUserDetail(id);
   }, []);
 
+  console.log({adminUsersDetail});
+
   const {
     firstName = '',
     nationalId = '',
@@ -335,7 +337,7 @@ export function AdminUsersDetail(props) {
                     }
                   </Col>
                   <Col md={4}>
-                    {
+                    {/* {
                       <FormattedMessage {...messages.idDevice}>
                         {msg => (
                           <InputForm
@@ -355,7 +357,7 @@ export function AdminUsersDetail(props) {
                           />
                         )}
                       </FormattedMessage>
-                    }
+                    } */}
                   </Col>
                   <Col md={6}>
                     {

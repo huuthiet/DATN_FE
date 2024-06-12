@@ -6,7 +6,7 @@
 
 import { Avatar } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -15,6 +15,7 @@ import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from '../../utils/injectReducer';
 import { useInjectSaga } from '../../utils/injectSaga';
 import GoogleMaps from '../../components/GoogleMaps';
+import { SearchLocationContext } from "../../components/SearchLocationContext";
 import { urlLink } from '../../helper/route';
 import Money from '../App/format';
 import { changeStoreData, getListRoom } from './actions';
@@ -27,6 +28,7 @@ import { getProfile } from '../Profile/actions';
 import { LocationOn, Phone } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import GooglePlacesAutocomplete from 'react-google-autocomplete';
 
 // import profileReducer from '../Profile/reducer';
 // import profileSaga from '../Profile/saga';
@@ -35,6 +37,34 @@ export function MapsPage(props) {
   const history = useHistory();
   useInjectReducer({ key: 'mapsPage', reducer });
   useInjectSaga({ key: 'mapsPage', saga });
+
+  const [currentPosition, setCurrentPosition] = useState({ lat: 10.856866, lng: 106.763324 })
+
+
+  const { inputValue = "ho chi minh" } = props;
+
+  const handlePlaceSelect = async (place) => {
+    try {
+      if (place === '') {
+        place = 'Linh Trung, Thủ Đức'
+      }
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=AIzaSyCVwwlv1Q3FKlJUZTV-ab5hknaivIDv87o`
+      );
+      const data = await response.json();
+      const { lat, lng } = data.results[0].geometry.location;
+      setCurrentPosition({ lat: lat, lng: lng });
+      console.log("VỊ TRÍIIII", data);
+      // setCoordinates({ lat, lng });
+    } catch (error) {
+      console.error('Error fetching coordinates:', error);
+      setCurrentPosition({ lat: 10.856866, lng: 106.763324 });
+    }
+  };
+
+  useEffect(() => {
+    handlePlaceSelect(inputValue);
+  }, [inputValue]);
 
   useEffect(() => {
     props.getListRoom();
@@ -57,7 +87,7 @@ export function MapsPage(props) {
   }, []);
   document.documentElement.style.setProperty('--vh', `${windowHeight}px`);
   const { listRoom = [], action1 } = props.mapsPage;
-  console.log('listRoom', listRoom);
+
 
   const [room, setRoom] = useState({});
 
@@ -74,7 +104,6 @@ export function MapsPage(props) {
       console.error(err);
     }
   };
-  const aa = 0;
   return (
     <div className="maps-page-wrapper">
       <Helmet>
@@ -84,12 +113,13 @@ export function MapsPage(props) {
       <GoogleMaps
         listRoom={listRoom}
         setRoom={setRoom}
-        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIksTv7qGEGtgkWZG6BMeYJj6ot6Br1Ws&v=3.exp&libraries=geometry,drawing,places"
+        // googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIksTv7qGEGtgkWZG6BMeYJj6ot6Br1Ws&v=3.exp&libraries=geometry,drawing,places"
+        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVwwlv1Q3FKlJUZTV-ab5hknaivIDv87o&v=3.exp&libraries=geometry,drawing,places"
         loadingElement={<div style={{ height: '100%' }} />}
         containerElement={<div style={{ height: '100%' }} />}
         mapElement={<div style={{ height: '100%' }} />}
+        position={currentPosition}
       />
-
       <div className="status-wrapper container">
         <div className="status">
           <div className="green-box" />

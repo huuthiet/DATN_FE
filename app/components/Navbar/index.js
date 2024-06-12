@@ -18,6 +18,7 @@ import {
 } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import InputBase from '@material-ui/core/InputBase';
+
 import { fade, makeStyles } from '@material-ui/core/styles';
 
 import SearchIcon from '@material-ui/icons/Search';
@@ -41,6 +42,7 @@ import {
   PaymentOutlined,
   ExitToAppRounded,
 } from '@material-ui/icons';
+import { geocodeByAddress, getLatLng } from 'react-google-autocomplete';
 
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -52,6 +54,9 @@ import img1 from './vi.png';
 import messages from './messages';
 import MenuButton from '../MenuButton';
 import Money from '../../containers/App/format';
+import InputLocation from '../../components/InputLocation';
+
+import { SearchLocationContext } from "../../components/SearchLocationContext";
 
 // note
 import makeSelectProfile from '../../containers/Profile/selectors';
@@ -60,6 +65,7 @@ import { getProfile } from '../../containers/Profile/actions';
 
 import reducer from '../../containers/Profile/reducer';
 import saga from '../../containers/Profile/saga';
+
 // ---------------------
 
 const useStyles = makeStyles(theme => ({
@@ -136,7 +142,7 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = props => {
   const history = useHistory();
-  const { currentUser = {}, listroom } = props;
+  const { currentUser = {}, listroom, onInputChange } = props;
   const [toggle, setToggle] = useState(false);
   const location = useLocation();
   const { pathname } = location;
@@ -152,6 +158,31 @@ const Navbar = props => {
     props.getProfile();
   }, []);
   //-----------------------
+
+  const handleSearchLocationChange = async(e) => {
+    console.log("hihsdaádsid");
+    console.log({e})
+  }
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [user, setUser] = useState({ lat: 10.856866, lng: 106.763324 });
+
+  const [ namePositon, setNamePosition ] = useState('');
+
+  // const handleInputChangeLat = (e) => {
+  //   const lat = parseInt(e.target.value);
+  //   setUser({lat: lat, lng: user.lng});
+  //   onInputChange({lat: lat, lng: user.lng});
+  // };
+  // const handleInputChangeLng = (e) => {
+  //   const lng = parseInt(e.target.value);
+  //   setUser({lat: user.lat, lng: lng});
+  //   onInputChange({lat: user.lat, lng: lng});
+  // };
+
+  const onSearch = () => {
+    onInputChange(namePositon);
+  }
 
   const menulistSearch = listroom.length > 0 && (
     <div className="listroommenu">
@@ -220,13 +251,17 @@ const Navbar = props => {
   );
   const handleSearchTermChange = e => {
     const { value } = e.target;
+    setNamePosition(value);
+    // onInputChange(value);
+    console.log({value});
     if (typingTimeoutRef.current) {
       clearTimeout(typingTimeoutRef.current);
     }
     typingTimeoutRef.current = setTimeout(() => {
       // eslint-disable-next-line react/prop-types
-      props.Search_Addresses(value);
-    }, 500);
+      // props.Search_Addresses(value);
+      onInputChange(value);
+    }, 1000);
   };
 
   return (
@@ -277,8 +312,26 @@ const Navbar = props => {
                         handleSearchTermChange(e);
                       }}
                       className="HanbleSearch"
+                      // onFocus={onSearch}
                     />
                   )}
+                  {/* {msg => (
+                    <InputLocation
+                      label={msg}
+                      placeholder={msg}
+                      name="address"
+                      autoComplete="address"
+                      // touched={touched.address}
+                      // error={errors.address}
+                      // onSelect={address => {
+                      //   setFieldValue('address', address.formatted_address);
+                      // }}
+                      // onBlur={handleBlur}
+                      onChange={e => {
+                        handleSearchLocationChange(e);
+                      }}
+                    />
+                  )} */}
                 </FormattedMessage>
               }
               {menulistSearch}
@@ -774,6 +827,19 @@ const Navbar = props => {
                       <ReceiptOutlined className="icon" />
                       <FormattedMessage {...messages.orderPendingPayList} />
                     </DropdownItem>
+                    <DropdownItem
+                      className={
+                        pathname.includes('/pay-deposit-user/')
+                          ? 'active'
+                          : ''
+                      }
+                      onClick={() => {
+                        history.push('/pay-deposit-user/');
+                      }}
+                    >
+                      <ReceiptOutlined className="icon" />
+                      <FormattedMessage {...messages.payDeposits} />
+                    </DropdownItem>
                     {/* <DropdownItem
                       className={pathname.includes('/recharge') ? 'active' : ''}
                       onClick={() => {
@@ -831,8 +897,26 @@ const Navbar = props => {
                     onChange={e => {
                       handleSearchTermChange(e);
                     }}
+                    // onFocus={onSearch}
                   />
                 )}
+                {/* {msg => (
+                  <InputLocation
+                    label={msg}
+                    placeholder={msg}
+                    name="address"
+                    autoComplete="address"
+                    // touched={touched.address}
+                    // error={errors.address}
+                    // onSelect={address => {
+                    //   setFieldValue('address', address.formatted_address);
+                    // }}
+                    // onBlur={handleBlur}
+                    onChange={e => {
+                      handleSearchLocationChange(e);
+                    }}
+                  />
+                )} */}
               </FormattedMessage>
             }
             {menulistSearch}

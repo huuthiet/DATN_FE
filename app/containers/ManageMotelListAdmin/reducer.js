@@ -11,12 +11,17 @@ import {
   GET_BUILDING_REVENUE_SUCCESS,
   GET_BUILDING_REVENUE_FAIL,
   CHANGE_STORE_DATA,
+  DELETE_MOTEL_SUCCESS,
+  DELETE_MOTEL_FAIL,
 } from './constants';
 
 export const initialState = {
   motelList: [],
   buildingRevenue: [],
   error: {},
+  showSuccessPopup: false,
+  showErrorPopup: false,
+  showWarningPopup: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -27,6 +32,14 @@ const managerBuildingsHostReducer = (state = initialState, action) =>
         draft.motelList = action.response;
         break;
       case GET_MOTEL_LIST_FAIL:
+        draft.error = action.error;
+        draft.showErrorPopup = true;
+        break;
+      case DELETE_MOTEL_SUCCESS:
+        draft.motelList = action.response;
+        draft.showSuccessPopup = true;
+        break;
+      case DELETE_MOTEL_FAIL:
         draft.error = action.error;
         draft.showErrorPopup = true;
         break;
