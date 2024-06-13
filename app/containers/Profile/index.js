@@ -252,7 +252,7 @@ export function Profile(props) {
                       alignItems: 'center',
                     }}
                   >
-                    <Col md={4} style={{ padding: '0' }}>
+                    {/* <Col md={4} style={{ padding: '0' }}>
                       <div className={classes.root}>
                         <input
                           accept=".png, .jpg"
@@ -274,7 +274,7 @@ export function Profile(props) {
                           </Button>
                         </label>
                       </div>
-                    </Col>
+                    </Col> */}
                     <Col
                       style={{
                         display: 'flex',
@@ -399,7 +399,7 @@ export function Profile(props) {
                       alignItems: 'center',
                     }}
                     >
-                      <Col md={4} style={{ padding: '0' }}>
+                      {/* <Col md={4} style={{ padding: '0' }}>
                         <div className={classes.root}>
                           <input
                             accept=".png, .jpg"
@@ -420,7 +420,7 @@ export function Profile(props) {
                             </Button>
                           </label>
                         </div>
-                      </Col>
+                      </Col> */}
                       <Col
                         style={{
                           display: 'flex',

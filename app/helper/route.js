@@ -175,6 +175,9 @@ export const urlLink = {
     postTransactionAfterCheckInCostPendingBanking:
       '/v1/homeKey/order/postTransactionAfterCheckInCostPendingBanking/',
     // -------
+    renewContract:
+      '/v1/homeKey/job/renewContract/',
+    // -------
   },
   auth: {
     sign_in: '/auth/login',

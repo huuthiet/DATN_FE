@@ -105,6 +105,7 @@ export function OrderMonthlyPendingPayment(props) {
         Authorization: `Bearer ${localStoreService.get('user').token}`,
       },
     };
+    console.log({config})
     const requestUrl =
       urlLink.api.serverUrl
       + urlLink.api.postExportBillRoomPendingPayByOrder

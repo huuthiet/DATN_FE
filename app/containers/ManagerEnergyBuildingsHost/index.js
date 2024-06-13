@@ -187,7 +187,7 @@ export function ManagerEnergyBuildingsHost(props) {
       {role.length === 2 && role[0] === 'host' ? (
         <>
           <Grid lg={12} container spacing={2} className="card-wrap">
-            {motelList.length > 0 &&
+            {motelList && motelList.length > 0 &&
               motelList.map((motel, key) => (
                 <Grid className="motel-card" key={key} lg={3} md={4} sm={6} xs={12}>
                   <ModalComponent
