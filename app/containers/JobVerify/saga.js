@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
 import { put, takeLatest } from 'redux-saga/effects';
+import localStore from 'local-storage';
 import { urlLink } from '../../helper/route';
 import { loadRepos, reposLoaded } from '../App/actions';
 import { putImagesFail, putImagesSuccess } from './actions';

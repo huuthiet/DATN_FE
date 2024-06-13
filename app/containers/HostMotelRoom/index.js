@@ -158,8 +158,8 @@ export function ManagerEnergyHostAdmin(props) {
       ),
     },
     {
-      field: 'monthly',
-      headerName: <FormattedMessage {...messages.WithdrawalsRequest} />,
+      field: 'withdrawRevenue',
+      headerName: 'Quản lý rút tiền doanh thu',
       headerAlign: 'center',
       align: 'center',
 

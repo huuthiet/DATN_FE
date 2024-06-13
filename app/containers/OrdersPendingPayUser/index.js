@@ -143,7 +143,7 @@ export function OrdersPendingPayUser(props) {
       nameRoom: item.job && item.job.room ? item.job.room.name : 'N/A',
       time: moment(new Date(item.createdAt)).format('DD-MM-YYYY'),
       time_expire: moment(new Date(item.expireTime)).format('DD-MM-YYYY'),
-      amount_tranform: `${Money(parseInt(item.amount.toFixed(0)))} VNĐ`,
+      amount_tranform: item.amount ? `${Money(parseInt(item.amount.toFixed(0)))} VNĐ` : 'N/A',
       type_trasaction:
         (item.type === 'monthly')
           ? 'Thanh toán hàng tháng'

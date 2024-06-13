@@ -179,7 +179,8 @@ export function* apiPutRenewContract(payload) {
   console.log({ id });
   console.log({ numberMon });
   // const requestUrl = `${urlLink.api.serverUrl + urlLink.api.job}/${id}/active`;
-  const requestUrl = `http://localhost:5502/api/v1/homeKey/job/renewContract/${id}`;
+  // const requestUrl = `http://localhost:5502/api/v1/homeKey/job/renewContract/${id}`;
+  const requestUrl = `${urlLink.api.serverUrl + urlLink.api.renewContract}${id}`;
   const dataUpdate = {
     numberMon,
   };

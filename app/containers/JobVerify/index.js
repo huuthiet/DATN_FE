@@ -35,6 +35,8 @@ import messages from './messages';
 import axios from 'axios';
 import { urlLink } from '../../helper/route';
 import localStoreService from 'local-storage';
+import localStore from 'local-storage';
+
 export function JobVerify(props) {
   useInjectReducer({ key: 'jobVerify', reducer });
   useInjectSaga({ key: 'jobVerify', saga });
@@ -44,6 +46,10 @@ export function JobVerify(props) {
   const [frontIDUrl, setFrontIDUrl] = useState('');
   const [backIDUrl, setBackIDUrl] = useState('');
   const TenMegaBytes = 5 * 1024 * 1024;
+
+  const currentUser = localStore.get('user') || {};
+
+  console.log("uerrrrrrr", currentUser);
 
   // Up Img CM
   const [urlImageArr, setUrlImageArr] = useState([]);
@@ -62,6 +68,7 @@ export function JobVerify(props) {
       },
     };
     try {
+      console.log({config})
       const response = await axios.post(requestUrl, formData, config);
       if (response.data.data.images) {
         return response.data.data.images.imageId;
