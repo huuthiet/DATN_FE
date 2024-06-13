@@ -29,6 +29,11 @@ import { LocationOn, Phone } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import GooglePlacesAutocomplete from 'react-google-autocomplete';
+import {
+  Grid,
+  Row,
+  Col,
+} from 'reactstrap';
 
 // import profileReducer from '../Profile/reducer';
 // import profileSaga from '../Profile/saga';
@@ -137,11 +142,11 @@ export function MapsPage(props) {
       {Object.keys(room).length !== 0 && (
         <div className="detail-wrapper">
           <div className="container">
-            <div className="row">
-              <div className="col-12 full-image">
+            <Row>
+              <Col xs={12} className="full-image">
                 {room.images ? (
-                  <div className="col-12 image-container">
-                    <div className="col-2 image">
+                  <Col xs={12} className="image-container">
+                    <Col xs={4} className="image">
                       {/* <img
                         alt="Avatar"
                         src={room.images}
@@ -149,8 +154,8 @@ export function MapsPage(props) {
                         N
                       </img> */}
                       <img className="image" src={room.images} alt="motel" />
-                    </div>
-                    <div className="col-8 card-content">
+                    </Col>
+                    <Col xs={8} className="card-content">
                       <div className="card-info">
                         <div className="title">{room.name}</div>
                         <div className="address">
@@ -182,17 +187,17 @@ export function MapsPage(props) {
                           <FormattedMessage {...messages.Detail} />
                         </button>
                       </div>
-                    </div>
-                  </div>
+                    </Col>
+                  </Col>
                 ) : (
                   <div className="image-container">
-                    <div className="col-4 image">
+                    <Col xs={4} className="image">
                       <img
                         alt="Avatar"
                         src="./defaul-room.jpg"
                       />
-                    </div>
-                    <div className="col-8 card-content">
+                    </Col>
+                    <Col xs={8} className="card-content">
                       <div className="card-info">
                         <div className="title">{room.name}</div>
                         <div className="address">
@@ -224,11 +229,11 @@ export function MapsPage(props) {
                           <FormattedMessage {...messages.Detail} />
                         </button>
                       </div>
-                    </div>
+                    </Col>
                   </div>
                 )}
-              </div>
-            </div>
+              </Col>
+            </Row>
           </div>
         </div>
       )}

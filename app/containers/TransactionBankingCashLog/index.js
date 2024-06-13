@@ -102,9 +102,9 @@ export function TransactionBankingCashLog(props) {
         (item.type === 'monthly')
           ? 'Thanh toán hàng tháng'
           : item.type === 'afterCheckInCost'
-          ? 'Thanh toán khi nhận phòng'
-          : item.type === 'deposit'? "Thanh toán cọc"
-          : 'N/A',
+            ? 'Thanh toán khi nhận phòng'
+            : item.type === 'deposit' ? "Thanh toán cọc"
+              : 'N/A',
       ...item,
     }));
   }
@@ -141,26 +141,23 @@ export function TransactionBankingCashLog(props) {
   const downloadFile = async id => {
     startLoading();
     console.log({ id });
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data',
-        Authorization: `Bearer ${localStoreService.get('user').token}`,
-      },
-    };
+
     const requestUrl =
-      urlLink.api.serverUrl
-      + urlLink.api.postExportBillPaidByTransaction 
-      + id;
-      console.log({requestUrl})
+      urlLink.api.serverUrl +
+      urlLink.api.postExportBillPaidByTransaction +
+      id;
+
+    console.log({ requestUrl });
+
     try {
-      const response = await axios.post(
-        requestUrl,
-        null,
-        {
-          responseType: 'blob',
+      const config = {
+        headers: {
+          Authorization: `Bearer ${localStoreService.get('user').token}`,
         },
-        config,
-      );
+        responseType: 'blob',
+      };
+
+      const response = await axios.post(requestUrl, null, config);
       console.log('file', response.data);
       fileDownload(response.data, 'export.pdf');
       stopLoading();
@@ -170,6 +167,7 @@ export function TransactionBankingCashLog(props) {
       notificationController.error('Xuất Hóa Đơn Không Thành Công');
     }
   };
+
 
   const apiPostImg = async payload => {
     const { id, formData } = payload;

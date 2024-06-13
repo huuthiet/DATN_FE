@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Grid, Tabs, Tab, Box } from '@material-ui/core';
-import { toast } from 'react-toastify';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -9,9 +8,7 @@ import html2pdf from 'html2pdf.js';
 import htmlToImage from 'html-to-image';
 import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
-import { Row, Col } from 'reactstrap';
-import LineChartVoltageDashboard from '../../components/LineChartVoltageDashboard';
-import LineChartCurrentDashboard from '../../components/LineChartCurrentDashboard';
+import { toast } from 'react-toastify';
 import {
   Cancel,
   GetApp,
@@ -36,8 +33,10 @@ import { urlLink } from '../../helper/route';
 import PaperWrapper from '../../components/PaperWrapper';
 import Speedometer from '../../components/Speedmetter';
 import LineChart from '../../components/LineChart';
+import LineChartVoltageDashboard from '../../components/LineChartVoltageDashboard';
+import LineChartCurrentDashboard from '../../components/LineChartCurrentDashboard';
 import LineChartHover from '../../components/LineChartHover';
-import { scale } from 'pdf-lib';
+import { Row, Col } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
@@ -350,12 +349,12 @@ const FollowEnergyAdmin = () => {
       }
 
       // Add table to PDF
-      pdfDoc.addPage();
+      // pdfDoc.addPage();
       pdfDoc.autoTable({
         head: headers,
         body: data,
         theme: 'striped',
-        startY: 20,
+        startY: 90,
         margin: { top: 20, left: 30 },
       });
 
@@ -569,19 +568,14 @@ const FollowEnergyAdmin = () => {
     // )}
     <div>
       <Helmet>
-        <title>EnergyMonitoring</title>
+        <title>Energy</title>
         <meta name="description" content="Description of Energy" />
       </Helmet>
-      <div className="title-abc">
-        <FormattedMessage {...messages.Header} />
-        <div>
-          <FormattedMessage {...messages.RoomName} /> {name}
-        </div>
-      </div>
+      <div className="title-abc">Theo dõi năng lượng: {name}</div>
 
       {showAlert && (
         <Alert severity="error">
-          <FormattedMessage {...messages.DateAlert} />
+          Vui lòng nhập ngày kết thúc lớn hơn ngày bắt đầu!
         </Alert>
       )}
       <br />
@@ -617,7 +611,7 @@ const FollowEnergyAdmin = () => {
           onClick={handleExportPreview}
         >
           <GetApp className="export-icon" />
-          <FormattedMessage {...messages.Export} />
+          Export
         </Button>
         <Button
           hidden
@@ -627,7 +621,7 @@ const FollowEnergyAdmin = () => {
           onClick={handleCancel}
         >
           <Cancel className="cancel-icon" />
-          <FormattedMessage {...messages.Cancel} />
+          Cancel
         </Button>
 
         <Button
@@ -637,7 +631,7 @@ const FollowEnergyAdmin = () => {
           onClick={handleExportPdf}
         >
           <GetApp className="export-icon" />
-          <FormattedMessage {...messages.Download} />
+          Download
         </Button>
       </div>
 
@@ -651,8 +645,8 @@ const FollowEnergyAdmin = () => {
           textColor="primary"
           label="scrollable auto tabs example"
         >
-          <Tab label={<FormattedMessage {...messages.OneDay} />} />
-          <Tab label={<FormattedMessage {...messages.OneMonth} />} />
+          <Tab label="1 Ngày" />
+          <Tab label="1 Tháng" />
         </Tabs>
       </div>
 
@@ -734,12 +728,15 @@ const FollowEnergyAdmin = () => {
               boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
             }}
           >
+            <span className="title" id="total-kwh-title">
+              Tổng số điện
+            </span>
             {info && info.labelTime && info.kWhData && (
               <div className="detail-container">
-                <span className="title">{<FormattedMessage {...messages.TotalElectric} />}</span>
+                <span className="title">{`Tổng số điện từ ${formattedStartDate} đến ${formattedEndDate}`}</span>
                 <span className="content">
                   <Speed className="icon" />
-                  <FormattedMessage {...messages.TotalElectricUsage} />{' '}
+                  Tổng kWh:{' '}
                   {info.kWhData && info.kWhData.length > 0
                     ? info.kWhData
                       .filter(value => value !== null)
@@ -753,7 +750,7 @@ const FollowEnergyAdmin = () => {
                   {/* calculate total kWh */}
                   <br />
                   <Speed className="icon" />
-                  <FormattedMessage {...messages.TotalWater} />{' '}
+                  Total water:{' '}
                   {info.waterData
                     ? info.waterData
                       .reduce(
@@ -765,7 +762,7 @@ const FollowEnergyAdmin = () => {
                 </span>
                 <span className="content">
                   <AttachMoney className="icon" />
-                  <FormattedMessage {...messages.Total} />{' '}
+                  Total Cost:{' '}
                   {info.kWhData && info.kWhData.length > 0
                     ? (
                       info.kWhData
@@ -795,45 +792,29 @@ const FollowEnergyAdmin = () => {
               boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
             }}
           >
-
+            <span id="detail-kwh-title">Chi tiết số điện sử dụng</span>
             {info && info.labelTime && info.kWhData && (
               <table>
                 <thead>
                   <tr>
-                    <th>
-                      <FormattedMessage {...messages.Time} />
-                    </th>
-                    <th>
-                      <FormattedMessage {...messages.ElectricUsage} />
-                    </th>
-                    <th>
-                      <FormattedMessage {...messages.WaterUsage} />
-                    </th>
-                    <th>
-                      <FormattedMessage {...messages.TotalCost} />
-                    </th>
+                    <th>Thời gian</th>
+                    <th>Số điện (kWh)</th>
+                    <th>Số nước (mét khối)</th>
+                    <th>Thành tiền</th>
                   </tr>
                 </thead>
                 <tbody>
                   {info.labelTime.map((date, index) => (
                     <tr key={index}>
-                      {date ? <td>{date}</td> : <td>
-                        <FormattedMessage {...messages.NoData} />
-                      </td>}
+                      {date ? <td>{date}</td> : <td>Không có dữ liệu</td>}
                       {info.kWhData ? (
                         info.kWhData[index] !== null ? (
                           <td>{parseFloat(info.kWhData[index]).toFixed(2)}</td>
                         ) : (
-                          <td>
-                            <FormattedMessage {...messages.NoData} />
-
-                          </td>
+                          <td>Không có dữ liệu</td>
                         )
                       ) : (
-                        <td>
-                          <FormattedMessage {...messages.NoData} />
-
-                        </td>
+                        <td>Không có dữ liệu</td>
                       )}
 
                       {/* Check xem info có waterData không */}
@@ -844,17 +825,11 @@ const FollowEnergyAdmin = () => {
                             {parseFloat(info.waterData[index]).toFixed(2)}
                           </td>
                         ) : (
-                          <td>
-                            <FormattedMessage {...messages.NoData} />
-
-                          </td>
+                          <td>Không có dữ liệu</td>
                         )
                       ) : (
                         // Nếu không có waterData, hiển thị cột trống
-                        <td>
-                          <FormattedMessage {...messages.NoData} />
-
-                        </td>
+                        <td>Không có dữ liệu</td>
                       )}
 
                       {/* Tính toán thành tiền */}

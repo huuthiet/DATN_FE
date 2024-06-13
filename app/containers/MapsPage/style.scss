@@ -139,7 +139,7 @@
                             .cancel-button{
                                 background-color: rgb(255, 255, 255);
                                 color: rgb(154, 154, 154);
-                                width: 150px;
+                                min-width: 120px;
                                 font-size: 18px;
                                 padding: 8px 20px;
                                 border-radius: 16px;
@@ -154,7 +154,7 @@
                             .detail-button{
                                 background-color: rgb(13, 116, 227);
                                 color: white;
-                                width: 150px;
+                                min-width: 120px;
                                 font-size: 18px;
                                 padding: 8px 20px;
                                 border-radius: 16px;

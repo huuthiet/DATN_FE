@@ -8,16 +8,16 @@ import { PUT_IMAGES } from './constants';
 
 export function* apiPutImages(payload) {
   const { id, idElectricMetter, formData } = payload;
-  const requestUrl = `${urlLink.api.serverUrl + urlLink.api.job}/${id}/images`;
+  const requestUrl = urlLink.api.serverUrl + urlLink.api.job + `/${id}` + `/images`;
+  console.log('requestUrl', requestUrl);
   yield put(loadRepos());
   try {
     const response = yield axios.put(requestUrl, formData);
     yield put(putImagesSuccess(response));
-    // đã xác minh thanh công. thì cho active phòng
+    // Nếu xác minh thành công, thực hiện yêu cầu PUT để active phòng
     try {
-      const requestUrl = `${urlLink.api.serverUrl +
-        urlLink.api.job}/${id}/active`;
-      yield axios.put(requestUrl);
+      const activeRequestUrl = `${urlLink.api.serverUrl}${urlLink.api.job}/${id}/active`;
+      yield axios.put(activeRequestUrl);
       yield put(push(`/job-detail/${id}/${idElectricMetter}`));
     } catch (error) {
       console.log(error);
@@ -29,6 +29,7 @@ export function* apiPutImages(payload) {
     yield put(reposLoaded());
   }
 }
+
 
 export default function* jobVerifySaga() {
   yield takeLatest(PUT_IMAGES, apiPutImages);

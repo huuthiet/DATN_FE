@@ -125,6 +125,9 @@ export function WithdrawRequestListHost(props) {
       amount: Money(item.amount) + " VNĐ", // Số tiền cần rút
       description: item.description,
       keyPayment: item.keyPayment,
+      bankName: item.bankName,
+      accountNumber: item.bankNumber,
+      bankOwner: item.bankOwner,
       status: item.status === 'waiting' ? 'Đang chờ duyệt' :
         item.status === 'approved' ? 'Đã được duyệt' :
           item.status === 'cancel' ? 'Đã hủy' : 'N/A',
@@ -151,6 +154,27 @@ export function WithdrawRequestListHost(props) {
     {
       field: 'keyPayment',
       headerName: 'Mã giao dịch',
+      headerAlign: 'center',
+      width: 200,
+      headerClassName: 'header-bold',
+    },
+    {
+      field: 'bankName',
+      headerName: 'Ngân hàng',
+      headerAlign: 'center',
+      width: 400,
+      headerClassName: 'header-bold',
+    },
+    {
+      field: 'accountNumber',
+      headerName: 'Số tài khoản',
+      headerAlign: 'center',
+      width: 200,
+      headerClassName: 'header-bold',
+    },
+    {
+      field: 'bankOwner',
+      headerName: 'Tên chủ tài khoản',
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',

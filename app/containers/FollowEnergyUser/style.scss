@@ -9,7 +9,26 @@
 //     z-index: 999; // Đặt z-index cao hơn để nó nằm trên mọi thành phần khác
 //   }
   
-/* SCSS để tạo hiệu ứng overlay semi-transparent và vòng quay loading */
+// /* SCSS để tạo hiệu ứng overlay semi-transparent và vòng quay loading */
+// @media print {
+//   body {
+//     margin: 0;
+//   }
+//   .total-info-container {
+//     page-break-before: auto; /* Tạo trang mới trước khi in div này */
+//     page-break-inside: avoid; /* Không chia cắt div khi in */
+//     page-break-after: auto; /* Tạo trang mới sau khi in div này */
+//   }
+//   .bill-1, .bill-2 {
+//     page-break-inside: avoid; /* Không chia cắt các thành phần trong bill-1 và bill-2 */
+//   }
+//   .bill-1-component1, .bill-1-component2 {
+//     display: inline-block; /* Hiển thị các thành phần của bill-1 cùng một hàng */
+//     width: 49%; /* Chia đều chiều rộng giữa các thành phần */
+//     vertical-align: top; /* Dọc theo đỉnh của các thành phần */
+//   }
+// }
+
 .loading-overlay {
   position: fixed;
   top: 0;
@@ -42,10 +61,12 @@
 
 .title-abc {
   color: rgb(24, 143, 190);
-  font-size: 26px;
+  font-size: 24px;
   text-align: center;
   padding: 10px;
   font-weight: 500;
+  display: flex;
+  flex-direction: column;
 }
 .manage-container{
   display: flex;
@@ -69,16 +90,16 @@
   }
   .btn-export {
     margin: 10px 0;
-    border: 1px solid #0de018;
-    color: #1e9e25;
+    border: 1px solid #4abe10;
+    color: #4abe10;
     font-weight: 600;
-    background-color: #e6f7e6;
+    background-color: #f6fff2;
     .export-icon{
       font-size: 22px;
       margin-right: 5px;
     }
     &:hover {
-      background-color: #138e19;
+      background-color: #4dbe15;
       color: white;
     }
   }
@@ -110,17 +131,24 @@
   }
 }
 
+.current-voltage-dashboard{
+  display: flex;
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
 .total-info-container{
   display: flex;
-  flex-direction: column;
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  // gap: 10px;
+  // align-items: center;
+  margin: auto auto;
   @media screen and (max-width: 768px) {
     flex-direction: column;
-    .bill-1{
-      width: 100%;
-    }
-    .bill-2{
-      width: 100%;
-    }
     
   }
   .bill-1{
@@ -167,7 +195,8 @@
     .detail-container{
       border: 1px solid #c8c8c8;
       border-radius: 6px;
-      padding: 6px 56px;
+      width: 100%;
+      padding: 6px 10px;
       @media screen and (max-width: 768px) {
         padding: 6px 0;
         text-align: center;
@@ -177,24 +206,26 @@
         font-size: 20px;
         font-weight: 700;
         color: #1f2f8d;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       .content{
         display: flex;
         flex-direction: row;
         align-items: center;
         margin: 10px 0;
-
         font-size: 20px;
         font-weight: 600;
         @media screen and (max-width: 768px){
           margin-left: 20px;
         }
         .icon{
-          font-size: 30px;
-          padding: 2px;
+          font-size: 32px;
+          padding: 3px;
           margin-right: 10px;
-          border: 1px solid #6b6b6b;
-          border-radius: 6px;
+          border: 1px solid #9b9b9b;
+          border-radius: 12px;
         }
       }
     }
@@ -223,3 +254,5 @@
   }
   }
 }
+
+

@@ -148,18 +148,8 @@ export function HostMotelRoomDetailUser(props) {
   const currentMonthElectricNumber = currentMonthData.electricNumber || 0;
   const currentMonthElectricPrice = currentMonthData.electricPrice || 0;
 
-  console.log('currentMonthRevenue', currentMonthRevenue);
-  console.log('currentMonthElectricNumber', currentMonthElectricNumber);
-  console.log('currentMonthElectricPrice', currentMonthElectricPrice);
-
-
-
-
-
-
   const exportFile = async () => {
     const data = hostRevenue.monthlyRevenue || [];
-    console.log('data', data);
 
     const formatCurrency = (value) => {
       return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
@@ -354,7 +344,7 @@ export function HostMotelRoomDetailUser(props) {
   return (
     <div className="login-page-wrapper">
       <Helmet>
-        <title>Quản lý doanh thu</title>
+        <title>RevenueManagement</title>
         <meta
           name="description"
           content="Description of HostRevenue"

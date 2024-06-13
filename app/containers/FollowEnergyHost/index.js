@@ -37,6 +37,8 @@ import LineChartVoltageDashboard from '../../components/LineChartVoltageDashboar
 import LineChartCurrentDashboard from '../../components/LineChartCurrentDashboard';
 import LineChartHover from '../../components/LineChartHover';
 import { Row, Col } from 'reactstrap';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const labelsInDay = [
   '1h',
@@ -347,12 +349,12 @@ const FollowEnergyAdmin = () => {
       }
 
       // Add table to PDF
-      pdfDoc.addPage();
+      // pdfDoc.addPage();
       pdfDoc.autoTable({
         head: headers,
         body: data,
         theme: 'striped',
-        startY: 20,
+        startY: 90,
         margin: { top: 20, left: 30 },
       });
 
