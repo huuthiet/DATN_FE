@@ -64,7 +64,8 @@ function MarkerPrice(props) {
           }}
           role="presentation"
         >
-          {Money(item.price)}
+          {/* {Money(item.price)} */}
+          {Money(item.minPrice)}
         </div>
       </div>
     </OverlayView>

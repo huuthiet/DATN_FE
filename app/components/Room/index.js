@@ -356,6 +356,10 @@ function Room(props) {
           <span>Diện tích: </span>
           {item.status === 'unknown' ? 'unknown' : `${item.acreage} m2`}
         </div>
+        <div>
+          <span>Giá: </span>
+          {item.price ? `${Money(item.price)} đ` : `Chưa cập nhật`}
+        </div>
       </div>
     </div>
   );

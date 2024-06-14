@@ -27,6 +27,8 @@ export const urlLink = {
     profileDetail: '/v1/admin/user',
     about: '/v1/about/signUpAbout',
     motelList: '/v1/homeKey/motelRoom/list',
+    motelPendingCensorAccept: '/v1/homeKey/motelRoom/motelPendingCensor/',
+    motelPendingCensorList: '/v1/homeKey/motelRoom/motelPendingCensor/list',
     motelPdf: '/v1/homeKey/motelRoom/pdf',
     motelCreateOrderAndPdf: '/v1/homeKey/motelRoom/createOrder/pdf',
     reportProblem: '/v1/homeKey/reportProblem/',
@@ -134,6 +136,7 @@ export const urlLink = {
     getBankMasterList: '/v1/user/bankmastername',
     getBankOwnerRoom: '/v1/user/bankOwnerRoom/', // +idroom
     adminHost: '/v1/admin/host',
+    adminHostPendingCensor: '/v1/admin/hostsPendingCensor',
     getListMotelByHost: '/v1/admin/listMotel/host/',
     exportBill: '/v1/homeKey/energy/device/exportBillRoom/',
     // /v1/homeKey/energy/device/exportBillRoom/:idMotel/:idRoom/2024-03-01/2024-03-15

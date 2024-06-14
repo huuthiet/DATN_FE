@@ -73,6 +73,14 @@ export default defineMessages({
     id: `${scope}.hostRoomHist`,
     defaultMessage: 'Quản lý tòa nhà',
   },
+  acceptMotels: {
+    id: `${scope}.acceptMotels`,
+    defaultMessage: 'Kiểm duyệt tòa nhà',
+  },
+  acceptHosts: {
+    id: `${scope}.acceptHosts`,
+    defaultMessage: 'Kiểm duyệt chủ trọ',
+  },
   billList: {
     id: `${scope}.billList`,
     defaultMessage: 'Danh Sách Hóa Đơn',

@@ -155,7 +155,7 @@ export function MapsPage(props) {
                           <LocationOn className="address-icon" />
                           {room.address.address}
                         </div>
-                        <div className="price">{Money(room.price || 0)} đ</div>
+                        <div className="price">{Money(room.minPrice || 0)} - {Money(room.maxPrice || 0)} đ</div>
                         <div className="phone">
                           <Phone className="phone-icon" />
                           {room.contactPhone}
@@ -197,7 +197,7 @@ export function MapsPage(props) {
                           <LocationOn className="address-icon" />
                           {room.address.address}
                         </div>
-                        <div className="price">{Money(room.price || 0)} đ</div>
+                        <div className="price">{Money(room.minPrice || 0)} - {Money(room.maxPrice || 0)} đ</div>
                         <div className="phone">
                           <Phone className="phone-icon" />
                           {room.contactPhone}

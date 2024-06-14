@@ -1,0 +1,72 @@
+.user-profile-wrapper {
+  .list-motel {
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+      li {
+        color: white;
+        .motel {
+          border-radius: 10px;
+          margin: 15px 0;
+          padding: 5px;
+          text-align: center;
+          .motel-name {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+          }
+          .motel-new,
+          .motel-edit,
+          .motel-remove {
+            cursor: pointer;
+          }
+        }
+        &:nth-child(even) {
+          .motel {
+            background: #457bc5;
+          }
+        }
+        &:nth-child(odd) {
+          .motel {
+            background: #bcdfc1;
+          }
+        }
+      }
+    }
+  }
+  .user-room-container {
+      .user-room-table{
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .table-responsive {
+        overflow-x: auto;
+        margin-top: 40px;
+
+        .user-room-table{
+          thead{
+            background-color: #457bc5;
+            color: white;
+          }
+          th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+          }
+        }
+      }
+      
+      @media (max-width: 600px) {
+        .user-room-table th, .user-room-table td {
+          font-size: 8px;
+          min-width: 100px;
+          padding: 8px;
+        }
+      
+        .hide-on-mobile {
+          display: none;
+        }
+      }
+  }
+}
