@@ -37,6 +37,8 @@
   "navbar.containers.host": "Quản lý chủ trọ",
   "navbar.containers.hostRoomRevenue": "Quản lý doanh thu",
   "navbar.containers.hostRoomHist": "Quản lý tòa nhà",
+  "navbar.containers.acceptMotels": "Kiểm duyệt tòa nhà",
+  "navbar.containers.acceptHosts": "Kiểm duyệt chủ trọ",
   "navbar.containers.billList": "Danh sách hóa đơn",
   "navbar.containers.reportProblemList": "Danh sách sự cố",
   "navbar.containers.transactionPayment": "Quản lý giao dịch",

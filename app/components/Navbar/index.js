@@ -789,6 +789,28 @@ const Navbar = props => {
                             <NotificationImportantOutlined className="icon" />
                             <FormattedMessage {...messages.reportProblemList} />
                           </DropdownItem>
+                          <DropdownItem
+                            className={
+                              pathname.includes('/admin/censor-motels')
+                                ? 'active'
+                                : ''
+                            }
+                            onClick={() => history.push('/admin/censor-motels/')}
+                          >
+                            <RestoreOutlined className="icon" />
+                            <FormattedMessage {...messages.acceptMotels} />
+                        </DropdownItem>
+                        <DropdownItem
+                            className={
+                              pathname.includes('/admin/censor-hosts')
+                                ? 'active'
+                                : ''
+                            }
+                            onClick={() => history.push('/admin/censor-hosts/')}
+                          >
+                            <RestoreOutlined className="icon" />
+                            <FormattedMessage {...messages.acceptHosts} />
+                        </DropdownItem>
                         </Fragment>
                       )}
                       {/* Customer role */}

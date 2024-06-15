@@ -495,10 +495,17 @@ export function Profile(props) {
                   {motelList.map((motel, index) => (
                     <li key={motel._id}>
                       <Row className="motel">
-                        <Col xs={6} className="motel-name">
+                        <Col xs={4} className="motel-name">
                           {index + 1}. {motel.name}
                         </Col>
-                        <Col xs={6}>
+                        <Col xs={4}>
+                          {motel.isAcceptedByAdmin === true ? (
+                            <div>Đã phê duyệt</div>
+                          ) : (
+                            <div>Chưa phê duyệt</div>
+                          )}
+                        </Col>
+                        <Col xs={4}>
                           <div className='edit-delete-btn'>
                             <div className="motel-edit"
                               onClick={() => {

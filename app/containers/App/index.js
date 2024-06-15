@@ -85,6 +85,8 @@ import ManagerEnergyRoomsHost from 'containers/ManagerEnergyRoomsHost/Loadable';
 import ManagerEnergyBuildingSummaryReport from 'containers/ManagerEnergyBuildingSummaryReport/Loadable';
 import ManagerEnergyRoomsUser from 'containers/ManagerEnergyRoomsUser/Loadable';
 import ManagerAcceptDepositHost from 'containers/ManagerAcceptDepositHost/Loadable';
+import CensorMotels from 'containers/CensorMotels/Loadable';
+import CensorHosts from 'containers/CensorHosts/Loadable';
 import ManagerAcceptAfterCheckInCostHost from 'containers/ManagerAcceptAfterCheckInCostHost/Loadable';
 import OrderDepositAfterCheckInCostPendingPayment from 'containers/OrderDepositAfterCheckInCostPendingPayment/Loadable';
 
@@ -342,6 +344,8 @@ export function App(props) {
           path="/manage-deposit/accept-deposit/:id"
           component={ManagerAcceptDepositHost}
         />
+        <Route path="/admin/censor-motels/" component={CensorMotels}/>
+        <Route path="/admin/censor-hosts/" component={CensorHosts}/>
         <Route
           path="/withdraw-request/list/:userId/:motelName"
           component={WithdrawRequestListHost}

@@ -37,6 +37,8 @@
   "navbar.containers.host": "Host Management",
   "navbar.containers.hostRoomRevenue": "Revenue Management",
   "navbar.containers.hostRoomHist": "Manage Room",
+  "navbar.containers.acceptMotels": "Censor Motels",
+  "navbar.containers.acceptHosts": "Censor Hosts",
   "navbar.containers.billList": "List Bill",
   "navbar.containers.reportProblemList": "List Report Problem",
   "navbar.containers.roomManager": "Host Management",
