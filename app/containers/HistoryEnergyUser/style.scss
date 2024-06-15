@@ -112,7 +112,7 @@
   
       .user-room-table{
         thead{
-          background-color: #457bc5;
+          background-color: white;
           color: white;
         }
         th, td {
@@ -129,7 +129,7 @@
           color: #858585;
           transition: all 0.3s;
           &:hover{
-            color: #457bc5;
+            color: white;
           }
         
         }

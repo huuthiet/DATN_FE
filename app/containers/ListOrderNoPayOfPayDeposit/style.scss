@@ -23,12 +23,12 @@
         }
         &:nth-child(even) {
           .motel {
-            background: #457bc5;
+            background: white;
           }
         }
         &:nth-child(odd) {
           .motel {
-            background: #bcdfc1;
+            background: white;
           }
         }
       }
@@ -46,7 +46,7 @@
 
         .user-room-table{
           thead{
-            background-color: #457bc5;
+            background-color: white;
             color: white;
           }
           th, td {
