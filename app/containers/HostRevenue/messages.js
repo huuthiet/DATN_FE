@@ -55,7 +55,11 @@ export default defineMessages({
     },
     TotalRoomPrice: {
         id: `${scope}.TotalRoomPrice`,
-        defaultMessage: 'Tiền phòng',
+        defaultMessage: 'Tổng tiền phòng',
+    },
+    RemainingRevenue: {
+        id: `${scope}.RemainingRevenue`,
+        defaultMessage: 'Doanh thu còn lại',
     },
     Revenue: {
         id: `${scope}.Revenue`,

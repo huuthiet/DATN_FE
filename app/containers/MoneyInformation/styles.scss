@@ -1,5 +1,5 @@
 .title {
-  color: rgb(0, 183, 255);
+  color: rgb(21, 93, 121);
   font-size: 28px;
   text-align: center;
   padding: 10px;
@@ -7,6 +7,7 @@
 }
 
 .admin-users-wrapper{
+  max-width: 90%;
   .btn-add{
     display: flex;
     align-items: center;
@@ -32,7 +33,7 @@
     thead{
       background-color: #f2f2f2;
       th{
-        min-width: 115px;
+        min-width: 160px;
         padding: 10px;
         text-align: start;
         font-size: 20px;

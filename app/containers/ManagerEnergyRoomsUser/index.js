@@ -98,12 +98,14 @@ export function ManagerEnergyRoomsUser(props) {
             `${urlLink.api.serverUrl +
             urlLink.api.getDataEnergyPerDayV2}${_id}`;
 
-          console.log({ totalKWhApi });
+          console.log("Check api lỗi: ", totalKWhApi);
           const response = await axios.get(totalKWhApi, {
             headers: {
               Authorization: `Bearer ${localStoreService.get('user').token}`,
             },
           });
+
+          console.log('response', response);
 
           const { data } = response.data;
 

@@ -65,11 +65,13 @@ export function HostMotelRoomDetailUser(props) {
   let totalRevenue = 0;
   let totalRoomPrice = 0;
   let totalElectricPrice = 0;
+  let remainingRevenue = 0;
 
   if (hostRevenue) {
     totalRevenue = hostRevenue.total; //Tổng tất cả tiền
     totalElectricPrice = hostRevenue.totalElectricPrice;
     totalRoomPrice = hostRevenue.totalRevenue; //Tiền phòng (tương đương doanh thu)
+    remainingRevenue = hostRevenue.remainingRevenue; //Tiền còn lại sau khi admin phê duyệt request rút tiền
   }
 
   // Define the formatter
@@ -146,51 +148,71 @@ export function HostMotelRoomDetailUser(props) {
   const currentMonthElectricNumber = currentMonthData.electricNumber || 0;
   const currentMonthElectricPrice = currentMonthData.electricPrice || 0;
 
-  console.log('currentMonthRevenue', currentMonthRevenue);
-  console.log('currentMonthElectricNumber', currentMonthElectricNumber);
-  console.log('currentMonthElectricPrice', currentMonthElectricPrice);
-
-
-
-
-
-
   const exportFile = async () => {
-    const data = hostRevenue || []; // Sử dụng dữ liệu từ hostRevenueData
+    const data = hostRevenue.monthlyRevenue || [];
+
+    const formatCurrency = (value) => {
+      return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    };
+
     const arrData = data.map((obj, index) => ({
       'STT': index + 1,
       'Thời gian': obj.time,
-      'Doanh thu': obj.revenue,
+      'Doanh thu': formatCurrency(obj.revenue),
     }));
 
-    // Định dạng cho tiêu đề
     const headerStyle = {
-      font: { bold: true },
+      font: { bold: true, color: { rgb: '000000' } },
       alignment: { horizontal: 'center' },
-      fill: { fgColor: { rgb: 'FFC000' } } // Màu cam
+      fill: { fgColor: { rgb: 'FFC000' } },
     };
 
-    // Định dạng cho dữ liệu
     const dataStyle = {
-      font: { bold: false },
+      font: { bold: false, color: { rgb: '000000' } },
       alignment: { horizontal: 'left' },
-      fill: { fgColor: { rgb: 'FFFFFF' } } // Màu trắng
+      fill: { fgColor: { rgb: 'FFFFFF' } },
+    };
+
+    const titleStyle = {
+      font: { bold: true, sz: 16, color: { rgb: '000000' } },
+      alignment: { horizontal: 'center' },
+    };
+
+    const timeStyle = {
+      font: { italic: true, color: { rgb: '000000' } },
+      alignment: { horizontal: 'right' },
     };
 
     const wscols = [
-      { wch: 5 }, // Độ rộng của cột STT
-      { wch: 15 }, // Độ rộng của cột Thời gian
-      { wch: 20 }, // Độ rộng của cột Doanh thu
+      { wch: 15 }, // Độ rộng của cột STT
+      { wch: 20 }, // Độ rộng của cột Thời gian
+      { wch: 30 }, // Độ rộng của cột Doanh thu
     ];
 
-    const worksheet = XLSX.utils.json_to_sheet(arrData);
-    worksheet['!cols'] = wscols;
+    const worksheet = XLSX.utils.json_to_sheet([]);
+
+    // Thêm tiêu đề và hợp nhất các ô
+    XLSX.utils.sheet_add_aoa(worksheet, [['Báo cáo Doanh Thu']], { origin: 'A1' });
+    worksheet['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 2 } }];
+    worksheet['A1'].s = titleStyle;
+
+    // Thêm thời gian xuất file
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}`;
+    XLSX.utils.sheet_add_aoa(worksheet, [[`Thời gian xuất file: ${formattedDate}`]], { origin: 'A2' });
+    worksheet['!merges'].push({ s: { r: 1, c: 0 }, e: { r: 1, c: 2 } });
+    worksheet['A2'].s = timeStyle;
 
     // Thêm hàng tiêu đề
-    XLSX.utils.sheet_add_aoa(worksheet, [['Số thứ tự', 'Thời gian', 'Doanh thu']], { origin: 'A1' });
+    XLSX.utils.sheet_add_aoa(worksheet, [['Số thứ tự', 'Thời gian', 'Doanh thu']], { origin: 'A4' });
+
+    // Thêm dữ liệu
+    XLSX.utils.sheet_add_json(worksheet, arrData, { skipHeader: true, origin: 'A5' });
+
+    worksheet['!cols'] = wscols;
 
     // Định dạng tiêu đề
-    const headerRange = XLSX.utils.decode_range(worksheet['!ref']);
+    const headerRange = XLSX.utils.decode_range('A4:C4');
     for (let c = headerRange.s.c; c <= headerRange.e.c; c++) {
       const cell = worksheet[XLSX.utils.encode_cell({ r: headerRange.s.r, c })];
       cell.s = headerStyle;
@@ -198,7 +220,7 @@ export function HostMotelRoomDetailUser(props) {
 
     // Định dạng dữ liệu
     const dataRange = XLSX.utils.decode_range(worksheet['!ref']);
-    for (let R = 1; R <= dataRange.e.r; ++R) {
+    for (let R = 4; R <= dataRange.e.r; ++R) {
       for (let C = dataRange.s.c; C <= dataRange.e.c; ++C) {
         const cell = worksheet[XLSX.utils.encode_cell({ r: R, c: C })];
         cell.s = dataStyle;
@@ -207,14 +229,6 @@ export function HostMotelRoomDetailUser(props) {
 
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-
-    // Thêm biểu đồ
-    const chart = {
-      type: 'bar',
-      data: arrData.map(obj => obj['Doanh thu']),
-      labels: arrData.map(obj => obj['Thời gian']),
-    };
-    XLSX.utils.book_append_sheet(workbook, chart, 'Chart1');
 
     if (arrData.length > 0) {
       XLSX.writeFile(workbook, 'Report.xlsx');
@@ -264,7 +278,7 @@ export function HostMotelRoomDetailUser(props) {
 
 
 
-  const handleSendWithdrawRequest = () => {
+  const handleSendWithdrawRequest = async () => {
     const bankId = selectedBank;
     const accountNumber = getSelectedBankAccountNumber();
     const withdrawAmount = document.getElementById('withdrawAmount').value;
@@ -290,19 +304,11 @@ export function HostMotelRoomDetailUser(props) {
       toast.error('Vui lòng nhập lý do rút tiền');
       return;
     }
-
-    if (withdrawAmount > hostRevenue.totalRevenue) {
-      toast.error('Số tiền rút phải nhỏ hơn tổng doanh thu');
-      return;
-    }
-
-    const withdrawRequest = urlLink.api.serverUrl + urlLink.api.withdrawRequest;
     //create current date format "yyyy-mm"
     const date = new Date();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
     const requestDate = `${year}-${month}`;
-
 
     const data = {
       id,
@@ -321,20 +327,24 @@ export function HostMotelRoomDetailUser(props) {
     //reset form
     document.getElementById('withdrawAmount').value = '';
     document.getElementById('withdrawReason').value = '';
-    props.postWithdraw(data);
-    if (data) {
-      toast.success('Gửi yêu cầu rút tiền thành công');
-    } else {
-      toast.error('Gửi yêu cầu rút tiền thất bại');
+    try {
+      // Gọi hàm postWithdraw và đợi kết quả
+      await props.postWithdraw(data);
 
+      // Nếu thành công, hiển thị thông báo thành công
+      toast.success("Yêu cầu rút tiền đã được gửi thành công!");
+    } catch (error) {
+      // Nếu có lỗi, hiển thị thông báo lỗi
+      toast.error("Đã xảy ra lỗi khi gửi yêu cầu rút tiền!");
     }
+
 
   }
 
   return (
     <div className="login-page-wrapper">
       <Helmet>
-        <title>Quản lý doanh thu</title>
+        <title>RevenueManagement</title>
         <meta
           name="description"
           content="Description of HostRevenue"
@@ -529,10 +539,10 @@ export function HostMotelRoomDetailUser(props) {
               </div>
               <div className='revenueText-container'>
                 <span className="totalRevenue-text">
-                  <FormattedMessage {...messages.TotalRoomPrice} />
+                  <FormattedMessage {...messages.RemainingRevenue} />
                 </span>
                 <span className="totalRevenue-number">
-                  {totalRoomPrice ? vndFormatter.format(totalRoomPrice) : 'Không có dữ liệu'}</span>
+                  {remainingRevenue ? vndFormatter.format(remainingRevenue) : 'Không có dữ liệu'}</span>
               </div>
 
             </div>

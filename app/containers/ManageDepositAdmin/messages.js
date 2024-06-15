@@ -5,85 +5,47 @@
  */
 import { defineMessages } from 'react-intl';
 
-export const scope = 'profile.containers';
+export const scope = 'ManageDepositAdmin.containers';
 
 export default defineMessages({
-  cancellation: {
-    id: `${scope}.cancellation`,
-    defaultMessage: 'Hủy đặt cọc',
+  Header: {
+    id: `${scope}.Header`,
+    defaultMessage: 'Quản lý cọc',
   },
-  cancellationtext: {
-    id: `${scope}.cancellationtext`,
-    defaultMessage:
-      'Bạn sẽ mất tiền đặt cọc khi hủy! Bạn có thực sự muốn hủy không?',
+  STT: {
+    id: `${scope}.STT`,
+    defaultMessage: 'STT',
   },
-  profile: {
-    id: `${scope}.profile`,
-    defaultMessage: 'Thông tin cá nhân',
+  BuildingName: {
+    id: `${scope}.BuildingName`,
+    defaultMessage: 'Tên nhà trọ',
   },
-  name: {
-    id: `${scope}.name`,
-    defaultMessage: 'Tên',
+  Address: {
+    id: `${scope}.Address`,
+    defaultMessage: 'Địa chỉ',
   },
-  aboutmap: {
-    id: `${scope}.aboutmap`,
-    defaultMessage: 'Về bản đồ',
+  ManageDeposit: {
+    id: `${scope}.ManageDeposit`,
+    defaultMessage: 'Quản lý duyệt cọc',
   },
-  uploadAvata: {
-    id: `${scope}.uploadAvata`,
-    defaultMessage: 'Tải Ảnh',
+  ManageCheckInCost: {
+    id: `${scope}.ManageCheckInCost`,
+    defaultMessage: 'Duyệt thanh toán khi nhận phòng',
   },
-
-  sdt: {
-    id: `${scope}.sdt`,
-    defaultMessage: 'Số điện thoại',
+  ManageBill: {
+    id: `${scope}.ManageBill`,
+    defaultMessage: 'Hóa đơn chờ thanh toán',
   },
-  wallet: {
-    id: `${scope}.wallet`,
-    defaultMessage: 'Số dư trong ví',
+  Detail: {
+    id: `${scope}.Detail`,
+    defaultMessage: 'Xem chi tiết',
   },
-  addnew: {
-    id: `${scope}.addnew`,
-    defaultMessage: 'Thêm mới',
+  RefundDeposit: {
+    id: `${scope}.RefundDeposit`,
+    defaultMessage: 'Quản lý hoàn cọc',
   },
-  edit: {
-    id: `${scope}.edit`,
-    defaultMessage: 'Chỉnh sửa',
-  },
-  delete: {
-    id: `${scope}.delete`,
-    defaultMessage: 'Xóa',
-  },
-  detelesuccess: {
-    id: `${scope}.detelesuccess`,
-    defaultMessage: 'Đã xoá thành công',
-  },
-  errorMessage: {
-    id: `${scope}.errorMessage`,
-    defaultMessage: 'Phòng đang cho thuê, không thể xóa!',
-  },
-  reallyMessage: {
-    id: `${scope}.reallyMessage`,
-    defaultMessage: 'Bạn có thực sự muốn xóa?',
-  },
-  NumberofFloors: {
-    id: `${scope}.NumberofFloors`,
-    defaultMessage: 'Số tầng:',
-  },
-  All: {
-    id: `${scope}.All`,
-    defaultMessage: 'Tất cả:',
-  },
-  PriceFluctuates: {
-    id: `${scope}.PriceFluctuates`,
-    defaultMessage: 'Giá dao động:',
-  },
-  description: {
-    id: `${scope}.description`,
-    defaultMessage: 'Mô tả:',
-  },
-  address: {
-    id: `${scope}.address`,
-    defaultMessage: 'Địa chỉ:',
+  DepositHistory: {
+    id: `${scope}.DepositHistory`,
+    defaultMessage: 'Lịch sử cọc',
   },
 });

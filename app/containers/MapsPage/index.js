@@ -26,7 +26,14 @@ import './style.scss';
 import makeSelectProfile from '../Profile/selectors';
 import { getProfile } from '../Profile/actions';
 import { LocationOn, Phone } from '@material-ui/icons';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 import GooglePlacesAutocomplete from 'react-google-autocomplete';
+import {
+  Grid,
+  Row,
+  Col,
+} from 'reactstrap';
 
 // import profileReducer from '../Profile/reducer';
 // import profileSaga from '../Profile/saga';
@@ -36,14 +43,14 @@ export function MapsPage(props) {
   useInjectReducer({ key: 'mapsPage', reducer });
   useInjectSaga({ key: 'mapsPage', saga });
 
-  const [ currentPosition, setCurrentPosition ] = useState({ lat: 10.856866, lng: 106.763324 })
+  const [currentPosition, setCurrentPosition] = useState({ lat: 10.856866, lng: 106.763324 })
 
 
   const { inputValue = "ho chi minh" } = props;
 
   const handlePlaceSelect = async (place) => {
     try {
-      if(place === '') {
+      if (place === '') {
         place = 'Linh Trung, Thủ Đức'
       }
       const response = await fetch(
@@ -51,7 +58,7 @@ export function MapsPage(props) {
       );
       const data = await response.json();
       const { lat, lng } = data.results[0].geometry.location;
-      setCurrentPosition({lat: lat, lng: lng});
+      setCurrentPosition({ lat: lat, lng: lng });
       console.log("VỊ TRÍIIII", data);
       // setCoordinates({ lat, lng });
     } catch (error) {
@@ -85,7 +92,7 @@ export function MapsPage(props) {
   }, []);
   document.documentElement.style.setProperty('--vh', `${windowHeight}px`);
   const { listRoom = [], action1 } = props.mapsPage;
-  
+
 
   const [room, setRoom] = useState({});
 
@@ -135,11 +142,11 @@ export function MapsPage(props) {
       {Object.keys(room).length !== 0 && (
         <div className="detail-wrapper">
           <div className="container">
-            <div className="row">
-              <div className="col-12 full-image">
+            <Row>
+              <Col xs={12} className="full-image">
                 {room.images ? (
-                  <div className="col-12 image-container">
-                    <div className="col-2 image">
+                  <Col xs={12} className="image-container">
+                    <Col xs={4} className="image">
                       {/* <img
                         alt="Avatar"
                         src={room.images}
@@ -147,8 +154,8 @@ export function MapsPage(props) {
                         N
                       </img> */}
                       <img className="image" src={room.images} alt="motel" />
-                    </div>
-                    <div className="col-8 card-content">
+                    </Col>
+                    <Col xs={8} className="card-content">
                       <div className="card-info">
                         <div className="title">{room.name}</div>
                         <div className="address">
@@ -168,7 +175,7 @@ export function MapsPage(props) {
                             setRoom({});
                           }}
                         >
-                          Hủy
+                          <FormattedMessage {...messages.Cancel} />
                         </button>
                         <button
                           className="detail-button"
@@ -177,20 +184,20 @@ export function MapsPage(props) {
                             history.push(`/motel/${room._id}`);
                           }}
                         >
-                          Xem chi tiết
+                          <FormattedMessage {...messages.Detail} />
                         </button>
                       </div>
-                    </div>
-                  </div>
+                    </Col>
+                  </Col>
                 ) : (
                   <div className="image-container">
-                    <div className="col-4 image">
+                    <Col xs={4} className="image">
                       <img
                         alt="Avatar"
                         src="./defaul-room.jpg"
                       />
-                    </div>
-                    <div className="col-8 card-content">
+                    </Col>
+                    <Col xs={8} className="card-content">
                       <div className="card-info">
                         <div className="title">{room.name}</div>
                         <div className="address">
@@ -210,7 +217,7 @@ export function MapsPage(props) {
                             setRoom({});
                           }}
                         >
-                          Hủy
+                          <FormattedMessage {...messages.Cancel} />
                         </button>
                         <button
                           className="detail-button"
@@ -219,14 +226,14 @@ export function MapsPage(props) {
                             history.push(`/motel/${room._id}`);
                           }}
                         >
-                          Xem chi tiết
+                          <FormattedMessage {...messages.Detail} />
                         </button>
                       </div>
-                    </div>
+                    </Col>
                   </div>
                 )}
-              </div>
-            </div>
+              </Col>
+            </Row>
           </div>
         </div>
       )}

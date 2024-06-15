@@ -23,6 +23,8 @@ import reducer from './reducer';
 import saga from './saga';
 import makeSelectMoneyInformation from './selectors';
 import './styles.scss';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 export function MoneyInformation(props) {
   useInjectReducer({ key: 'moneyInformation', reducer });
@@ -40,7 +42,9 @@ export function MoneyInformation(props) {
         <title>Quản lý tài khoản ngân hàng</title>
         <meta name="description" content="Description of Bank Admin" />
       </Helmet>
-      <div className="title">Quản lý tài khoản ngân hàng</div>
+      <div className="title">
+        <FormattedMessage {...messages.Header} />
+      </div>
       <div className="admin-users-wrapper container">
         <Button
           className='btn-add'
@@ -51,15 +55,23 @@ export function MoneyInformation(props) {
           }}
         >
           <i className="fa fa-edit" aria-hidden="true"></i>
-          Thêm tài khoản
+          <FormattedMessage {...messages.AddAccount} />
         </Button>
         <table className="table">
           <thead>
             <tr>
-              <th scope="col">Số tài khoản</th>
-              <th scope="col">Tên tài khoản</th>
-              <th scope="col">Tên ngân hàng</th>
-              <th scope="col">Chi nhánh</th>
+              <th scope="col">
+                <FormattedMessage {...messages.AccountNumber} />
+              </th>
+              <th scope="col">
+                <FormattedMessage {...messages.AccountName} />
+              </th>
+              <th scope="col">
+                <FormattedMessage {...messages.BankName} />
+              </th>
+              <th scope="col">
+                <FormattedMessage {...messages.Branch} />
+              </th>
               {/* <th scope="col">Hình QR</th> */}
               <th scope="col" />
             </tr>
@@ -109,7 +121,7 @@ export function MoneyInformation(props) {
       </div>
       <SuccessPopup
         visible={showSuccessPopup}
-        content="Xóa thành công"
+        content={<FormattedMessage {...messages.DeleteSuccess} />}
         toggle={() => {
           // eslint-disable-next-line react/prop-types
           props.changeStoreData('showSuccessPopup', !showSuccessPopup);
@@ -117,7 +129,7 @@ export function MoneyInformation(props) {
       />
       <WarningPopup
         visible={showWarningPopup}
-        content="Bạn thực sự muốn xóa?"
+        content={<FormattedMessage {...messages.ConfirmDelete} />}
         callBack={() => props.deleteAdminBank(id)}
         toggle={() => {
           // eslint-disable-next-line react/prop-types

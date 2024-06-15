@@ -16,6 +16,7 @@ import Room from '../Room';
 import { FormattedMessage } from 'react-intl';
 import { Add } from '@material-ui/icons';
 import { urlLink } from '../../helper/route';
+import messages from './messages';
 
 function FloorDetailV2(props) {
   const { floors = [] } = props.motelDetail.motel;
@@ -109,7 +110,7 @@ function FloorDetailV2(props) {
               }
             }}
           >
-            Tầng {key + 1}
+            <FormattedMessage {...messages.Floor} /> {key + 1}
           </div>
         ))}
       </div>
@@ -126,8 +127,7 @@ function FloorDetailV2(props) {
               }}
             >
               <Add className='add-icon' />
-              Thêm phòng
-              {/* <FormattedMessage {...messages.addRoom} /> */}
+              <FormattedMessage {...messages.addRoom} />
               {/* <img src="/icon_add.png" /> */}
             </button>
           )}

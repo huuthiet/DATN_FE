@@ -21,7 +21,7 @@ import SuccessPopup from '../../components/SuccessPopup';
 import WarningPopup from '../../components/WarningPopup';
 import localStoreService from 'local-storage';
 import * as localStore from 'local-storage';
-import { CloudUpload } from '@material-ui/icons';
+import { CheckCircleOutline, CloudUpload, HighlightOffOutlined } from '@material-ui/icons';
 import moment from 'moment';
 import Money from '../App/format';
 import { DataGrid } from '@mui/x-data-grid';
@@ -71,6 +71,7 @@ export function TransactionBankingCashLog(props) {
   } = props.pendingAcceptBankCashList;
 
   let transformedData = [];
+  console.log('pendingAcceptBankCashList', pendingAcceptBankCashList);
 
   if (pendingAcceptBankCashList.length !== 0) {
     transformedData = pendingAcceptBankCashList.map((item, index) => ({
@@ -78,6 +79,9 @@ export function TransactionBankingCashLog(props) {
       nameMotelRoom: item.motel && item.motel.name ? item.motel.name : 'N/A',
       nameRoom: item.room && item.room.name ? item.room.name : 'N/A',
       time: moment(new Date(item.createdAt)).format('DD-MM-YYYY'),
+      nameTkLable: item.banking && item.banking.nameTkLable ? item.banking.nameTkLable : 'N/A',
+      stk: item.banking && item.banking.stk ? item.banking.stk : 'N/A',
+      nameTk: item.banking && item.banking.nameTk ? item.banking.nameTk : 'N/A',
       amount_tranform: `${Money(parseInt(item.amount.toFixed(0)))} VNĐ`,
       payment_Method: item.paymentMethod === 'cash' ? 'Tiền mặt' : 'Ngân hàng',
       type_trasaction:
@@ -163,7 +167,6 @@ export function TransactionBankingCashLog(props) {
     };
     try {
       const response = await axios.post(requestUrl, formData, config);
-      console.log('responsexx', response);
       if (response.data.data.images) {
         setUrlImgCloud(response.data.data.images.imageUrl);
       }
@@ -173,75 +176,120 @@ export function TransactionBankingCashLog(props) {
   };
 
   const columns = [
-    { field: 'key', headerName: 'STT', headerAlign: 'center', width: 150 },
+    {
+      field: 'key',
+      headerName: <FormattedMessage {...messages.STT} />,
+      headerAlign: 'center',
+      width: 150
+    },
     {
       field: 'keyPayment',
-      headerName: 'Nội dung thanh toán',
+      headerName: <FormattedMessage {...messages.KeyPayment} />,
+      headerAlign: 'center',
+      width: 250,
+      headerClassName: 'header-bold',
+    },
+    {
+      field: 'nameTkLable',
+      headerName: <FormattedMessage {...messages.BankName} />,
+      headerAlign: 'center',
+      width: 400,
+      headerClassName: 'header-bold',
+    },
+    {
+      field: 'stk',
+      headerName: <FormattedMessage {...messages.AccountNumber} />,
+      headerAlign: 'center',
+      width: 250,
+      headerClassName: 'header-bold',
+    },
+    {
+      field: 'nameTk',
+      headerName: <FormattedMessage {...messages.AccountName} />,
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
     },
     {
       field: 'amount_tranform',
-      headerName: 'Số tiền',
+      headerName: <FormattedMessage {...messages.Amount} />,
       headerAlign: 'center',
       width: 150,
       headerClassName: 'header-bold',
     },
     {
       field: 'time',
-      headerName: 'Thời gian',
+      headerName: <FormattedMessage {...messages.Time} />,
       headerAlign: 'center',
       width: 150,
       headerClassName: 'header-bold',
     },
     {
       field: 'payment_Method',
-      headerName: 'Phương thức thanh toán',
+      headerName: <FormattedMessage {...messages.PaymentMethod} />,
       headerAlign: 'center',
-      width: 200,
+      width: 300,
       headerClassName: 'header-bold',
     },
     {
-      field: 'nameMotelRoom',
-      headerName: 'Tên khu trọ',
-      headerAlign: 'center',
-      width: 250,
-      headerClassName: 'header-bold',
-    },
-    {
-      field: 'nameRoom',
-      headerName: 'Phòng',
-      headerAlign: 'center',
-      width: 150,
-      headerClassName: 'header-bold',
-    },
-    {
-      field: 'type_trasaction',
-      headerName: 'Loại thanh toán',
+      field: 'motelName',
+      headerName: <FormattedMessage {...messages.BuildingName} />,
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
     },
     {
       field: 'description',
-      headerName: 'Ghi chú',
+      headerName: <FormattedMessage {...messages.Description} />,
+      headerAlign: 'center',
+      width: 400,
+      headerClassName: 'header-bold',
+    },
+    {
+      field: 'note',
+      headerName: <FormattedMessage {...messages.Note} />,
       headerAlign: 'center',
       width: 400,
       headerClassName: 'header-bold',
     },
     {
       field: 'status',
-      headerName: 'Trạng thái',
+      headerName: <FormattedMessage {...messages.Status} />,
       headerAlign: 'center',
-      width: 150,
+      width: 200,
       headerClassName: 'header-bold',
+      renderCell: (params) => {
+        let color;
+        let statusText;
+        switch (params.value) {
+          case 'waiting':
+            color = 'orange';
+            statusText = <FormattedMessage {...messages.Waiting} />;
+            break;
+          case 'rejected':
+            color = 'red';
+            statusText = <FormattedMessage {...messages.Rejected} />;
+            break;
+          case 'approved':
+            color = 'green';
+            statusText = <FormattedMessage {...messages.Accepted} />;
+            break;
+          default:
+            color = 'black';
+            statusText = 'N/A';
+        }
+        return (
+          <span style={{ color }}>
+            {statusText}
+          </span>
+        );
+      },
     },
     {
       field: 'iamgeLink',
-      headerName: 'Minh chứng đã tải',
+      headerName: <FormattedMessage {...messages.UNC} />,
       headerAlign: 'center',
-      width: 200,
+      width: 250,
       headerClassName: 'header-bold',
       renderCell: params => (
         <a href={params.row.file} target="bank">
@@ -251,17 +299,19 @@ export function TransactionBankingCashLog(props) {
     },
     {
       field: 'action',
-      headerName: 'Tải minh chứng',
+      headerName: <FormattedMessage {...messages.UploadUNC} />,
       headerAlign: 'center',
+      align: 'center',
       width: 200,
       headerClassName: 'header-bold',
       renderCell: params => (
         <div
           style={{
             display: 'flex',
-            flexDirection: 'column',
+            // flexDirection: 'column',
             paddingBottom: '5px',
             alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           <input
@@ -274,7 +324,7 @@ export function TransactionBankingCashLog(props) {
             }}
           />
           <CloudUpload
-            style={{ fontSize: 40, cursor: 'pointer' }}
+            style={{ fontSize: 28, color: 'gray', cursor: 'pointer' }}
             onClick={() => fileRefs.current[params.row._id].click()}
           />
         </div>
@@ -282,7 +332,7 @@ export function TransactionBankingCashLog(props) {
     },
     {
       field: 'success',
-      headerName: 'Chấp nhận',
+      headerName: <FormattedMessage {...messages.Accept} />,
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
@@ -291,15 +341,17 @@ export function TransactionBankingCashLog(props) {
           return (
             <Button
               color="success"
+              style={{ display: 'flex', alignItems: 'center', gap: '5px', minHeight: '40px' }}
               onClick={() => {
                 setIdTransaction(params.row._id);
                 setStatus('approve');
                 props.changeStoreData('showWarningapprove', true);
               }}
             >
-              <i className="fa fa-check" aria-hidden="true">
-                <FormattedMessage {...messages.Accept} />
-              </i>
+              {/* <i className="fa fa-check" aria-hidden="true">
+              </i> */}
+              <CheckCircleOutline />
+              <FormattedMessage {...messages.Accept} />
             </Button>
           );
         }
@@ -308,7 +360,7 @@ export function TransactionBankingCashLog(props) {
     },
     {
       field: 'reject',
-      headerName: 'Từ chối',
+      headerName: <FormattedMessage {...messages.Reject} />,
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
@@ -317,15 +369,18 @@ export function TransactionBankingCashLog(props) {
           return (
             <Button
               color="danger"
+              tyle={{ display: 'flex', alignItems: 'center', gap: '5px', minHeight: '40px' }}
               onClick={() => {
                 setIdTransaction(params.row._id);
                 setStatus('reject');
                 props.changeStoreData('showWarningapprove', true);
               }}
             >
-              <i className="fa fa-check" aria-hidden="true">
-                <FormattedMessage {...messages.Reject} />
-              </i>
+              {/* <i className="fa fa-check" aria-hidden="true">
+
+              </i> */}
+              <HighlightOffOutlined />
+              <FormattedMessage {...messages.Reject} />
             </Button>
           );
         }
@@ -361,11 +416,12 @@ export function TransactionBankingCashLog(props) {
       </div>
       <WarningPopup
         visible={showWarningapprove}
-        content="Xác nhận thực hiện?"
+        content={<FormattedMessage {...messages.ConfirmAccept} />}
         callBack={() => {
           props.approveWithdrawRequest(idTransaction, status);
           console.log({ idTransaction, status });
         }}
+
         toggle={() => {
           props.changeStoreData('showWarningapprove', false);
         }}
@@ -373,11 +429,11 @@ export function TransactionBankingCashLog(props) {
 
       <WarningPopup
         visible={showWarningreject}
-        content="Xác nhận từ chối?"
+        content={<FormattedMessage {...messages.ConfirmReject} />}
         callBack={() => {
           props.approveWithdrawRequest(idTransaction, status);
           console.log({ idTransaction, status });
-          toast.success('Từ chối yêu cầu thành công!');
+          toast.success(<FormattedMessage {...messages.RejectSuccess} />);
         }}
         toggle={() => {
 
@@ -388,7 +444,7 @@ export function TransactionBankingCashLog(props) {
 
       <SuccessPopup
         visible={showSuccessapprove}
-        content="Thành công!"
+        content={<FormattedMessage {...messages.AcceptSuccess} />}
         toggle={() => {
           props.changeStoreData('showSuccessapprove', !showSuccessapprove);
         }}

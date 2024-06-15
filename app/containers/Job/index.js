@@ -930,7 +930,7 @@ export function Job(props) {
           {/* <button onClick={toggleModal}>Open modal</button> */}
         </Container>
       </div>
-    </div>
+    </div >
   );
 }
 

@@ -52,15 +52,26 @@ export function ManagerEnergyBuildingsAdmin(props) {
     showWarningPopup,
   } = props.motelListByOwner;
 
-  console.log("motelListuuuu", motelList);
-
   // console.log('check props: ', motelList);
   const columns = [
-    { field: 'index', headerName: 'STT', headerAlign: 'center', width: 150, headerClassName: 'header-bold', align: 'center' },
-    { field: 'name', headerName: 'Tên tòa nhà', width: 250, headerAlign: 'center', headerClassName: 'header-bold' },
+    {
+      field: 'index',
+      headerName: <FormattedMessage {...messages.STT} />,
+      headerAlign: 'center',
+      width: 150,
+      headerClassName: 'header-bold',
+      align: 'center'
+    },
+    {
+      field: 'name',
+      headerName: <FormattedMessage {...messages.BuildingName} />,
+      width: 250,
+      headerAlign: 'center',
+      headerClassName: 'header-bold'
+    },
     {
       field: 'file',
-      headerName: 'Ảnh Phòng 1',
+      headerName: <FormattedMessage {...messages.BuildingImage} />,
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
@@ -88,18 +99,24 @@ export function ManagerEnergyBuildingsAdmin(props) {
         );
       },
     },
-    { field: 'address', headerName: 'Địa chỉ', width: 700, headerAlign: 'center', headerClassName: 'header-bold' },
+    {
+      field: 'address',
+      headerName: <FormattedMessage {...messages.Address} />,
+      width: 700,
+      headerAlign: 'center',
+      headerClassName: 'header-bold'
+    },
     {
       field: 'totalRoom',
-      headerName: 'Số phòng',
+      headerName: <FormattedMessage {...messages.RoomQuantity} />,
       headerAlign: 'center',
-      width: 150,
+      width: 200,
       headerClassName: 'header-bold',
       align: 'center',
     },
     {
       field: 'rentedRoom',
-      headerName: 'Đã thuê',
+      headerName: <FormattedMessage {...messages.Rented} />,
       headerAlign: 'center',
       width: 150,
       headerClassName: 'header-bold',
@@ -107,7 +124,7 @@ export function ManagerEnergyBuildingsAdmin(props) {
     },
     {
       field: 'depositedRoom',
-      headerName: 'Đã cọc',
+      headerName: <FormattedMessage {...messages.Deposited} />,
       headerAlign: 'center',
       width: 150,
       headerClassName: 'header-bold',
@@ -116,7 +133,7 @@ export function ManagerEnergyBuildingsAdmin(props) {
     {
       field: 'listRoom',
       headerAlign: 'center',
-      headerName: 'Danh sách các phòng',
+      headerName: <FormattedMessage {...messages.RoomList} />,
       width: 300,
       renderCell: params => (
         <a
@@ -125,7 +142,7 @@ export function ManagerEnergyBuildingsAdmin(props) {
             handleButtonClick(params.row);
           }}
         >
-          Xem chi tiết
+          <FormattedMessage {...messages.Detail} />
         </a>
       ),
       headerClassName: 'header-bold',
@@ -134,16 +151,16 @@ export function ManagerEnergyBuildingsAdmin(props) {
     {
       field: 'delete',
       headerAlign: 'center',
-      headerName: 'Xóa tòa nhà',
+      headerName: <FormattedMessage {...messages.DeleteBuilding} />,
       width: 200,
       renderCell: params => (
         <Button
           onClick={() => {
             handleDeleteMotel(params.row._id);
           }}
-          color="primary"
+          color="danger"
         >
-          Xóa
+          <FormattedMessage {...messages.Delete} />
         </Button>
       ),
       headerClassName: 'header-bold',
@@ -153,24 +170,24 @@ export function ManagerEnergyBuildingsAdmin(props) {
 
   let rows = [];
   // if(motelList) {
-    if(motelList.length > 0) {
-      rows = motelList.map((motel, index) => ({
-        index: index + 1,
-        name: motel.name,
-        address: motel.address.address,
-        _id: motel._id,
-        key: motel._id,
-        file: motel.file,
-        totalRoom: motel.totalRoom,
-        depositedRoom: motel.depositedRoom,
-        availableRoom: motel.availableRoom,
-        rentedRoom: motel.rentedRoom,
-        _id: motel._id,
-      }));
-    }
+  if (motelList.length > 0) {
+    rows = motelList.map((motel, index) => ({
+      index: index + 1,
+      name: motel.name,
+      address: motel.address.address,
+      _id: motel._id,
+      key: motel._id,
+      file: motel.file,
+      totalRoom: motel.totalRoom,
+      depositedRoom: motel.depositedRoom,
+      availableRoom: motel.availableRoom,
+      rentedRoom: motel.rentedRoom,
+      _id: motel._id,
+    }));
+  }
   // }
 
-  console.log({rows});
+  console.log({ rows });
 
   const handleButtonClick = useCallback((row) => {
     // history.push(`/hostMotelRoom/${row._id}`);
@@ -198,8 +215,13 @@ export function ManagerEnergyBuildingsAdmin(props) {
         <meta name="description" content="Description of Profile" />
       </Helmet>
       <div className="title-abc">
-        <span>Quản lý các tòa nhà</span>
-        <span>Người quản lý: <strong>{name}</strong></span>
+        <span>
+          <FormattedMessage {...messages.Header} />
+        </span>
+        <span>
+          <FormattedMessage {...messages.HostName} />
+          <strong>{name}</strong>
+        </span>
       </div>
 
       {role.length === 2 && role.includes('master') && (
@@ -235,7 +257,7 @@ export function ManagerEnergyBuildingsAdmin(props) {
       />
       <WarningPopup
         visible={showWarningPopup}
-        content={<FormattedMessage {...messages.reallyMessage} />}
+        content={<FormattedMessage {...messages.ConfirmDeleteBuilding} />}
         callBack={() => props.deleteMotel(idMotel, id)}
         toggle={() => {
           props.changeStoreData('showWarningPopup', false);

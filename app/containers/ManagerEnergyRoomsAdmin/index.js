@@ -41,10 +41,12 @@ import { getMotelInfor } from '../ManagerEnergyRoomsHost/actions';
 import reducer from '../ManagerEnergyRoomsHost/reducer';
 import saga from '../ManagerEnergyRoomsHost/saga';
 import makeSelectMotelListRoom from '../ManagerEnergyRoomsHost/selectors';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const electricMetterStyled = room => ({
   color:
-  (room.listIdElectricMetter && room.listIdElectricMetter.length === 0) ? 'red' : 'green',
+    (room.listIdElectricMetter && room.listIdElectricMetter.length === 0) ? 'red' : 'green',
   fontWeight: (room.listIdElectricMetter && room.listIdElectricMetter.length === 0) || 'bold',
   border:
     (room.listIdElectricMetter && room.listIdElectricMetter.length === 0) || !room.listIdElectricMetter
@@ -141,7 +143,7 @@ const ManagerEnergyRoomsAdmin = props => {
   }, []);
 
   const { listFloor = [] } = props.motelListRoom;
-  console.log({listFloor})
+  console.log({ listFloor })
 
   // const { motel = {} } = props.motel;
   // console.log('motel haha', motel);
@@ -165,7 +167,9 @@ const ManagerEnergyRoomsAdmin = props => {
         <title>Energy</title>
         <meta name="description" content="Description of Energy" />
       </Helmet>
-      <div className="title-abc">Quản lý năng lượng các phòng tòa {name}</div>
+      <div className="title-abc">
+        <FormattedMessage {...messages.Header} /> {name}
+      </div>
       {currentUser.role.length === 2 && currentUser.role.includes('master') ? (
         <Grid lg={12} container spacing={2}>
           {/* {floors.map((floor, floorIndex) => */}
@@ -180,7 +184,7 @@ const ManagerEnergyRoomsAdmin = props => {
                     <Typography
                       style={{ display: 'flex', justifyContent: 'flex-end' }}
                     >
-                      <Tooltip title="Xem lịch sử số điện" placement='top' arrow>
+                      <Tooltip title={<FormattedMessage {...messages.EnergyHistory} />} placement='top' arrow>
                         <Link to={`/history-energy/${room._id}/${room.name}`}>
                           <StyleMoreButton>
                             <MoreHoriz />
@@ -194,17 +198,17 @@ const ManagerEnergyRoomsAdmin = props => {
                       component="div"
                       style={cardNameStyle}
                     >
-                      Tên phòng: {' '}{room.name}
+                      <FormattedMessage {...messages.RoomName} />{' '}{room.name}
                     </Typography>
 
                     <Typography variant="body2" color="text.secondary">
-                      Số lượng đồng hồ: &nbsp;
+                      <FormattedMessage {...messages.MeterQuantity} /> &nbsp;
                       {/* <Speed style={{ fontSize: '22px', marginRight: '5px' }} /> */}
                       <span style={electricMetterStyled(room)}>
-                      {!room.listIdElectricMetter ||
-                        (room.listIdElectricMetter && room.listIdElectricMetter.length === 0) ? (
+                        {!room.listIdElectricMetter ||
+                          (room.listIdElectricMetter && room.listIdElectricMetter.length === 0) ? (
                           <span style={{ fontWeight: 'bold' }}>
-                            Chưa có đồng hồ
+                            <FormattedMessage {...messages.NoMeter} />
                           </span>
                         ) : (
                           room.listIdElectricMetter.length
@@ -218,7 +222,9 @@ const ManagerEnergyRoomsAdmin = props => {
                         }`}
                       style={{ textDecoration: 'none' }}
                     >
-                      <StyledButton>Xem chi tiết</StyledButton>
+                      <StyledButton>
+                        <FormattedMessage {...messages.Detail} />
+                      </StyledButton>
                     </Link>
                   </CardActions>
                 </Card>

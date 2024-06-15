@@ -5,6 +5,12 @@
   display: table;
   box-sizing: border-box;
   padding: 5px 20px;
+  @media screen and (max-width: 576px) {
+    padding: 5px 50px;
+    display: flex;
+    flex-direction: column;
+    
+  }
   .logo {
     height: 35px;
     margin-bottom: 2px;
@@ -38,6 +44,20 @@
     }
   }
   .text-logo {
+    display: flex;
+    justify-content: space-between;
+    .menu-button{
+      display: none;
+      border: none;
+      border-radius: 14px;
+      margin-right: 16px;
+      background-color: transparent;
+      font-size: 22px;
+      color: #333;
+      @media screen and (max-width: 576px){
+        display: flex;
+      }
+    }
     &:hover {
       .logo-symbol {
         box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
@@ -69,11 +89,47 @@
     }
   }
   .site-nav {
+    // background-color: red;
     float: right;
     .site-main-menu {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      @media screen and (max-width: 576px){
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+      }
+      .close-menu{
+        display: none;
+        @media screen and (max-width: 576px){
+          display: flex;
+          width: 100%;
+          justify-content: flex-end;
+          align-items: flex-end;
+          .close-menu-btn{
+            border: none;
+            border-radius: 50%;
+            background-color: transparent;
+            font-size: 20px;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+          }
+        }
+      }
+      @media screen and (max-width: 576px){
+        display: flex;
+        flex-direction: column;
+      }
+      li{
+        padding-left: 15px;
+        border-radius: 12px;
+      }
       @media (max-width: 576px) {
         li:last-child {
-          margin-right: 30px !important;
+          margin-right: 0px !important;
         }
         .dropdown-menu-right {
           top: 50px;
@@ -86,18 +142,24 @@
         .money-info-box {
           display: flex;
           flex-direction: column;
-          justify-content: start;
+          justify-content: flex-end;
           gap: 10px;
-          align-items: center;
+          align-items: flex-end;
           color: black !important;
           .dropdown-menu {
-            overflow-y: auto;
-            max-height: 600px;
-
+            position: fixed;
+            z-index: 999;
+            top: 56px;
+            max-height: 630px;
+            transition: overflow-y 0.3s ease-in-out;
             &:hover {
               overflow-y: auto;
-              max-height: 600px;
-              transition: all 0.3s ease-in-out;
+            }
+            @media screen and (max-width: 576px){
+              position: relative;
+              top: 0px;
+              left: 0px;
+              overflow-y: auto;
             }
 
             margin: 8px 8px;
@@ -110,7 +172,6 @@
               62px 63px 207px rgba(0, 0, 0, 0.04);
             .dropdown-item {
               font-size: 20px;
-
               &.active{
                 background-color: rgba(25, 177, 219, 0.25);
               }
@@ -211,17 +272,10 @@
     }
     .site-nav {
       position: fixed;
-      height: 100%;
-      width: 100%;
       background-color: #fff;
-      top: 0;
       bottom: 0;
-      right: 0;
-      width: 100%;
-      max-width: 320px;
-      height: calc(100% - 52px);
-      left: auto;
-      top: 52px;
+      height: calc(100% - 80px);
+      left: auto;      
       z-index: -1;
       opacity: 1;
       overflow: auto;
@@ -247,6 +301,11 @@
       box-shadow: none;
     }
     .mobile-menu-show {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      padding: 10px 15px;
+      float: left;
       z-index: 999;
       -webkit-transition: all 0.44s ease-in-out;
       -moz-transition: all 0.44s ease-in-out;
@@ -262,6 +321,17 @@
       transition: all 0.44s ease-in-out;
     }
     .site-nav {
+      max-width: calc(100% - 50px);
+      margin: 4px 35px;
+      top: 6px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 20px 6px rgba(0, 0, 0, 0.05);
+      z-index: 999;
+      @media screen and (max-width: 576px){
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+      }
       .site-main-menu {
         li {
           display: block;
@@ -273,6 +343,9 @@
       z-index: 999;
       background-color: #fff;
       padding: 0px 0px;
+    }
+    .mobisearch{
+      max-width: 50%;
     }
     .logo-symbol {
       width: 32px;
@@ -288,6 +361,9 @@
     }
     .menu-language {
       line-height: 32px;
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 10px;
     }
   }
   .listroommenu {

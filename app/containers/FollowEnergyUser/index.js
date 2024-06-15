@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Grid, Tabs, Tab, Box } from '@material-ui/core';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+// import file font times.ttf
+import html2pdf from 'html2pdf.js';
+import htmlToImage from 'html-to-image';
 import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
 import { toast } from 'react-toastify';
-import _ from 'lodash';
 import {
   Cancel,
   GetApp,
@@ -13,28 +18,29 @@ import {
   Speed,
 } from '@material-ui/icons';
 import dayjs, { Dayjs } from 'dayjs';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import { format } from 'date-fns';
+import { Helmet } from 'react-helmet';
 import axios, { AxiosResponse } from 'axios';
 import { useParams } from 'react-router-dom';
 import localStore from 'local-storage';
-import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
-import LineChart from '../../components/LineChart';
-import LineChartHover from '../../components/LineChartHover';
-import Speedometer from '../../components/Speedmetter';
-import PaperWrapper from '../../components/PaperWrapper';
-import { urlLink } from '../../helper/route';
-import { loadRepos, reposLoaded } from '../App/actions';
+
 import './style.scss';
 
 import Calendar from 'moedim';
-import moment from 'moment-timezone';
+import moment, { isDate } from 'moment-timezone';
+import { format } from 'date-fns';
+import _, { set } from 'lodash';
+import { urlLink } from '../../helper/route';
+import PaperWrapper from '../../components/PaperWrapper';
+import Speedometer from '../../components/Speedmetter';
+import LineChart from '../../components/LineChart';
+import LineChartVoltageDashboard from '../../components/LineChartVoltageDashboard';
+import LineChartCurrentDashboard from '../../components/LineChartCurrentDashboard';
+import LineChartHover from '../../components/LineChartHover';
+import { Row, Col } from 'reactstrap';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const labelsInDay = [
-  '0h',
   '1h',
   '2h',
   '3h',
@@ -58,6 +64,7 @@ const labelsInDay = [
   '21h',
   '22h',
   '23h',
+  '24h',
 ];
 
 function getDaysInCurrentMonth() {
@@ -77,14 +84,13 @@ function getDaysInCurrentMonth() {
 
 const labelsInMon = getDaysInCurrentMonth();
 
-const FollowEnergyUser = props => {
+const FollowEnergyAdmin = () => {
   const currentUser = localStore.get('user') || {};
-  const { idDevice = '' } = currentUser;
+  const { role = [] } = currentUser;
 
   const [currentDay, setCurrentDay] = useState(new Date());
   // get Device Id
-  const { name, roomId } = useParams();
-  console.log('roomId', roomId);
+  const { id, roomId, idMetter, name } = useParams();
 
   // note
   const [info, setInfo] = useState({});
@@ -128,16 +134,23 @@ const FollowEnergyUser = props => {
 
   const handleStartDateDisplayChange = event => {
     const newDate = event.target.value;
-    console.log('newDate', newDate);
 
     setStartDateDisplay(newDate);
   };
   const handleEndDateDisplayChange = event => {
     const newDate = event.target.value;
-
     setEndDateDisplay(newDate);
   };
 
+  const formatDate = inputDate => {
+    // Nếu không có inputDate thì trả về chuỗi rỗng
+    if (!inputDate) return 'No data';
+    const date = new Date(inputDate);
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Tháng bắt đầu từ 0
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
   const handleButtonFilter = async () => {
     if (endDateDisplay < startDateDisplay) {
       setShowAlert(true);
@@ -148,6 +161,13 @@ const FollowEnergyUser = props => {
         urlLink.api.getTotalKWhPerDayForDayToDayV2 +
         roomId}/${startDateDisplay}/${endDateDisplay}`;
 
+      //get first day and last day of last month
+      const firstDayLastMonth = moment(startDateDisplay).subtract(1, 'months').startOf('month').format('YYYY-MM-DD');
+      const lastDayLastMonth = moment(startDateDisplay).subtract(1, 'months').endOf('month').format('YYYY-MM-DD');
+      const apiGetLastMonth = `${urlLink.api.serverUrl +
+        urlLink.api.getTotalKWhPerDayForDayToDayV2 + roomId}/${firstDayLastMonth}/${lastDayLastMonth}`;
+
+
       try {
         setValue(2);
         startLoading();
@@ -155,13 +175,23 @@ const FollowEnergyUser = props => {
         const detailKwhTitle = document.getElementById('detail-kwh-title');
         totalKWhtitle.setAttribute('hidden', true);
         detailKwhTitle.setAttribute('hidden', true);
-        console.log("apiGetDay hihi: ", apiGetDay);
         const response = await axios.get(apiGetDay);
-        // console.log('response', response);
+        const lastMonthResponse = await axios.get(apiGetLastMonth);
+        console.log('Check response: ', lastMonthResponse);
 
         const result = response.data.data;
-        // console.log('resultttttttttttttttttttttttttttt', result);
+        console.log('Check result: ', result.kWhData);
+        console.log('exportElectricUsage', result.kWhData);
+        setExportElectricUsage(result.kWhData || 0);
 
+        // Lấy kết quả và định dạng ngày tháng
+        const formattedExportDateTime = result.labelTime.map(formatDate);
+        console.log('formattedExportDateTime', formattedExportDateTime);
+
+
+
+        // Lưu trữ kết quả đã định dạng trong state
+        setExportDateTime(formattedExportDateTime);
         setInfo(result);
 
         setTotalkWh(parseFloat(result.totalkWhTime).toFixed(2));
@@ -170,29 +200,16 @@ const FollowEnergyUser = props => {
 
         setExportStartDay(format(new Date(startDateDisplay), 'dd/MM/yyyy'));
         setExportEndDay(format(new Date(endDateDisplay), 'dd/MM/yyyy'));
-        setExportRoomName(result.dataBefore.NameRoom);
+        setExportRoomName(name);
         // Hàm định dạng ngày tháng
-        const formatDate = inputDate => {
-          // Nếu không có inputDate thì trả về chuỗi rỗng
-          if (!inputDate) return 'No data';
-          const date = new Date(inputDate);
-          const day = date.getDate();
-          const month = date.getMonth() + 1; // Tháng bắt đầu từ 0
-          const year = date.getFullYear();
-          return `${day}/${month}/${year}`;
-        };
 
-        // Lấy kết quả và định dạng ngày tháng
-        const formattedExportDateTime = result.labelTime.map(formatDate);
 
-        // Lưu trữ kết quả đã định dạng trong state
-        setExportDateTime(formattedExportDateTime);
 
-        // Check if result.kWhData is not null
-        const exportElectricUsage = result.kWhData !== null ? result.kWhData : 0;
-        setExportElectricUsage(exportElectricUsage);
 
-        const exportWaterUsage = result.waterData !== null ? result.waterData : 0;
+        const exportElectricUsage = result.kWhData || 0;
+
+        console.log('exportElectricUsage', exportElectricUsage);
+        const exportWaterUsage = result.waterData || 0;
 
         setExportWaterUsage(exportWaterUsage);
 
@@ -217,20 +234,11 @@ const FollowEnergyUser = props => {
         }
 
         // Lưu số điện và số nước tháng này vào state
-        const { rawData } = result;
-        if (rawData) {
-          const latestTotalKwh = rawData[rawData.length - 1];
-          // console.log('latestTotalKwh', latestTotalKwh);
-          if (latestTotalKwh.Total_kWh) {
-            setExportLatestKwh(
-              latestTotalKwh.Total_kWh.toLocaleString('vi-VN', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }),
-            );
-          } else {
-            setExportLatestKwh('No data');
-          }
+        const totalkWhTime = result.totalkWhTime;
+        console.log('totalkWhTime', totalkWhTime);
+        if (totalkWhTime) {
+          setExportLatestKwh(totalkWhTime.toFixed(2));
+          console.log('totalKwhTime', totalkWhTime);
         } else {
           setExportLatestKwh('No data');
         }
@@ -249,16 +257,6 @@ const FollowEnergyUser = props => {
         }
       } catch (error) {
         console.error('Error fetching data from API:', error);
-        toast.error(
-          error.response.data.errors[0].errorMessage,
-          {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 3000,
-            hideProgressBar: false,
-            pauseOnHover: true,
-            draggable: true,
-          },
-        );
       } finally {
         stopLoading();
       }
@@ -266,206 +264,115 @@ const FollowEnergyUser = props => {
   };
 
   const handleExportPdf = async () => {
-    // Tạo đối tượng jsPDF với kích thước trang A4
-    const pdfDoc = new jsPDF({
-      orientation: 'portrait',
-      unit: 'mm',
-      format: 'a4',
-    });
-    // setfont
-    pdfDoc.setFontSize(12);
+    try {
+      console.log('exportDateTime', exportDateTime);
 
-    // Define table column headers
-    const headers = [
-      [
-        'Time',
-        'Electricity Usage (kWh)',
-        'Water Usage (cubic meters)',
-        'Total Cost (VND)',
-      ],
-    ];
+      // Create jsPDF instance
+      const pdfDoc = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4',
+      });
+      pdfDoc.setFontSize(12);
 
-    // Tạo mảng data ban đầu
-    const data = [];
+      // Define table column headers
+      const headers = [
+        ['Time', 'Electric Usage (kWh)', 'Water Usage (m3)', 'Total Cost (VND)'],
+      ];
+      console.log("Check exportElectricUsage", exportElectricUsage);
 
-    // Hàm tính toán totalPrice
-    const calculateTotalPrice = (electricUsage, waterUsage) => {
-      // console.log('electricUsagehỉhrkfhdfkdfdkhfkdh', electricUsage, 'waterUsage', waterUsage);
-      if (electricUsage === undefined) {
-        electricUsage = 0;
-      }
-      if (waterUsage === null) {
-        waterUsage = 0;
-      }
+      // Prepare data
+      const data = exportDateTime.map((dateTime, index) => {
+        const electricUsage = exportElectricUsage[index] || 0;
+        const formattedElectricUsage = parseFloat(electricUsage).toFixed(2);
 
-      const electricUnitPrice = 3900; // Giá tiền cho mỗi đơn vị electricUsage
-      const waterUnitPrice = 4400; // Giá tiền cho mỗi đơn vị waterUsage
-      const totalPrice =
-        electricUsage * electricUnitPrice + waterUsage * waterUnitPrice;
-      return totalPrice.toFixed(0);
-    };
-
-    // Thêm dữ liệu từ exportDateTime, exportElectricUsage và exportWaterUsage vào data
-    exportDateTime.forEach((dateTime, index) => {
-      const electricUsage =
-        exportElectricUsage[index] != null
-          ? exportElectricUsage[index]
-          : 0;
-      const formattedElectricUsage = parseFloat(electricUsage).toLocaleString(
-        'vi-VN',
-        {
+        const waterUsage = exportWaterUsage[index] || 0;
+        const formattedWaterUsage = parseFloat(waterUsage).toLocaleString('vi-VN', {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
-        },
-      );
-      const waterUsage =
-        exportWaterUsage && exportWaterUsage[index] !== undefined
-          ? exportWaterUsage[index]
-          : 0;
-      const formattedWaterUsage = parseFloat(waterUsage).toLocaleString(
-        'vi-VN',
-        {
+        });
+
+        const totalPrice = calculateTotalPrice(electricUsage, waterUsage);
+        const formattedTotalPrice = parseFloat(totalPrice).toLocaleString('vi-VN', {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
-        },
-      );
+        });
 
-      const totalPrice = calculateTotalPrice(electricUsage, waterUsage);
-      const formattedTotalPrice = parseFloat(totalPrice).toLocaleString(
-        'vi-VN',
-        {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        },
-      );
+        return [dateTime, formattedElectricUsage, formattedWaterUsage, formattedTotalPrice];
+      });
 
-      data.push([
-        dateTime,
-        _.isNaN(formattedElectricUsage) ? 0 : formattedElectricUsage,
-        _.isNaN(formattedWaterUsage) ? 0 : formattedWaterUsage,
-        formattedTotalPrice,
-      ]);
-    });
+      // Calculate total price
+      const totalPriceSum = exportDateTime.reduce((total, dateTime, index) => {
+        const electricUsage = exportElectricUsage[index] || 0;
+        const waterUsage = exportWaterUsage[index] || 0;
+        const totalPrice = calculateTotalPrice(electricUsage, waterUsage);
+        return total + parseFloat(totalPrice);
+      }, 0);
 
-    // Tính tổng toàn bộ tiền
-    const totalPriceSum = exportDateTime.reduce((total, dateTime, index) => {
-      const electricUsage =
-        exportElectricUsage[index] !== undefined
-          ? exportElectricUsage[index]
-          : 0;
-      // console.log('electricUsage', electricUsage);
-      const waterUsage =
-        exportWaterUsage[index] !== undefined ? exportWaterUsage[index] : 0;
-      const totalPrice = calculateTotalPrice(electricUsage, waterUsage);
-      return total + parseFloat(totalPrice);
-    }, 0);
-
-    // Định dạng số và thêm đơn vị tiền tệ
-    const totalPriceFormatted = totalPriceSum.toLocaleString('vi-VN', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
-
-    // Thêm vào mảng dữ liệu
-    data.push(['Total Amount', '', '', `${totalPriceFormatted} (VND)`]);
-
-    // Thêm tiêu đề và thông tin khác vào file PDF
-    const title = 'HOMELAND INVOICE';
-    pdfDoc.setFontSize(20); // Kích thước font cho tiêu đề
-
-    const textWidth = pdfDoc.getTextWidth(title);
-    const startX = (pdfDoc.internal.pageSize.getWidth() - textWidth) / 2; // Căn giữa theo chiều rộng
-    const electricUnitPrice = 3900;
-    const formattedElectricUnitPrice = electricUnitPrice.toLocaleString(
-      'vi-VN',
-      {
+      // Format total price
+      const totalPriceFormatted = totalPriceSum.toLocaleString('vi-VN', {
+        minimumFractionDigits: 2,
         maximumFractionDigits: 2,
-      },
-    );
-    const waterUnitPrice = 4400;
-    const formattedWaterUnitPrice = waterUnitPrice.toLocaleString('vi-VN', {
-      maximumFractionDigits: 2,
-    });
+      });
 
-    pdfDoc.text(title, startX, 20);
+      // Add total price row to data
+      data.push(['Total', '', '', `${totalPriceFormatted} (VND)`]);
 
-    pdfDoc.setFontSize(12); // Kích thước font cho thông tin
-    pdfDoc.text(`Room Name: ${exportRoomName}`, 30, 30);
+      // Add title and other information to PDF
+      const title = 'HOMELAND INVOICE';
+      pdfDoc.setFontSize(20);
+      const textWidth = pdfDoc.getTextWidth(title);
+      const startX = (pdfDoc.internal.pageSize.getWidth() - textWidth) / 2;
+      pdfDoc.text(title, startX, 20);
 
-    pdfDoc.text(`Period: From ${exportStartDay} to ${exportEndDay}`, 30, 40);
-    drawHorizontalLine(30, 44); // Vẽ đường ngang dưới thông tin
-    pdfDoc.text(`Electricity Usage Last Month: ${exportLastKwh} (kWh)`, 30, 50);
-    pdfDoc.text(
-      `Electricity Usage This Month: ${exportLatestKwh} (kWh)`,
-      30,
-      60,
-    );
-    pdfDoc.text(
-      `Water Usage Last Month: ${exportLastWater} (cubic meters)`,
-      30,
-      70,
-    );
-    pdfDoc.text(
-      `Water Usage This Month: ${exportLatestWater} (cubic meters)`,
-      30,
-      80,
-    );
+      pdfDoc.setFontSize(12);
+      pdfDoc.text(`Room Name: ${exportRoomName}`, 30, 30);
+      pdfDoc.text(`Period: From ${exportStartDay} to ${exportEndDay}`, 30, 40);
+      drawHorizontalLine(30, 44);
 
-    pdfDoc.text(`Total kWh: ${exportTotalKwh} (kWh)`, 30, 90);
-    pdfDoc.text(
-      `Electricity Unit Price: ${formattedElectricUnitPrice} (VND/kWh)`,
-      30,
-      100,
-    );
-    pdfDoc.text(
-      `Water Unit Price: ${formattedWaterUnitPrice} (VND/cubic meter)`,
-      30,
-      110,
-    );
+      // Add total kWh to PDF
+      pdfDoc.text(`Total kWh: ${info.totalkWhTime} (kWh)`, 30, 50);
 
-    pdfDoc.text(`Total Amount: ${totalPriceFormatted} (VND)`, 30, 120);
+      // Add electric unit price and total electric price to PDF
+      const electricUnitPrice = 3900;
+      const formattedElectricUnitPrice = electricUnitPrice.toLocaleString('vi-VN', { maximumFractionDigits: 2 });
+      const totalElectricPrice = info.totalkWhTime * electricUnitPrice;
+      pdfDoc.text(`Electric Unit Price: ${formattedElectricUnitPrice} (VND/kWh)`, 30, 60);
+      pdfDoc.text(`Total: ${totalElectricPrice} (VND)`, 30, 70);
 
-    // Hàm vẽ đường ngang
-    function drawHorizontalLine(startX, startY) {
-      const lineLength = 150; // Độ dài đường ngang
-      const lineHeight = 0.5; // Độ dày đường ngang
-      pdfDoc.setLineWidth(lineHeight);
-      pdfDoc.line(
-        startX,
-        startY + lineHeight,
-        startX + lineLength,
-        startY + lineHeight,
-      );
+      // Draw horizontal line function
+      function drawHorizontalLine(startX, startY) {
+        const lineLength = 150;
+        const lineHeight = 0.5;
+        pdfDoc.setLineWidth(lineHeight);
+        pdfDoc.line(startX, startY + lineHeight, startX + lineLength, startY + lineHeight);
+      }
+
+      // Add table to PDF
+      // pdfDoc.addPage();
+      pdfDoc.autoTable({
+        head: headers,
+        body: data,
+        theme: 'striped',
+        startY: 90,
+        margin: { top: 20, left: 30 },
+      });
+
+      // Save PDF
+      pdfDoc.save(`energy_report_${exportRoomName}_${exportStartDay}_${exportEndDay}.pdf`);
+    } catch (error) {
+      console.error('Error exporting PDF:', error);
+      alert('An error occurred while exporting the PDF. Please try again.');
     }
-
-    // Lấy ra element chứa biểu đồ
-    const chartContainer = document.querySelector('.bill-1-component1 canvas');
-
-    // Chuyển đổi biểu đồ thành hình ảnh sử dụng html2canvas
-    const chartImage = await html2canvas(chartContainer);
-
-    // Chèn hình ảnh biểu đồ vào file PDF
-    pdfDoc.addImage(chartImage.toDataURL('image/png'), 'PNG', 20, 150, 180, 80);
-
-    pdfDoc.addPage();
-    pdfDoc.autoTable({
-      head: headers,
-      body: data,
-      theme: 'striped',
-      startY: 20, // starting y position of the table
-      margin: { top: 20, left: 30 }, // margin-top
-    });
-
-    // Xuất file PDF
-    pdfDoc.save(
-      `energy_report_${exportRoomName}_${exportStartDay}_${exportEndDay}.pdf`,
-    );
   };
+
+
+
 
   const handleExportPreview = () => {
     // Toggle the export state
     setExportState(true);
-    // console.log('exportState', exportState);
+    console.log('exportState', exportState);
 
     // Elements to toggle visibility
     const pdfExportContainer = document.getElementById('pdf-export-container');
@@ -533,7 +440,6 @@ const FollowEnergyUser = props => {
     setValue(newValue);
   };
 
-  const [totalkWh, setTotalkWh] = useState(-1);
   const [loading, setLoading] = useState(false);
   const startLoading = () => {
     setLoading(true);
@@ -543,18 +449,18 @@ const FollowEnergyUser = props => {
     setLoading(false);
   };
 
+  const [totalkWh, setTotalkWh] = useState(-1);
+
   const [currentDayData, setCurrentDayData] = useState([]);
   const [currentKwh, setCurrentKwh] = useState([]);
   const [currentCurrent, setCurrentCurrent] = useState([]);
   const [currentVoltage, setCurrentVoltage] = useState([]);
-
   const getCurrentDayData = async () => {
     startLoading();
 
     const apiUrlDay =
       urlLink.api.serverUrl + urlLink.api.getTotalKWhPerHourInOneDayV2
       + roomId + "/" + moment().format("YYYY-MM-DD");
-    console.log({ apiUrlDay });
 
     const apiUrlMon = urlLink.api.serverUrl + urlLink.api.getTotalKWhPerDayInOneMonthV2
       + roomId + "/" + moment().format("YYYY-MM");
@@ -566,13 +472,15 @@ const FollowEnergyUser = props => {
         const formattedTotalkWh = parseFloat(
           responseDay.data.data.totalkWhTime,
         ).toFixed(2);
+        console.log('formattedTotalkWh', formattedTotalkWh.voltageData);
+
         setTotalkWh(formattedTotalkWh);
-        setCurrentVoltage(responseDay.data.data.voltageData);
-        setCurrentCurrent(responseDay.data.data.currentData);
 
         setLabelLineChart(labelsInDay);
 
         setTitleKwhChart(`Total kWh today`);
+        setCurrentVoltage(responseDay.data.data.voltageData);
+        setCurrentCurrent(responseDay.data.data.currentData);
       } else if (value === 1) {
         const responseMon = await axios.get(apiUrlMon);
         const formattedTotalkWh = parseFloat(
@@ -587,6 +495,9 @@ const FollowEnergyUser = props => {
 
         const responseDay = await axios.get(apiUrlDay);
         setCurrentVoltage(responseDay.data.data.voltageData);
+        console.log('responseDay.data.data.voltageData', responseDay.data.data.voltageData);
+        console.log('responseDay.data.data.currentData', responseDay.data.data.currentData);
+
         setCurrentCurrent(responseDay.data.data.currentData);
       } else if (value === 2) {
         // Đang thực hiện filter từ ngày tới ngày
@@ -610,7 +521,6 @@ const FollowEnergyUser = props => {
         setCurrentVoltage(responseDay.data.data.voltageData);
         setCurrentCurrent(responseDay.data.data.currentData);
       }
-      // setCurrentDayData(responseDay.data.data);
     } catch (error) {
       setCurrentKwh([]);
       setCurrentVoltage([]);
@@ -632,26 +542,19 @@ const FollowEnergyUser = props => {
     }
   };
 
-
   useEffect(() => {
     getCurrentDayData();
 
     const intervalId = setInterval(() => {
       getCurrentDayData();
-    }, 1000 * 15);
+    }, 1000 * 60 * 60);
 
     return () => clearInterval(intervalId);
   }, [value]);
 
   // Hàm tính toán totalPrice
   const calculateTotalPrice = (electricUsage, waterUsage) => {
-    if (electricUsage === null) {
-      electricUsage = 0;
-    }
-    if (waterUsage === null) {
-      waterUsage = 0;
-    }
-    console.log('electricUsage', electricUsage, 'waterUsage', waterUsage);
+    // console.log('electricUsage', electricUsage, 'waterUsage', waterUsage);
     const electricUnitPrice = 3900; // Giá tiền cho mỗi đơn vị electricUsage
     const waterUnitPrice = 4400; // Giá tiền cho mỗi đơn vị waterUsage
     const totalPrice =
@@ -660,7 +563,10 @@ const FollowEnergyUser = props => {
   };
 
   return (
-    <>
+    // {role.length === 2 && role[0] === 'host' ? () : (
+    //   <h1>Không có quyền truy cập</h1>
+    // )}
+    <div>
       <Helmet>
         <title>Energy</title>
         <meta name="description" content="Description of Energy" />
@@ -669,13 +575,12 @@ const FollowEnergyUser = props => {
 
       {showAlert && (
         <Alert severity="error">
-          Vui lòng nhập ngày sau lớn hơn ngày trước!
+          Vui lòng nhập ngày kết thúc lớn hơn ngày bắt đầu!
         </Alert>
       )}
       <br />
 
       {loading && <div className="loading-overlay" />}
-
       <div className="manage-container">
         <input
           type="date"
@@ -730,7 +635,7 @@ const FollowEnergyUser = props => {
         </Button>
       </div>
 
-      <div style={{ marginLeft: '150px' }}>
+      <div id="filter-time" style={{ marginLeft: '150px' }}>
         <Tabs
           value={value}
           onChange={handleChangeTime}
@@ -744,37 +649,61 @@ const FollowEnergyUser = props => {
           <Tab label="1 Tháng" />
         </Tabs>
       </div>
-      <div id="chart-container">
-        <Grid container justify="center">
-          {/* <Grid
-            item
-            xs={12}
-            sm={7}
-            md={5}
-            style={{
-              height: '300px',
-              margin: '8px',
-              borderRadius: '6px',
-              boxShadow: '1px 1px 16px 2px rgba(0, 0, 0, 0.1)',
-            }}
-          >
-            <LineChart
+
+      {/* CHART */}
+      <div id="chart-container" >
+        <Row className='current-voltage-dashboard'>
+          <Col xs={12} sm={10} style={{
+            height: '400px',
+            padding: '12px',
+            borderRadius: '6px',
+            boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
+          }}>
+            <LineChartHover
               textY="(kWh)"
               nameChart={`${titleKwhChart}: ${totalkWh}`}
               dataEnergy={currentKwh}
               labelsEnergy={labelLineChart}
+              roomId={roomId}
             />
-          </Grid> */}
+          </Col>
+          <Col xs={12} sm={5} md={5} style={{
+            height: '400px',
+            padding: '12px',
+            borderRadius: '6px',
+            boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
+          }}>
+            <LineChartVoltageDashboard
+              textY="(V)"
+              nameChart="Voltage"
+              dataEnergy={currentVoltage}
+              labelsEnergy={labelsInDay}
+            />
+          </Col>
+          <Col xs={12} sm={5} md={5} style={{
+            height: '400px',
+            padding: '12px',
+            borderRadius: '6px',
+            boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
+          }}>
+            <LineChartCurrentDashboard
+              textY="(A)"
+              nameChart="Current"
+              dataEnergy={currentCurrent}
+              labelsEnergy={labelsInDay}
+            />
+          </Col>
+        </Row>
+      </div>
 
-          <Grid
-            item
+      <div hidden id="pdf-export-container" >
+        <Row className="total-info-container">
+          <Col
             xs={12}
-            sm={7}
-            md={7}
+            sm={6}
             style={{
-              height: '350px',
+              height: '400px',
               margin: '8px',
-              padding: '12px',
               borderRadius: '6px',
               boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
             }}
@@ -786,184 +715,81 @@ const FollowEnergyUser = props => {
               labelsEnergy={labelLineChart}
               roomId={roomId}
             />
-          </Grid>
-
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={4}
-            style={{
-              height: '350px',
-              margin: '8px',
-              padding: '12px',
-              borderRadius: '6px',
-              boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
-            }}
-          >
-            <LineChart
-              textY="(V)"
-              nameChart="Voltage"
-              dataEnergy={currentVoltage}
-              labelsEnergy={labelsInDay}
-            />
-          </Grid>
-
-          <Grid
-            item
-            xs={12}
-            sm={7}
-            md={7}
-            style={{
-              height: '350px',
-              margin: '8px',
-              padding: '12px',
-              borderRadius: '6px',
-              boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
-            }}
-          >
-            <LineChart
-              textY="(A)"
-              nameChart="Current"
-              dataEnergy={currentCurrent}
-              labelsEnergy={labelsInDay}
-            />
-          </Grid>
-
-          <Grid
-            item
-            xs={12}
-            sm={4}
-            md={4}
-            style={{
-              height: '350px',
-              margin: '8px',
-              padding: '12px',
-              borderRadius: '6px',
-              boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
-              justifyContent: 'center',
-              alignItems: 'center',
-              textAlign: 'center',
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column',
-            }}
-          >
-            <Calendar
-              value={currentDay}
-              onChange={d => setValue(d)}
-              style={{ width: '300px', height: '200px' }}
-            />
-          </Grid>
-        </Grid>
-      </div>
-
-      <div hidden id="pdf-export-container" className="total-info-container">
-        <div className="bill-1">
-          <div className="bill-1-component1">
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={12}
-              style={{
-                height: '350px',
-                margin: '8px',
-                padding: '12px',
-                borderRadius: '6px',
-                boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
-              }}
-            >
-              <LineChart
-                textY="(kWh)"
-                nameChart={`${titleKwhChart}`}
-                dataEnergy={currentKwh}
-                labelsEnergy={labelLineChart}
-              />
-            </Grid>
-          </div>
-
-          <div className="bill-1-component2">
-            <Grid
-              className="total-info-content"
-              item
-              xs={12}
-              sm={4}
-              md={12}
-              style={{
-                height: '350px',
-                margin: '8px',
-                padding: '12px',
-                borderRadius: '6px',
-                boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
-              }}
-            >
-              <span className="title" id="total-kwh-title">
-                Tổng số điện
-              </span>
-              {info && info.labelTime && info.kWhData && (
-                <div className="detail-container">
-                  <span className="title">{`Tổng số điện từ ${formattedStartDate} đến ${formattedEndDate}`}</span>
-                  <span className="content">
-                    <Speed className="icon" />
-                    Tổng kWh:{' '}
-                    {info.kWhData && info.kWhData.length > 0
-                      ? info.kWhData
-                        .filter(value => value !== null)
-                        .reduce((tổng, giáTrị) => tổng + parseFloat(giáTrị), 0)
-                        .toFixed(2)
-                      : '0.00'}{' '}
-                    (kWh)
-                  </span>
-
-                  <span className="content">
-                    {/* calculate total kWh */}
-                    <br />
-                    <Speed className="icon" />
-                    Total water:{' '}
-                    {info.waterData
-                      ? info.waterData
-                        .reduce(
-                          (total, value) => total + parseFloat(value),
-                          0,
-                        )
-                        .toFixed(2)(m3)
-                      : 'Không có dữ liệu'}
-                  </span>
-                  <span className="content">
-                    <AttachMoney className="icon" />
-                    Total Cost:{' '}
-                    {info.kWhData && info.kWhData.length > 0
-                      ? (
-                        info.kWhData
-                          .filter(value => value !== null)
-                          .reduce((total, value) => total + parseFloat(value), 0) * 3900
-                      ).toLocaleString('vi-VN', {
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 0,
-                      })
-                      : '0'}{' '}
-                    (VND)
-                  </span>
-
-                </div>
-              )}
-            </Grid>
-          </div>
-        </div>
-
-        <div className="bill-2">
-          <Grid
+          </Col>
+          <Col
             className="total-info-content"
             item
             xs={12}
             sm={4}
-            md={12}
             style={{
               height: '400px',
               margin: '8px',
               borderRadius: '6px',
-              boxShadow: '1px 1px 16px 2px rgba(0, 0, 0, 0.1)',
+              boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
+            }}
+          >
+            <span className="title" id="total-kwh-title">
+              Tổng số điện
+            </span>
+            {info && info.labelTime && info.kWhData && (
+              <div className="detail-container">
+                <span className="title">{`Tổng số điện từ ${formattedStartDate} đến ${formattedEndDate}`}</span>
+                <span className="content">
+                  <Speed className="icon" />
+                  Tổng kWh:{' '}
+                  {info.kWhData && info.kWhData.length > 0
+                    ? info.kWhData
+                      .filter(value => value !== null)
+                      .reduce((tổng, giáTrị) => tổng + parseFloat(giáTrị), 0)
+                      .toFixed(2)
+                    : '0.00'}{' '}
+                  (kWh)
+                </span>
+
+                <span className="content">
+                  {/* calculate total kWh */}
+                  <br />
+                  <Speed className="icon" />
+                  Total water:{' '}
+                  {info.waterData
+                    ? info.waterData
+                      .reduce(
+                        (total, value) => total + parseFloat(value),
+                        0,
+                      )
+                      .toFixed(2)(m3)
+                    : 'Không có dữ liệu'}
+                </span>
+                <span className="content">
+                  <AttachMoney className="icon" />
+                  Total Cost:{' '}
+                  {info.kWhData && info.kWhData.length > 0
+                    ? (
+                      info.kWhData
+                        .filter(value => value !== null)
+                        .reduce((total, value) => total + parseFloat(value), 0) * 3900
+                    ).toLocaleString('vi-VN', {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                    })
+                    : '0'}{' '}
+                  (VND)
+                </span>
+              </div>
+            )}
+          </Col>
+        </Row>
+        <Row className="total-info-container">
+          <Col
+            className="total-info-content"
+            item
+            xs={12}
+            md={10}
+            style={{
+              height: '400px',
+              margin: '8px',
+              borderRadius: '6px',
+              boxShadow: '2px 2px 20px 6px rgba(0, 0, 0, 0.05)',
             }}
           >
             <span id="detail-kwh-title">Chi tiết số điện sử dụng</span>
@@ -1037,14 +863,10 @@ const FollowEnergyUser = props => {
                 </tbody>
               </table>
             )}
-          </Grid>
-        </div>
+          </Col>
+        </Row>
       </div>
-    </>
+    </div>
   );
 };
-
-FollowEnergyUser.propTypes = {
-  currentUser: PropTypes.object,
-};
-export default FollowEnergyUser;
+export default FollowEnergyAdmin;

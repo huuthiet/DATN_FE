@@ -152,9 +152,9 @@ export function motelDetailV2(props) {
           </div>
         </div>
       </div>
-      { idMotel && (
+      {idMotel && (
         <FloorDetailV2 {...props} idMotel={idMotel} owner={motel.owner} status={status} />
-        )
+      )
       }
     </div>
   );

@@ -51,8 +51,6 @@ import axios from 'axios';
 import { set } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-
 
 
 
@@ -63,12 +61,17 @@ export function HostMotelRoomDetailUser(props) {
   console.log('check props: ', props);
   const { hostRevenue } = props.hostMotelRoomDetailUser;
   console.log('hostRevenueData', hostRevenue);
+  //get user data
   let totalRevenue = 0;
+  let totalRoomPrice = 0;
   let totalElectricPrice = 0;
+  let remainingRevenue = 0;
 
   if (hostRevenue) {
-    totalRevenue = hostRevenue.totalRevenue;
+    totalRevenue = hostRevenue.total; //Tổng tất cả tiền
     totalElectricPrice = hostRevenue.totalElectricPrice;
+    totalRoomPrice = hostRevenue.totalRevenue; //Tiền phòng (tương đương doanh thu)
+    remainingRevenue = hostRevenue.remainingRevenue; //Tiền còn lại sau khi admin phê duyệt request rút tiền
   }
 
   // Define the formatter
@@ -85,8 +88,6 @@ export function HostMotelRoomDetailUser(props) {
     };
     props.getListRoom(data);
   }, []);
-  const history = useHistory();
-
   const roomEntries = Object.entries(listRoom);
   console.log('roomEntries', roomEntries);
 
@@ -128,9 +129,6 @@ export function HostMotelRoomDetailUser(props) {
     };
 
     props.getHostRevenue(data);
-
-    // Reset the selections
-    setSelectedBuilding('Chọn tòa nhà');
   };
 
   const getCurrentMonthData = (monthlyRevenue) => {
@@ -150,51 +148,71 @@ export function HostMotelRoomDetailUser(props) {
   const currentMonthElectricNumber = currentMonthData.electricNumber || 0;
   const currentMonthElectricPrice = currentMonthData.electricPrice || 0;
 
-  console.log('currentMonthRevenue', currentMonthRevenue);
-  console.log('currentMonthElectricNumber', currentMonthElectricNumber);
-  console.log('currentMonthElectricPrice', currentMonthElectricPrice);
-
-
-
-
-
-
   const exportFile = async () => {
-    const data = hostRevenue || []; // Sử dụng dữ liệu từ hostRevenueData
+    const data = hostRevenue.monthlyRevenue || [];
+
+    const formatCurrency = (value) => {
+      return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    };
+
     const arrData = data.map((obj, index) => ({
       'STT': index + 1,
       'Thời gian': obj.time,
-      'Doanh thu': obj.revenue,
+      'Doanh thu': formatCurrency(obj.revenue),
     }));
 
-    // Định dạng cho tiêu đề
     const headerStyle = {
-      font: { bold: true },
+      font: { bold: true, color: { rgb: '000000' } },
       alignment: { horizontal: 'center' },
-      fill: { fgColor: { rgb: 'FFC000' } } // Màu cam
+      fill: { fgColor: { rgb: 'FFC000' } },
     };
 
-    // Định dạng cho dữ liệu
     const dataStyle = {
-      font: { bold: false },
+      font: { bold: false, color: { rgb: '000000' } },
       alignment: { horizontal: 'left' },
-      fill: { fgColor: { rgb: 'FFFFFF' } } // Màu trắng
+      fill: { fgColor: { rgb: 'FFFFFF' } },
+    };
+
+    const titleStyle = {
+      font: { bold: true, sz: 16, color: { rgb: '000000' } },
+      alignment: { horizontal: 'center' },
+    };
+
+    const timeStyle = {
+      font: { italic: true, color: { rgb: '000000' } },
+      alignment: { horizontal: 'right' },
     };
 
     const wscols = [
-      { wch: 5 }, // Độ rộng của cột STT
-      { wch: 15 }, // Độ rộng của cột Thời gian
-      { wch: 20 }, // Độ rộng của cột Doanh thu
+      { wch: 15 }, // Độ rộng của cột STT
+      { wch: 20 }, // Độ rộng của cột Thời gian
+      { wch: 30 }, // Độ rộng của cột Doanh thu
     ];
 
-    const worksheet = XLSX.utils.json_to_sheet(arrData);
-    worksheet['!cols'] = wscols;
+    const worksheet = XLSX.utils.json_to_sheet([]);
+
+    // Thêm tiêu đề và hợp nhất các ô
+    XLSX.utils.sheet_add_aoa(worksheet, [['Báo cáo Doanh Thu']], { origin: 'A1' });
+    worksheet['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 2 } }];
+    worksheet['A1'].s = titleStyle;
+
+    // Thêm thời gian xuất file
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}`;
+    XLSX.utils.sheet_add_aoa(worksheet, [[`Thời gian xuất file: ${formattedDate}`]], { origin: 'A2' });
+    worksheet['!merges'].push({ s: { r: 1, c: 0 }, e: { r: 1, c: 2 } });
+    worksheet['A2'].s = timeStyle;
 
     // Thêm hàng tiêu đề
-    XLSX.utils.sheet_add_aoa(worksheet, [['Số thứ tự', 'Thời gian', 'Doanh thu']], { origin: 'A1' });
+    XLSX.utils.sheet_add_aoa(worksheet, [['Số thứ tự', 'Thời gian', 'Doanh thu']], { origin: 'A4' });
+
+    // Thêm dữ liệu
+    XLSX.utils.sheet_add_json(worksheet, arrData, { skipHeader: true, origin: 'A5' });
+
+    worksheet['!cols'] = wscols;
 
     // Định dạng tiêu đề
-    const headerRange = XLSX.utils.decode_range(worksheet['!ref']);
+    const headerRange = XLSX.utils.decode_range('A4:C4');
     for (let c = headerRange.s.c; c <= headerRange.e.c; c++) {
       const cell = worksheet[XLSX.utils.encode_cell({ r: headerRange.s.r, c })];
       cell.s = headerStyle;
@@ -202,7 +220,7 @@ export function HostMotelRoomDetailUser(props) {
 
     // Định dạng dữ liệu
     const dataRange = XLSX.utils.decode_range(worksheet['!ref']);
-    for (let R = 1; R <= dataRange.e.r; ++R) {
+    for (let R = 4; R <= dataRange.e.r; ++R) {
       for (let C = dataRange.s.c; C <= dataRange.e.c; ++C) {
         const cell = worksheet[XLSX.utils.encode_cell({ r: R, c: C })];
         cell.s = dataStyle;
@@ -212,37 +230,212 @@ export function HostMotelRoomDetailUser(props) {
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
 
-    // Thêm biểu đồ
-    const chart = {
-      type: 'bar',
-      data: arrData.map(obj => obj['Doanh thu']),
-      labels: arrData.map(obj => obj['Thời gian']),
-    };
-    XLSX.utils.book_append_sheet(workbook, chart, 'Chart1');
-
     if (arrData.length > 0) {
       XLSX.writeFile(workbook, 'Report.xlsx');
     }
   };
 
-  const handleProcessWithdrawRequest = () => {
-    history.push(`/admin/withdrawRequest/${listRoom.owner}`);
-  }
+  // const handleWithdrawRequest = () => {
+  //   if (selectedBuilding === 'Chọn tòa nhà') {
+  //     toast.error('Vui lòng chọn tòa nhà');
+  //     return;
+  //   }
+  //   setModal(true);
+  //   const userBankRequest = urlLink.api.serverUrl + urlLink.api.getBankUser;
+  //   console.log('userBankRequest', userBankRequest);
+  //   const data = { id };
+
+  //   axios.get(userBankRequest, { params: data })
+  //     .then((response) => {
+  //       console.log('response', response.data.data.data);
+  //       const fetchedData = response.data.data.data;
+  //       if (Array.isArray(fetchedData)) {
+  //         setBankData(fetchedData); // Ensure data is an array
+  //         if (fetchedData.length > 0) {
+  //           setSelectedBank(fetchedData[0]._id); // Set the first bank as the default selected
+  //         }
+  //       } else {
+  //         setBankData([]); // Set as empty array if data is not an array
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log('error', error);
+  //       setBankData([]); // Set as empty array on error
+  //     });
+  // };
+
+  const handleBankChange = (event) => {
+    setSelectedBank(event.target.value);
+  };
+
+  const getSelectedBankAccountNumber = () => {
+    if (Array.isArray(bankData)) {
+      const selectedBankData = bankData.find(bank => bank._id === selectedBank);
+      return selectedBankData ? selectedBankData.stk : '';
+    }
+    return '';
+  };
+
+
+
+  // const handleSendWithdrawRequest = async () => {
+  //   const bankId = selectedBank;
+  //   const accountNumber = getSelectedBankAccountNumber();
+  //   const withdrawAmount = document.getElementById('withdrawAmount').value;
+  //   const withdrawReason = document.getElementById('withdrawReason').value;
+
+  //   //create getRandomHex function
+  //   function getRandomHex() {
+  //     // Generate a random 32-bit integer
+  //     const randomInt = Math.floor(Math.random() * 0xFFFFFFFF);
+  //     // Convert the integer to a hexadecimal string and ensure it is 8 characters long
+  //     const hexString = randomInt.toString(16).toUpperCase().padStart(8, '0');
+  //     return hexString;
+  //   }
+  //   const keyPayment = getRandomHex();
+  //   console.log('keyPayment', keyPayment);
+
+  //   if (!withdrawAmount) {
+  //     toast.error('Vui lòng nhập số tiền cần rút');
+  //     return;
+  //   }
+
+  //   if (!withdrawReason) {
+  //     toast.error('Vui lòng nhập lý do rút tiền');
+  //     return;
+  //   }
+  //   //create current date format "yyyy-mm"
+  //   const date = new Date();
+  //   const month = date.getMonth() + 1;
+  //   const year = date.getFullYear();
+  //   const requestDate = `${year}-${month}`;
+
+  //   const data = {
+  //     id,
+  //     keyPayment,
+  //     requestDate,
+  //     //motel name
+  //     motelName: selectedBuilding,
+  //     bankId,
+  //     accountNumber,
+  //     withdrawAmount,
+  //     withdrawReason,
+  //     type: 'cash',
+  //   };
+  //   console.log('data', data);
+  //   setModal(false);
+  //   //reset form
+  //   document.getElementById('withdrawAmount').value = '';
+  //   document.getElementById('withdrawReason').value = '';
+  //   try {
+  //     // Gọi hàm postWithdraw và đợi kết quả
+  //     await props.postWithdraw(data);
+
+  //     // Nếu thành công, hiển thị thông báo thành công
+  //     toast.success("Yêu cầu rút tiền đã được gửi thành công!");
+  //   } catch (error) {
+  //     // Nếu có lỗi, hiển thị thông báo lỗi
+  //     toast.error("Đã xảy ra lỗi khi gửi yêu cầu rút tiền!");
+  //   }
+
+
+  // }
 
   return (
     <div className="login-page-wrapper">
       <Helmet>
-        <title>Quản lý doanh thu</title>
+        <title>RevenueManagement</title>
         <meta
           name="description"
           content="Description of HostRevenue"
         />
       </Helmet>
-      <div className="title">Quản lý doanh thu</div>
+      <div className="title">
+        <FormattedMessage {...messages.Header} />
+      </div>
       <div className="job-list-wrapper container-fluid">
         <Row className="action-container">
-          <Row>
-          </Row>
+          {/* <ModalComponent
+            modal={modal}
+            toggle={() => setModal(!modal)}
+            className="modal-lg"
+            modalTitle="Xác nhận yêu cầu rút tiền"
+            footer={
+              <>
+                <Button color="secondary" onClick={() => setModal(!modal)}>
+                  <FormattedMessage {...messages.Cancel} />
+                </Button>
+                <Button color="primary" onClick={handleSendWithdrawRequest}>
+                  <FormattedMessage {...messages.Send} />
+                </Button>
+              </>
+            }
+          >
+            <Row>
+              <Col md={12}>
+                <Form>
+                  <FormGroup>
+                    <Label for="bankName">
+                      <FormattedMessage {...messages.Bank} />
+                    </Label>
+                    <Input
+                      type="select"
+                      name="bankName"
+                      id="bankName"
+                      value={selectedBank}
+                      onChange={handleBankChange}
+                    >
+                      {bankData.length > 0 ? (
+                        bankData.map(bank => (
+                          <option key={bank._id} value={bank._id}>
+                            {bank.nameTkLable}
+                          </option>
+                        ))
+                      ) : (
+                        <option>
+                          <FormattedMessage {...messages.NoData} />
+                        </option>
+                      )}
+                    </Input>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="accountNumber">
+                      <FormattedMessage {...messages.BankAccount} />
+                    </Label>
+                    <Input
+                      type="text"
+                      name="accountNumber"
+                      id="accountNumber"
+                      value={getSelectedBankAccountNumber()}
+                      readOnly
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="withdrawAmount">
+                      <FormattedMessage {...messages.AmountToWithdraw} />
+                    </Label>
+                    <Input
+                      type="text"
+                      name="withdrawAmount"
+                      id="withdrawAmount"
+                      placeholder="Nhập số tiền cần rút"
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <Label for="withdrawReason">
+                      <FormattedMessage {...messages.Note} />
+                    </Label>
+                    <Input
+                      type="textarea"
+                      name="withdrawReason"
+                      id="withdrawReason"
+                    />
+                  </FormGroup>
+                </Form>
+              </Col>
+            </Row>
+          </ModalComponent> */}
           <Col xs={12} sm={2}>
             <Dropdown isOpen={yearDropdownOpen} toggle={() => setYearDropdownOpen(!yearDropdownOpen)} className="mt-4 room-dropdown-container">
               <DropdownToggle caret color="none" className="room-dropdown custom-dropdown-toggle">
@@ -283,7 +476,9 @@ export function HostMotelRoomDetailUser(props) {
                     </DropdownItem>
                   ))
                 ) : (
-                  <DropdownItem>Không có dữ liệu</DropdownItem>
+                  <DropdownItem>
+                    <FormattedMessage {...messages.NoData} />
+                  </DropdownItem>
                 )}
               </DropdownMenu>
             </Dropdown>
@@ -309,26 +504,43 @@ export function HostMotelRoomDetailUser(props) {
                 </Button>
               </Col>
               <Col md={5}>
-                <Button
+                {/* <Button
+                  onClick={handleWithdrawRequest}
                   color="primary"
                   className="btn-block mt-4"
-                  onClick={handleProcessWithdrawRequest}
                 >
-                  {<FormattedMessage {...messages.ProcessWithdrawRequest} />}                    </Button>
+                  {<FormattedMessage {...messages.Withdraw} />}
+                </Button> */}
               </Col>
             </Row>
           </Col>
         </Row>
         <Row className="revenueData-container">
+          <Col xs={12} sm={3} className="totalRevenue-container">
+            <div className="totalRevenue">
+              <div className='icon-container'>
+                <MonetizationOn />
+              </div>
+              <div className='revenueText-container'>
+                <span className="totalRevenue-text">
+                  <FormattedMessage {...messages.Total} />
+                </span>
+                <span className="totalRevenue-number">
+                  {totalRevenue ? vndFormatter.format(totalRevenue) : 'Không có dữ liệu'}</span>
+              </div>
+            </div>
+          </Col>
           <Col xs={12} sm={4} className="totalRevenue-container">
             <div className="totalRevenue">
               <div className='icon-container'>
                 <MonetizationOn />
               </div>
               <div className='revenueText-container'>
-                <span className="totalRevenue-text">Tổng doanh thu</span>
+                <span className="totalRevenue-text">
+                  <FormattedMessage {...messages.RemainingRevenue} />
+                </span>
                 <span className="totalRevenue-number">
-                  {totalRevenue ? vndFormatter.format(totalRevenue) : 'Không có dữ liệu'}</span>
+                  {remainingRevenue ? vndFormatter.format(remainingRevenue) : 'Không có dữ liệu'}</span>
               </div>
 
             </div>
@@ -339,27 +551,29 @@ export function HostMotelRoomDetailUser(props) {
                 <Payment />
               </div>
               <div className='revenueText-container'>
-                <span className="totalRevenue-text">Doanh thu tháng này</span>
+                <span className="totalRevenue-text">
+                  <FormattedMessage {...messages.CurrentMonth} />
+                </span>
                 <span className="totalRevenue-number">
                   {currentMonthRevenue ? vndFormatter.format(currentMonthRevenue) : 'Không có dữ liệu'}</span>
               </div>
-
             </div>
           </Col>
-          <Col xs={12} sm={3} className="totalRevenue-container">
+          {/* <Col xs={12} sm={3} className="totalRevenue-container">
             <div className="totalRevenue">
               <div className='icon-container'>
                 <Power />
               </div>
               <div className='revenueText-container'>
-                <span className="totalRevenue-text">Tiền điện tháng này</span>
+                <span className="totalRevenue-text">
+                  <FormattedMessage {...messages.Electric} />
+                </span>
                 <span className="totalRevenue-number">
                   {currentMonthElectricPrice ? vndFormatter.format(currentMonthElectricPrice) : 'Không có dữ liệu'}
                 </span>
               </div>
-
             </div>
-          </Col>
+          </Col> */}
         </Row>
         <Row className="dashboard-container">
           <Col xs={12} sm={7} className="compare-container">

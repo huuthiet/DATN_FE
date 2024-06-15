@@ -2,7 +2,7 @@ import React, { useState, Fragment, useRef, useEffect } from 'react';
 import ClassNames from 'classnames';
 import { NavLink, useHistory, useLocation } from 'react-router-dom';
 
-import _ from 'lodash';
+import _, { set } from 'lodash';
 import PropTypes from 'prop-types';
 import './style.scss';
 import { Avatar } from '@material-ui/core';
@@ -15,6 +15,7 @@ import {
   Col,
   Row,
   Container,
+  Button,
 } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import InputBase from '@material-ui/core/InputBase';
@@ -41,6 +42,7 @@ import {
   AccountBalanceOutlined,
   PaymentOutlined,
   ExitToAppRounded,
+  Close,
 } from '@material-ui/icons';
 import { geocodeByAddress, getLatLng } from 'react-google-autocomplete';
 
@@ -159,15 +161,15 @@ const Navbar = props => {
   }, []);
   //-----------------------
 
-  const handleSearchLocationChange = async(e) => {
+  const handleSearchLocationChange = async (e) => {
     console.log("hihsdaádsid");
-    console.log({e})
+    console.log({ e })
   }
 
   const [searchQuery, setSearchQuery] = useState('');
   const [user, setUser] = useState({ lat: 10.856866, lng: 106.763324 });
 
-  const [ namePositon, setNamePosition ] = useState('');
+  const [namePositon, setNamePosition] = useState('');
 
   // const handleInputChangeLat = (e) => {
   //   const lat = parseInt(e.target.value);
@@ -253,7 +255,7 @@ const Navbar = props => {
     const { value } = e.target;
     setNamePosition(value);
     // onInputChange(value);
-    console.log({value});
+    console.log({ value });
     if (typingTimeoutRef.current) {
       clearTimeout(typingTimeoutRef.current);
     }
@@ -264,58 +266,74 @@ const Navbar = props => {
     }, 1000);
   };
 
+  const handleClick = () => {
+    setToggle(!toggle);
+    console.log({ toggle });
+  };
+
+  const handleClose = () => {
+    setToggle(false);
+  }
+
   return (
     <div className="navbar-wrapper">
       <div className="header-content clearfix">
-        <div className="text-logo">
-          <NavLink exact to="/">
-            <div className="logo-text">
-              <img className="logo zoom-hover" src="/favicon.png" alt="logo" />{' '}
-              <FormattedMessage {...messages.home} />
-            </div>
-          </NavLink>
-        </div>
-        <ul className="menu-language">
-          <li
-            className="language-vi"
-            onClick={() => {
-              props.changeLocale('vi');
-            }}
-          >
-            <img src={img1} alt="language" />
-          </li>
-          <li
-            className="language-en"
-            onClick={() => {
-              props.changeLocale('en');
-            }}
-          >
-            <img src={img2} alt="language" />
-          </li>
-          <li className="menulistSearchAll">
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
+
+        <Row>
+          <Col xs={12} sm={2} md={3} lg={2} className="text-logo">
+            <NavLink exact to="/">
+              <div className="logo-text">
+                <img className="logo zoom-hover" src="/favicon.png" alt="logo" />{' '}
+                <FormattedMessage {...messages.home} />
               </div>
-              {
-                <FormattedMessage {...messages.search_location}>
-                  {msg => (
-                    <InputBase
-                      autoComplete={{}}
-                      placeholder={msg}
-                      classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput,
-                      }}
-                      inputProps={{ 'aria-label': 'search' }}
-                      onChange={e => {
-                        handleSearchTermChange(e);
-                      }}
-                      className="HanbleSearch"
+            </NavLink>
+            <button
+              className="menu-button"
+              onClick={handleClick}>
+              <MenuButton />
+            </button>
+          </Col>
+          <Col xs={12} sm={10} md={9} lg={5} className="menu-language">
+            <li
+              className="language-vi"
+              onClick={() => {
+                props.changeLocale('vi');
+              }}
+            >
+              <img src={img1} alt="language" />
+            </li>
+            <li
+              className="language-en"
+              onClick={() => {
+                props.changeLocale('en');
+              }}
+            >
+              <img src={img2} alt="language" />
+            </li>
+            <li className="menulistSearchAll">
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                {
+                  <FormattedMessage {...messages.search_location}>
+                    {msg => (
+                      <InputBase
+                        autoComplete={{}}
+                        placeholder={msg}
+                        classes={{
+                          root: classes.inputRoot,
+                          input: classes.inputInput,
+                        }}
+                        inputProps={{ 'aria-label': 'search' }}
+                        onChange={e => {
+                          handleSearchTermChange(e);
+                        }}
+                        className="HanbleSearch"
                       // onFocus={onSearch}
-                    />
-                  )}
-                  {/* {msg => (
+                      />
+                    )}
+                    {/* {msg => (
                     <InputLocation
                       label={msg}
                       placeholder={msg}
@@ -332,597 +350,34 @@ const Navbar = props => {
                       }}
                     />
                   )} */}
-                </FormattedMessage>
-              }
-              {menulistSearch}
-            </div>
-          </li>
-        </ul>
-
-        <div
-          className={ClassNames(
-            'site-nav',
-            { 'mobile-menu-hide': !toggle },
-            { 'mobile-menu-show': toggle },
-          )}
-        >
-          {toggle && <div>hello</div>}
-          <ul className="site-main-menu">
-            {/* note */}
-            {/* {!_.isEmpty(currentUser) && (
-              <li>
-                <strong>
-                  <FormattedMessage {...messages.wallet} />:{' '}
-                </strong>
-                {profile.wallet || profile.wallet === 0
-                  ? `${Money(Number(profile.wallet))} VND`
-                  : 'Chưa có dữ liệu'}
-              </li>
-            )} */}
-
-            {/* {!_.isEmpty(currentUser) && !currentUser.role.includes('master') && (
-              <li>
-                <NavLink
-                  exact
-                  to="/withdraw"
-                  onClick={() => {
-                    setToggle(false);
-                  }}
-                >
-                  <FormattedMessage {...messages.withdraw} />
-                </NavLink>
-              </li>
-            )} */}
-            {/* ------------------------------- */}
-            <li>
-              <NavLink
-                exact
-                to="/terms"
-                onClick={() => {
-                  setToggle(false);
-                }}
-              >
-                <FormattedMessage {...messages.contact} />
-              </NavLink>
+                  </FormattedMessage>
+                }
+                {menulistSearch}
+              </div>
             </li>
-            <li>
-              <NavLink
-                exact
-                to="/about"
-                onClick={() => {
-                  setToggle(false);
-                }}
-              >
-                <FormattedMessage {...messages.about} />
-              </NavLink>
-            </li>
-            {!_.isEmpty(currentUser) ? (
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  <FormattedMessage {...messages.hi} />{' '}
-                  <strong>
-                    {currentUser.lastName} {currentUser.firstName}{' '}
-                  </strong>
-                </DropdownToggle>
-                <div className="money-info-box">
-                  {/* All user role */}
-                  <DropdownMenu right>
-                    {/* Money info */}
-
-                    <DropdownItem
-                      className={
-                        pathname.includes('/money-information') ? 'active' : ''
-                      }
-                      onClick={() => {
-                        history.push('/money-information');
-                      }}
-                    >
-                      <PermIdentityOutlined className="icon" />
-                      <FormattedMessage {...messages.money} />
-                    </DropdownItem>
-
-                    {/* Host role */}
-                    {currentUser.role.includes('host') && (
-                      <>
-                        {/* <DropdownItem
-                          className={
-                            pathname.includes('/energy-billing-manage')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => {
-                            history.push('/energy-billing-manage');
+            <div className="mobisearch">
+              <li className="menulistSearchAll">
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                  {
+                    <FormattedMessage {...messages.search_location}>
+                      {msg => (
+                        <InputBase
+                          placeholder={msg}
+                          classes={{
+                            root: classes.inputRoot,
+                            input: classes.inputInput,
                           }}
-                        >
-                          <DnsOutlined className="icon" />
-                          <FormattedMessage {...messages.energyManagerHost} />
-                        </DropdownItem> */}
-                        <DropdownItem
-                          className={
-                            pathname.includes('/roomManage') ? 'active' : ''
-                          }
-                          onClick={() => {
-                            history.push('/roomManage');
+                          inputProps={{ 'aria-label': 'search' }}
+                          onChange={e => {
+                            handleSearchTermChange(e);
                           }}
-                        >
-                          <HomeOutlined className="icon" />
-                          <FormattedMessage {...messages.roomManager} />
-                        </DropdownItem>
-                        <DropdownItem
-                          className={
-                            pathname.includes('/manager-energy-buildings-host')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => {
-                            history.push('/manager-energy-buildings-host');
-                          }}
-                        >
-                          <BlurOn className="icon" />
-                          <FormattedMessage {...messages.energyManager} />
-                        </DropdownItem>
-                        {/* <DropdownItem
-                          className={
-                            pathname.includes('/order/list') ? 'active' : ''
-                          }
-                          onClick={() => {
-                            history.push('/order/list');
-                          }}
-                        >
-                          <LocalOfferOutlined className="icon" />
-                          <FormattedMessage {...messages.order} />
-                        </DropdownItem> */}
-                        <DropdownItem
-                          className={
-                            pathname.includes('/manage-deposit') ? 'active' : ''
-                          }
-                          onClick={() => {
-                            history.push('/manage-deposit');
-                          }}
-                        >
-                          <LocalOfferOutlined className="icon" />
-                          <FormattedMessage {...messages.order} />
-                        </DropdownItem>
-                        <DropdownItem
-                          className={
-                            pathname.includes('/manage-monthly-order')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => {
-                            history.push('/manage-monthly-order');
-                          }}
-                        >
-                          <LocalOfferOutlined className="icon" />
-                          <FormattedMessage {...messages.manageMonthly} />
-                        </DropdownItem>
-                        {/* <DropdownItem
-                          className={
-                            pathname.includes('/monthly-order/list')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => {
-                            history.push('/monthly-order/list');
-                          }}
-                        >
-                          <ShoppingCartOutlined className="icon" />
-                          <FormattedMessage {...messages.monthlyOrder} />
-                        </DropdownItem> */}
-                        <DropdownItem
-                          className={
-                            pathname.includes('/user/hostMotelRoom')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => {
-                            history.push(
-                              `/user/hostRevenue/${currentUser._id}`,
-                            );
-                          }}
-                        >
-                          <LibraryBooksOutlined className="icon" />
-                          <FormattedMessage {...messages.hostRoomRevenue} />
-                        </DropdownItem>
-                        <DropdownItem
-                          className={
-                            pathname.includes('/historyRoomHost')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => {
-                            history.push('/historyRoomHost');
-                          }}
-                        >
-                          <RestoreOutlined className="icon" />
-                          <FormattedMessage {...messages.hostRoomHist} />
-                        </DropdownItem>
-                        <DropdownItem
-                          className={
-                            pathname.includes('/bill-list') ? 'active' : ''
-                          }
-                          onClick={() => {
-                            history.push('/bill-list');
-                          }}
-                        >
-                          <ReceiptOutlined className="icon" />
-                          <FormattedMessage {...messages.billList} />
-                        </DropdownItem>
-                        <DropdownItem
-                          className={
-                            pathname.includes('/admin/report-problem-list')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => {
-                            history.push('/admin/report-problem-list');
-                          }}
-                        >
-                          <NotificationImportantOutlined className="icon" />
-                          <FormattedMessage {...messages.reportProblemList} />
-                        </DropdownItem>
-                        {/* <DropdownItem
-                          className={
-                            pathname.includes('/host/transaction/list')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => {
-                            history.push('/host/transaction/list');
-                          }}
-                        >
-                          <PaymentOutlined className="icon" />
-                          <FormattedMessage {...messages.transactionPayment} />
-                        </DropdownItem> */}
-                      </>
-                    )}
-                    {/* Admin role */}
-                    {currentUser.role.includes('master') && (
-                      <Fragment>
-                        <DropdownItem
-                          className={
-                            pathname.includes('/admin/users') ? 'active' : ''
-                          }
-                          onClick={() => {
-                            history.push('/admin/users');
-                          }}
-                        >
-                          <PeopleOutline className="icon" />
-                          <FormattedMessage {...messages.user} />
-                        </DropdownItem>
-                        <DropdownItem
-                          className={
-                            pathname.includes('/admin/manager-energy-host')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => {
-                            history.push('/admin/manager-energy-host');
-                          }}
-                        >
-                          <BlurOn className="icon" />
-                          <FormattedMessage {...messages.managerHost} />
-                        </DropdownItem>
-                        {/* <DropdownItem
-                          className={
-                            pathname.includes('/admin/order/list')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => {
-                            history.push('/admin/order/list');
-                          }}
-                        >
-                          <ShoppingCartOutlined className="icon" />
-                          <FormattedMessage {...messages.order} />
-                        </DropdownItem> */}
-                        {/* <DropdownItem
-                          className={
-                            pathname.includes('/admin/monthly-order/list')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => {
-                            history.push('/admin/monthly-order/list');
-                          }}
-                        >
-                          <ShoppingCartOutlined className="icon" />
-                          <FormattedMessage {...messages.monthlyOrder} />
-                        </DropdownItem> */}
-                        {/* <DropdownItem
-                          className={
-                            pathname.includes('/admin/transaction/list')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => {
-                            history.push('/admin/transaction/list');
-                          }}
-                        >
-                          <PaymentOutlined className="icon" />
-                          <FormattedMessage {...messages.transactionPayment} />
-                        </DropdownItem> */}
-                        {/* <DropdownItem
-                          className={
-                            pathname.includes('/admin/requestWithdraw/list')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => {
-                            history.push('/admin/requestWithdraw/list');
-                          }}
-                        >
-                          <AccountBalanceOutlined className="icon" />
-                          <FormattedMessage {...messages.withdrawPayment} />
-                        </DropdownItem> */}
-                        <DropdownItem
-                          className={
-                            pathname.includes('/admin/hostMotelRoom')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => {
-                            history.push('/admin/hostMotelRoom');
-                          }}
-                        >
-                          <LibraryBooksOutlined className="icon" />
-                          <FormattedMessage {...messages.host} />
-                        </DropdownItem>
-                        {/* <DropdownItem
-                          className={
-                            pathname.includes('/admin/historyRoomHost')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => history.push('/admin/historyRoomHost')}
-                        >
-                          <RestoreOutlined className="icon" />
-                          <FormattedMessage {...messages.hostRoomHist} />
-                        </DropdownItem> */}
-                        <DropdownItem
-                          className={
-                            pathname.includes('/admin/censor-motels')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => history.push('/admin/censor-motels/')}
-                        >
-                          <RestoreOutlined className="icon" />
-                          <FormattedMessage {...messages.acceptMotels} />
-                        </DropdownItem>
-                        <DropdownItem
-                          className={
-                            pathname.includes('/admin/censor-hosts')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => history.push('/admin/censor-hosts/')}
-                        >
-                          <RestoreOutlined className="icon" />
-                          <FormattedMessage {...messages.acceptHosts} />
-                        </DropdownItem>
-                        {/* <DropdownItem
-                          className={
-                            pathname.includes('/admin/bill-list')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() => history.push('/admin/bill-list')}
-                        >
-                          <ReceiptOutlined className="icon" />
-                          <FormattedMessage {...messages.billList} />
-                        </DropdownItem> */}
-                        <DropdownItem
-                          className={
-                            pathname.includes('/admin/report-problem-list')
-                              ? 'active'
-                              : ''
-                          }
-                          onClick={() =>
-                            history.push('/admin/report-problem-list')
-                          }
-                        >
-                          <NotificationImportantOutlined className="icon" />
-                          <FormattedMessage {...messages.reportProblemList} />
-                        </DropdownItem>
-                      </Fragment>
-                    )}
-                    {/* Customer role */}
-                    {currentUser.role.length === 1 &&
-                      currentUser.role.includes('customer') && (
-                        <>
-                          <DropdownItem
-                            className={
-                              pathname.includes('/manager-energy-rooms-user')
-                                ? 'active'
-                                : ''
-                            }
-                            onClick={() => {
-                              history.push('/manager-energy-rooms-user');
-                            }}
-                          >
-                            <BlurOn className="icon" />
-
-                            <FormattedMessage {...messages.energyRoomsUser} />
-                          </DropdownItem>
-
-                          {/* Report problem */}
-                          <DropdownItem
-                            className={
-                              pathname.includes('/report-problem-list')
-                                ? 'active'
-                                : ''
-                            }
-                            onClick={() => {
-                              history.push('/report-problem-list');
-                            }}
-                          >
-                            <NotificationImportantOutlined className="icon" />
-                            <FormattedMessage {...messages.reportProblemList} />
-                          </DropdownItem>
-                        </>
+                        // onFocus={onSearch}
+                        />
                       )}
-                    <DropdownItem divider />
-                    {/* Profile */}
-                    <DropdownItem
-                      className={pathname.includes('/profile') ? 'active' : ''}
-                      onClick={() => {
-                        history.push('/profile');
-                      }}
-                    >
-                      <PermIdentityOutlined className="icon" />
-                      <FormattedMessage {...messages.infor} />
-                    </DropdownItem>
-                    <DropdownItem
-                      className={
-                        pathname.includes('/changePassword') ? 'active' : ''
-                      }
-                      onClick={() => {
-                        history.push('/changePassword');
-                      }}
-                    >
-                      <SyncAltOutlined className="icon" />
-                      <FormattedMessage {...messages.changepassword} />
-                    </DropdownItem>
-                    {/* <DropdownItem
-                      className={
-                        pathname.includes('/transaction/user/list')
-                          ? 'active'
-                          : ''
-                      }
-                      onClick={() => {
-                        history.push('/transaction/user/list');
-                      }}
-                    >
-                      <CreditCardOutlined className="icon" />
-                      <FormattedMessage {...messages.LogtransactionPayment} />
-                    </DropdownItem> */}
-                    {/* <DropdownItem
-                      className={
-                        pathname.includes('/requestWithdraw/user/list')
-                          ? 'active'
-                          : ''
-                      }
-                      onClick={() => {
-                        history.push('/requestWithdraw/user/list');
-                      }}
-                    >
-                      <AccountBalanceWalletOutlined className="icon" />
-                      <FormattedMessage {...messages.LogRequestWithdraw} />
-                    </DropdownItem> */}
-                    {/* <DropdownItem
-                      className={
-                        pathname.includes('/transactionLog') ? 'active' : ''
-                      }
-                      onClick={() => {
-                        history.push('/transactionLog');
-                      }}
-                    >
-                      <ReceiptOutlined className="icon" />
-                      <FormattedMessage {...messages.TransactionLog} />
-                    </DropdownItem> */}
-                    <DropdownItem
-                      className={
-                        pathname.includes('/transaction-banking-cash-log')
-                          ? 'active'
-                          : ''
-                      }
-                      onClick={() => {
-                        history.push('/transaction-banking-cash-log');
-                      }}
-                    >
-                      <ReceiptOutlined className="icon" />
-                      <FormattedMessage
-                        {...messages.TransactionBankingCashLog}
-                      />
-                    </DropdownItem>
-                    <DropdownItem
-                      className={
-                        pathname.includes('/orders-pending-pay-user')
-                          ? 'active'
-                          : ''
-                      }
-                      onClick={() => {
-                        history.push('/orders-pending-pay-user');
-                      }}
-                    >
-                      <ReceiptOutlined className="icon" />
-                      <FormattedMessage {...messages.orderPendingPayList} />
-                    </DropdownItem>
-                    <DropdownItem
-                      className={
-                        pathname.includes('/pay-deposit-user/')
-                          ? 'active'
-                          : ''
-                      }
-                      onClick={() => {
-                        history.push('/pay-deposit-user/');
-                      }}
-                    >
-                      <ReceiptOutlined className="icon" />
-                      <FormattedMessage {...messages.payDeposits} />
-                    </DropdownItem>
-                    {/* <DropdownItem
-                      className={pathname.includes('/recharge') ? 'active' : ''}
-                      onClick={() => {
-                        history.push('/recharge');
-                      }}
-                    >
-                      <CreditCardOutlined className="icon" />
-                      <FormattedMessage {...messages.addMoney} />
-                    </DropdownItem> */}
-                    <DropdownItem divider />
-                    <DropdownItem
-                      onClick={() => {
-                        props.changeStoreData('showLogout', true);
-                      }}
-                    >
-                      <ExitToAppRounded className="icon" />
-                      <FormattedMessage {...messages.logout} />
-                    </DropdownItem>
-                  </DropdownMenu>
-                </div>
-              </UncontrolledDropdown>
-            ) : (
-              <li className={pathname.includes('/auth/login') ? 'active' : ''}>
-                <NavLink
-                  exact
-                  to="/auth/login"
-                  onClick={() => {
-                    setToggle(false);
-                  }}
-                >
-                  <i className="fa fa-sign-in" aria-hidden="true" />{' '}
-                  <FormattedMessage {...messages.signin_signup} />
-                </NavLink>
-              </li>
-            )}
-          </ul>
-        </div>
-      </div>
-      <div className="mobisearch">
-        <li className="menulistSearchAll">
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            {
-              <FormattedMessage {...messages.search_location}>
-                {msg => (
-                  <InputBase
-                    placeholder={msg}
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
-                    inputProps={{ 'aria-label': 'search' }}
-                    onChange={e => {
-                      handleSearchTermChange(e);
-                    }}
-                    // onFocus={onSearch}
-                  />
-                )}
-                {/* {msg => (
+                      {/* {msg => (
                   <InputLocation
                     label={msg}
                     placeholder={msg}
@@ -939,13 +394,608 @@ const Navbar = props => {
                     }}
                   />
                 )} */}
-              </FormattedMessage>
-            }
-            {menulistSearch}
-          </div>
-        </li>
-      </div>
-    </div>
+                    </FormattedMessage>
+                  }
+                  {menulistSearch}
+                </div>
+              </li>
+            </div>
+
+          </Col>
+
+          <Col Col xs={12} sm={12} md={12} lg={5}
+            className={
+              ClassNames(
+                'site-nav',
+                { 'mobile-menu-hide': !toggle },
+                { 'mobile-menu-show': toggle },
+              )}
+          >
+
+            <ul className="site-main-menu">
+              {/* note */}
+              {/* {!_.isEmpty(currentUser) && (
+              <li>
+                <strong>
+                  <FormattedMessage {...messages.wallet} />:{' '}
+                </strong>
+                {profile.wallet || profile.wallet === 0
+                  ? `${Money(Number(profile.wallet))} VND`
+                  : 'Chưa có dữ liệu'}
+              </li>
+            )} */}
+
+              {/* {!_.isEmpty(currentUser) && !currentUser.role.includes('master') && (
+              <li>
+                <NavLink
+                  exact
+                  to="/withdraw"
+                  onClick={() => {
+                    setToggle(false);
+                  }}
+                >
+                  <FormattedMessage {...messages.withdraw} />
+                </NavLink>
+              </li>
+            )} */}
+              {/* ------------------------------- */}
+              <div className="close-menu">
+                <button
+                  className='close-menu-btn'
+                  onClick={handleClose}
+                >
+                  <Close />
+                </button>
+              </div>
+              <li>
+                <NavLink
+                  exact
+                  to="/terms"
+                  onClick={() => {
+                    setToggle(false);
+                  }}
+                >
+                  <FormattedMessage {...messages.contact} />
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  exact
+                  to="/about"
+                  onClick={() => {
+                    setToggle(false);
+                  }}
+                >
+                  <FormattedMessage {...messages.about} />
+                </NavLink>
+              </li>
+              {!_.isEmpty(currentUser) ? (
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    <FormattedMessage {...messages.hi} />{' '}
+                    <strong>
+                      {currentUser.lastName} {currentUser.firstName}{' '}
+                    </strong>
+                  </DropdownToggle>
+                  <div className="money-info-box">
+                    {/* All user role */}
+                    <DropdownMenu right>
+                      {/* Money info */}
+
+                      <DropdownItem
+                        className={
+                          pathname.includes('/money-information') ? 'active' : ''
+                        }
+                        onClick={() => {
+                          history.push('/money-information');
+                        }}
+                      >
+                        <PermIdentityOutlined className="icon" />
+                        <FormattedMessage {...messages.money} />
+                      </DropdownItem>
+
+                      {/* Host role */}
+                      {currentUser.role.includes('host') && (
+                        <>
+                          {/* <DropdownItem
+                          className={
+                            pathname.includes('/energy-billing-manage')
+                              ? 'active'
+                              : ''
+                          }
+                          onClick={() => {
+                            history.push('/energy-billing-manage');
+                          }}
+                        >
+                          <DnsOutlined className="icon" />
+                          <FormattedMessage {...messages.energyManagerHost} />
+                        </DropdownItem> */}
+                          <DropdownItem
+                            className={
+                              pathname.includes('/roomManage') ? 'active' : ''
+                            }
+                            onClick={() => {
+                              setToggle(false);
+                              history.push('/roomManage');
+                            }}
+                          >
+                            <HomeOutlined className="icon" />
+                            <FormattedMessage {...messages.roomManager} />
+                          </DropdownItem>
+                          <DropdownItem
+                            className={
+                              pathname.includes('/manager-energy-buildings-host')
+                                ? 'active'
+                                : ''
+                            }
+                            onClick={() => {
+                              setToggle(false);
+                              history.push('/manager-energy-buildings-host');
+                            }}
+                          >
+                            <BlurOn className="icon" />
+                            <FormattedMessage {...messages.energyManager} />
+                          </DropdownItem>
+                          {/* <DropdownItem
+                          className={
+                            pathname.includes('/order/list') ? 'active' : ''
+                          }
+                          onClick={() => {
+                            history.push('/order/list');
+                          }}
+                        >
+                          <LocalOfferOutlined className="icon" />
+                          <FormattedMessage {...messages.order} />
+                        </DropdownItem> */}
+                          <DropdownItem
+                            className={
+                              pathname.includes('/manage-deposit') ? 'active' : ''
+                            }
+                            onClick={() => {
+                              setToggle(false);
+                              history.push('/manage-deposit');
+                            }}
+                          >
+                            <LocalOfferOutlined className="icon" />
+                            <FormattedMessage {...messages.order} />
+                          </DropdownItem>
+                          <DropdownItem
+                            className={
+                              pathname.includes('/manage-monthly-order')
+                                ? 'active'
+                                : ''
+                            }
+                            onClick={() => {
+                              setToggle(false);
+                              history.push('/manage-monthly-order');
+                            }}
+                          >
+                            <LocalOfferOutlined className="icon" />
+                            <FormattedMessage {...messages.manageMonthly} />
+                          </DropdownItem>
+                          {/* <DropdownItem
+                          className={
+                            pathname.includes('/monthly-order/list')
+                              ? 'active'
+                              : ''
+                          }
+                          onClick={() => {
+                            history.push('/monthly-order/list');
+                          }}
+                        >
+                          <ShoppingCartOutlined className="icon" />
+                          <FormattedMessage {...messages.monthlyOrder} />
+                        </DropdownItem> */}
+                          <DropdownItem
+                            className={
+                              pathname.includes('/user/hostMotelRoom')
+                                ? 'active'
+                                : ''
+                            }
+                            onClick={() => {
+                              setToggle(false);
+                              history.push(
+                                `/user/hostRevenue/${currentUser._id}`,
+                              );
+                            }}
+                          >
+                            <LibraryBooksOutlined className="icon" />
+                            <FormattedMessage {...messages.hostRoomRevenue} />
+                          </DropdownItem>
+                          <DropdownItem
+                            className={
+                              pathname.includes('/historyRoomHost')
+                                ? 'active'
+                                : ''
+                            }
+                            onClick={() => {
+                              setToggle(false);
+                              history.push('/historyRoomHost');
+                            }}
+                          >
+                            <RestoreOutlined className="icon" />
+                            <FormattedMessage {...messages.hostRoomHist} />
+                          </DropdownItem>
+                          <DropdownItem
+                            className={
+                              pathname.includes('/bill-list') ? 'active' : ''
+                            }
+                            onClick={() => {
+                              setToggle(false);
+                              history.push('/bill-list');
+                            }}
+                          >
+                            <ReceiptOutlined className="icon" />
+                            <FormattedMessage {...messages.billList} />
+                          </DropdownItem>
+                          <DropdownItem
+                            className={
+                              pathname.includes('/admin/report-problem-list')
+                                ? 'active'
+                                : ''
+                            }
+                            onClick={() => {
+                              setToggle(false);
+                              history.push('/admin/report-problem-list');
+                            }}
+                          >
+                            <NotificationImportantOutlined className="icon" />
+                            <FormattedMessage {...messages.reportProblemList} />
+                          </DropdownItem>
+                          {/* <DropdownItem
+                          className={
+                            pathname.includes('/host/transaction/list')
+                              ? 'active'
+                              : ''
+                          }
+                          onClick={() => {
+                            history.push('/host/transaction/list');
+                          }}
+                        >
+                          <PaymentOutlined className="icon" />
+                          <FormattedMessage {...messages.transactionPayment} />
+                        </DropdownItem> */}
+                        </>
+                      )}
+                      {/* Admin role */}
+                      {currentUser.role.includes('master') && (
+                        <Fragment>
+                          <DropdownItem
+                            className={
+                              pathname.includes('/admin/users') ? 'active' : ''
+                            }
+                            onClick={() => {
+                              setToggle(false);
+                              history.push('/admin/users');
+                            }}
+                          >
+                            <PeopleOutline className="icon" />
+                            <FormattedMessage {...messages.user} />
+                          </DropdownItem>
+                          <DropdownItem
+                            className={
+                              pathname.includes('/admin/manager-energy-host')
+                                ? 'active'
+                                : ''
+                            }
+                            onClick={() => {
+                              setToggle(false);
+                              history.push('/admin/manager-energy-host');
+                            }}
+                          >
+                            <BlurOn className="icon" />
+                            <FormattedMessage {...messages.managerHost} />
+                          </DropdownItem>
+                          {/* <DropdownItem
+                          className={
+                            pathname.includes('/admin/order/list')
+                              ? 'active'
+                              : ''
+                          }
+                          onClick={() => {
+                            history.push('/admin/order/list');
+                          }}
+                        >
+                          <ShoppingCartOutlined className="icon" />
+                          <FormattedMessage {...messages.order} />
+                        </DropdownItem> */}
+                          {/* <DropdownItem
+                          className={
+                            pathname.includes('/admin/monthly-order/list')
+                              ? 'active'
+                              : ''
+                          }
+                          onClick={() => {
+                            history.push('/admin/monthly-order/list');
+                          }}
+                        >
+                          <ShoppingCartOutlined className="icon" />
+                          <FormattedMessage {...messages.monthlyOrder} />
+                        </DropdownItem> */}
+                          {/* <DropdownItem
+                          className={
+                            pathname.includes('/admin/transaction/list')
+                              ? 'active'
+                              : ''
+                          }
+                          onClick={() => {
+                            history.push('/admin/transaction/list');
+                          }}
+                        >
+                          <PaymentOutlined className="icon" />
+                          <FormattedMessage {...messages.transactionPayment} />
+                        </DropdownItem> */}
+                          {/* <DropdownItem
+                          className={
+                            pathname.includes('/admin/requestWithdraw/list')
+                              ? 'active'
+                              : ''
+                          }
+                          onClick={() => {
+                            history.push('/admin/requestWithdraw/list');
+                          }}
+                        >
+                          <AccountBalanceOutlined className="icon" />
+                          <FormattedMessage {...messages.withdrawPayment} />
+                        </DropdownItem> */}
+                          <DropdownItem
+                            className={
+                              pathname.includes('/admin/hostMotelRoom')
+                                ? 'active'
+                                : ''
+                            }
+                            onClick={() => {
+                              setToggle(false);
+                              history.push('/admin/hostMotelRoom');
+                            }}
+                          >
+                            <LibraryBooksOutlined className="icon" />
+                            <FormattedMessage {...messages.host} />
+                          </DropdownItem>
+                          {/* <DropdownItem
+                          className={
+                            pathname.includes('/admin/historyRoomHost')
+                              ? 'active'
+                              : ''
+                          }
+                          onClick={() => history.push('/admin/historyRoomHost')}
+                        >
+                          <RestoreOutlined className="icon" />
+                          <FormattedMessage {...messages.hostRoomHist} />
+                        </DropdownItem> */}
+                          {/* <DropdownItem
+                          className={
+                            pathname.includes('/admin/bill-list')
+                              ? 'active'
+                              : ''
+                          }
+                          onClick={() => history.push('/admin/bill-list')}
+                        >
+                          <ReceiptOutlined className="icon" />
+                          <FormattedMessage {...messages.billList} />
+                        </DropdownItem> */}
+                          <DropdownItem
+                            className={
+                              pathname.includes('/admin/report-problem-list')
+                                ? 'active'
+                                : ''
+                            }
+                            onClick={() => {
+                              setToggle(false);
+                              history.push('/admin/report-problem-list')
+                            }
+                            }
+                          >
+                            <NotificationImportantOutlined className="icon" />
+                            <FormattedMessage {...messages.reportProblemList} />
+                          </DropdownItem>
+                          <DropdownItem
+                            className={
+                              pathname.includes('/admin/censor-motels')
+                                ? 'active'
+                                : ''
+                            }
+                            onClick={() => history.push('/admin/censor-motels/')}
+                          >
+                            <RestoreOutlined className="icon" />
+                            <FormattedMessage {...messages.acceptMotels} />
+                        </DropdownItem>
+                        <DropdownItem
+                            className={
+                              pathname.includes('/admin/censor-hosts')
+                                ? 'active'
+                                : ''
+                            }
+                            onClick={() => history.push('/admin/censor-hosts/')}
+                          >
+                            <RestoreOutlined className="icon" />
+                            <FormattedMessage {...messages.acceptHosts} />
+                        </DropdownItem>
+                        </Fragment>
+                      )}
+                      {/* Customer role */}
+                      {currentUser.role.length === 1 &&
+                        currentUser.role.includes('customer') && (
+                          <>
+                            <DropdownItem
+                              className={
+                                pathname.includes('/manager-energy-rooms-user')
+                                  ? 'active'
+                                  : ''
+                              }
+                              onClick={() => {
+                                setToggle(false);
+                                history.push('/manager-energy-rooms-user');
+                              }}
+                            >
+                              <BlurOn className="icon" />
+
+                              <FormattedMessage {...messages.energyRoomsUser} />
+                            </DropdownItem>
+
+                            {/* Report problem */}
+                            <DropdownItem
+                              className={
+                                pathname.includes('/report-problem-list')
+                                  ? 'active'
+                                  : ''
+                              }
+                              onClick={() => {
+                                setToggle(false);
+                                history.push('/report-problem-list');
+                              }}
+                            >
+                              <NotificationImportantOutlined className="icon" />
+                              <FormattedMessage {...messages.reportProblemList} />
+                            </DropdownItem>
+                          </>
+                        )}
+                      <DropdownItem divider />
+                      {/* Profile */}
+                      <DropdownItem
+                        className={pathname.includes('/profile') ? 'active' : ''}
+                        onClick={() => {
+                          setToggle(false);
+                          history.push('/profile');
+                        }}
+                      >
+                        <PermIdentityOutlined className="icon" />
+                        <FormattedMessage {...messages.infor} />
+                      </DropdownItem>
+                      <DropdownItem
+                        className={
+                          pathname.includes('/changePassword') ? 'active' : ''
+                        }
+                        onClick={() => {
+                          setToggle(false);
+                          history.push('/changePassword');
+                        }}
+                      >
+                        <SyncAltOutlined className="icon" />
+                        <FormattedMessage {...messages.changepassword} />
+                      </DropdownItem>
+                      {/* <DropdownItem
+                      className={
+                        pathname.includes('/transaction/user/list')
+                          ? 'active'
+                          : ''
+                      }
+                      onClick={() => {
+                        history.push('/transaction/user/list');
+                      }}
+                    >
+                      <CreditCardOutlined className="icon" />
+                      <FormattedMessage {...messages.LogtransactionPayment} />
+                    </DropdownItem> */}
+                      {/* <DropdownItem
+                      className={
+                        pathname.includes('/requestWithdraw/user/list')
+                          ? 'active'
+                          : ''
+                      }
+                      onClick={() => {
+                        history.push('/requestWithdraw/user/list');
+                      }}
+                    >
+                      <AccountBalanceWalletOutlined className="icon" />
+                      <FormattedMessage {...messages.LogRequestWithdraw} />
+                    </DropdownItem> */}
+                      {/* <DropdownItem
+                      className={
+                        pathname.includes('/transactionLog') ? 'active' : ''
+                      }
+                      onClick={() => {
+                        history.push('/transactionLog');
+                      }}
+                    >
+                      <ReceiptOutlined className="icon" />
+                      <FormattedMessage {...messages.TransactionLog} />
+                    </DropdownItem> */}
+                      <DropdownItem
+                        className={
+                          pathname.includes('/transaction-banking-cash-log')
+                            ? 'active'
+                            : ''
+                        }
+                        onClick={() => {
+                          setToggle(false);
+                          history.push('/transaction-banking-cash-log');
+                        }}
+                      >
+                        <ReceiptOutlined className="icon" />
+                        <FormattedMessage
+                          {...messages.TransactionBankingCashLog}
+                        />
+                      </DropdownItem>
+                      <DropdownItem
+                        className={
+                          pathname.includes('/orders-pending-pay-user')
+                            ? 'active'
+                            : ''
+                        }
+                        onClick={() => {
+                          setToggle(false);
+                          history.push('/orders-pending-pay-user');
+                        }}
+                      >
+                        <ReceiptOutlined className="icon" />
+                        <FormattedMessage {...messages.orderPendingPayList} />
+                      </DropdownItem>
+                      <DropdownItem
+                        className={
+                          pathname.includes('/pay-deposit-user/')
+                            ? 'active'
+                            : ''
+                        }
+                        onClick={() => {
+                          setToggle(false);
+                          history.push('/pay-deposit-user/');
+                        }}
+                      >
+                        <ReceiptOutlined className="icon" />
+                        <FormattedMessage {...messages.payDeposits} />
+                      </DropdownItem>
+                      {/* <DropdownItem
+                      className={pathname.includes('/recharge') ? 'active' : ''}
+                      onClick={() => {
+                        history.push('/recharge');
+                      }}
+                    >
+                      <CreditCardOutlined className="icon" />
+                      <FormattedMessage {...messages.addMoney} />
+                    </DropdownItem> */}
+                      <DropdownItem divider />
+                      <DropdownItem
+                        onClick={() => {
+                          props.changeStoreData('showLogout', true);
+                        }}
+                      >
+                        <ExitToAppRounded className="icon" />
+                        <FormattedMessage {...messages.logout} />
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </div>
+                </UncontrolledDropdown>
+              ) : (
+                <li className={pathname.includes('/auth/login') ? 'active' : ''}>
+                  <NavLink
+                    exact
+                    to="/auth/login"
+                    onClick={() => {
+                      setToggle(false);
+                    }}
+                  >
+                    <i className="fa fa-sign-in" aria-hidden="true" />{' '}
+                    <FormattedMessage {...messages.signin_signup} />
+                  </NavLink>
+                </li>
+              )}
+            </ul>
+          </Col >
+        </Row >
+      </div >
+
+    </div >
   );
 };
 

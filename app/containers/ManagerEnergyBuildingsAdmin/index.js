@@ -19,6 +19,8 @@ import saga from './saga';
 import makeSelectManagerBuildingHost from './selectors';
 import './style.scss';
 import { useParams } from 'react-router';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 export function ManagerEnergyBuildingsAdmin(props) {
   useInjectReducer({ key: 'motelprofileList', reducer });
@@ -44,7 +46,10 @@ export function ManagerEnergyBuildingsAdmin(props) {
         <meta name="description" content="Description of Profile" />
       </Helmet>
       <div className="title-abc">
-        Quản lý năng lượng các tòa nhà: <strong>{name}</strong>
+        <FormattedMessage {...messages.Header} />
+        <div>
+          <FormattedMessage {...messages.HostName} /> {name}
+        </div>
       </div>
 
       {role.length === 2 && role.includes('master') ? (
@@ -91,14 +96,16 @@ export function ManagerEnergyBuildingsAdmin(props) {
                             );
                           }}
                         >
-                          Xem chi tiết
+                          <FormattedMessage {...messages.Detail} />
                         </button>
                       </div>
                     </Card>
                   </div>
                 ))
               ) : (
-                <p className="text-center">Không có phòng</p>
+                <p className="text-center">
+                  <FormattedMessage {...messages.NoData} />
+                </p>
               )
             ) : (
               ''

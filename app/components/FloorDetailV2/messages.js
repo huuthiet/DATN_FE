@@ -6,7 +6,7 @@
 import { add } from 'lodash';
 import { defineMessages } from 'react-intl';
 
-export const scope = 'FloorDetail.conmponents';
+export const scope = 'FloorDetail.containers';
 
 export default defineMessages({
     All: {
@@ -16,6 +16,10 @@ export default defineMessages({
     addRoom: {
         id: `${scope}.addRoom`,
         defaultMessage: 'Thêm phòng',
+    },
+    Floor: {
+        id: `${scope}.Floor`,
+        defaultMessage: 'Tầng',
     },
 
 });

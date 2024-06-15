@@ -248,7 +248,7 @@ export function MoneyInformationDetail(props) {
                       {msg => (
                         <div>
                           <label style={{ fontSize: '15px', fontWeight: 700 }}>
-                            Lựa chọn ngân hàng:
+                            <FormattedMessage {...messages.bank} />
                           </label>
                           <Select
                             key={options}

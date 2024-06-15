@@ -121,11 +121,11 @@ function Room(props) {
         modal={modal}
         toggle={() => setModal(false)}
         className="room-modal"
-        modalTitle="Thông tin phòng"
+        modalTitle={<FormattedMessage {...messages.Information} />}
         footer={
           <>
             <Button color="secondary" onClick={() => setModal(false)}>
-              Đóng
+              <FormattedMessage {...messages.Cancel} />
             </Button>
             <Button
               color="primary" onClick={() => {
@@ -140,7 +140,7 @@ function Room(props) {
                 // }
               }}
             >
-              Xem chi tiết
+              <FormattedMessage {...messages.Detail} />
             </Button>
           </>
         }
@@ -189,7 +189,7 @@ function Room(props) {
                     <div className="item">
                       <div className="electric-title">
                         <EmojiObjects className="electric-icon" />
-                        <FormattedMessage {...messages.ElectricPrice} />
+                        <FormattedMessage {...messages.electricityPrice} />
                       </div>
                       {Money(electricityPrice)} đ
                     </div>
@@ -198,7 +198,7 @@ function Room(props) {
                     <div className="item">
                       <div className="water-title">
                         <Waves className="water-icon" />
-                        <FormattedMessage {...messages.WaterPrice} />
+                        <FormattedMessage {...messages.waterPrice} />
                       </div>
                       {Money(wifiPrice)} đ
                     </div>
@@ -207,7 +207,7 @@ function Room(props) {
                     <div className="item">
                       <div className="wifi-title">
                         <Wifi className="wifi-icon" />
-                        <FormattedMessage {...messages.WifiPrice} />
+                        <FormattedMessage {...messages.wifiPrice} />
                       </div>
                       {Money(waterPrice)} đ
                     </div>
@@ -249,41 +249,41 @@ function Room(props) {
                 <>
                   <InfoOutlined className={ClassNames('icon')} />
                   {item.status === 'unknown'
-                    ? 'Chưa cập nhật'
-                    : 'Chưa cập nhật'}
+                    ? <FormattedMessage {...messages.unknown} />
+                    : <FormattedMessage {...messages.unknown} />}
                 </>
               ) : item.status === roomStatus.AVAILABLE ? (
                 <>
                   <CheckCircleOutlineOutlined className={ClassNames('icon')} />
                   {item.status === roomStatus.AVAILABLE
-                    ? 'Còn trống'
-                    : 'Chưa cập nhật'}
+                    ? <FormattedMessage {...messages.available} />
+                    : <FormattedMessage {...messages.unknown} />}
                 </>
               ) : item.status === roomStatus.RENTED ? (
                 <>
                   <VpnKeyOutlined className={ClassNames('icon')} />
                   {item.status === roomStatus.RENTED
-                    ? 'Đã thuê'
-                    : 'Chưa cập nhật'}
+                    ? <FormattedMessage {...messages.rented} />
+                    : <FormattedMessage {...messages.unknown} />}
                 </>
               ) : item.status === roomStatus.DEPOSITED ? (
                 <>
                   <AttachMoneyOutlined className={ClassNames('icon')} />
                   {item.status === roomStatus.DEPOSITED
-                    ? 'Đã cọc'
-                    : 'Chưa cập nhật'}
+                    ? <FormattedMessage {...messages.deposited} />
+                    : <FormattedMessage {...messages.unknown} />}
                 </>
               ) : item.status === roomStatus.SOONEXPIRECONTRACT ? (
                 <>
                   <AttachMoneyOutlined className={ClassNames('icon')} />
                   {item.status === roomStatus.SOONEXPIRECONTRACT
-                    ? 'Sắp trống'
-                    : 'Chưa cập nhật'}
+                    ? <FormattedMessage {...messages.soonExpireContract} />
+                    : <FormattedMessage {...messages.unknown} />}
                 </>
               ) : (
                 <>
                   <InfoOutlined className={ClassNames('icon')} />
-                  Không có
+                  <FormattedMessage {...messages.unknown} />
                 </>
               )}
             </>
@@ -293,11 +293,11 @@ function Room(props) {
                 <>
                   <VpnKeyOutlined className={ClassNames('icon')} />
                   {item.status === roomStatus.RENTED
-                    ? 'Đã thuê'
-                    : 'Chưa cập nhật'}
+                    ? <FormattedMessage {...messages.rented} />
+                    : <FormattedMessage {...messages.unknown} />}
                 </>
               ) : (
-                'Chưa cập nhật'
+                <FormattedMessage {...messages.unknown} />
               )}
             </>
           ) : status === '2' ? (
@@ -306,11 +306,11 @@ function Room(props) {
                 <>
                   <CheckCircleOutlineOutlined className={ClassNames('icon')} />
                   {item.status === roomStatus.AVAILABLE
-                    ? 'Còn trống'
-                    : 'Chưa cập nhật'}
+                    ? <FormattedMessage {...messages.available} />
+                    : <FormattedMessage {...messages.unknown} />}
                 </>
               ) : (
-                'Chưa cập nhật'
+                <FormattedMessage {...messages.unknown} />
               )}
             </>
           ) : status === '3' ? (
@@ -319,11 +319,11 @@ function Room(props) {
                 <>
                   <AttachMoneyOutlined className={ClassNames('icon')} />
                   {item.status === roomStatus.DEPOSITED
-                    ? 'Đã cọc'
-                    : 'Chưa cập nhật'}
+                    ? <FormattedMessage {...messages.deposited} />
+                    : <FormattedMessage {...messages.unknown} />}
                 </>
               ) : (
-                'Chưa cập nhật'
+                <FormattedMessage {...messages.unknown} />
               )}
             </>
           ) : status === '4' ? (
@@ -332,28 +332,32 @@ function Room(props) {
                 <>
                   <AttachMoneyOutlined className={ClassNames('icon')} />
                   {item.status === roomStatus.SOONEXPIRECONTRACT
-                    ? 'Sắp trống'
-                    : 'Chưa cập nhật'}
+                    ? <FormattedMessage {...messages.soonExpireContract} />
+                    : <FormattedMessage {...messages.unknown} />}
                 </>
               ) : (
-                'Chưa cập nhật'
+                <FormattedMessage {...messages.unknown} />
               )}
             </>
           ) : (
             <>
               <InfoOutlined className={ClassNames('icon')} />
-              Không có
+              <FormattedMessage {...messages.unknown} />
             </>
           )}
         </span>
       </div>
       <div className={ClassNames('info')}>
         <div>
-          <span>Phòng </span>
-          {item.status === 'unknown' ? 'Chưa cập nhật' : item.name}
+          <span>
+            <FormattedMessage {...messages.Room} />
+          </span>
+          {item.status === 'unknown' ? <FormattedMessage {...messages.unknown} /> : item.name}
         </div>
         <div>
-          <span>Diện tích: </span>
+          <span>
+            <FormattedMessage {...messages.Acreage} />
+          </span>
           {item.status === 'unknown' ? 'unknown' : `${item.acreage} m2`}
         </div>
         <div>
