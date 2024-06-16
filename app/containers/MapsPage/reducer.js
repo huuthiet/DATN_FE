@@ -20,7 +20,8 @@ const mapsPageReducer = (state = initialState, action) =>
         draft.action1 = 1;
         break;
       case GET_LIST_ROOM_FAIL:
-        draft.listRoom = action.error;
+        // draft.listRoom = action.error;
+        draft.listRoom = [];
         break;
     }
   });

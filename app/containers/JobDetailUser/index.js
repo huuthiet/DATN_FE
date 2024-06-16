@@ -642,6 +642,8 @@ export function JobDetailUser(props) {
     }));
   }
 
+  console.log({bankOptions});
+
   return (
     <div className="job-detail-wrapper">
       <Helmet>

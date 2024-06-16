@@ -48,6 +48,7 @@ import { geocodeByAddress, getLatLng } from 'react-google-autocomplete';
 
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import Select from 'react-select';
 import { connect } from 'react-redux';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -57,6 +58,8 @@ import messages from './messages';
 import MenuButton from '../MenuButton';
 import Money from '../../containers/App/format';
 import InputLocation from '../../components/InputLocation';
+import ModalComponent from './modal';
+import CheckBox from '../CheckBox';
 
 import { SearchLocationContext } from "../../components/SearchLocationContext";
 
@@ -144,7 +147,7 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = props => {
   const history = useHistory();
-  const { currentUser = {}, listroom, onInputChange } = props;
+  const { currentUser = {}, listroom, onInputChange, onFilterChange } = props;
   const [toggle, setToggle] = useState(false);
   const location = useLocation();
   const { pathname } = location;
@@ -275,9 +278,487 @@ const Navbar = props => {
     setToggle(false);
   }
 
+  const [isOpenCheckIn, setIsOpenCheckIn] = useState(true);
+  const toggleCheckInModal = () => {
+    setIsOpenCheckIn(!isOpenCheckIn);
+  };
+
+  const [selectedUtility, setSelectedUtility] = useState(null);
+
+  const [address, setAddress] = useState("Viet Nam");
+  const [utilities, setUtilities] = useState([]);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(100000000);
+
+  const handleUtilityChange = (utility) => {
+    setSelectedUtility(utility);
+  };
+
+  
+
+  // const utilityOptions = ["wifi","bon_cau", "dieu_hoa", "truyen_hinh", "voi_hoa_sen",
+  //   "giat_ui", "giu_xe", "gac_lung", "bon_rua_mat", "don_phong",
+  //   "san_go", "tu_quan_ao", "gio_giac_tu_do", "loi_di_rieng"];
+
+  const utilityOptions = [
+    {label: "Internet", value: "wifi"},
+  ]
+
+  const vietnamProvinces = [
+    { label: "An Giang", value: "An Giang" },
+    { label: "Bà Rịa - Vũng Tàu", value: "Ba Ria - Vung Tau" },
+    { label: "Bạc Liêu", value: "Bac Lieu" },
+    { label: "Bắc Kạn", value: "Bac Kan" },
+    { label: "Bắc Giang", value: "Bac Giang" },
+    { label: "Bắc Ninh", value: "Bac Ninh" },
+    { label: "Bến Tre", value: "Ben Tre" },
+    { label: "Bình Dương", value: "Binh Duong" },
+    { label: "Bình Định", value: "Binh Dinh" },
+    { label: "Bình Phước", value: "Binh Phuoc" },
+    { label: "Bình Thuận", value: "Binh Thuan" },
+    { label: "Cà Mau", value: "Ca Mau" },
+    { label: "Cao Bằng", value: "Cao Bang" },
+    { label: "Cần Thơ", value: "Can Tho" },
+    { label: "Đà Nẵng", value: "Da Nang" },
+    { label: "Đắk Lắk", value: "Dak Lak" },
+    { label: "Đắk Nông", value: "Dak Nong" },
+    { label: "Điện Biên", value: "Dien Bien" },
+    { label: "Đồng Nai", value: "Dong Nai" },
+    { label: "Đồng Tháp", value: "Dong Thap" },
+    { label: "Gia Lai", value: "Gia Lai" },
+    { label: "Hà Giang", value: "Ha Giang" },
+    { label: "Hà Nam", value: "Ha Nam" },
+    { label: "Hà Nội", value: "Ha Noi" },
+    { label: "Hà Tĩnh", value: "Ha Tinh" },
+    { label: "Hải Dương", value: "Hai Duong" },
+    { label: "Hải Phòng", value: "Hai Phong" },
+    { label: "Hậu Giang", value: "Hau Giang" },
+    { label: "Hòa Bình", value: "Hoa Binh" },
+    { label: "Hồ Chí Minh", value: "Ho Chi Minh" },
+    { label: "Hưng Yên", value: "Hung Yen" },
+    { label: "Khánh Hòa", value: "Khanh Hoa" },
+    { label: "Kiên Giang", value: "Kien Giang" },
+    { label: "Kon Tum", value: "Kon Tum" },
+    { label: "Lai Châu", value: "Lai Chau" },
+    { label: "Lâm Đồng", value: "Lam Dong" },
+    { label: "Lạng Sơn", value: "Lang Son" },
+    { label: "Lào Cai", value: "Lao Cai" },
+    { label: "Long An", value: "Long An" },
+    { label: "Nam Định", value: "Nam Dinh" },
+    { label: "Nghệ An", value: "Nghe An" },
+    { label: "Ninh Bình", value: "Ninh Binh" },
+    { label: "Ninh Thuận", value: "Ninh Thuan" },
+    { label: "Phú Thọ", value: "Phu Tho" },
+    { label: "Phú Yên", value: "Phu Yen" },
+    { label: "Quảng Bình", value: "Quang Binh" },
+    { label: "Quảng Nam", value: "Quang Nam" },
+    { label: "Quảng Ngãi", value: "Quang Ngai" },
+    { label: "Quảng Ninh", value: "Quang Ninh" },
+    { label: "Quảng Trị", value: "Quang Tri" },
+    { label: "Sóc Trăng", value: "Soc Trang" },
+    { label: "Sơn La", value: "Son La" },
+    { label: "Tây Ninh", value: "Tay Ninh" },
+    { label: "Thái Bình", value: "Thai Binh" },
+    { label: "Thái Nguyên", value: "Thai Nguyen" },
+    { label: "Thanh Hóa", value: "Thanh Hoa" },
+    { label: "Thừa Thiên - Huế", value: "Thua Thien - Hue" },
+    { label: "Tiền Giang", value: "Tien Giang" },
+    { label: "Trà Vinh", value: "Tra Vinh" },
+    { label: "Tuyên Quang", value: "Tuyen Quang" },
+    { label: "Vĩnh Long", value: "Vinh Long" },
+    { label: "Vĩnh Phúc", value: "Vinh Phuc" },
+    { label: "Yên Bái", value: "Yen Bai" },
+  ];
+
+  const SubmitModal = () => {
+    // console.log({utilities});
+    // console.log({minPrice});
+    // console.log({maxPrice});
+    // console.log(typeof(minPrice));
+    // console.log(typeof(maxPrice));
+
+    let MinPrice = minPrice;
+    let MaxPrice = maxPrice;
+
+    if(typeof(MinPrice) !== 'number') {
+      MinPrice = parseInt(MinPrice);
+    }
+    if(typeof(MaxPrice) !== 'number') {
+      MaxPrice = parseInt(MaxPrice);
+    }
+    
+
+    const data = {
+      address: address,
+      utilities: utilities,
+      minPrice: MinPrice,
+      maxPrice: MaxPrice,
+    }
+    // console.log({data})
+    onInputChange(address);
+    console.log({address});
+    onFilterChange(data);
+
+    setIsOpenCheckIn(false);
+  }
+  
+
   return (
     <div className="navbar-wrapper">
       <div className="header-content clearfix">
+
+      <ModalComponent
+        modal={isOpenCheckIn}
+        toggle={toggleCheckInModal}
+        modalTitle="Bộ lọc"
+        footer={
+          <div>
+            <Button color="secondary" onClick={toggleCheckInModal}>
+              <FormattedMessage {...messages.Cancel} />
+            </Button>{' '}
+            <Button onClick={SubmitModal} color="primary">
+              <FormattedMessage {...messages.Accept} />
+            </Button>
+          </div>
+          }
+        >
+      <div>
+        <Select
+          placeholder="Chọn Vị Trí"
+          options={vietnamProvinces}
+          onChange={selectedOption => {
+            console.log('Selected bank:', selectedOption);
+            setAddress(selectedOption.label);
+          }}
+        />
+        <Row>
+          <Col xs={6} md={4}>
+            <CheckBox
+              label="Internet"
+              onChange={e => {
+                const index = utilities.indexOf('wifi');
+                console.log({utilities});
+                if (e.target.checked) {
+                  if (index === -1) {
+                    const newArr = [...utilities];
+                    newArr.push('wifi');
+                    setUtilities(newArr);
+                  }
+                } else if (index !== -1) {
+                  const newArr = [...utilities];
+                  newArr.splice(index, 1);
+                  setUtilities(newArr);
+                }
+              }}
+            />
+          </Col>
+          <Col xs={6} md={4}>
+            <CheckBox
+              label={<FormattedMessage {...messages.washingDrying} />}
+              onChange={e => {
+                const index = utilities.indexOf('giat_ui');
+                if (e.target.checked) {
+                  if (index === -1) {
+                    const newArr = [...utilities];
+                    newArr.push('giat_ui');
+                    setUtilities(newArr);
+                  }
+                } else if (index !== -1) {
+                  const newArr = [...utilities];
+                  newArr.splice(index, 1);
+                  setUtilities(newArr);
+                }
+              }}
+            />
+          </Col>
+          <Col xs={6} md={4}>
+            <CheckBox
+              label={<FormattedMessage {...messages.parkingLot} />}
+              onChange={e => {
+                const index = utilities.indexOf('giu_xe');
+                if (e.target.checked) {
+                  if (index === -1) {
+                    const newArr = [...utilities];
+                    newArr.push('giu_xe');
+                    setUtilities(newArr);
+                  }
+                } else if (index !== -1) {
+                  const newArr = [...utilities];
+                  newArr.splice(index, 1);
+                  setUtilities(newArr);
+                }
+              }}
+            />
+          </Col>
+          <Col xs={6} md={4}>
+            <CheckBox
+              label={<FormattedMessage {...messages.television} />}
+              onChange={e => {
+                const index = utilities.indexOf('truyen_hinh');
+                if (e.target.checked) {
+                  if (index === -1) {
+                    const newArr = [...utilities];
+                    newArr.push('truyen_hinh');
+                    setUtilities(newArr);
+                  }
+                } else if (index !== -1) {
+                  const newArr = [...utilities];
+                  newArr.splice(index, 1);
+                  setUtilities(newArr);
+                }
+              }}
+            />
+          </Col>
+          <Col xs={6} md={4}>
+            <CheckBox
+              label={
+                <FormattedMessage {...messages.AirConditioner} />
+              }
+              onChange={e => {
+                const index = utilities.indexOf('dieu_hoa');
+                if (e.target.checked) {
+                  if (index === -1) {
+                    const newArr = [...utilities];
+                    newArr.push('dieu_hoa');
+                    setUtilities(newArr);
+                  }
+                } else if (index !== -1) {
+                  const newArr = [...utilities];
+                  newArr.splice(index, 1);
+                  setUtilities(newArr);
+                }
+              }}
+            />
+          </Col>
+          <Col xs={6} md={4}>
+            <CheckBox
+              label={<FormattedMessage {...messages.toiletBowl} />}
+              onChange={e => {
+                const index = utilities.indexOf('bon_cau');
+                if (e.target.checked) {
+                  if (index === -1) {
+                    const newArr = [...utilities];
+                    newArr.push('bon_cau');
+                    setUtilities(newArr);
+                  }
+                } else if (index !== -1) {
+                  const newArr = [...utilities];
+                  newArr.splice(index, 1);
+                  setUtilities(newArr);
+                }
+              }}
+            />
+          </Col>
+          <Col xs={6} md={4}>
+            <CheckBox
+              label={<FormattedMessage {...messages.Mezzanine} />}
+              onChange={e => {
+                const index = utilities.indexOf('gac_lung');
+                if (e.target.checked) {
+                  if (index === -1) {
+                    const newArr = [...utilities];
+                    newArr.push('gac_lung');
+                    setUtilities(newArr);
+                  }
+                } else if (index !== -1) {
+                  const newArr = [...utilities];
+                  newArr.splice(index, 1);
+                  setUtilities(newArr);
+                }
+              }}
+            />
+          </Col>
+          <Col xs={6} md={4}>
+            <CheckBox
+              label={<FormattedMessage {...messages.washstand} />}
+              onChange={e => {
+                const index = utilities.indexOf('bon_rua_mat');
+                if (e.target.checked) {
+                  if (index === -1) {
+                    const newArr = [...utilities];
+                    newArr.push('bon_rua_mat');
+                    setUtilities(newArr);
+                  }
+                } else if (index !== -1) {
+                  const newArr = [...utilities];
+                  newArr.splice(index, 1);
+                  setUtilities(newArr);
+                }
+              }}
+            />
+          </Col>
+          <Col xs={6} md={4}>
+            <CheckBox
+              label={<FormattedMessage {...messages.clearTheRoom} />}
+              onChange={e => {
+                const index = utilities.indexOf('don_phong');
+                if (e.target.checked) {
+                  if (index === -1) {
+                    const newArr = [...utilities];
+                    newArr.push('don_phong');
+                    setUtilities(newArr);
+                  }
+                } else if (index !== -1) {
+                  const newArr = [...utilities];
+                  newArr.splice(index, 1);
+                  setUtilities(newArr);
+                }
+              }}
+            />
+          </Col>
+          <Col xs={6} md={4}>
+            <CheckBox
+              label={<FormattedMessage {...messages.WoodFloor} />}
+              onChange={e => {
+                const index = utilities.indexOf('san_go');
+                if (e.target.checked) {
+                  if (index === -1) {
+                    const newArr = [...utilities];
+                    newArr.push('san_go');
+                    setUtilities(newArr);
+                  }
+                } else if (index !== -1) {
+                  const newArr = [...utilities];
+                  newArr.splice(index, 1);
+                  setUtilities(newArr);
+                }
+              }}
+            />
+          </Col>
+          <Col xs={6} md={4}>
+            <CheckBox
+              label={<FormattedMessage {...messages.Wardrobe} />}
+              onChange={e => {
+                const index = utilities.indexOf('tu_quan_ao');
+                if (e.target.checked) {
+                  if (index === -1) {
+                    const newArr = [...utilities];
+                    newArr.push('tu_quan_ao');
+                    setUtilities(newArr);
+                  }
+                } else if (index !== -1) {
+                  const newArr = [...utilities];
+                  newArr.splice(index, 1);
+                  setUtilities(newArr);
+                }
+              }}
+            />
+          </Col>
+          <Col xs={6} md={4}>
+            <CheckBox
+              label={<FormattedMessage {...messages.shower} />}
+              onChange={e => {
+                const index = utilities.indexOf('voi_hoa_sen');
+                if (e.target.checked) {
+                  if (index === -1) {
+                    const newArr = [...utilities];
+                    newArr.push('voi_hoa_sen');
+                    setUtilities(newArr);
+                  }
+                } else if (index !== -1) {
+                  const newArr = [...utilities];
+                  newArr.splice(index, 1);
+                  setUtilities(newArr);
+                }
+              }}
+            />
+          </Col>
+          <Col xs={6} md={4}>
+            <CheckBox
+              label={<FormattedMessage {...messages.FreeTime} />}
+              onChange={e => {
+                const index = utilities.indexOf('gio_giac_tu_do');
+                if (e.target.checked) {
+                  if (index === -1) {
+                    const newArr = [...utilities];
+                    newArr.push('gio_giac_tu_do');
+                    setUtilities(newArr);
+                  }
+                } else if (index !== -1) {
+                  const newArr = [...utilities];
+                  newArr.splice(index, 1);
+                  setUtilities(newArr);
+                }
+              }}
+            />
+          </Col>
+          <Col xs={6} md={4}>
+            <CheckBox
+              label={
+                <FormattedMessage {...messages.PrivateEntrance} />
+              }
+              onChange={e => {
+                const index = utilities.indexOf('loi_di_rieng');
+                if (e.target.checked) {
+                  if (index === -1) {
+                    const newArr = [...utilities];
+                    newArr.push('loi_di_rieng');
+                    setUtilities(newArr);
+                  }
+                } else if (index !== -1) {
+                  const newArr = [...utilities];
+                  newArr.splice(index, 1);
+                  setUtilities(newArr);
+                }
+              }}
+            />
+          </Col>
+        </Row>
+        <Row>
+        <Col xs={4} sm={2} md={3} lg={2}>
+        {
+          <FormattedMessage {...messages.MinPrice}>
+            {msg => (
+              <InputBase
+                autoComplete={{}}
+                placeholder={msg}
+                value={(minPrice)}
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+                onChange={e => {
+                  // handleSearchTermChange(e);
+                  setMinPrice((e.target.value));
+                }}
+                className="HanbleSearch"
+              // onFocus={onSearch}
+              />
+            )}
+          </FormattedMessage>
+        }
+        </Col>
+        </Row>
+        <Row>
+        <Col xs={4} sm={2} md={3} lg={2}>
+        {
+          <FormattedMessage {...messages.MaxPrice}>
+            {msg => (
+              <InputBase
+                autoComplete={{}}
+                placeholder={msg}
+                value={(maxPrice)}
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+                onChange={e => {
+                  // handleSearchTermChange(e);
+                  setMaxPrice((e.target.value));
+                }}
+                className="HanbleSearch"
+              // onFocus={onSearch}
+              />
+            )}
+          </FormattedMessage>
+        }
+        </Col>
+        
+        </Row>
+      </div>
+      </ModalComponent>
 
         <Row>
           <Col xs={12} sm={2} md={3} lg={2} className="text-logo">

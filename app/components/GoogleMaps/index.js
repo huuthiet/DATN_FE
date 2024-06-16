@@ -26,10 +26,13 @@ const GoogleMaps = compose(
     setRoom = () => {}
   } = props;
 
+  console.log("listRoom GGG", listRoom);
+  console.log("position GGG", position);
+
 
   return (
     <GoogleMap
-      defaultZoom={14}
+      defaultZoom={12}
       defaultCenter={{ lat: 10.856866, lng: 106.763324 }}
       // defaultCenter={position}
       center={position}
