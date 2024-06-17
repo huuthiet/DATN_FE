@@ -5,8 +5,10 @@
  */
 
 import { Avatar } from '@material-ui/core';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState, useContext } from 'react';
+import localStoreService from 'local-storage';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -50,7 +52,17 @@ export function MapsPage(props) {
   const [currentPosition, setCurrentPosition] = useState({ lat: 10.856866, lng: 106.763324 })
 
 
-  const { inputValue = "ho chi minh" } = props;
+  const { 
+    inputValue = "ho chi minh",
+    valueFilter = {
+      address: 'Viet Nam',
+      minPrice: 0,
+      maxPrice: 100000000,
+      utilities: ["wifi","bon_cau", "dieu_hoa", "truyen_hinh", "voi_hoa_sen",
+        "giat_ui", "giu_xe", "gac_lung", "bon_rua_mat", "don_phong",
+        "san_go", "tu_quan_ao", "gio_giac_tu_do", "loi_di_rieng"]
+    }
+  } = props;
 
   const handlePlaceSelect = async (place) => {
     try {
@@ -76,9 +88,9 @@ export function MapsPage(props) {
   }, [inputValue]);
 
   useEffect(() => {
-    props.getListRoom();
+    props.getListRoom(valueFilter);
     props.getProfile();
-  }, []);
+  }, [valueFilter]);
 
   let isHost = false;
   if (localStore.get('user') && localStore.get('user').role) {
@@ -107,8 +119,7 @@ export function MapsPage(props) {
     return () => window.removeEventListener('resize', resizeWindow);
   }, []);
   document.documentElement.style.setProperty('--vh', `${windowHeight}px`);
-  const { listRoom = [], action1 } = props.mapsPage;
-
+  let { listRoom = [], action1 } = props.mapsPage;
 
   const [room, setRoom] = useState({});
 
@@ -125,6 +136,35 @@ export function MapsPage(props) {
       console.error(err);
     }
   };
+
+  const getDataFilter = async(dataFilter) => {
+    // const requestUrlFilter = urlLink.api.serverUrl + urlLink.api.searchMotel;
+    const requestUrlFilter = "http://localhost:5502/api/v1/homeKey/motelRoom/searchMotels";
+    console.log({dataFilter});
+    try {
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data',
+          Authorization: `Bearer ${localStoreService.get('user').token}`,
+        },
+      };
+      const response = await axios.post(requestUrlFilter, dataFilter);
+      console.log("ĐÃ GỌI FILTERERRRR", response);
+      listRoom = response.data.data.listMotel;
+      // setCurrentPosition(response.data.data.address);
+
+      console.log({listRoom})
+    } catch (error) {
+      console.log({error});
+      listRoom = [];
+    }
+
+  }
+  // useEffect(() => {
+  //   getDataFilter(valueFilter);
+  // }, [valueFilter]);
+
+  console.log({room})
   return (
     <div className="maps-page-wrapper">
       <Helmet>
@@ -283,8 +323,8 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    getListRoom: () => {
-      dispatch(getListRoom());
+    getListRoom: (payload) => {
+      dispatch(getListRoom(payload));
     },
     getProfile: () => {
       dispatch(getProfile());

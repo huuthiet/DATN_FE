@@ -145,6 +145,7 @@ import makeSelectApp from './selectors';
 import './style.scss';
 import { WarningOutlined } from '@material-ui/icons';
 import WithdrawRequestListHost from 'containers/WithdrawRequestListHost/Loadable';
+import { address } from 'ip';
 
 axios.defaults.headers.common.Authorization = `Bearer ${localStore.get(
   'token',
@@ -166,6 +167,15 @@ export function App(props) {
 
   // const [inputValue, setInputValue] = useState({ lat: 10.856866, lng: 106.763324 });
   const [inputValue, setInputValue] = useState('');
+  const [valueFilter, setValueFilter] = useState({
+    address: 'Viet Nam',
+    minPrice: 0,
+    maxPrice: 100000000,
+    utilities: ["wifi","bon_cau", "dieu_hoa", "truyen_hinh", "voi_hoa_sen",
+      "giat_ui", "giu_xe", "gac_lung", "bon_rua_mat", "don_phong",
+      "san_go", "tu_quan_ao", "gio_giac_tu_do", "loi_di_rieng"]
+  });
+  // const [positionFilter, setPositionFilter] = userState();
 
   return (
     <div className="app-wrapper">
@@ -188,10 +198,11 @@ export function App(props) {
         Search_Addresses={props.Search_Addresses}
         listroom={listroom}
         onInputChange={setInputValue}
+        onFilterChange={setValueFilter}
       />
       <Switch>
         {/* <Route exact path="/" component={MapsPage} /> */}
-        <Route exact path="/" render={() => <MapsPage inputValue={inputValue} />} />
+        <Route exact path="/" render={() => <MapsPage inputValue={inputValue} valueFilter={valueFilter} />} />
         <Route path="/auth" component={Auth} />
         <Route path="/bill-list" component={BillList} />
         <Route path="/report-problem/:id" component={ReportProblem} />

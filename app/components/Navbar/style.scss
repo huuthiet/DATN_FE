@@ -411,12 +411,28 @@
   .mobisearch {
     display: none;
   }
+  .filter-button{
+    border: none;
+    border-radius: 20px;
+    min-width: 60px;
+    background-color: #1f99e5;
+    color: #ffffff;
+    transition: all 0.3s ease-in-out;
+    .filter-icon{
+      font-size: 20px;
+      margin-right: 4px;
+    }
+    &:hover{
+      background-color: #0f5f9b;
+    }
+  }
 }
 
 @media (max-width: 576px) {
   .menulistSearchAll {
     display: none !important;
   }
+
   .mobisearch {
     display: block !important;
     .menulistSearchAll {

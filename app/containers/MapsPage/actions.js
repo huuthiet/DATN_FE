@@ -12,9 +12,10 @@ export function defaultAction() {
     };
 }
 
-export function getListRoom() {
+export function getListRoom(payload) {
     return {
         type: GET_LIST_ROOM,
+        payload,
     };
 }
 

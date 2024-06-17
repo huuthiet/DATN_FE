@@ -158,6 +158,10 @@ export default defineMessages({
     id: `${scope}.search_location`,
     defaultMessage: 'Tìm kiếm vị trí...',
   },
+  filter: {
+    id: `${scope}.filter`,
+    defaultMessage: 'Filter',
+  },
   TransactionLog: {
     id: `${scope}.TransactionLog`,
     defaultMessage: 'Nhật ký giao dịch',
@@ -185,5 +189,81 @@ export default defineMessages({
   wallet: {
     id: `${scope}.wallet`,
     defaultMessage: 'Số dư',
+  },
+  washingDrying: {
+    id: `${scope}.washingDrying`,
+    defaultMessage: 'Giặt ủi',
+  },
+  parkingLot: {
+    id: `${scope}.parkingLot`,
+    defaultMessage: 'Giữ xe',
+  },
+  television: {
+    id: `${scope}.television`,
+    defaultMessage: 'Truyền hình',
+  },
+  AirConditioner: {
+    id: `${scope}.AirConditioner`,
+    defaultMessage: 'Điều hòa',
+  },
+  toiletBowl: {
+    id: `${scope}.toiletBowl`,
+    defaultMessage: 'Bồn cầu',
+  },
+  Mezzanine: {
+    id: `${scope}.Mezzanine`,
+    defaultMessage: 'Gác lửng',
+  },
+  washstand: {
+    id: `${scope}.washstand`,
+    defaultMessage: 'Bồn rửa mặt',
+  },
+  clearTheRoom: {
+    id: `${scope}.clearTheRoom`,
+    defaultMessage: 'Dọn phòng',
+  },
+  WoodFloor: {
+    id: `${scope}.WoodFloor`,
+    defaultMessage: 'Sàn gỗ',
+  },
+  Wardrobe: {
+    id: `${scope}.Wardrobe`,
+    defaultMessage: 'Tủ quần áo',
+  },
+  shower: {
+    id: `${scope}.shower`,
+    defaultMessage: 'Vòi hoa sen',
+  },
+  FreeTime: {
+    id: `${scope}.FreeTime`,
+    defaultMessage: 'Giờ giấc tự do',
+  },
+  PrivateEntrance: {
+    id: `${scope}.PrivateEntrance`,
+    defaultMessage: 'Lối đi riêng',
+  },
+  wifi: {
+    id: `${scope}.wifi`,
+    defaultMessage: 'Internet',
+  },
+  Accept: {
+    id: `${scope}.Accept`,
+    defaultMessage: 'Chấp Nhận',
+  },
+  Cancel: {
+    id: `${scope}.Cancel`,
+    defaultMessage: 'Hủy',
+  },
+  RangePrice: {
+    id: `${scope}.RangePrice`,
+    defaultMessage: 'Khoảng Giá',
+  },
+  MinPrice: {
+    id: `${scope}.MinPrice`,
+    defaultMessage: 'Giá nhỏ nhất',
+  },
+  MaxPrice: {
+    id: `${scope}.MaxPrice`,
+    defaultMessage: 'Giá lớn nhất',
   },
 });

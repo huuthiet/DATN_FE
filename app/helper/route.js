@@ -29,6 +29,7 @@ export const urlLink = {
     profileDetail: '/v1/admin/user',
     about: '/v1/about/signUpAbout',
     motelList: '/v1/homeKey/motelRoom/list',
+    searchMotel: '/v1/homeKey/motelRoom/searchMotels',
     motelPendingCensorAccept: '/v1/homeKey/motelRoom/motelPendingCensor/',
     motelPendingCensorList: '/v1/homeKey/motelRoom/motelPendingCensor/list',
     motelPdf: '/v1/homeKey/motelRoom/pdf',

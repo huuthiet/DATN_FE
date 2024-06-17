@@ -12,7 +12,9 @@ import localStore from 'local-storage';
 import Money from '../../containers/App/format';
 
 function MarkerPrice(props) {
+  console.log("TIEMMMMMMM",)
   const { item, setRoom } = props;
+  // console.log('item', item);
   let address = {};
   if (item && item.address && item.address.geometry && item.address.geometry.location) {
     address = {

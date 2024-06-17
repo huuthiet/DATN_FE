@@ -571,7 +571,7 @@ const FollowEnergyAdmin = () => {
         <title>Energy</title>
         <meta name="description" content="Description of Energy" />
       </Helmet>
-      <div className="title-abc">Theo dõi năng lượng: {name}</div>
+      <div className="title-abc">Theo dõi thông số điện năng: {name}</div>
 
       {showAlert && (
         <Alert severity="error">
