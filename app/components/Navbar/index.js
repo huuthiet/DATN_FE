@@ -121,11 +121,11 @@ const useStyles = makeStyles(theme => ({
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
-    // width: '10%',
+    width: '100%',
     border: '1px solid',
     borderRadius: '5px',
     [theme.breakpoints.up('md')]: {
-      // width: '30ch',
+      // width: '20ch',
     },
   },
   sectionDesktop: {
@@ -433,9 +433,15 @@ const Navbar = props => {
                 setAddress(selectedOption.label);
               }}
             />
-            <Row
-              style={{ marginTop: '20px' }}
+            <span
+              style={{ fontSize: '22px', fontWeight: '600' }}
             >
+              <FormattedMessage {...messages.utilities} />
+            </span>
+            <Row
+              style={{ marginTop: '10px' }}
+            >
+
               <Col xs={6} md={4}>
                 <CheckBox
                   label="Internet"
@@ -708,8 +714,13 @@ const Navbar = props => {
                 />
               </Col>
             </Row>
+            <span
+              style={{ fontSize: '22px', fontWeight: '600' }}
+            >
+              <FormattedMessage {...messages.priceRange} />
+            </span>
             <Row
-              style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-start' }}>
+              style={{ marginTop: '10px', display: 'flex', justifyContent: 'flex-start' }}>
               <Col xs={4} sm={2} md={3} lg={3}>
                 {
                   <FormattedMessage {...messages.MinPrice}>

@@ -162,6 +162,14 @@ export default defineMessages({
     id: `${scope}.filter`,
     defaultMessage: 'Filter',
   },
+  utilities: {
+    id: `${scope}.utilities`,
+    defaultMessage: 'Tiện ích',
+  },
+  priceRange: {
+    id: `${scope}.priceRange`,
+    defaultMessage: 'Khoảng giá',
+  },
   TransactionLog: {
     id: `${scope}.TransactionLog`,
     defaultMessage: 'Nhật ký giao dịch',
