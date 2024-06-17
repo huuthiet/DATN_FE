@@ -34,6 +34,10 @@ export default defineMessages({
     id: `${scope}.unknown`,
     defaultMessage: 'Không có phòng',
   },
+  soonExpireContract: {
+    id: `${scope}.soonExpireContract`,
+    defaultMessage: 'Sắp hết hợp đồng',
+  },
   deposited: {
     id: `${scope}.deposited`,
     defaultMessage: 'Đã đặt cọc',

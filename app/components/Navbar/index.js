@@ -285,6 +285,10 @@ const Navbar = props => {
     setIsOpenCheckIn(!isOpenCheckIn);
   };
 
+  const openFilter = () => {
+    setIsOpenCheckIn(true);
+  }
+
   const [selectedUtility, setSelectedUtility] = useState(null);
 
   const [address, setAddress] = useState("Viet Nam");
@@ -397,10 +401,10 @@ const Navbar = props => {
       maxPrice: MaxPrice,
     }
     // console.log({data})
+    console.log("JKAHLSDFKJAHSDFLJKHASDKLJFH")
     onInputChange(address);
     console.log({ address });
     onFilterChange(data);
-
     setIsOpenCheckIn(false);
   }
 
@@ -849,13 +853,14 @@ const Navbar = props => {
                 {menulistSearch}
               </div>
             </li>
-            <Button
+            {/* <Button
               className="filter-button"
               onClick={toggleCheckInModal}
+              // onClick={openFilter}
             >
               <FilterList className='filter-icon' />
               <FormattedMessage {...messages.filter} />
-            </Button>
+            </Button> */}
             <div className="mobisearch">
               <li className="menulistSearchAll">
                 <div className={classes.search}>
@@ -1482,8 +1487,12 @@ const Navbar = props => {
                   <NavLink
                     exact
                     to="/auth/login"
-                    onClick={() => {
+                    onClick={(e) => {
+                      // e.preventDefault();
+                      // e.stopPropagation();
                       setToggle(false);
+                      // handleClickLogin();
+                      console.log("HIHI")
                     }}
                   >
                     <i className="fa fa-sign-in" aria-hidden="true" />{' '}
@@ -1492,11 +1501,11 @@ const Navbar = props => {
                 </li>
               )}
             </ul>
-          </Col >
-        </Row >
-      </div >
+          </Col>
+        </Row>
+      </div>
 
-    </div >
+    </div>
   );
 };
 
