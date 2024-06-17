@@ -52,13 +52,13 @@ export function MapsPage(props) {
   const [currentPosition, setCurrentPosition] = useState({ lat: 10.856866, lng: 106.763324 })
 
 
-  const { 
+  const {
     inputValue = "ho chi minh",
     valueFilter = {
       address: 'Viet Nam',
       minPrice: 0,
       maxPrice: 100000000,
-      utilities: ["wifi","bon_cau", "dieu_hoa", "truyen_hinh", "voi_hoa_sen",
+      utilities: ["wifi", "bon_cau", "dieu_hoa", "truyen_hinh", "voi_hoa_sen",
         "giat_ui", "giu_xe", "gac_lung", "bon_rua_mat", "don_phong",
         "san_go", "tu_quan_ao", "gio_giac_tu_do", "loi_di_rieng"]
     }
@@ -137,10 +137,10 @@ export function MapsPage(props) {
     }
   };
 
-  const getDataFilter = async(dataFilter) => {
+  const getDataFilter = async (dataFilter) => {
     // const requestUrlFilter = urlLink.api.serverUrl + urlLink.api.searchMotel;
     const requestUrlFilter = "http://localhost:5502/api/v1/homeKey/motelRoom/searchMotels";
-    console.log({dataFilter});
+    console.log({ dataFilter });
     try {
       const config = {
         headers: {
@@ -153,9 +153,9 @@ export function MapsPage(props) {
       listRoom = response.data.data.listMotel;
       // setCurrentPosition(response.data.data.address);
 
-      console.log({listRoom})
+      console.log({ listRoom })
     } catch (error) {
-      console.log({error});
+      console.log({ error });
       listRoom = [];
     }
 
@@ -164,7 +164,7 @@ export function MapsPage(props) {
   //   getDataFilter(valueFilter);
   // }, [valueFilter]);
 
-  console.log({room})
+  console.log({ room })
   return (
     <div className="maps-page-wrapper">
       <Helmet>
