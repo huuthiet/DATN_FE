@@ -38,7 +38,7 @@ export default defineMessages({
   },
   AmountOfMoney: {
     id: `${scope}.AmountOfMoney`,
-    defaultMessage: 'Số tiền ',
+    defaultMessage: 'Số tiền: ',
   },
   AmountOfMoneyDec: {
     id: `${scope}.AmountOfMoneyDec`,

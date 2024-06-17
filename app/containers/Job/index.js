@@ -246,11 +246,7 @@ export function Job(props) {
   useInjectReducer({ key: 'job', reducer });
   useInjectSaga({ key: 'job', saga });
   const { room = {}, jobError, jobErrorNuber } = props.job;
-  console.log('check job: ', props.job);
-  console.log('check job error: ', jobErrorNuber);
   const { bankInfo = [] } = props.bankInfo;
-  console.log('bankInfo', bankInfo);
-  console.log('props.bankInfo;', props.bankInfo);
 
   const {
     bank = '',
@@ -269,7 +265,6 @@ export function Job(props) {
     depositPrice = 0,
   } = room;
   useEffect(() => {
-    console.log("Check props: ", props);
     props.getRoom(id);
     props.getBankInfo(id);
     Modal.setAppElement('body');
@@ -369,11 +364,7 @@ export function Job(props) {
   }
 
   const SubmitCashModal = () => {
-    console.log('isSubmitted', isSubmitted);
-    // console.log('hahaha', imageFile);
-    // setIsSubmitted({ ...isSubmitted, imageFile });
     const requestData = { ...isSubmitted };
-    console.log("check request data", requestData);
     setIsOpenTransfer(!isOpenTransfer);
     //reset lại giá trị của state
     setSelectedBankName('');
@@ -393,8 +384,6 @@ export function Job(props) {
       toast.error("Vui lòng chọn ngân hàng");
     }
   }
-
-  console.log("minimumMonths room: ", minimumMonths);
 
   let bankOptions = [];
 
@@ -515,13 +504,8 @@ export function Job(props) {
             validationSchema={validateForm}
             onSubmit={evt => {
               const formData = { ...evt, type };
-              console.log("bankingggggg", banking);
-              console.log("evt in form: ", evt)
-              console.log('formData start', formData);
-              console.log('imageFile', imageFile);
               if (imageFile) {
                 formData.append('imageFile', imageFile);
-                console.log('formData with imageFile', formData);
               }
               if (rentalPeriodAction > 0) {
                 formData.rentalPeriod = rentalPeriodAction;
@@ -601,7 +585,7 @@ export function Job(props) {
                     <div className="deposit" style={{ minHeight: '200px' }}>
                       <h5>
                         <FormattedMessage {...messages.AmountOfMoney} />{' '}
-                        {Money(values.deposit)} đ
+                        {Money(values.deposit)}
                       </h5>
                       <div style={{ minHeight: '50px' }}>
                         <FormattedMessage {...messages.AmountOfMoneyTransfer} />

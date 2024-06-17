@@ -40,7 +40,7 @@ function FloorDetailV2(props) {
       }
     }
   }
-  // console.log(localStore.get('user').role.length);
+  console.log(localStore.get('user').role);
 
   const [listRoom, setListRoom] = useState([]);
   const [idMotel, setIdMotel] = useState(props.idMotel || null);
@@ -56,17 +56,12 @@ function FloorDetailV2(props) {
 
   const history = useHistory();
 
-  console.log("v2222", props);
-  console.log("floors", floors);
-  console.log("idMotell", props.idMotel);
-
   const motelId = props.motelDetail.motel._id;
 
   // get params from url
 
   // Effect to update the URL when index changes
   useEffect(() => {
-    console.log("GỌI LẤYYYYYYY")
     // Get the current URL
     const currentURL = new URL(window.location.href);
 
@@ -86,7 +81,6 @@ function FloorDetailV2(props) {
       startLoading();
       const url = urlLink.api.serverUrl + urlLink.api.motelDetailOneFloor + idMotel + '/' + index;
       const response = await axios.get(url);
-      console.log("uuuuu", response);
       setListRoom(response.data.data);
       console.log({ listRoom });
       stopLoading();
@@ -115,22 +109,20 @@ function FloorDetailV2(props) {
         ))}
       </div>
       <div className="room-list">
-        {localStoreService.get('user') === null
-          ? history.push(`/auth/login`)
-          : localStoreService.get('user').role.length > 1 && (
-            <button
-              className={ClassNames('button-add', { hidden: !isEdit })}
-              onClick={() => {
-                // console.log(floors[index]._id,
+        {isHost && (
+          <button
+            className={ClassNames('button-add', { hidden: !isEdit })}
+            onClick={() => {
+              // console.log(floors[index]._id,
 
-                history.push(`/createroom/${floors[index]}`);
-              }}
-            >
-              <Add className='add-icon' />
-              <FormattedMessage {...messages.addRoom} />
-              {/* <img src="/icon_add.png" /> */}
-            </button>
-          )}
+              history.push(`/createroom/${floors[index]}`);
+            }}
+          >
+            <Add className='add-icon' />
+            <FormattedMessage {...messages.addRoom} />
+            {/* <img src="/icon_add.png" /> */}
+          </button>
+        )}
 
         <div className="room-wrapper">
           <div className={ClassNames('room-container')}>

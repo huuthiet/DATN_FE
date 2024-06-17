@@ -27,7 +27,7 @@ const ModalComponent = (props) => {
     }, [modal]);
 
     return (
-        <Modal style={{ minHeight: '800px', minWidth: '800px' }} isOpen={modalState} toggle={toggle} className={className}>
+        <Modal style={{ minHeight: '800px', minWidth: '50%' }} isOpen={modalState} toggle={toggle} className={className}>
             <ModalHeader style={{ fontWeight: '600', color: 'brown' }} toggle={toggle}>{modalTitle}</ModalHeader>
             <ModalBody style={{ padding: '20px', fontSize: '16px', lineHeight: '1.6', bottom: '20px' }}>{children}</ModalBody>
             <ModalFooter>{footer}</ModalFooter>

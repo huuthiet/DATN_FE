@@ -193,6 +193,7 @@
   "CreateMotel.containers.EnterNumberPhone": "Nhập số điện thoại",
   "CreateMotel.containers.enterDescription": "Nhập mô tả",
   "CreateMotel.containers.enterMotelName": "Nhập tên nhà trọ",
+  "CreateMotel.containers.roomPrice": "Giá: ",
   "CreateMotel.containers.electricityPrice": "Giá điện",
   "CreateMotel.containers.waterPrice": "Giá nước",
   "CreateMotel.containers.wifiPrice": "Giá xe",
@@ -201,7 +202,7 @@
   "CreateMotel.containers.Finish": "Hoàn thành",
   "CreateRoom.containers.monthlyPayment": "Thanh toán hàng tháng",
   "Motel.containers.Floor": "Tầng",
-  "Motel.containers.Room": "Phòng",
+  "Motel.containers.Room": "Phòng: ",
   "Motel.containers.Information": "Thông tin sơ lược",
   "Motel.containers.NumberofFloors": "Số tầng:",
   "Motel.containers.All": "Tất cả:",
@@ -296,7 +297,7 @@
   "Job.containers.VehiclePrice": "Giá xe",
   "Job.containers.ServicePrice": "Phí dịch vụ",
   "Job.containers.TotalPrice": "Tổng tiền",
-  "Job.containers.AmountOfMoney": "Hóa đơn là",
+  "Job.containers.AmountOfMoney": "Hóa đơn là: ",
   "Job.containers.AmountOfMoneyDec": "Số tiền sẽ được trừ vào ví của bạn, bạn có thực sự muốn thanh toán không?",
   "Job.containers.AmountOfMoneyTransfer": "Vui lòng chọn tên ngân hàng để thực hiện chuyển tiền!",
   "Job.containers.Accept": "Chấp nhận",
@@ -320,7 +321,7 @@
   "Job.containers.ErrCheckRom": "Bạn thực sự muốn chọn một ngày",
   "Job.containers.InformationRoom": "Thông tin cho thuê phòng",
   "Job.containers.Motel": "Nhà trọ",
-  "Job.containers.Room": "Phòng",
+  "Job.containers.Room": "Phòng: ",
   "Job.containers.Activated": "Đã kích hoạt",
   "Job.containers.PaymentDeposit": "Tài khoản của bạn không đủ, vui lòng nạp thêm để tiến hành thanh toán!",
   "Job.containers.Deposit": "Đặt cọc",
@@ -778,5 +779,7 @@
   "ManageDepositAdmin.containers.Detail": "Chi tiết",
   "ManageDepositAdmin.containers.ManageBill": "Hóa đơn chờ thanh toán",
   "ManageDepositAdmin.containers.RefundDeposit": "Quản lý hoàn tiền cọc",
-  "ManageDepositAdmin.containers.DepositHistory": "Lịch sử tiền cọc"
+  "ManageDepositAdmin.containers.DepositHistory": "Lịch sử tiền cọc",
+  "CensorMotel.containers.Header": "Duyệt thông tin khu trọ",
+  "CensorHost.containers.Header": "Duyệt thông tin chủ trọ"
 }

@@ -43,6 +43,7 @@ import {
   PaymentOutlined,
   ExitToAppRounded,
   Close,
+  CheckCircleOutline,
 } from '@material-ui/icons';
 import { geocodeByAddress, getLatLng } from 'react-google-autocomplete';
 
@@ -588,7 +589,7 @@ const Navbar = props => {
                         </DropdownItem> */}
                           <DropdownItem
                             className={
-                              pathname.includes('/user/hostMotelRoom')
+                              pathname.includes('/user/hostRevenue')
                                 ? 'active'
                                 : ''
                             }
@@ -797,10 +798,10 @@ const Navbar = props => {
                             }
                             onClick={() => history.push('/admin/censor-motels/')}
                           >
-                            <RestoreOutlined className="icon" />
+                            <CheckCircleOutline className="icon" />
                             <FormattedMessage {...messages.acceptMotels} />
-                        </DropdownItem>
-                        <DropdownItem
+                          </DropdownItem>
+                          <DropdownItem
                             className={
                               pathname.includes('/admin/censor-hosts')
                                 ? 'active'
@@ -808,9 +809,9 @@ const Navbar = props => {
                             }
                             onClick={() => history.push('/admin/censor-hosts/')}
                           >
-                            <RestoreOutlined className="icon" />
+                            <CheckCircleOutline className="icon" />
                             <FormattedMessage {...messages.acceptHosts} />
-                        </DropdownItem>
+                          </DropdownItem>
                         </Fragment>
                       )}
                       {/* Customer role */}

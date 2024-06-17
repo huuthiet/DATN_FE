@@ -13,14 +13,12 @@ import Money from '../../containers/App/format';
 
 function MarkerPrice(props) {
   const { item, setRoom } = props;
-  console.log('item', item);
   let address = {};
   if (item && item.address && item.address.geometry && item.address.geometry.location) {
     address = {
       lat: item.address.geometry.location.lat,
       lng: item.address.geometry.location.lng,
     };
-    console.log('address', address);
   } else {
     return null;
   }

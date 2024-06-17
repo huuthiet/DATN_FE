@@ -843,7 +843,7 @@ export function JobDetailUser(props) {
               <ListItemText
                 primary={<FormattedMessage {...messages.ExpireDate} />}
                 secondary={
-                  currentOrder.type === 'afterCheckInCost' ? moment(currentOrder.expireTime).format("DD/MM/YYYY"): ""
+                  currentOrder.type === 'afterCheckInCost' ? moment(currentOrder.expireTime).format("DD/MM/YYYY") : ""
                 }
               />
             )}
@@ -1003,7 +1003,7 @@ export function JobDetailUser(props) {
               // secondary={moment(lastDay).format('DD/MM/YYYY')}
               secondary={
                 currentOrder.type === 'monthly' ? moment(currentOrder.expireTime).startOf("month").format("DD/MM/YYYY")
-                : moment().add(1, "months").startOf("month").format("DD/MM/YYYY")
+                  : moment().add(1, "months").startOf("month").format("DD/MM/YYYY")
               }
             />
             {currentOrder.type === 'monthly' && (
@@ -1148,7 +1148,7 @@ export function JobDetailUser(props) {
         <div className="deposit" style={{ minHeight: '200px' }}>
           <h5>
             <FormattedMessage {...messages.AmountOfMoney} />
-            {Money(afterCheckInCost)} đ
+            {Money(afterCheckInCost)}
           </h5>
           <div style={{ minHeight: '50px' }}>
             <FormattedMessage {...messages.AmountOfMoneyTransfer} />

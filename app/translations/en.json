@@ -187,6 +187,7 @@
   "CreateMotel.containers.rangePrice": "The price range you want",
   "CreateMotel.containers.minPrice": "Lowest price",
   "CreateMotel.containers.maxPrice": "Highest price",
+  "CreateMotel.containers.roomPrice": "Price: ",
   "CreateMotel.containers.roomAcreage": "Room acreage",
   "CreateMotel.containers.ProfileRoom": "Enter your hostel information",
   "CreateMotel.containers.EnterNumberPhone": "Enter your phone number",
@@ -301,7 +302,7 @@
   "Job.containers.VehiclePrice": "Vehicle Price",
   "Job.containers.ServicePrice": "Service Price",
   "Job.containers.TotalPrice": "Total Price",
-  "Job.containers.AmountOfMoney": "Amount of money",
+  "Job.containers.AmountOfMoney": "Amount of money: ",
   "Job.containers.AmountOfMoneyDec": "Will subtract it from your wallet, do you really want to pay?",
   "Job.containers.Accept": "Accept",
   "Job.containers.Cancel": "Cancel",
@@ -792,5 +793,7 @@
   "ManageDepositAdmin.containers.Detail": "Detail",
   "ManageDepositAdmin.containers.ManageBill": "Manage Bill",
   "ManageDepositAdmin.containers.RefundDeposit": "Refund Deposit",
-  "ManageDepositAdmin.containers.DepositHistory": "Deposit History"
+  "ManageDepositAdmin.containers.DepositHistory": "Deposit History",
+  "CensorMotel.containers.Header": "Censor Motel",
+  "CensorHost.containers.Header": "Censor Host"
 }

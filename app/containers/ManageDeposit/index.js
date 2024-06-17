@@ -61,7 +61,7 @@ export function ManageDeposit(props) {
       field: 'action-1',
       headerName: 'Quản lý duyệt cọc',
       headerAlign: 'center',
-      width: 200,
+      width: 250,
       headerClassName: 'header-bold',
       renderCell: params =>
       // eslint-disable-next-line no-unused-expressions
@@ -82,7 +82,7 @@ export function ManageDeposit(props) {
       field: 'action-2',
       headerName: 'Duyệt thanh toán khi nhận phòng',
       headerAlign: 'center',
-      width: 300,
+      width: 350,
       headerClassName: 'header-bold',
       renderCell: params =>
       // eslint-disable-next-line no-unused-expressions

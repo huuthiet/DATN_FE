@@ -108,7 +108,7 @@ export function Profile(props) {
     showAlert = false,
     alert = {},
   } = props.profile;
-  console.log({profile})
+  console.log({ profile })
 
   const TenMegaBytes = 10 * 1024 * 1024;
   const handleFileInputChange = e => {
@@ -222,59 +222,14 @@ export function Profile(props) {
                         }`}
                     />
                   </ListItem>
-                  <Divider variant="inset" component="li" />
-                  <ListItem>
-                    {/* <ListItemAvatar>
-                      <Avatar>
-                        <AccountBalanceWalletIcon />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={<FormattedMessage {...messages.wallet} />}
-                      secondary={Money(Number(profile.wallet))}
-                    />
-                    <ListItemSecondaryAction>
-                      <IconButton
-                        edge="end"
-                        aria-label="comments"
-                        onClick={() => {
-                          history.push('/recharge');
-                        }}
-                      >
-                        <AddIcon />
-                      </IconButton>
-                    </ListItemSecondaryAction> */}
-                  </ListItem>
                   <Row
                     style={{
                       display: 'flex',
                       justifyContent: 'center',
                       alignItems: 'center',
+                      marginTop: '20px',
                     }}
                   >
-                    {/* <Col md={4} style={{ padding: '0' }}>
-                      <div className={classes.root}>
-                        <input
-                          accept=".png, .jpg"
-                          className={classes.input}
-                          id="contained-button-file"
-                          type="file"
-                          onChange={e => {
-                            handleFileInputChange(e);
-                          }}
-                        />
-                        <label htmlFor="contained-button-file">
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            component="span"
-
-                          >
-                            {<FormattedMessage {...messages.uploadAvata} />}
-                          </Button>
-                        </label>
-                      </div>
-                    </Col> */}
                     <Col
                       style={{
                         display: 'flex',
@@ -357,6 +312,7 @@ export function Profile(props) {
                         </Tooltip>
                       </ListItemSecondaryAction>
                     </ListItem>
+                    <Divider variant="inset" component="li" />
                     <ListItem>
                       <ListItemAvatar>
                         <Avatar>
@@ -382,55 +338,18 @@ export function Profile(props) {
                       />
                     </ListItem>
                     <Divider variant="inset" component="li" />
-                    {/* <ListItem>
-                      <ListItemAvatar>
-                        <Avatar>
-                          <AccountBalanceWalletIcon />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={<FormattedMessage {...messages.wallet} />}
-                        secondary={Money(Number(profile.wallet))}
-                      />
-                    </ListItem> */}
-                    <Row style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
+                    <Row className='map-profile-btn'
                     >
-                      {/* <Col md={4} style={{ padding: '0' }}>
-                        <div className={classes.root}>
-                          <input
-                            accept=".png, .jpg"
-                            className={classes.input}
-                            id="contained-button-file"
-                            type="file"
-                            onChange={e => {
-                              handleFileInputChange(e);
-                            }}
-                          />
-                          <label htmlFor="contained-button-file">
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              component="span"
-                            >
-                              {<FormattedMessage {...messages.uploadAvata} />}
-                            </Button>
-                          </label>
-                        </div>
-                      </Col> */}
                       <Col
                         style={{
                           display: 'flex',
                           justifyContent: 'center',
                           alignItems: 'center',
                         }}
-                        md={4}
+                        xs={6} md={4}
                       >
                         <Button
-                          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '4px', margin: 'auto' }}
+                          className='map-btn'
                           onClick={() => {
                             history.push('/');
                           }}
@@ -445,13 +364,13 @@ export function Profile(props) {
                           justifyContent: 'center',
                           alignItems: 'center',
                         }}
-                        md={4}
+                        xs={6} md={4}
                       >
                         <Button
                           variant="contained"
                           color="primary"
                           component="span"
-                          style={{ margin: 'auto' }}
+                          className='profile-update-btn'
                           onClick={() => {
                             history.push(`/profile/${_id}`);
                           }}
@@ -466,10 +385,10 @@ export function Profile(props) {
             </div>
             {(role[1] !== 'master') & (role[0] !== 'master') ? (
               <Row xs={12} className='motel-title'>
-                <Col xs={6} className='motellist-title'>
+                <Col xs={9} sm={6} className='motellist-title'>
                   <FormattedMessage {...messages.listbuilding} className="add-new-title" />
                 </Col>
-                <Col xs={6} className='add-new-button-container'>
+                <Col xs={2} sm={6} className='add-new-button-container'>
                   <Button
                     className='add-new-btn'
                     component="span"
@@ -480,7 +399,7 @@ export function Profile(props) {
                     <div className="add-new-icon">
                       <i className="fa fa-plus" aria-hidden="true" />
                     </div>
-                    <div>
+                    <div className='add-new-building-text'>
                       {<FormattedMessage {...messages.addnew} />}
                     </div>
                   </Button>
@@ -495,17 +414,17 @@ export function Profile(props) {
                   {motelList.map((motel, index) => (
                     <li key={motel._id}>
                       <Row className="motel">
-                        <Col xs={4} className="motel-name">
+                        <Col xs={6} sm={4} className="motel-name">
                           {index + 1}. {motel.name}
                         </Col>
-                        <Col xs={4}>
+                        <Col xs={6} sm={4}>
                           {motel.isAcceptedByAdmin === true ? (
                             <div>Đã phê duyệt</div>
                           ) : (
                             <div>Chưa phê duyệt</div>
                           )}
                         </Col>
-                        <Col xs={4}>
+                        <Col xs={12} sm={4}>
                           <div className='edit-delete-btn'>
                             <div className="motel-edit"
                               onClick={() => {
@@ -551,35 +470,27 @@ export function Profile(props) {
         </div>
         {jobs.length !== 0 ? (
           <>
-            {/* <div className='job-header'>
-              <div className='job-fullname'>
-                <Person className='fullname-icon' />
-                Tên
-              </div>
-              <div className='job-motel'>
-                <Home className='motel-icon' />
-                Tên tòa nhà
-              </div>
-            </div> */}
             {jobs.map((job, index) => (
               <Grid item xs={12} key={job._id}>
                 <div className='job-information'>
-                  <div className='job-detail' container justify="center" alignItems="center">
-                    <div className='job-item1'>
-                      <div className='job-fullname'>
-                        {index + 1}{' '}
-                        <Person className='fullname-icon' />{' '}
-                        <Typography className='fullname-text'>
-                          {job.fullName}
-                        </Typography>
-                      </div>
+                  <Row className='job-detail' container justify="center" alignItems="center">
+                    <Col xs={12} sm={8} >
+                      <Row xs={12} className='job-item1'>
+                        <Col xs={12} sm={5} className='job-fullname'>
+                          {index + 1}{' '}
+                          <Person className='fullname-icon' />{' '}
+                          <Typography className='fullname-text'>
+                            {job.fullName}
+                          </Typography>
+                        </Col>
 
-                      <div className='job-phone'>
-                        <Home className='phone-icon' />
-                        <Typography className='phone-text'>{job.motelName}</Typography>
-                      </div>
-                    </div>
-                    <div className='job-item2'>
+                        <Col xs={12} sm={6} className='job-phone'>
+                          <Home className='phone-icon' />
+                          <Typography className='phone-text'>{job.motelName}</Typography>
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col xs={12} sm={4} className='job-item2'>
                       <div className='job-btn'>
                         <Tooltip title="Xem chi tiết" placement='top'>
                           {job && job.room && job.room._id !== null ? (
@@ -629,8 +540,8 @@ export function Profile(props) {
                           </Button>
                         </Tooltip>
                       </div>
-                    </div>
-                  </div>
+                    </Col>
+                  </Row>
                 </div>
               </Grid>
             ))}

@@ -37,7 +37,7 @@ function FloorDetail(props) {
       }
     }
   }
-  // console.log(localStore.get('user').role.length);
+  console.log(localStore.get('user').role);
   const history = useHistory();
   // get params from url
 
@@ -72,23 +72,19 @@ function FloorDetail(props) {
         ))}
       </div>
       <div className="room-list">
-        {localStoreService.get('user') === null
-          ? history.push(`/auth/login`)
-          : localStoreService.get('user').role.length > 1 && (
-            <button
-              className={ClassNames('button-add', { hidden: !isEdit })}
-              onClick={() => {
-                // console.log(floors[index]._id,
-
-                history.push(`/createroom/${floors[index]._id}`);
-              }}
-            >
-              <Add className='add-icon' />
-              Thêm phòng
-              {/* <FormattedMessage {...messages.addRoom} /> */}
-              {/* <img src="/icon_add.png" /> */}
-            </button>
-          )}
+        {isHost && (
+          <div
+            className="add-room"
+            onClick={() => {
+              history.push(
+                `/motel/${props.motelDetail.motel._id}/create-room?floor=${index}`,
+              );
+            }}
+          >
+            <Add />
+            <FormattedMessage id="addRoom" />
+          </div>
+        )}
 
         <div className="room-wrapper">
           <div className={ClassNames('room-container')}>

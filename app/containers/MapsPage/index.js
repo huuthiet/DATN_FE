@@ -29,6 +29,8 @@ import { LocationOn, Phone } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import GooglePlacesAutocomplete from 'react-google-autocomplete';
+import localStore from 'local-storage';
+
 import {
   Grid,
   Row,
@@ -42,6 +44,8 @@ export function MapsPage(props) {
   const history = useHistory();
   useInjectReducer({ key: 'mapsPage', reducer });
   useInjectSaga({ key: 'mapsPage', saga });
+
+
 
   const [currentPosition, setCurrentPosition] = useState({ lat: 10.856866, lng: 106.763324 })
 
@@ -59,7 +63,7 @@ export function MapsPage(props) {
       const data = await response.json();
       const { lat, lng } = data.results[0].geometry.location;
       setCurrentPosition({ lat: lat, lng: lng });
-      console.log("VỊ TRÍIIII", data);
+      // console.log("VỊ TRÍIIII", data);
       // setCoordinates({ lat, lng });
     } catch (error) {
       console.error('Error fetching coordinates:', error);
@@ -75,6 +79,18 @@ export function MapsPage(props) {
     props.getListRoom();
     props.getProfile();
   }, []);
+
+  let isHost = false;
+  if (localStore.get('user') && localStore.get('user').role) {
+    if (localStore.get('user').role.length) {
+      for (let index = 0; index < localStore.get('user').role.length; index++) {
+        const element = localStore.get('user').role[index];
+        if (element == 'host') {
+          isHost = true;
+        }
+      }
+    }
+  }
 
   const [windowHeight, setWindowHeight] = useState(0);
   const resizeWindow = () => {
@@ -177,15 +193,26 @@ export function MapsPage(props) {
                         >
                           <FormattedMessage {...messages.Cancel} />
                         </button>
-                        <button
-                          className="detail-button"
-                          onClick={() => {
-                            /* eslint no-underscore-dangle: 0 */
-                            history.push(`/motel/${room._id}`);
-                          }}
-                        >
-                          <FormattedMessage {...messages.Detail} />
-                        </button>
+                        {isHost ? (
+                          <button
+                            className="detail-button"
+                            onClick={() => {
+                              /* eslint no-underscore-dangle: 0 */
+                              history.push(`/motel/${room._id}`);
+                            }}
+                          >
+                            <FormattedMessage {...messages.Detail} />
+                          </button>) : (
+                          <button
+                            className="detail-button"
+                            onClick={() => {
+                              /* eslint no-underscore-dangle: 0 */
+                              history.push(`/motel-detail-V2/${room._id}`);
+                            }}
+                          >
+                            <FormattedMessage {...messages.Detail} />
+                          </button>
+                        )}
                       </div>
                     </Col>
                   </Col>

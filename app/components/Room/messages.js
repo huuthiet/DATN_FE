@@ -10,6 +10,10 @@ export const scope = 'CreateRoom.containers';
 export const scopeCreateModel = 'CreateMotel.containers';
 
 export default defineMessages({
+  roomPrice: {
+    id: `${scopeCreateModel}.roomPrice`,
+    defaultMessage: 'Giá: ',
+  },
   wifiPrice: {
     id: `${scopeCreateModel}.wifiPrice`,
     defaultMessage: 'Giá xe',
@@ -45,10 +49,6 @@ export default defineMessages({
   AcreageRoom: {
     id: `${scope}.AcreageRoom`,
     defaultMessage: 'Diện tích phòng',
-  },
-  PriceName: {
-    id: `${scope}.PriceName`,
-    defaultMessage: 'Giá phòng',
   },
   electricityPrice: {
     id: `${scope}.electricityPrice`,
@@ -204,10 +204,10 @@ export default defineMessages({
   },
   Room: {
     id: `${scope}.Room`,
-    defaultMessage: 'Phòng',
+    defaultMessage: 'Phòng: ',
   },
   Acreage: {
     id: `${scope}.Acreage`,
-    defaultMessage: 'Diện tích',
+    defaultMessage: 'Diện tích: ',
   },
 });

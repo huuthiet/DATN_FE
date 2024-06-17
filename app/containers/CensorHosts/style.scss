@@ -1,4 +1,12 @@
 .user-profile-wrapper {
+  max-width: 90%;
+  .title{
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(21, 93, 121);
+    margin-bottom: 20px;
+  }
   .list-motel {
     ul {
       list-style-type: none;

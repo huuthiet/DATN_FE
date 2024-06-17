@@ -27,7 +27,7 @@ export function HistoryFloorsRoomHost(props) {
   const history = useHistory();
   const { MotelRoom = [], MotelRoomNone } = props.historyFloorsRoomHost;
   const { id = '' } = useParams();
-  console.log({MotelRoom})
+  console.log({ MotelRoom })
   // const currentUser = localStore.get('user') || {};
   // const { _id } = currentUser;
   useEffect(() => {
@@ -38,7 +38,7 @@ export function HistoryFloorsRoomHost(props) {
     { field: 'stt', headerName: 'STT', headerAlign: 'center', width: 120, align: 'center' },
     {
       field: 'roomName',
-      headerName: 'Tên Phòng',
+      headerName: 'Tên phòng',
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
@@ -47,81 +47,20 @@ export function HistoryFloorsRoomHost(props) {
       field: 'key',
       headerName: 'Mã phòng',
       headerAlign: 'center',
-      width: 150,
+      width: 200,
       align: 'center',
       headerClassName: 'header-bold',
     },
-    // {
-    //   field: 'image1',
-    //   headerName: 'Ảnh Phòng 1',
-    //   headerAlign: 'center',
-    //   width: 250,
-    //   headerClassName: 'header-bold',
-    //   renderCell: (params) => {
-    //     return params.value ? (
-    //       <a href={params.value} target="_blank" rel="noopener noreferrer">
-    //         <Avatar
-    //           style={{
-    //             width: '250px',
-    //           }}
-    //           variant="square"
-    //           alt="Avatar"
-    //           src={params.value}
-    //         />
-    //       </a>
-    //     ) : (
-    //       <Avatar
-    //         style={{
-    //           width: '250px',
-    //         }}
-    //         variant="square"
-    //         alt="Avatar"
-    //         src={''}
-    //       />
-    //     );
-    //   },
-    // },
-    // {
-    //   field: 'image2',
-    //   headerName: 'Ảnh Phòng 2',
-    //   headerAlign: 'center',
-    //   width: 250,
-    //   headerClassName: 'header-bold',
-    //   renderCell: (params) => {
-    //     return params.value ? (
-    //       <a href={params.value} target="_blank" rel="noopener noreferrer">
-    //         <Avatar
-    //           style={{
-    //             width: '250px',
-    //           }}
-    //           variant="square"
-    //           alt="Avatar"
-    //           src={params.value}
-    //         />
-    //       </a>
-    //     ) : (
-    //       <Avatar
-    //         style={{
-    //           width: '250px',
-    //         }}
-    //         variant="square"
-    //         alt="Avatar"
-    //         src={''}
-    //       />
-    //     );
-    //   },
-    // },
     {
       field: 'status',
-      headerName: 'Trạng Thái',
+      headerName: 'Trạng thái',
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
-      align: 'center'
     },
     {
       field: 'action-1',
-      headerName: 'Chi Tiết Phòng',
+      headerName: 'Chi tiết phòng',
       headerAlign: 'center',
       width: 250,
       align: 'center',
@@ -160,8 +99,7 @@ export function HistoryFloorsRoomHost(props) {
               color="primary"
               onClick={() => {
                 history.push(
-                  `/historyRoomHost/room/${id}/roomdetail/${
-                  params.row._id
+                  `/historyRoomHost/room/${id}/roomdetail/${params.row._id
                   }`,
                 );
                 // history.push(`/room-detail/${params.row._id}`)
@@ -181,7 +119,7 @@ export function HistoryFloorsRoomHost(props) {
       align: 'center',
       headerClassName: 'header-bold',
       renderCell: params => {
-        if(params.row.rentedBy){
+        if (params.row.rentedBy) {
           return (
             <>
               <a className="btn-detail"

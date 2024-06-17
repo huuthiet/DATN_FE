@@ -36,10 +36,7 @@ export function ReportProblemListAdmin(props) {
 
   const currentUser = localStore.get('user') || {};
 
-  console.log("action222", action2);
   useEffect(() => {
-    console.log("usrrr", localStoreService.get('user').role);
-    console.log("usrrr", localStoreService.get('user').role.includes('master'));
     let data = {};
     if (_.isArray(localStoreService.get('user').role)) {
       // for (
@@ -52,7 +49,7 @@ export function ReportProblemListAdmin(props) {
       //     setIsAdmin(true);
       //   }
       // }
-      
+
       if (localStoreService.get('user').role.includes('master')) {
         setIsAdmin(true);
         data = {
@@ -74,23 +71,8 @@ export function ReportProblemListAdmin(props) {
     //   endDate,
     //   isAdmin,
     // };
-
-    console.log({data})
-    console.log("gọiiiii", isAdmin);
     props.getListReportProblem(data);
   }, [action2]);
-
-  // useEffect(() => {
-  //   const data = {
-  //     startDate,
-  //     endDate,
-  //     isAdmin,
-  //   };
-
-  //   console.log({ data });
-  //   console.log("gọiiiii", isAdmin);
-  //   props.getListReportProblem(data);
-  // }, [isAdmin, startDate, endDate, action2]);
 
   const dateNow = new Date();
   const beforeNow = dateNow.setDate(dateNow.getDate() - 1);
@@ -101,74 +83,59 @@ export function ReportProblemListAdmin(props) {
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 150 },
     {
       field: 'idReportProblem',
-      headerName: 'Mã Báo Cáo',
+      headerName: 'Mã báo cáo',
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
     },
     {
       field: 'dateReportProblem',
-      headerName: 'Ngày Lập Báo Cáo',
+      headerName: 'Ngày lập báo cáo',
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
     },
     {
       field: 'status',
-      headerName: 'Trạng Thái',
+      headerName: 'Trạng thái',
       headerAlign: 'center',
       width: 350,
       headerClassName: 'header-bold',
     },
     {
       field: 'nameMotel',
-      headerName: 'Khu Trọ',
+      headerName: 'Khu trọ',
       headerAlign: 'center',
       width: 350,
       headerClassName: 'header-bold',
     },
     {
       field: 'nameRoom',
-      headerName: 'Tên Phòng',
+      headerName: 'Tên phòng',
       headerAlign: 'center',
       width: 350,
       headerClassName: 'header-bold',
     },
     {
       field: 'nameUser',
-      headerName: 'Khách Thuê',
+      headerName: 'Khách thuê',
       headerAlign: 'center',
       width: 350,
       headerClassName: 'header-bold',
     },
     {
       field: 'description',
-      headerName: 'Mô Tả',
+      headerName: 'Mô tả',
       headerAlign: 'center',
       width: 350,
       headerClassName: 'header-bold',
     },
     {
       field: 'image',
-      headerName: 'Ảnh Mô Tả',
+      headerName: 'Ảnh mô tả',
       headerAlign: 'center',
-      width: 150,
+      width: 200,
       headerClassName: 'header-bold',
-      // renderCell: params => {
-      //   // eslint-disable-next-line no-unused-expressions
-      //   return (
-      //     <>
-      //       <Avatar
-      //         style={{
-      //           width: '250px',
-      //         }}
-      //         variant="square"
-      //         alt="Avatar"
-      //         src={params.value}
-      //       />
-      //     </>
-      //   );
-      // },
       renderCell: params => (
         <a href={params.row.image} target="bank">
           LINK

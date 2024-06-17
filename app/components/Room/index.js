@@ -29,7 +29,6 @@ import { roomStatus, roomStatusCode } from '../../helper/constants';
 
 function Room(props) {
   const { item = {}, status = '', isEdit, isHost } = props;
-  console.log('item', item);
   const {
     _id,
     utilities = [],
@@ -361,7 +360,9 @@ function Room(props) {
           {item.status === 'unknown' ? 'unknown' : `${item.acreage} m2`}
         </div>
         <div>
-          <span>Giá: </span>
+          <span>
+            <FormattedMessage {...messages.roomPrice} />
+          </span>
           {item.price ? `${Money(item.price)} đ` : `Chưa cập nhật`}
         </div>
       </div>

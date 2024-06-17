@@ -18,6 +18,27 @@
       .user-profile-container{
         border-radius: 10px;
         padding: 10px 30px;
+        .map-profile-btn{
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 20px;
+          .map-btn,
+          .profile-update-btn{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+          }
+          @media screen and (max-width: 768px){
+            .map-btn,
+            .profile-update-btn{
+              font-size: 12px;
+            }
+          }
+        }
         .upload-and-create-motel-btn{
           display: flex;
           min-width: 340px;
@@ -44,9 +65,18 @@
         // justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid gray;
+        @media screen and (max-width: 768px){
+          font-size: small;
+          
+        }
         .add-new-button-container{
           display: flex;
           justify-content: end;
+          @media screen and (max-width: 768px){
+            display: flex;
+            justify-content: flex-end;
+            
+          }
 
         }
         .add-new-btn{
@@ -54,8 +84,19 @@
           flex-direction: row;
           justify-content: center;
           align-items: center;
-          gap: 10px;
           min-width: 200px;
+          gap: 10px;
+          @media screen and (max-width: 768px){
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            min-width: 40px;
+            .add-new-building-text{
+              display: none;
+            }
+            
+          }
         }
       }
       .job-empty{
@@ -167,21 +208,18 @@
         }
         .job-item1{
           display: flex;
+          width: 100%;
           flex-direction: row;
-          justify-content: space-around;
           align-items: center;
           gap: 10px;
-          width: 50%;
-          @media screen and (max-width: 768px){
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 20px;
-          }
           .job-fullname{
             display: flex;
             flex-direction: row;
             align-items: center;
             gap: 10px;
+            @media screen and (max-width: 768px){
+              justify-content: center;
+            }
             .fullname-icon{
               font-size: 22px;
               color: #6e6e6e;
@@ -197,6 +235,10 @@
             flex-direction: row;
             align-items: center;
             gap: 10px;
+            @media screen and (max-width: 768px){
+              justify-content: center;
+              margin-bottom: 10px;
+            }
             .phone-icon{
               font-size: 22px;
               color: #6e6e6e;

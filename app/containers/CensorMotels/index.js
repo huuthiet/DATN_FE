@@ -59,6 +59,7 @@ import localStoreService from 'local-storage';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { set } from 'lodash';
 import { useParams } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -98,7 +99,7 @@ export function CensorMotels(props) {
   } = currentUser;
 
   const { id } = useParams();
-  console.log({id});
+  console.log({ id });
 
   // console.log({currentUser});
 
@@ -149,17 +150,17 @@ export function CensorMotels(props) {
     showSuccessapprove,
     action = 0,
   } = props.pendingAcceptDepositList;
-  console.log({showWarningapprove})
-  console.log({pendingAcceptDepositList});
+  console.log({ showWarningapprove })
+  console.log({ pendingAcceptDepositList });
   console.log("accctionnnn", action);
 
   useEffect(() => {
     props.getPayDepositList();
   }, [action]);
 
-  
 
-  let transformedData= [];
+
+  let transformedData = [];
   if (pendingAcceptDepositList.length !== 0) {
     transformedData = pendingAcceptDepositList.map((item, index) => ({
       key: index + 1, // STT
@@ -197,8 +198,8 @@ export function CensorMotels(props) {
   const [isOpen, setIsOpen] = useState(false);
 
   function handleProfile(row) {
-    
-    console.log({row})
+
+    console.log({ row })
     // eslint-disable-next-line no-param-reassign
     profile.fullName = row.owner;
     profile.nationalId = row.nationalId;
@@ -223,35 +224,35 @@ export function CensorMotels(props) {
 
   function toggleModal() {
     setIsOpen(!isOpen);
-    console.log({profile})
+    console.log({ profile })
   }
 
   const columns = [
     { field: 'key', headerName: 'STT', headerAlign: 'center', width: 120 },
     {
       field: 'nameMotel',
-      headerName: 'Tên Tòa Nhà',
+      headerName: 'Tên tòa nhà',
       headerAlign: 'center',
       width: 250,
       headerClassName: 'header-bold',
     },
     {
       field: 'addressMotel',
-      headerName: 'Địa Chỉ',
+      headerName: 'Địa chỉ',
       headerAlign: 'center',
       width: 400,
       headerClassName: 'header-bold',
     },
     {
       field: 'numberOfRoom',
-      headerName: 'Số Phòng',
+      headerName: 'Số phòng',
       headerAlign: 'center',
       width: 150,
       headerClassName: 'header-bold',
     },
     {
       field: 'owner',
-      headerName: 'Chủ Sở Hữu',
+      headerName: 'Chủ sở hữu',
       headerAlign: 'center',
       width: 200,
       headerClassName: 'header-bold',
@@ -288,7 +289,7 @@ export function CensorMotels(props) {
             onClick={() => {
               /* eslint no-underscore-dangle: 0 */
               // eslint-disable-next-line no-undef
-              console.log({params})
+              console.log({ params })
               setIdMotel(params.row._id);
               // eslint-disable-next-line no-undef
               setStatus(true);
@@ -312,7 +313,7 @@ export function CensorMotels(props) {
       // eslint-disable-next-line consistent-return
       renderCell: params => {
         // eslint-disable-next-line no-unused-expressions
-        console.log({params})
+        console.log({ params })
         return (
           <Button
             color="cancel"
@@ -545,7 +546,9 @@ export function CensorMotels(props) {
           </Button>
         </div>
       </Modal>
-      <div className="title">Kiểm duyệt tòa nhà</div>
+      <div className="title">
+        <FormattedMessage {...messages.Header} />
+      </div>
       <div className="job-list-wrapper container-fluid">
         <div style={{ width: '100%' }}>
           <DataGrid
