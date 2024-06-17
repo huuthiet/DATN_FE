@@ -40,7 +40,7 @@ function FloorDetailV2(props) {
       }
     }
   }
-  console.log(localStore.get('user').role);
+  console.log("XXXXX", localStore.get('user'));
 
   const [listRoom, setListRoom] = useState([]);
   const [idMotel, setIdMotel] = useState(props.idMotel || null);

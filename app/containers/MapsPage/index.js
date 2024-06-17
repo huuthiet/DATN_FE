@@ -90,7 +90,12 @@ export function MapsPage(props) {
   useEffect(() => {
     props.getListRoom(valueFilter);
     props.getProfile();
-  }, [valueFilter]);
+  }, []);
+  // useEffect(() => {
+  //   props.getListRoom(valueFilter);
+  //   props.getProfile();
+  //   console.log("Đưuọc GỌIIIIIIII")
+  // }, [valueFilter]);
 
   let isHost = false;
   if (localStore.get('user') && localStore.get('user').role) {
@@ -247,7 +252,7 @@ export function MapsPage(props) {
                             className="detail-button"
                             onClick={() => {
                               /* eslint no-underscore-dangle: 0 */
-                              history.push(`/motel-detail-V2/${room._id}`);
+                              history.push(`/motel-detail-v2/${room._id}`);
                             }}
                           >
                             <FormattedMessage {...messages.Detail} />
