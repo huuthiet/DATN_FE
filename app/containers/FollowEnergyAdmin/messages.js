@@ -10,7 +10,7 @@ export const scopeCreateModel = 'FollowEnergyAdmin.containers';
 export default defineMessages({
   Header: {
     id: `${scope}.Header`,
-    defaultMessage: 'Theo dõi năng lượng',
+    defaultMessage: 'Theo dõi điện năng',
   },
   RoomName: {
     id: `${scope}.RoomName`,

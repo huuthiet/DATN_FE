@@ -172,7 +172,7 @@ const ManagerEnergyRoomsHost = props => {
       } else if (status === "Empty room") {
         showToast('Phòng chưa được thuê!');
       } else if (status === "Room no id metter") {
-        showToast('Phòng chưa được đặt đồng hồ năng lượng!');
+        showToast('Phòng chưa được đặt đồng hồ điện năng!');
       } else if (status === "No data in this time") {
         showToast('Phòng không có dữ liệu điện trong thời gian xuất hóa đơn');
       }
@@ -318,7 +318,7 @@ const ManagerEnergyRoomsHost = props => {
         <title>Energy</title>
         <meta name="description" content="Description of Energy" />
       </Helmet>
-      <div className="title-abc">Quản lý năng lượng các phòng tòa {name}</div>
+      <div className="title-abc">Quản lý điện năng các phòng tòa {name}</div>
       {loading && <div className='loading-overlay' />}
       <Button
         className="summary-btn"

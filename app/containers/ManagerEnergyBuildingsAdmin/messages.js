@@ -10,7 +10,7 @@ export const scope = 'ManagerEnergyBuildingAdmin.containers';
 export default defineMessages({
   Header: {
     id: `${scope}.Header`,
-    defaultMessage: 'Quản lý năng lượng các tòa nhà',
+    defaultMessage: 'Quản lý điện năng các tòa nhà',
   },
   Detail: {
     id: `${scope}.Detail`,

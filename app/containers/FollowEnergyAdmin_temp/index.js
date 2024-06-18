@@ -179,7 +179,7 @@ const FollowEnergyAdmin = props => {
   return (
     <>
       {loading && <div className="loading-overlay" />}
-      <h1>Theo dõi năng lượng</h1>
+      <h1>Theo dõi điện năng</h1>
       <div style={{ marginLeft: '150px' }}>
         <Tabs
           value={value}

@@ -273,8 +273,12 @@
     .image-slider {
         margin-bottom: 20px;
         padding: 10px;
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            filter: invert(0.7);
+        }
         .carousel-item {
-            height: 200px;
+            height: 300px;
             position: relative;
             img {
                 position: absolute;
@@ -283,7 +287,10 @@
                 left: 0;
                 right: 0;
                 margin: auto;
-                height: 600px;
+                height: 700px;
+                width: 100%;
+                object-fit: contain;
+
             }
         }
     }

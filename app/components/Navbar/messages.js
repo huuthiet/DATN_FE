@@ -14,11 +14,11 @@ export default defineMessages({
   },
   managerHost: {
     id: `${scope}.managerHost`,
-    defaultMessage: 'Quản lý năng lượng các chủ trọ',
+    defaultMessage: 'Quản lý điện năng các chủ trọ',
   },
   energyRoomsUser: {
     id: `${scope}.energyRoomsUser`,
-    defaultMessage: 'Quản lý năng lượng',
+    defaultMessage: 'Quản lý điện năng',
   },
   energyRoomsBillUser: {
     id: `${scope}.energyRoomsBillUser`,
@@ -26,7 +26,7 @@ export default defineMessages({
   },
   energyManager: {
     id: `${scope}.energyManager`,
-    defaultMessage: 'Quản lý năng lượng các tòa',
+    defaultMessage: 'Quản lý điện năng các tòa',
   },
   energyManagerHost: {
     id: `${scope}.energyManagerHost`,
@@ -34,12 +34,12 @@ export default defineMessages({
   },
   energyRooms: {
     id: `${scope}.energyRooms`,
-    defaultMessage: 'Quản lý năng lượng các phòng',
+    defaultMessage: 'Quản lý điện năng các phòng',
   },
 
   energyUser: {
     id: `${scope}.energyUser`,
-    defaultMessage: 'Quản lý năng lượng tiêu thụ',
+    defaultMessage: 'Quản lý điện năng tiêu thụ',
   },
   contact: {
     id: `${scope}.contact`,

@@ -10,7 +10,7 @@ export const scopeCreateModel = 'CreateMotel.containers';
 export default defineMessages({
   energy: {
     id: `${scopeCreateModel}.energy`,
-    defaultMessage: 'Năng lượng',
+    defaultMessage: 'Điện năng',
   },
 
 });

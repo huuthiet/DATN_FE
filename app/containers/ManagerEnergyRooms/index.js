@@ -4,19 +4,19 @@
  *
  */
 
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import localStore from 'local-storage';
 import { createStructuredSelector } from 'reselect';
 
 import {
-  Grid, 
+  Grid,
   Paper,
-  Card, 
+  Card,
   CardActions,
   CardContent,
-  CardMedia, 
+  CardMedia,
   Button,
   Typography
 } from '@material-ui/core';
@@ -53,34 +53,34 @@ const ManagerEnergyRooms = props => {
 
   // const [roomList, setRoomList] = useState([]);
 
-  const {listDeviceEnergy = [] } = props.listDeviceEnergy;
+  const { listDeviceEnergy = [] } = props.listDeviceEnergy;
 
   useEffect(() => {
     props.getListDeviceEnergy();
   }, []);
 
   console.log("listDeviceEnergy", listDeviceEnergy)
-  
+
 
   // const [dataLineChart, setDataLineChart] = useState([]);
 
 
-// const fetchData = async () => {
-//   const apiUrl = urlLink.api.serverUrl + urlLink.api.getListDeviceEnergy;
-//   try {
-//     const response = await axios.get(apiUrl);
+  // const fetchData = async () => {
+  //   const apiUrl = urlLink.api.serverUrl + urlLink.api.getListDeviceEnergy;
+  //   try {
+  //     const response = await axios.get(apiUrl);
 
-//     setRoomList(response.data.data);
+  //     setRoomList(response.data.data);
 
-//     console.log('dataa', roomList);
-//   } catch (error) {
-//     console.error('Error fetching data:', error);
-//   }
-// };
+  //     console.log('dataa', roomList);
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //   }
+  // };
 
-// useEffect(() => {
-//   fetchData();
-// }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   const layouts = [
     { i: '1', x: 0, y: 0, w: 1, h: 1 },
@@ -100,46 +100,46 @@ const ManagerEnergyRooms = props => {
 
   return (
     <div className="container">
-      
+
       {/* {!_.isEmpty(currentUser) ? ( */}
-        <>
+      <>
         <Helmet>
           <title>Energy</title>
           <meta name="description" content="Description of Energy" />
         </Helmet>
-        <div className="title-abc">Quản lý năng lượng các phòng</div>
-      {/* {currentUser.role.includes('host') && ( */}
+        <div className="title-abc">Quản lý điện năng các phòng</div>
+        {/* {currentUser.role.includes('host') && ( */}
         <Grid lg={12} container spacing={2}>
-        {listDeviceEnergy.map((room, index) => (
-          <>
-          <Grid key={index} item lg={3} md={4} sm={6} xs={12}>
-            <Card sx={{ maxWidth: 345 }}>
-              <CardMedia
-                component="img"
-                alt="green iguana"
-                height="140"
-                image="../../images/air_conditioner.png"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {room.Name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Id đồng hồ: {room.Id}
-                </Typography>
-              </CardContent>
-              <CardActions style={{ justifyContent: 'center' }}>
-                <Link to={`/admin/follow-energy/${room.Id}/${room.Name}`}>
-                  <Button variant="contained" size="small">Xem chi tiết</Button>
-                </Link>
-              </CardActions>
-            </Card>
+          {listDeviceEnergy.map((room, index) => (
+            <>
+              <Grid key={index} item lg={3} md={4} sm={6} xs={12}>
+                <Card sx={{ maxWidth: 345 }}>
+                  <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    height="140"
+                    image="../../images/air_conditioner.png"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {room.Name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Id đồng hồ: {room.Id}
+                    </Typography>
+                  </CardContent>
+                  <CardActions style={{ justifyContent: 'center' }}>
+                    <Link to={`/admin/follow-energy/${room.Id}/${room.Name}`}>
+                      <Button variant="contained" size="small">Xem chi tiết</Button>
+                    </Link>
+                  </CardActions>
+                </Card>
+              </Grid>
+            </>
+          ))}
         </Grid>
-          </>
-        ))}
-      </Grid>
-      {/* )} */}
-        </>
+        {/* )} */}
+      </>
       {/* ) : (
         <h1>Không có quyền truy cập</h1>
       )} */}

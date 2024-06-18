@@ -7,12 +7,12 @@
 import React from 'react';
 
 import {
-  Grid, 
+  Grid,
   Paper,
-  Card, 
+  Card,
   CardActions,
   CardContent,
-  CardMedia, 
+  CardMedia,
   Button,
   Typography
 } from '@material-ui/core';
@@ -48,7 +48,7 @@ const ManagerEnergyBuildings = props => {
         <title>Energy</title>
         <meta name="description" content="Description of Energy" />
       </Helmet>
-      <div className="title-abc">Quản lý năng lượng các tòa nhà</div>
+      <div className="title-abc">Quản lý điện năng các tòa nhà</div>
       <Grid lg={12} container spacing={2}>
         <Grid item lg={3} md={4} sm={6} xs={12}>
           <Card sx={{ maxWidth: 345 }}>
@@ -63,7 +63,7 @@ const ManagerEnergyBuildings = props => {
                 Tòa 1
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Địa chỉ: 
+                Địa chỉ:
               </Typography>
             </CardContent>
             <CardActions style={{ justifyContent: 'center' }}>
@@ -88,7 +88,7 @@ const ManagerEnergyBuildings = props => {
               </Typography>
             </CardContent>
             <CardActions style={{ justifyContent: 'center' }}>
-              <Button variant="contained" size="small">Xem chi tiết</Button>  
+              <Button variant="contained" size="small">Xem chi tiết</Button>
             </CardActions>
           </Card>
         </Grid>

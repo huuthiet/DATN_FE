@@ -10,7 +10,7 @@ export const scope = 'ManagerEnergyHostAdmin.containers';
 export default defineMessages({
   Header: {
     id: `${scope}.Header`,
-    defaultMessage: 'Quản lý năng lượng các chủ trọ',
+    defaultMessage: 'Quản lý điện năng các chủ trọ',
   },
   HostName: {
     id: `${scope}.HostName`,

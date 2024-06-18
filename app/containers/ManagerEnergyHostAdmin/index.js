@@ -480,7 +480,7 @@ export function ManagerEnergyHostAdmin(props) {
   return (
     <div className="user-profile-wrapper container">
       <Helmet>
-        <title>Quản lý năng lượng các chủ trọ</title>
+        <title>Quản lý điện năng các chủ trọ</title>
         <meta name="description" content="Description of Manager Energy Host" />
       </Helmet>
       <div className="title-abc">
