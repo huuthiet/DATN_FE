@@ -775,7 +775,7 @@
   "ManageDepositAdmin.containers.BuildingName": "Tên tòa nhà",
   "ManageDepositAdmin.containers.Address": "Địa chỉ",
   "ManageDepositAdmin.containers.ManageDeposit": "Quản lý tiền cọc",
-  "ManageDepositAdmin.containers.ManageCheckInCost": "Quản lý tiền đặt cọc",
+  "ManageDepositAdmin.containers.ManageCheckInCost": "Quản lý thanh toán khi nhận phòng",
   "ManageDepositAdmin.containers.Detail": "Chi tiết",
   "ManageDepositAdmin.containers.ManageBill": "Hóa đơn chờ thanh toán",
   "ManageDepositAdmin.containers.RefundDeposit": "Quản lý hoàn tiền cọc",
