@@ -134,7 +134,7 @@ export function ManageMonthly(props) {
           content="Description of Manage Monthly Order"
         />
       </Helmet>
-      <div className="title">Quản thanh toán hàng tháng</div>
+      <div className="title">Quản lý thanh toán hàng tháng</div>
       <div className="job-list-wrapper container-fluid">
         <div style={{ width: '100%' }}>
           <DataGrid

@@ -1417,36 +1417,34 @@ const Navbar = props => {
                       <ReceiptOutlined className="icon" />
                       <FormattedMessage {...messages.TransactionLog} />
                     </DropdownItem> */}
-                      <DropdownItem
-                        className={
-                          pathname.includes('/transaction-banking-cash-log')
-                            ? 'active'
-                            : ''
-                        }
-                        onClick={() => {
-                          setToggle(false);
-                          history.push('/transaction-banking-cash-log');
-                        }}
-                      >
-                        <ReceiptOutlined className="icon" />
-                        <FormattedMessage
-                          {...messages.TransactionBankingCashLog}
-                        />
-                      </DropdownItem>
-                      <DropdownItem
-                        className={
-                          pathname.includes('/orders-pending-pay-user')
-                            ? 'active'
-                            : ''
-                        }
-                        onClick={() => {
-                          setToggle(false);
-                          history.push('/orders-pending-pay-user');
-                        }}
-                      >
-                        <ReceiptOutlined className="icon" />
-                        <FormattedMessage {...messages.orderPendingPayList} />
-                      </DropdownItem>
+                      {currentUser.role.includes('customer') && (
+                        <DropdownItem
+                          className={pathname.includes('/transaction-banking-cash-log') ? 'active' : ''}
+                          onClick={() => {
+                            setToggle(false);
+                            history.push('/transaction-banking-cash-log');
+                          }}
+                        >
+                          <ReceiptOutlined className="icon" />
+                          <FormattedMessage {...messages.TransactionBankingCashLog} />
+                        </DropdownItem>
+                      )}
+                      {currentUser.role.includes('customer') ? (
+                        <DropdownItem
+                          className={
+                            pathname.includes('/orders-pending-pay-user')
+                              ? 'active'
+                              : ''
+                          }
+                          onClick={() => {
+                            setToggle(false);
+                            history.push('/orders-pending-pay-user');
+                          }}
+                        >
+                          <ReceiptOutlined className="icon" />
+                          <FormattedMessage {...messages.orderPendingPayList} />
+                        </DropdownItem>
+                      ) : null}
                       <DropdownItem
                         className={
                           pathname.includes('/pay-deposit-user/')
